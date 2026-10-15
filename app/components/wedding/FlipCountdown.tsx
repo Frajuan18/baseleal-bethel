@@ -10,17 +10,60 @@ interface TimeUnits {
   seconds: number;
 }
 
+function FlipUnitCard({ value, label }: { value: string; label: string }) {
+  const [currentVal, setCurrentVal] = useState(value);
+  const [prevVal, setPrevVal] = useState(value);
+  const [isFlipping, setIsFlipping] = useState(false);
+
+  useEffect(() => {
+    if (value !== currentVal) {
+      setPrevVal(currentVal);
+      setCurrentVal(value);
+      setIsFlipping(true);
+
+      const timer = setTimeout(() => {
+        setIsFlipping(false);
+      }, 550);
+
+      return () => clearTimeout(timer);
+    }
+  }, [value, currentVal]);
+
+  return (
+    <div className="flex flex-col items-center">
+      {/* White Mechanical Split-Flap Card with 3D Flip Animation */}
+      <div className={`split-flap-white-card w-full aspect-[1/1.12] sm:aspect-[1/1.18] flex items-center justify-center p-2 sm:p-4 ${isFlipping ? "animate-card-flip" : ""}`}>
+        
+        {/* Metal Crease Hinge */}
+        <span className="split-flap-white-crease" aria-hidden />
+
+        {/* Small Side Rivet Details */}
+        <div className="absolute top-1/2 left-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#94A3B8]/60 z-30 shadow-xs" />
+        <div className="absolute top-1/2 right-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#94A3B8]/60 z-30 shadow-xs" />
+
+        {/* Large Digits Display */}
+        <span className="font-editorial-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#1E140E] tabular-nums block select-none">
+          {currentVal}
+        </span>
+      </div>
+
+      {/* Butter Yellow Unit Label */}
+      <span className="mt-3.5 text-[10px] sm:text-xs font-sans font-semibold uppercase tracking-[0.24em] text-[#FEE885]">
+        {label}
+      </span>
+    </div>
+  );
+}
+
 export function FlipCountdown() {
   const [timeLeft, setTimeLeft] = useState<TimeUnits | null>(null);
   const [isCelebrationDay, setIsCelebrationDay] = useState(false);
 
   useEffect(() => {
-    if (!wedding.date) {
-      return;
-    }
-
-    const timeStr = wedding.time || "14:00";
-    const targetTime = new Date(`${wedding.date}T${timeStr}:00`).getTime();
+    // January 3, 2027 Celebration Target
+    const targetDateStr = wedding.date || "2027-01-03";
+    const timeStr = wedding.time || "10:00";
+    const targetTime = new Date(`${targetDateStr}T${timeStr}:00`).getTime();
 
     const calculateTimeLeft = () => {
       const now = Date.now();
@@ -46,8 +89,6 @@ export function FlipCountdown() {
     return () => clearInterval(interval);
   }, []);
 
-  const hasDateConfigured = Boolean(wedding.date);
-
   const units: { key: keyof TimeUnits; label: string }[] = [
     { key: "days", label: "Days" },
     { key: "hours", label: "Hours" },
@@ -58,11 +99,11 @@ export function FlipCountdown() {
   return (
     <section
       id="countdown"
-      className="py-20 sm:py-28 bg-[#2B1810] text-[#F8F4ED] relative overflow-hidden"
+      className="py-20 sm:py-28 lg:py-32 bg-[#3D2C22] bg-[radial-gradient(ellipse_at_top,_#4D372B_0%,#39281F_55%,#2A1D16_100%)] text-[#F8F4ED] relative overflow-hidden border-y border-[#5A4032]"
     >
-      {/* Decorative background watermark */}
+      {/* Decorative Warm Butter Yellow Watermark */}
       <div
-        className="pointer-events-none absolute -right-12 -bottom-16 font-editorial-serif text-[18rem] md:text-[24rem] text-white/[0.03] select-none leading-none z-0"
+        className="pointer-events-none absolute -right-10 -bottom-14 font-editorial-serif text-[18rem] md:text-[24rem] text-[#FEE885]/[0.04] select-none leading-none z-0"
         aria-hidden
       >
         &amp;
@@ -70,81 +111,50 @@ export function FlipCountdown() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 text-center">
         
-        {/* Eyebrow and heading */}
-        <p className="eyebrow text-[#B18A54] mb-3">
+        {/* Eyebrow and Heading */}
+        <p className="eyebrow text-[#FEE885] mb-2.5 tracking-[0.28em] font-medium">
           Until We Say &ldquo;I Do&rdquo;
         </p>
 
-        <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#F8F4ED] max-w-2xl mx-auto leading-tight">
-          {!hasDateConfigured
-            ? "Every Second Brings Us Closer to Forever"
-            : isCelebrationDay
+        <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#FFFDF7] max-w-2xl mx-auto leading-tight">
+          {isCelebrationDay
             ? "Today, With Joyous Hearts, We Celebrate!"
             : "The Journey to Our Wedding Day"}
         </h2>
 
-        <div className="h-px w-16 bg-[#B18A54]/60 mx-auto mt-5 mb-8 sm:mb-12" />
+        <div className="h-px w-16 bg-[#FEE885]/60 mx-auto mt-5 mb-10 sm:mb-14" />
 
-        {/* Screen Reader Accessible Announcement (quiet/polite) */}
+        {/* Screen Reader Accessible Announcement */}
         <div className="sr-only" aria-live="polite">
-          {timeLeft && hasDateConfigured
-            ? `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes until the wedding`
-            : "Wedding countdown pending date confirmation"}
+          {timeLeft
+            ? `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds until January 3, 2027`
+            : "Wedding countdown ticking"}
         </div>
 
-        {/* Flip-Board Countdown Display */}
-        {hasDateConfigured && timeLeft && !isCelebrationDay ? (
-          <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6 max-w-2xl mx-auto">
+        {/* White Cards Flip Countdown Display */}
+        {timeLeft && !isCelebrationDay && (
+          <div className="grid grid-cols-4 gap-3 sm:gap-5 md:gap-7 max-w-2xl mx-auto">
             {units.map((unit) => {
               const val = String(timeLeft[unit.key]).padStart(2, "0");
-              return (
-                <div key={unit.key} className="flex flex-col items-center">
-                  {/* Split-flap card */}
-                  <div className="split-flap-card w-full py-4 sm:py-6 md:py-8 px-1 sm:px-3 text-center">
-                    <span className="split-flap-crease" aria-hidden />
-                    <span className="font-editorial-serif text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-[#F8F4ED] tabular-nums block">
-                      {val}
-                    </span>
-                  </div>
-
-                  {/* Unit Label */}
-                  <span className="mt-3 text-[9px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-[#C9A46E]">
-                    {unit.label}
-                  </span>
-                </div>
-              );
+              return <FlipUnitCard key={unit.key} value={val} label={unit.label} />;
             })}
           </div>
-        ) : !hasDateConfigured ? (
-          /* Editorial Date Placeholder (when date is null) */
-          <div className="bg-[#1C0E08]/60 border border-[#B18A54]/30 p-8 sm:p-12 max-w-xl mx-auto rounded-sm backdrop-blur-sm">
-            <span className="text-[#B18A54] text-lg mb-2 block">✦</span>
-            <p className="font-editorial-serif text-2xl sm:text-3xl italic text-[#F8F4ED] mb-3">
-              Our countdown begins soon
-            </p>
-            <p className="text-xs sm:text-sm text-[#F8F4ED]/75 leading-relaxed font-light font-sans max-w-md mx-auto">
-              As soon as the ceremony date and time are officially confirmed, the mechanical countdown will tick down to the very second we stand at the altar.
-            </p>
-            <div className="mt-6">
-              <a href="#rsvp" className="btn-editorial-gold text-[10px]">
-                Notify Us of Your Intent to Attend
-              </a>
-            </div>
-          </div>
-        ) : (
-          /* Celebration day banner */
-          <div className="bg-[#B18A54]/20 border border-[#B18A54] p-8 sm:p-12 max-w-xl mx-auto rounded-sm">
-            <p className="font-editorial-serif text-3xl sm:text-4xl text-[#F8F4ED] italic mb-3">
+        )}
+
+        {isCelebrationDay && (
+          /* Celebration Day Banner */
+          <div className="bg-[#FEE885]/15 border border-[#FEE885]/40 p-8 sm:p-12 max-w-xl mx-auto rounded-sm backdrop-blur-sm">
+            <p className="font-editorial-serif text-3xl sm:text-4xl text-[#FEE885] italic mb-3">
               The day has arrived!
             </p>
-            <p className="text-sm text-[#F8F4ED]/85 leading-relaxed">
+            <p className="text-sm text-white/90 leading-relaxed font-light">
               We are so grateful for your presence, prayers, and love as we begin this new covenant chapter as husband and wife.
             </p>
           </div>
         )}
 
-        {/* Editorial Quote note */}
-        <p className="mt-12 text-xs sm:text-sm font-editorial-serif italic text-[#C9A46E]/90 max-w-lg mx-auto">
+        {/* Editorial Scripture Blessing */}
+        <p className="mt-12 text-xs sm:text-sm font-editorial-serif italic text-[#FEE885]/90 max-w-lg mx-auto">
           “Therefore what God has joined together, let no one separate.”
         </p>
       </div>

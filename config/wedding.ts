@@ -60,13 +60,10 @@ export const wedding: WeddingConfig = {
     hashtag: "#BaselealAndBethel",
   },
 
-  // Editable Date & Time placeholders:
-  // To activate the countdown & calendar for a specific date, set:
-  // date: "2027-08-14",
-  // time: "14:30",
-  date: null,
-  time: null,
-  timeDisplay: "Time to be announced",
+  // Editable Date & Time:
+  date: "2027-01-03",
+  time: "10:00",
+  timeDisplay: "10:00 AM",
 
   // Venue & Location placeholders:
   venue: "Ceremony Venue to be Announced",

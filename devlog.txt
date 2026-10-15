@@ -5830,3 +5830,127 @@ Import trace:
 ⚠ Fast Refresh had to perform a full reload due to a runtime error.
 ✓ Compiled in 141ms
  GET / 200 in 393ms (next.js: 7ms, application-code: 386ms)
+✓ Compiled in 482ms
+ GET / 200 in 619ms (next.js: 45ms, application-code: 574ms)
+✓ Compiled in 341ms
+ GET / 200 in 162ms (next.js: 25ms, application-code: 137ms)
+✓ Compiled in 211ms
+[browser] ./app/components/wedding/WeddingHero.tsx:1:10
+Error: You're importing a module that depends on `useState` into a React Server Component module. This API is only available in Client Components. To fix, mark the file (or its parent) with the `"use client"` directive.
+    Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+> 1 | import { useState } from "react";
+    |          ^^^^^^^^
+  2 | import Image from "next/image";
+  3 | import { coupleName, wedding } from "@/config/wedding";
+  4 | import { useTheme } from "@/app/context/ThemeContext";
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./app/components/wedding/WeddingHero.tsx
+    ./app/page.tsx 
+⨯ upstream image response failed for https://images.unsplash.com/photo-1545232979-fbf71fe97799?auto=format&fit=crop&w=1000&q=85 404
+✓ Compiled in 103ms
+ GET / 200 in 123ms (next.js: 11ms, application-code: 112ms)
+✓ Compiled in 58ms
+✓ Compiled in 60ms
+✓ Compiled in 228ms
+ GET / 200 in 102ms (next.js: 13ms, application-code: 88ms)
+✓ Compiled in 1577ms
+ GET / 200 in 786ms (next.js: 51ms, application-code: 736ms)
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+      <LoadingBoundary name="/" loading={null}>
+        <HTTPAccessFallbackBoundary notFound={{...}} forbidden={undefined} unauthorized={undefined}>
+          <HTTPAccessFallbackErrorBoundary pathname="/" notFound={{...}} forbidden={undefined} unauthorized={undefined} ...>
+            <RedirectBoundary>
+              <RedirectErrorBoundary router={{...}}>
+                <InnerLayoutRouter url="/" tree={[...]} params={{}} renderTree={{...}} segmentPath={[...]} ...>
+                  <SegmentViewNode type="page" pagePath="page.tsx">
+                    <SegmentTrieNode>
+                    <Home>
+                      <ThemeProvider>
+                        <main className="min-h-scre...">
+                          <WeddingHero>
+                          <InvitationSection>
+                            <section id="invitation" className="relative p...">
+                              <div
++                               className="pointer-events-none absolute -top-24 right-1/4 w-[420px] h-[420px] rounded-..."
+-                               className="pointer-events-none absolute w-[380px] h-[380px] sm:w-[500px] sm:h-[500px] ..."
+                                aria-hidden={true}
+-                               style={{left:"50%",top:"35%",transform:"translate(..."}}
+                              >
+                              <div
++                               className="pointer-events-none absolute bottom-10 left-10 w-[360px] h-[360px] rounded-..."
+-                               className="pointer-events-none absolute bottom-12 right-12 w-[340px] h-[340px] rounded..."
+                                aria-hidden={true}
+                              >
+                              <div className="relative z...">
+                                <div>
+                                <div
++                                 className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center"
+-                                 className="max-w-3xl lg:max-w-4xl mx-auto w-full"
+                                >
++                                 <div className="lg:col-span-5 flex flex-col justify-center space-y-8">
+-                                 <article
+-                                   className="relative z-20 bg-white rounded-md p-7 sm:p-11 md:p-16 text-center borde..."
+-                                 >
+                                  ...
+                          ...
+                  ...
+                ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at div (<anonymous>)
+    at InvitationSection (app/components/wedding/InvitationSection.tsx:90:15)
+    at Home (app\page.tsx:16:9)
+  88 |             className={`h-px w-16 mx-auto mt-6 mb-6 transition-colors duration-500 ${
+  89 |               isDark ? "bg-[#FEE885]/60" : "bg-[#8C6A3B]/50"
+> 90 |             }`}
+     |               ^
+  91 |           />
+  92 |           <p
+  93 |             className={`text-sm sm:text-base leading-relaxed font-sans font-light transition-colors duration-500 ${
+ GET / 200 in 381ms (next.js: 7ms, application-code: 375ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1545232979-fbf71fe97799?auto=format&fit=crop&w=1000&q=85 404
+✓ Compiled in 270ms
+✓ Compiled in 233ms
+✓ Compiled in 240ms
+✓ Compiled in 163ms
+✓ Compiled in 255ms
+✓ Compiled in 253ms
+ GET / 200 in 102ms (next.js: 7ms, application-code: 95ms)
+✓ Compiled in 67ms
+ GET / 200 in 142ms (next.js: 5ms, application-code: 137ms)
+✓ Compiled in 190ms
+✓ Compiled in 212ms
+✓ Compiled in 120ms
+✓ Compiled in 151ms
+✓ Compiled in 184ms
+✓ Compiled in 273ms
+✓ Compiled in 177ms
+✓ Compiled in 238ms
+✓ Compiled in 140ms
+ GET / 200 in 166ms (next.js: 17ms, application-code: 149ms)
+✓ Compiled in 212ms
+ GET / 200 in 121ms (next.js: 14ms, application-code: 107ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1545232979-fbf71fe97799?auto=format&fit=crop&w=1000&q=85 404
+ GET / 200 in 136ms (next.js: 3ms, application-code: 133ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1545232979-fbf71fe97799?auto=format&fit=crop&w=1000&q=85 404
+✓ Compiled in 70ms
+ GET / 200 in 81ms (next.js: 3ms, application-code: 78ms)
+✓ Compiled in 140ms
+✓ Compiled in 143ms

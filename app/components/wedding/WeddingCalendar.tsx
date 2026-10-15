@@ -4,13 +4,11 @@ import { useState } from "react";
 import { coupleName, wedding } from "@/config/wedding";
 
 function downloadICS(year: number, monthIndex: number, dayNumber: number) {
-  if (!wedding.date) return;
-
-  const timeString = wedding.time || "14:00";
+  const timeString = wedding.time || "10:00";
   const [hours, minutes] = timeString.split(":").map(Number);
 
-  const startDate = new Date(year, monthIndex, dayNumber, hours || 14, minutes || 0);
-  const endDate = new Date(startDate.getTime() + 4 * 60 * 60 * 1000); // 4-hour duration
+  const startDate = new Date(year, monthIndex, dayNumber, hours || 10, minutes || 0);
+  const endDate = new Date(startDate.getTime() + 5 * 60 * 60 * 1000); // 5-hour celebration
 
   const pad = (n: number) => String(n).padStart(2, "0");
   const formatDateICS = (d: Date) =>
@@ -49,15 +47,12 @@ function downloadICS(year: number, monthIndex: number, dayNumber: number) {
 export function WeddingCalendar() {
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
-  // Determine date details safely
-  const hasDate = Boolean(wedding.date);
-
-  // If date is configured (e.g. "2027-08-14"), calculate exact calendar properties
+  // Default to January 3, 2027 or dynamically parse from wedding.date if set
   let year = 2027;
-  let monthIndex = 7; // August (0-indexed)
-  let dayNumber = 14;
-  let weekdayName = "Saturday";
-  let monthName = "August";
+  let monthIndex = 0; // January (0-indexed: 0 = Jan)
+  let dayNumber = 3;
+  let weekdayName = "Sunday";
+  let monthName = "January";
 
   if (wedding.date) {
     const parts = wedding.date.split("-").map(Number);
@@ -84,11 +79,10 @@ export function WeddingCalendar() {
 
   // Google Calendar URL generator
   const getGoogleCalendarUrl = () => {
-    if (!wedding.date) return "#";
-    const timeString = wedding.time || "14:00";
+    const timeString = wedding.time || "10:00";
     const [hours, minutes] = timeString.split(":").map(Number);
-    const startDate = new Date(year, monthIndex, dayNumber, hours || 14, minutes || 0);
-    const endDate = new Date(startDate.getTime() + 4 * 60 * 60 * 1000);
+    const startDate = new Date(year, monthIndex, dayNumber, hours || 10, minutes || 0);
+    const endDate = new Date(startDate.getTime() + 5 * 60 * 60 * 1000);
 
     const pad = (n: number) => String(n).padStart(2, "0");
     const formatGCal = (d: Date) =>
@@ -105,187 +99,247 @@ export function WeddingCalendar() {
   };
 
   return (
-    <section id="date" className="py-20 sm:py-28 lg:py-32 bg-[#EEE5D9]/60 border-y border-[#DED2C2]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
+    <section
+      id="date"
+      className="py-20 sm:py-28 lg:py-36 bg-[#FFF8D6] relative overflow-hidden transition-colors duration-500"
+    >
+      {/* High-Definition Tactile Paper Noise Layer */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.15] mix-blend-multiply select-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.2 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)'/%3E%3C/svg%3E")`,
+        }}
+        aria-hidden
+      />
+
+      {/* Authentic Darker Fiber Dots & Speckles Texture (Handmade Flecked Hard Paper) */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-multiply select-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='18' cy='24' r='1.3' fill='%234A350E'/%3E%3Ccircle cx='76' cy='42' r='0.9' fill='%235A4215'/%3E%3Ccircle cx='124' cy='18' r='1.2' fill='%233D2B09'/%3E%3Ccircle cx='36' cy='92' r='1.4' fill='%234C3710'/%3E%3Ccircle cx='104' cy='82' r='0.8' fill='%23563F14'/%3E%3Ccircle cx='148' cy='112' r='1.3' fill='%23412E0A'/%3E%3Ccircle cx='62' cy='138' r='1' fill='%234B360E'/%3E%3Ccircle cx='128' cy='146' r='1.5' fill='%23382707'/%3E%3Ccircle cx='92' cy='122' r='0.8' fill='%23594116'/%3E%3Ccircle cx='12' cy='140' r='1.2' fill='%2347330D'/%3E%3C/svg%3E")`,
+        }}
+        aria-hidden
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-18">
-          <p className="eyebrow text-[#B18A54] mb-3">Save The Date</p>
-          <h2 className="font-editorial-serif text-4xl sm:text-5xl md:text-6xl text-[#422B20]">
+        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
+          <p className="eyebrow text-[#8C6A3B] mb-2.5 font-semibold tracking-[0.28em]">
+            Save The Date
+          </p>
+          <h2 className="font-editorial-serif text-4xl sm:text-5xl md:text-6xl text-[#2B1810] tracking-tight">
             The Day of Our Vows
           </h2>
-          <div className="h-px w-16 bg-[#B18A54] mx-auto mt-5 mb-5" />
-          <p className="text-sm sm:text-base text-[#857365] leading-relaxed">
+          <div className="h-px w-16 bg-[#8C6A3B]/50 mx-auto mt-5 mb-5" />
+          <p className="text-sm sm:text-base text-[#4A3B32] leading-relaxed font-light">
             Mark your calendar to celebrate with us. We want nothing more than to share this sacred day with those who have shaped our lives.
           </p>
         </div>
 
-        {/* Two-Column Editorial & Interactive Calendar */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        {/* Two-Column Editorial & High-End Interactive Calendar */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           
-          {/* Left Column: Big Editorial Date Card */}
-          <div className="lg:col-span-6 flex flex-col justify-between space-y-8">
-            <div className="bg-[#F8F4ED] p-8 sm:p-12 border border-[#DED2C2] shadow-sm relative">
-              <span className="eyebrow text-[#B18A54] block mb-2">
-                Celebration Details
-              </span>
+          {/* Left Column: Metallic White Celebration Details Card */}
+          <div className="lg:col-span-6 flex flex-col justify-between">
+            <div className="h-full bg-gradient-to-br from-white via-[#F8FAFC] to-[#EEF2F6] border border-white/90 p-8 sm:p-12 shadow-[0_22px_55px_-12px_rgba(43,24,16,0.12),0_8px_24px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.95)] rounded-md relative flex flex-col justify-between">
+              
+              {/* Subtle Metallic Corner Highlight */}
+              <div
+                className="pointer-events-none absolute -top-12 -left-12 w-36 h-36 bg-gradient-to-br from-white via-white/40 to-transparent rounded-full blur-xl opacity-80"
+                aria-hidden
+              />
 
-              {hasDate ? (
-                <>
-                  <h3 className="font-editorial-serif text-4xl sm:text-5xl text-[#422B20] leading-none mb-3">
-                    {weekdayName}
-                  </h3>
-                  <p className="font-editorial-serif text-2xl sm:text-3xl italic text-[#B18A54] mb-6">
-                    {monthName} {dayNumber}, {year}
-                  </p>
-                  <p className="text-sm text-[#857365] leading-relaxed mb-6">
-                    Ceremony begins promptly at{" "}
-                    <strong className="text-[#422B20] font-semibold">
-                      {wedding.time ? `${wedding.time} Local Time` : wedding.timeDisplay}
-                    </strong>
-                    . Reception and celebration to follow immediately after the service.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <h3 className="font-editorial-serif text-3xl sm:text-4xl text-[#422B20] leading-tight mb-3">
-                    Date Awaiting Formal Announcement
-                  </h3>
-                  <p className="text-sm text-[#857365] leading-relaxed mb-6">
-                    We are currently finalizing the church and reception arrangements. The official date and schedule will appear here and in your formal correspondence.
-                  </p>
-                </>
-              )}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="eyebrow text-[#8C6A3B] text-[10px] tracking-[0.28em] font-semibold">
+                    Celebration Details
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-sans font-medium uppercase tracking-[0.16em] bg-[#FEE885]/40 text-[#2B1810] border border-[#FEE885]/80">
+                    ✦ Confirmed Date
+                  </span>
+                </div>
 
-              <div className="border-t border-[#DED2C2] pt-6 space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="text-[#B18A54] text-sm mt-0.5" aria-hidden>✦</span>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#422B20]">
-                      Location &amp; Venue
-                    </p>
-                    <p className="text-sm text-[#857365] mt-0.5">
-                      {wedding.venue} — {wedding.city}
-                    </p>
-                    <p className="text-xs text-[#857365]/80 mt-0.5">
-                      {wedding.address}
-                    </p>
+                <h3 className="font-editorial-serif text-4xl sm:text-5xl text-[#1E140E] leading-none mb-2">
+                  {weekdayName}
+                </h3>
+                
+                <p className="font-editorial-serif text-2xl sm:text-3xl italic text-[#8C6A3B] mb-5">
+                  {monthName} {dayNumber}, {year}
+                </p>
+
+                <p className="text-sm text-[#475569] leading-relaxed mb-6 font-light">
+                  Ceremony begins promptly at{" "}
+                  <strong className="text-[#1E140E] font-semibold">
+                    {wedding.time ? `${wedding.time} Local Time` : "10:00 AM Local Time"}
+                  </strong>
+                  . Reception and joyful celebration to follow immediately after the ceremony.
+                </p>
+
+                {/* Venue Detail Inset Box */}
+                <div className="border border-[#E2E8F0] bg-white/80 p-5 rounded-sm space-y-2.5 shadow-xs">
+                  <div className="flex items-start gap-3">
+                    <span className="text-[#8C6A3B] text-base leading-none mt-0.5" aria-hidden>
+                      📍
+                    </span>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1E140E]">
+                        Location &amp; Venue
+                      </p>
+                      <p className="text-sm font-medium text-[#334155] mt-1">
+                        {wedding.venue} — {wedding.city}
+                      </p>
+                      <p className="text-xs text-[#64748B] mt-0.5 leading-relaxed font-light">
+                        {wedding.address}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-8 flex flex-wrap items-center gap-4">
+              <div className="mt-8 pt-6 border-t border-[#E2E8F0] flex flex-wrap items-center gap-3.5">
                 <button
                   type="button"
                   onClick={handleAddToCalendar}
-                  disabled={!hasDate}
-                  className="btn-editorial disabled:opacity-40 disabled:cursor-not-allowed group"
-                  aria-label="Download Apple / Outlook iCal invitation"
+                  className="min-h-[46px] px-7 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-xl bg-[#1E140E] text-[#FAF6F0] hover:bg-[#8C6A3B] group focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2"
+                  aria-label="Download Apple or Outlook iCal invitation"
                 >
                   <span>{downloadSuccess ? "Invitation Downloaded ✓" : "Add to Calendar"}</span>
-                  <span className="group-hover:translate-x-0.5 transition-transform" aria-hidden>
+                  <span className="group-hover:translate-y-0.5 transition-transform" aria-hidden>
                     ↓
                   </span>
                 </button>
 
-                {hasDate && (
-                  <a
-                    href={getGoogleCalendarUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-editorial-outline text-[#422B20] text-[10px]"
-                  >
-                    Google Calendar ↗
-                  </a>
-                )}
+                <a
+                  href={getGoogleCalendarUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-h-[46px] px-6 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-medium inline-flex items-center justify-center gap-1.5 transition-all duration-300 bg-white/90 border border-[#CBD5E1] text-[#1E140E] hover:bg-[#F1F5F9] shadow-xs hover:shadow-sm"
+                >
+                  <span>Google Calendar</span>
+                  <span aria-hidden>↗</span>
+                </a>
 
                 {wedding.directionsUrl && (
                   <a
                     href={wedding.directionsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs font-sans uppercase tracking-[0.18em] text-[#422B20] underline underline-offset-4 hover:text-[#B18A54] transition-colors"
+                    className="text-xs font-sans uppercase tracking-[0.18em] text-[#1E140E] underline underline-offset-4 hover:text-[#8C6A3B] transition-colors ml-auto py-2"
                   >
                     Get Directions ↗
                   </a>
                 )}
               </div>
+
             </div>
           </div>
 
-          {/* Right Column: Visual Calendar Grid Box */}
-          <div className="lg:col-span-6">
-            <div className="bg-[#F8F4ED] border border-[#DED2C2] p-6 sm:p-10 shadow-sm max-w-md mx-auto lg:max-w-none">
+          {/* Right Column: Metallic White Visual Interactive Calendar Grid */}
+          <div className="lg:col-span-6 flex flex-col justify-between">
+            <div className="h-full bg-gradient-to-br from-white via-[#F8FAFC] to-[#EEF2F6] border border-white/90 p-6 sm:p-10 shadow-[0_22px_55px_-12px_rgba(43,24,16,0.12),0_8px_24px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.95)] rounded-md flex flex-col justify-between relative overflow-hidden">
               
-              {/* Calendar Month & Year Bar */}
-              <div className="flex items-center justify-between pb-5 border-b border-[#DED2C2]">
-                <div>
-                  <span className="font-editorial-serif text-3xl sm:text-4xl text-[#422B20]">
-                    {monthName}
-                  </span>
-                  <span className="block text-xs uppercase tracking-[0.25em] text-[#857365] mt-0.5">
-                    {year}
-                  </span>
-                </div>
-                <div className="w-10 h-10 rounded-full border border-[#B18A54]/40 flex items-center justify-center text-[#B18A54] text-xs font-editorial-serif italic">
-                  {wedding.couple.monogram}
-                </div>
-              </div>
+              {/* Subtle Metallic Corner Highlight */}
+              <div
+                className="pointer-events-none absolute -bottom-12 -right-12 w-36 h-36 bg-gradient-to-tl from-white via-white/40 to-transparent rounded-full blur-xl opacity-80"
+                aria-hidden
+              />
 
-              {/* Weekday Labels (S M T W T F S) */}
-              <div className="grid grid-cols-7 gap-1 mt-6 text-center">
-                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-                  <span
-                    key={day}
-                    className="text-[10px] font-sans font-semibold uppercase tracking-[0.16em] text-[#857365] py-2"
-                  >
-                    {day}
-                  </span>
-                ))}
-              </div>
-
-              {/* Day Cells Grid */}
-              <div className="grid grid-cols-7 gap-y-2 gap-x-1 mt-2 text-center text-xs sm:text-sm">
-                {/* Empty offset days for start of month */}
-                {Array.from({ length: startDayOffset }).map((_, i) => (
-                  <span key={`blank-${i}`} className="py-2.5 opacity-0 select-none">
-                    0
-                  </span>
-                ))}
-
-                {/* Day numbers */}
-                {days.map((d) => {
-                  const isWeddingDay = hasDate && d === dayNumber;
-                  return (
-                    <div
-                      key={d}
-                      className="py-1 flex items-center justify-center"
-                    >
-                      <span
-                        className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-xs sm:text-sm font-medium transition-all ${
-                          isWeddingDay
-                            ? "bg-[#B18A54] text-[#F8F4ED] font-bold shadow-md ring-2 ring-[#B18A54]/30 scale-110"
-                            : "text-[#422B20] hover:bg-[#EEE5D9]/70"
-                        }`}
-                        title={isWeddingDay ? `${coupleName}'s Wedding Day!` : undefined}
-                      >
-                        {d}
+              <div>
+                {/* Calendar Month & Year Bar */}
+                <div className="flex items-center justify-between pb-5 border-b border-[#E2E8F0]">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-editorial-serif text-3xl sm:text-4xl text-[#1E140E] leading-tight">
+                        {monthName}
+                      </span>
+                      <span className="font-editorial-serif italic text-2xl text-[#8C6A3B]">
+                        {year}
                       </span>
                     </div>
-                  );
-                })}
+                    <span className="block text-[10px] uppercase tracking-[0.25em] text-[#64748B] mt-1 font-medium">
+                      Wedding Celebration Month
+                    </span>
+                  </div>
+
+                  {/* Monogram Seal Badge */}
+                  <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37]/50 bg-white/90 shadow-sm flex items-center justify-center text-[#8C6A3B] text-sm font-editorial-serif italic tracking-wider">
+                    {wedding.couple.monogram}
+                  </div>
+                </div>
+
+                {/* Weekday Labels (Sun Mon Tue Wed Thu Fri Sat) */}
+                <div className="grid grid-cols-7 gap-1 mt-6 text-center">
+                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                    <span
+                      key={day}
+                      className="text-[11px] font-sans font-semibold uppercase tracking-[0.16em] text-[#64748B] py-2"
+                    >
+                      {day}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Day Cells Grid */}
+                <div className="grid grid-cols-7 gap-y-2.5 gap-x-1 mt-3 text-center text-xs sm:text-sm">
+                  {/* Empty offset days for start of month */}
+                  {Array.from({ length: startDayOffset }).map((_, i) => (
+                    <span key={`blank-${i}`} className="py-2.5 opacity-0 select-none">
+                      0
+                    </span>
+                  ))}
+
+                  {/* Day numbers */}
+                  {days.map((d) => {
+                    const isWeddingDay = d === dayNumber;
+                    return (
+                      <div
+                        key={d}
+                        className="py-1 flex items-center justify-center relative"
+                      >
+                        <span
+                          className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-xs sm:text-sm font-medium transition-all duration-300 relative ${
+                            isWeddingDay
+                              ? "bg-[#FFF8D6] text-[#1E140E] font-bold shadow-[0_3px_12px_rgba(180,140,20,0.25)] border-2 border-[#E8D47E] ring-4 ring-white scale-110 overflow-hidden"
+                              : "text-[#334155] hover:bg-[#E2E8F0]/70 hover:scale-105"
+                          }`}
+                          title={isWeddingDay ? `${coupleName}'s Wedding Day!` : undefined}
+                        >
+                          {isWeddingDay && (
+                            <span
+                              className="pointer-events-none absolute inset-0 opacity-25 mix-blend-multiply select-none"
+                              style={{
+                                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='dotNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23dotNoise)'/%3E%3C/svg%3E")`,
+                              }}
+                              aria-hidden
+                            />
+                          )}
+                          <span className="relative z-10">{d}</span>
+                          {isWeddingDay && (
+                            <span
+                              className="absolute -top-1 -right-1 text-[10px] text-[#8C6A3B] select-none z-10"
+                              aria-hidden
+                            >
+                              ✦
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* Legend note below calendar */}
-              <div className="mt-6 pt-4 border-t border-[#DED2C2] flex items-center justify-between text-[11px] text-[#857365]">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-[#B18A54] inline-block" />
-                  <span>
-                    {hasDate ? "Wedding Day Celebration" : "Provisional Calendar View"}
+              {/* Legend Note Below Calendar */}
+              <div className="mt-8 pt-5 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3 text-xs text-[#64748B]">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-3.5 h-3.5 rounded-full bg-[#FFF8D6] border border-[#E8D47E] inline-block shadow-xs" />
+                  <span className="font-medium text-[#1E140E]">
+                    The Wedding Day ({monthName} {dayNumber})
                   </span>
                 </div>
-                <span className="font-editorial-serif italic text-sm text-[#422B20]">
+                <span className="font-editorial-serif italic text-sm text-[#8C6A3B]">
                   {wedding.city}
                 </span>
               </div>

@@ -1,148 +1,190 @@
+"use client";
+
 import Image from "next/image";
-import { coupleName, formatFullWeddingDate, wedding } from "@/config/wedding";
+import { wedding } from "@/config/wedding";
 
 export function InvitationSection() {
-  const formattedDate = formatFullWeddingDate(wedding.date);
+  // Structured date lockup data (matches reference: SATURDAY | SEPT 20 2028 | AT 10 AM)
+  const parsedDate = (() => {
+    if (wedding.date) {
+      const parts = wedding.date.split("-").map(Number);
+      if (parts.length === 3) {
+        const [y, m, d] = parts;
+        const dt = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+        const weekdays = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+        return {
+          weekday: weekdays[dt.getUTCDay()] ?? "SATURDAY",
+          month: months[m - 1] ?? "SEPT",
+          day: String(d),
+          year: String(y),
+          time: wedding.time ? `AT ${wedding.time}` : "AT 10 AM",
+        };
+      }
+    }
+    return {
+      weekday: "SATURDAY",
+      month: "SEPT",
+      day: "20",
+      year: "2028",
+      time: "AT 10 AM",
+    };
+  })();
 
   return (
-    <section id="invitation" className="relative py-20 sm:py-28 lg:py-36 bg-[#F8F4ED]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
+    <section
+      id="invitation"
+      className="relative py-20 sm:py-28 lg:py-32 overflow-hidden bg-[#F5F7FA]"
+    >
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
-          <p className="eyebrow text-[#B18A54] mb-3">Our Covenant</p>
-          <h2 className="font-editorial-serif text-4xl sm:text-5xl md:text-6xl text-[#422B20] tracking-tight">
+        <div className="text-center max-w-xl mx-auto mb-12 sm:mb-16">
+          <p className="eyebrow mb-2.5 text-[#8C6A3B]">
+            Our Covenant
+          </p>
+          <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl tracking-tight text-[#2B1810]">
             A Day to Hold Close
           </h2>
-          <div className="h-px w-16 bg-[#B18A54] mx-auto mt-6 mb-6" />
-          <p className="text-sm sm:text-base text-[#857365] leading-relaxed font-sans">
-            We invite you to share in the prayers, vows, and unforgettable moments as we join our lives together in the presence of God and our cherished loved ones.
-          </p>
+          <div className="h-px w-14 mx-auto mt-4 mb-4 bg-[#8C6A3B]/50" />
         </div>
 
-        {/* Editorial Layout: Left Narrative & Right Luxury Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          
-          {/* Left Column: Intimate Narrative & Detail Photo */}
-          <div className="lg:col-span-5 flex flex-col justify-center space-y-8">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-[#EEE5D9] shadow-md border border-[#DED2C2]">
+        {/* The Fine-Art Wedding Invitation Card - Left-Aligned Typography & Large Floral Accent */}
+        <div className="max-w-[580px] sm:max-w-[620px] md:max-w-[650px] mx-auto w-full">
+          <article className="relative z-20 bg-[#FAF5EE] rounded-sm p-7 sm:p-11 md:p-14 text-left border border-[#E8DFD3] shadow-[0_26px_65px_-12px_rgba(0,0,0,0.32),0_10px_28px_-6px_rgba(0,0,0,0.12),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-500 overflow-hidden aspect-[1/1.38] min-h-[580px] sm:min-h-[680px] md:min-h-[720px] flex flex-col justify-between">
+            
+            {/* Fine Tactile Cotton Paper Texture Overlay */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.045] mix-blend-multiply select-none"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)'/%3E%3C/svg%3E")`,
+              }}
+              aria-hidden
+            />
+
+            {/* Sculptural Pleated Silk Floral Artwork - Sized Bigger in Top-Right Corner */}
+            <div className="pointer-events-none absolute top-0 right-0 w-[50%] sm:w-[56%] md:w-[60%] max-w-[390px] aspect-[1087/1447] select-none overflow-hidden z-10 opacity-95">
               <Image
-                src={wedding.images.invitationCard}
-                alt="Fine art wedding details and rings"
+                src="/card flower.png"
+                alt="Artisan pleated silk floral sculpture"
                 fill
-                sizes="(max-width: 1024px) 100vw, 450px"
-                className="object-cover object-center filter saturate-[0.9] hover:scale-105 transition-transform duration-700"
+                priority
+                sizes="(max-width: 640px) 240px, 390px"
+                className="object-contain object-top-right filter saturate-[0.98] contrast-[1.02]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2B1810]/50 via-transparent to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5 text-[#F8F4ED]">
-                <p className="eyebrow text-[#C9A46E] text-[10px]">
-                  Faith &amp; Devotion
-                </p>
-                <p className="font-editorial-serif text-xl italic mt-1">
-                  “Two are better than one, because they have a good return for their labor.”
-                </p>
-              </div>
             </div>
 
-            <div className="border-l-2 border-[#B18A54] pl-5 space-y-2">
-              <h3 className="font-editorial-serif text-2xl text-[#422B20]">
-                A Celebration of Grace
-              </h3>
-              <p className="text-sm text-[#857365] leading-relaxed">
-                From our first conversation to this sacred milestone, we have experienced God&apos;s guidance at every step. Having you stand beside us as we exchange vows will be our greatest honour.
-              </p>
-            </div>
-          </div>
-
-          {/* Right Column: Centered Luxury Invitation Card */}
-          <div className="lg:col-span-7">
-            <article className="relative bg-[#EEE5D9]/70 border border-[#DED2C2] p-8 sm:p-12 md:p-16 shadow-[0_20px_50px_rgba(66,43,32,0.06)] rounded-sm text-center">
+            {/* Content Layer: Left-Aligned Editorial Stationery Typography */}
+            <div className="relative z-20 flex flex-col justify-between h-full text-left">
               
-              {/* Corner Ornamental Accents */}
-              <span className="absolute top-4 left-4 text-[#B18A54] text-sm select-none" aria-hidden>✦</span>
-              <span className="absolute top-4 right-4 text-[#B18A54] text-sm select-none" aria-hidden>✦</span>
-              <span className="absolute bottom-4 left-4 text-[#B18A54] text-sm select-none" aria-hidden>✦</span>
-              <span className="absolute bottom-4 right-4 text-[#B18A54] text-sm select-none" aria-hidden>✦</span>
+              {/* Top Breathing Space */}
+              <div className="h-4 sm:h-8" />
 
-              {/* Inner Decorative Inset Border */}
-              <div className="border border-[#DED2C2]/80 p-6 sm:p-10 md:p-12">
+              {/* Main Typography Block - Left-Aligned with generous space */}
+              <div className="max-w-[70%] sm:max-w-[60%] md:max-w-[56%] space-y-6 sm:space-y-7">
                 
-                {/* Monogram Badge */}
-                <div className="w-12 h-12 mx-auto rounded-full border border-[#B18A54]/50 flex items-center justify-center text-[#B18A54] font-editorial-serif text-lg italic mb-6">
-                  {wedding.couple.monogram}
-                </div>
-
-                <p className="eyebrow text-[#857365]">
-                  You Are Cordially Invited
-                </p>
-
-                <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[#857365]/80 font-medium">
-                  To celebrate the marriage of
-                </p>
-
-                <h3 className="font-editorial-serif text-4xl sm:text-5xl md:text-6xl text-[#422B20] my-5 leading-[0.95] tracking-tight">
-                  {wedding.couple.first}
-                  <span className="block text-3xl sm:text-4xl text-[#B18A54] italic font-light my-1">
-                    &amp;
-                  </span>
-                  {wedding.couple.second}
-                </h3>
-
-                <p className="max-w-md mx-auto text-sm leading-relaxed text-[#857365] mt-6 mb-8 font-light">
-                  {wedding.invitationNote.message}
-                </p>
-
-                <div className="h-px w-20 bg-[#B18A54]/40 mx-auto mb-8" />
-
-                {/* Event Key Facts Grid */}
-                <dl className="grid grid-cols-1 sm:grid-cols-3 gap-6 py-6 border-y border-[#DED2C2] text-left sm:text-center">
-                  <div>
-                    <dt className="eyebrow text-[#B18A54] mb-1.5">Date</dt>
-                    <dd className="font-editorial-serif text-lg text-[#422B20] leading-snug">
-                      {formattedDate}
-                    </dd>
-                  </div>
-
-                  <div>
-                    <dt className="eyebrow text-[#B18A54] mb-1.5">Time</dt>
-                    <dd className="font-editorial-serif text-lg text-[#422B20] leading-snug">
-                      {wedding.time ? `${wedding.time} Local Time` : wedding.timeDisplay}
-                    </dd>
-                  </div>
-
-                  <div>
-                    <dt className="eyebrow text-[#B18A54] mb-1.5">Place</dt>
-                    <dd className="font-editorial-serif text-lg text-[#422B20] leading-snug">
-                      {wedding.venue}
-                      <span className="block text-xs font-sans text-[#857365] mt-0.5">
-                        {wedding.city}
+                {/* Couple Header - Title Case (Not Capitalized) */}
+                <div className="space-y-2">
+                  <p className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-[#7C5A32]">
+                    The Wedding Of
+                  </p>
+                  <h3 className="font-editorial-serif text-[clamp(2.1rem,6vw,3.25rem)] text-[#1E140E] leading-[1.02] tracking-[-0.01em]">
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="capitalize">{wedding.couple.first}</span>
+                      <span className="font-editorial-serif italic font-light text-[0.8em] tracking-normal text-[#9A7338]">
+                        and
                       </span>
-                    </dd>
-                  </div>
-                </dl>
-
-                {/* Bible Verse Scripture Blessing */}
-                <div className="mt-8 pt-2">
-                  <blockquote className="font-editorial-serif text-base sm:text-lg italic text-[#422B20]/90 max-w-lg mx-auto">
-                    {wedding.scripture.verse}
-                  </blockquote>
-                  <cite className="block mt-2 text-[10px] uppercase tracking-[0.2em] text-[#B18A54] not-italic font-medium">
-                    {wedding.scripture.reference}
-                  </cite>
+                    </div>
+                    <span className="block mt-0.5 sm:mt-1 capitalize">
+                      {wedding.couple.second}
+                    </span>
+                  </h3>
                 </div>
 
-                <div className="mt-10">
-                  <a href="#rsvp" className="btn-editorial">
-                    <span>Respond to Invitation</span>
+                {/* Invitation Request Line */}
+                <div className="space-y-1">
+                  <p className="font-editorial-serif uppercase tracking-[0.22em] text-[10px] sm:text-[11px] text-[#3E2B20]/90 font-medium">
+                    Request The Presence Of Your Company
+                  </p>
+                  <p className="font-editorial-serif uppercase tracking-[0.22em] text-[10px] sm:text-[11px] text-[#3E2B20]/90 font-medium">
+                    For Their Upcoming Wedding
+                  </p>
+                </div>
+
+                {/* 3-Column Vertical Hairline Date Lockup (Bigger Day & Time) */}
+                <div className="pt-2 sm:pt-3">
+                  <div className="inline-flex items-center text-[#1E140E]">
+                    
+                    {/* Left: Day of Week */}
+                    <div className="pr-4 sm:pr-5 text-left">
+                      <span className="font-editorial-serif uppercase tracking-[0.16em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]">
+                        {parsedDate.weekday}
+                      </span>
+                    </div>
+
+                    {/* Left Hairline Separator */}
+                    <div className="h-16 sm:h-20 w-px bg-[#2B1810]/40" />
+
+                    {/* Center: Stacked Month, Day Number, Year */}
+                    <div className="px-4 sm:px-6 text-center flex flex-col items-center justify-center">
+                      <span className="font-sans uppercase tracking-[0.24em] text-[10px] sm:text-[11px] font-semibold text-[#7C5A32]">
+                        {parsedDate.month}
+                      </span>
+                      <span className="font-editorial-serif text-3xl sm:text-4xl md:text-[2.65rem] font-semibold leading-none my-1 text-[#1E140E]">
+                        {parsedDate.day}
+                      </span>
+                      <span className="font-sans uppercase tracking-[0.22em] text-[10px] sm:text-[11px] font-medium text-[#7C5A32]">
+                        {parsedDate.year}
+                      </span>
+                    </div>
+
+                    {/* Right Hairline Separator */}
+                    <div className="h-16 sm:h-20 w-px bg-[#2B1810]/40" />
+
+                    {/* Right: Time */}
+                    <div className="pl-4 sm:pl-5 text-left">
+                      <span className="font-editorial-serif uppercase tracking-[0.16em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]">
+                        {parsedDate.time}
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+
+                {/* Venue & Location Block */}
+                <div className="space-y-1">
+                  <p className="font-editorial-serif uppercase tracking-[0.2em] text-[11px] sm:text-xs text-[#22150D] font-medium leading-relaxed">
+                    {wedding.venue}
+                  </p>
+                  <p className="font-editorial-serif uppercase tracking-[0.18em] text-[10px] sm:text-[11px] text-[#634838] leading-relaxed">
+                    {wedding.city}
+                  </p>
+                </div>
+
+                {/* RSVP Online CTA Button */}
+                <div className="pt-1">
+                  <a
+                    href="#rsvp"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
+                  >
+                    <span>RSVP Online</span>
                     <span aria-hidden>→</span>
                   </a>
                 </div>
 
               </div>
-            </article>
-          </div>
 
+              {/* Scripture Blessing at Bottom */}
+              <div className="pt-6 opacity-80 max-w-[75%]">
+                <p className="font-editorial-serif italic text-xs sm:text-[13px] text-[#553C2D] leading-relaxed">
+                  {wedding.scripture.verse}
+                </p>
+              </div>
+
+            </div>
+          </article>
         </div>
+
       </div>
     </section>
   );
