@@ -1,26 +1,256 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ivory: #F8F4ED;
+  --color-cream: #EEE5D9;
+  --color-espresso: #422B20;
+  --color-muted: #857365;
+  --color-gold: #B18A54;
+  --color-gold-light: #C9A46E;
+  --color-gold-dark: #8C6A3B;
+  --color-coffee: #4A2E22;
+  --color-coffee-dark: #2B1810;
+  --color-beige: #DED2C2;
+  --color-beige-light: #EDE4D8;
+  --font-serif: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --font-hero-serif: var(--font-cormorant), 'Cormorant Garamond', var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --font-sans: var(--font-montserrat), 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ivory: #F8F4ED;
+  --cream: #EEE5D9;
+  --espresso: #422B20;
+  --muted: #857365;
+  --gold: #B18A54;
+  --coffee: #4A2E22;
+  --beige: #DED2C2;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--ivory);
+  color: var(--espresso);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F8F4ED;
+}
+::-webkit-scrollbar-thumb {
+  background: #C9A46E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B18A54;
+}
+
+/* Ambient moving butter yellow ball animations */
+@keyframes float-butter-orb {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(75px, -45px) scale(1.12);
+  }
+  66% {
+    transform: translate(-45px, 40px) scale(0.94);
+  }
+}
+
+@keyframes float-butter-orb-secondary {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1.05);
+  }
+  40% {
+    transform: translate(-60px, 50px) scale(0.92);
+  }
+  80% {
+    transform: translate(45px, -35px) scale(1.08);
+  }
+}
+
+.animate-butter-ball {
+  animation: float-butter-orb 16s ease-in-out infinite;
+}
+
+.animate-butter-ball-secondary {
+  animation: float-butter-orb-secondary 22s ease-in-out infinite;
+}
+
+/* Selection */
+::selection {
+  background: #B18A54;
+  color: #F8F4ED;
+}
+
+/* Editorial typography classes */
+.font-editorial-serif {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+.font-hero-serif {
+  font-family: var(--font-hero-serif), var(--font-cormorant), 'Cormorant Garamond', var(--font-serif), Georgia, serif;
+}
+
+.eyebrow {
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* Luxury button */
+.btn-editorial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 46px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background-color: var(--espresso);
+  color: var(--ivory);
+  border: 1px solid var(--espresso);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-editorial:hover {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--ivory);
+}
+
+.btn-editorial-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 46px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background-color: var(--gold);
+  color: #2B1810;
+  border: 1px solid var(--gold);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-editorial-gold:hover {
+  background-color: transparent;
+  color: var(--gold);
+}
+
+.btn-editorial-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 46px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-editorial-outline:hover {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: #2B1810;
+}
+
+/* Form inputs */
+.editorial-input {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--beige);
+  padding: 0.85rem 0;
+  color: var(--espresso);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.editorial-input:focus {
+  border-color: var(--gold);
+}
+
+.editorial-input::placeholder {
+  color: #9C8C7E;
+  font-weight: 300;
+}
+
+.editorial-input-dark {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(248, 244, 237, 0.25);
+  padding: 0.85rem 0;
+  color: var(--ivory);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.editorial-input-dark:focus {
+  border-color: var(--gold);
+}
+
+.editorial-input-dark::placeholder {
+  color: rgba(248, 244, 237, 0.45);
+  font-weight: 300;
+}
+
+/* Flip panel */
+.split-flap-card {
+  position: relative;
+  background: linear-gradient(180deg, #2A170F 0%, #1E0F0A 100%);
+  border: 1px solid rgba(222, 210, 194, 0.2);
+  border-radius: 3px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  perspective: 400px;
+}
+
+.split-flap-crease {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  z-index: 10;
 }
