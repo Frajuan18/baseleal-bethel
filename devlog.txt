@@ -6018,3 +6018,4 @@ Import trace:
     ./app/page.tsx 
 ✓ Compiled in 443ms
 ✓ Compiled in 278ms
+✓ Compiled in 229ms
