@@ -5955,3 +5955,66 @@ https://react.dev/link/hydration-mismatch
 ✓ Compiled in 140ms
 ✓ Compiled in 143ms
 ✓ Compiled in 145ms
+ GET / 200 in 584ms (next.js: 49ms, application-code: 536ms)
+⨯ upstream image response timed out for https://images.unsplash.com/photo-1545232979-fbf71fe97799?auto=format&fit=crop&w=1000&q=85
+✓ Compiled in 977ms
+✓ Compiled in 912ms
+✓ Compiled in 524ms
+[browser] ./app/components/wedding/WeddingCalendar.tsx:398:1
+Error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  396 |     </section>
+  397 |   );
+> 398 | }
+      | ^
+  399 |
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./app/components/wedding/WeddingCalendar.tsx
+    ./app/page.tsx 
+✓ Compiled in 701ms
+ GET / 200 in 1786ms (next.js: 192ms, application-code: 1595ms)
+✓ Compiled in 335ms
+✓ Compiled in 1061ms
+✓ Compiled in 513ms
+✓ Compiled in 893ms
+✓ Compiled in 437ms
+✓ Compiled in 153ms
+✓ Compiled in 939ms
+✓ Compiled in 425ms
+✓ Compiled in 841ms
+✓ Compiled in 359ms
+✓ Compiled in 1116ms
+✓ Compiled in 526ms
+✓ Compiled in 256ms
+✓ Compiled in 268ms
+✓ Compiled in 303ms
+ GET / 200 in 271ms (next.js: 55ms, application-code: 216ms)
+✓ Compiled in 132ms
+ GET / 200 in 165ms (next.js: 15ms, application-code: 150ms)
+✓ Compiled in 111ms
+✓ Compiled in 745ms
+✓ Compiled in 240ms
+✓ Compiled in 604ms
+✓ Compiled in 226ms
+✓ Compiled in 109ms
+ GET / 200 in 221ms (next.js: 40ms, application-code: 181ms)
+✓ Compiled in 354ms
+[browser] ./app/components/wedding/WishesSection.tsx:318:1
+Error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  316 |     </section>
+  317 |   );
+> 318 | }
+      | ^
+  319 |
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./app/components/wedding/WishesSection.tsx
+    ./app/page.tsx 
+✓ Compiled in 443ms
+✓ Compiled in 278ms

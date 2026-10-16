@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { wedding } from "@/config/wedding";
 
 interface TimeUnits {
@@ -10,9 +11,16 @@ interface TimeUnits {
   seconds: number;
 }
 
-function FlipUnitCard({ value, label }: { value: string; label: string }) {
+function FlipUnitCard({
+  value,
+  label,
+}: {
+  value: string;
+  label: string;
+}) {
   const [currentVal, setCurrentVal] = useState(value);
   const [prevVal, setPrevVal] = useState(value);
+  const [flipKey, setFlipKey] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
 
   useEffect(() => {
@@ -20,35 +28,136 @@ function FlipUnitCard({ value, label }: { value: string; label: string }) {
       setPrevVal(currentVal);
       setCurrentVal(value);
       setIsFlipping(true);
+      setFlipKey((k) => k + 1);
 
       const timer = setTimeout(() => {
         setIsFlipping(false);
-      }, 550);
+      }, 580);
 
       return () => clearTimeout(timer);
     }
   }, [value, currentVal]);
 
   return (
-    <div className="flex flex-col items-center">
-      {/* White Mechanical Split-Flap Card with 3D Flip Animation */}
-      <div className={`split-flap-white-card w-full aspect-[1/1.12] sm:aspect-[1/1.18] flex items-center justify-center p-2 sm:p-4 ${isFlipping ? "animate-card-flip" : ""}`}>
+    <div className="flex flex-col items-center w-full">
+      {/* Authentic Fliqlo Split-Flap Clock Card in Textured Brown Beige */}
+      <div className="fliqlo-card-container relative w-full aspect-[1/1.12] sm:aspect-[1/1.16] rounded-xl sm:rounded-2xl bg-[#3A281E] shadow-[0_22px_45px_-8px_rgba(43,24,16,0.38),0_8px_18px_rgba(43,24,16,0.22),inset_0_1px_1px_rgba(254,232,133,0.18)] border border-[#5A4032] select-none">
         
-        {/* Metal Crease Hinge */}
-        <span className="split-flap-white-crease" aria-hidden />
+        {/* 1. TOP STATIC HALF (Shows new incoming value in butter yellow, upper half) */}
+        <div className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden bg-gradient-to-b from-[#4A3528] via-[#3E2C20] to-[#36251A] rounded-t-xl sm:rounded-t-2xl z-10 border-b border-[#22150E]">
+          {/* Tactile Embossed Paper Grain */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-overlay select-none z-10"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoiseTop'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.5 -0.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoiseTop)'/%3E%3C/svg%3E")`,
+            }}
+            aria-hidden
+          />
+          {/* Artisanal Fiber Dots */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.22] mix-blend-multiply select-none z-10"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='16' r='1.2' fill='%231B1008'/%3E%3Ccircle cx='56' cy='28' r='0.8' fill='%2325170C'/%3E%3Ccircle cx='82' cy='14' r='1.1' fill='%231F130A'/%3E%3Ccircle cx='28' cy='64' r='1.3' fill='%23190E07'/%3E%3Ccircle cx='72' cy='78' r='0.9' fill='%2322150B'/%3E%3C/svg%3E")`,
+            }}
+            aria-hidden
+          />
+          <div className="absolute top-0 left-0 right-0 h-[200%] flex items-center justify-center">
+            <span className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
+              {currentVal}
+            </span>
+          </div>
+        </div>
 
-        {/* Small Side Rivet Details */}
-        <div className="absolute top-1/2 left-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#94A3B8]/60 z-30 shadow-xs" />
-        <div className="absolute top-1/2 right-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#94A3B8]/60 z-30 shadow-xs" />
+        {/* 2. BOTTOM STATIC HALF (Shows old value until the flap slaps down, lower half) */}
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden bg-gradient-to-b from-[#2E1E15] via-[#37261C] to-[#422E22] rounded-b-xl sm:rounded-b-2xl z-10 border-t border-[#1C120B]">
+          {/* Tactile Embossed Paper Grain */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-overlay select-none z-10"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoiseBot'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.5 -0.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoiseBot)'/%3E%3C/svg%3E")`,
+            }}
+            aria-hidden
+          />
+          {/* Artisanal Fiber Dots */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.22] mix-blend-multiply select-none z-10"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='16' r='1.2' fill='%231B1008'/%3E%3Ccircle cx='56' cy='28' r='0.8' fill='%2325170C'/%3E%3Ccircle cx='82' cy='14' r='1.1' fill='%231F130A'/%3E%3Ccircle cx='28' cy='64' r='1.3' fill='%23190E07'/%3E%3Ccircle cx='72' cy='78' r='0.9' fill='%2322150B'/%3E%3C/svg%3E")`,
+            }}
+            aria-hidden
+          />
+          <div className="absolute -top-[100%] left-0 right-0 h-[200%] flex items-center justify-center">
+            <span className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
+              {isFlipping ? prevVal : currentVal}
+            </span>
+          </div>
+        </div>
 
-        {/* Large Digits Display */}
-        <span className="font-editorial-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#1E140E] tabular-nums block select-none">
-          {currentVal}
-        </span>
+        {/* 3. PHYSICAL 3D FLIPPING FLAP (180° rotation in textured brown beige) */}
+        {isFlipping && (
+          <div
+            key={flipKey}
+            className="fliqlo-flap absolute top-0 left-0 right-0 h-1/2 z-30"
+          >
+            {/* FRONT FACE (Top half of old value, folds down in 3D) */}
+            <div className="fliqlo-backface-hidden absolute inset-0 overflow-hidden bg-gradient-to-b from-[#4A3528] via-[#3E2C20] to-[#36251A] rounded-t-xl sm:rounded-t-2xl border-b border-[#22150E]">
+              {/* Flap Texture */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-overlay select-none z-10"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFlapFront'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.5 -0.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFlapFront)'/%3E%3C/svg%3E")`,
+                }}
+                aria-hidden
+              />
+              <div className="absolute top-0 left-0 right-0 h-[200%] flex items-center justify-center">
+                <span className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
+                  {prevVal}
+                </span>
+              </div>
+              {/* Dynamic 3D shadow as it tilts down */}
+              <div className="fliqlo-shadow-front-anim absolute inset-0 bg-[#160E08] pointer-events-none" />
+            </div>
+
+            {/* BACK FACE (Bottom half of new value, rotated 180°, lands flat) */}
+            <div className="fliqlo-backface-hidden fliqlo-flap-back absolute inset-0 overflow-hidden bg-gradient-to-b from-[#2E1E15] via-[#37261C] to-[#422E22] rounded-b-xl sm:rounded-b-2xl border-t border-[#1C120B]">
+              {/* Flap Texture */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-overlay select-none z-10"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFlapBack'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.5 -0.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFlapBack)'/%3E%3C/svg%3E")`,
+                }}
+                aria-hidden
+              />
+              <div className="absolute -top-[100%] left-0 right-0 h-[200%] flex items-center justify-center">
+                <span className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
+                  {currentVal}
+                </span>
+              </div>
+              {/* Dynamic 3D shadow as it lands flat */}
+              <div className="fliqlo-shadow-back-anim absolute inset-0 bg-[#160E08] pointer-events-none" />
+            </div>
+          </div>
+        )}
+
+        {/* Center Split Crease */}
+        <div
+          className="absolute top-1/2 left-0 right-0 -translate-y-1/2 h-[2.5px] bg-[#1E120A] z-40 shadow-[0_1px_1px_rgba(254,232,133,0.18)] pointer-events-none"
+          aria-hidden
+        />
+
+        {/* Mechanical Side Hinges */}
+        <div
+          className="absolute top-1/2 -left-[1px] -translate-y-1/2 w-1.5 sm:w-2 h-3 sm:h-4 bg-[#1E120A] rounded-r-[2px] z-50 border border-[#553C2D] border-l-0 pointer-events-none"
+          aria-hidden
+        />
+        <div
+          className="absolute top-1/2 -right-[1px] -translate-y-1/2 w-1.5 sm:w-2 h-3 sm:h-4 bg-[#1E120A] rounded-l-[2px] z-50 border border-[#553C2D] border-r-0 pointer-events-none"
+          aria-hidden
+        />
       </div>
 
-      {/* Butter Yellow Unit Label */}
-      <span className="mt-3.5 text-[10px] sm:text-xs font-sans font-semibold uppercase tracking-[0.24em] text-[#FEE885]">
+      {/* Elegant Brown Beige Unit Label Underneath */}
+      <span className="mt-3.5 sm:mt-4 text-[10px] sm:text-xs font-sans font-semibold uppercase tracking-[0.25em] text-[#4A3528]">
         {label}
       </span>
     </div>
@@ -99,11 +208,23 @@ export function FlipCountdown() {
   return (
     <section
       id="countdown"
-      className="py-20 sm:py-28 lg:py-32 bg-[#3D2C22] bg-[radial-gradient(ellipse_at_top,_#4D372B_0%,#39281F_55%,#2A1D16_100%)] text-[#F8F4ED] relative overflow-hidden border-y border-[#5A4032]"
+      className="py-20 sm:py-28 lg:py-32 relative overflow-hidden border-y border-[#EAE3D9] bg-[#FAF8F5]"
     >
-      {/* Decorative Warm Butter Yellow Watermark */}
+      {/* Background Image: countdown bg.png */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+        <Image
+          src="/countdown bg.png"
+          alt="Countdown background"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
+
+      {/* Decorative Warm Brown Beige Watermark */}
       <div
-        className="pointer-events-none absolute -right-10 -bottom-14 font-editorial-serif text-[18rem] md:text-[24rem] text-[#FEE885]/[0.04] select-none leading-none z-0"
+        className="pointer-events-none absolute -right-10 -bottom-14 font-editorial-serif text-[18rem] md:text-[24rem] text-[#3D2C22]/[0.035] select-none leading-none z-0"
         aria-hidden
       >
         &amp;
@@ -111,18 +232,18 @@ export function FlipCountdown() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 text-center">
         
-        {/* Eyebrow and Heading */}
-        <p className="eyebrow text-[#FEE885] mb-2.5 tracking-[0.28em] font-medium">
+        {/* Eyebrow and Heading in Brown Beige */}
+        <p className="eyebrow text-[#8C6A3B] mb-2.5 tracking-[0.28em] font-semibold">
           Until We Say &ldquo;I Do&rdquo;
         </p>
 
-        <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#FFFDF7] max-w-2xl mx-auto leading-tight">
+        <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#2B1810] max-w-2xl mx-auto leading-tight">
           {isCelebrationDay
             ? "Today, With Joyous Hearts, We Celebrate!"
             : "The Journey to Our Wedding Day"}
         </h2>
 
-        <div className="h-px w-16 bg-[#FEE885]/60 mx-auto mt-5 mb-10 sm:mb-14" />
+        <div className="h-px w-16 bg-[#8C6A3B]/40 mx-auto mt-5 mb-10 sm:mb-14" />
 
         {/* Screen Reader Accessible Announcement */}
         <div className="sr-only" aria-live="polite">
@@ -131,30 +252,36 @@ export function FlipCountdown() {
             : "Wedding countdown ticking"}
         </div>
 
-        {/* White Cards Flip Countdown Display */}
+        {/* Textured Brown Beige Cards Flip Countdown Display with Butter Yellow Digits */}
         {timeLeft && !isCelebrationDay && (
-          <div className="grid grid-cols-4 gap-3 sm:gap-5 md:gap-7 max-w-2xl mx-auto">
+          <div className="grid grid-cols-4 gap-3 sm:gap-5 md:gap-7 max-w-3xl mx-auto">
             {units.map((unit) => {
               const val = String(timeLeft[unit.key]).padStart(2, "0");
-              return <FlipUnitCard key={unit.key} value={val} label={unit.label} />;
+              return (
+                <FlipUnitCard
+                  key={unit.key}
+                  value={val}
+                  label={unit.label}
+                />
+              );
             })}
           </div>
         )}
 
         {isCelebrationDay && (
           /* Celebration Day Banner */
-          <div className="bg-[#FEE885]/15 border border-[#FEE885]/40 p-8 sm:p-12 max-w-xl mx-auto rounded-sm backdrop-blur-sm">
-            <p className="font-editorial-serif text-3xl sm:text-4xl text-[#FEE885] italic mb-3">
+          <div className="bg-[#FAF6EE] border border-[#8C6A3B]/40 p-8 sm:p-12 max-w-xl mx-auto rounded-sm shadow-sm">
+            <p className="font-editorial-serif text-3xl sm:text-4xl text-[#8C6A3B] italic mb-3">
               The day has arrived!
             </p>
-            <p className="text-sm text-white/90 leading-relaxed font-light">
+            <p className="text-sm text-[#4A3B32] leading-relaxed font-light">
               We are so grateful for your presence, prayers, and love as we begin this new covenant chapter as husband and wife.
             </p>
           </div>
         )}
 
-        {/* Editorial Scripture Blessing */}
-        <p className="mt-12 text-xs sm:text-sm font-editorial-serif italic text-[#FEE885]/90 max-w-lg mx-auto">
+        {/* Editorial Scripture Blessing in Warm Brown Beige */}
+        <p className="mt-12 text-xs sm:text-sm font-editorial-serif italic text-[#7A5A35] max-w-lg mx-auto">
           “Therefore what God has joined together, let no one separate.”
         </p>
       </div>

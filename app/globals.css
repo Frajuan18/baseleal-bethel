@@ -233,45 +233,94 @@ body {
   font-weight: 300;
 }
 
-/* White Split-Flap Card & Flip Animation */
-@keyframes split-flip-down {
+/* Authentic Fliqlo 3D Split-Flap Clock Mechanism (180° Physical Flap) */
+@keyframes fliqlo-flip-down-180 {
   0% {
     transform: rotateX(0deg);
-    filter: brightness(1);
-  }
-  50% {
-    transform: rotateX(-90deg);
-    filter: brightness(0.88);
   }
   100% {
-    transform: rotateX(0deg);
-    filter: brightness(1);
+    transform: rotateX(-180deg);
   }
 }
 
-.animate-card-flip {
-  animation: split-flip-down 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+@keyframes fliqlo-shadow-front {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes fliqlo-shadow-back {
+  0% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fliqlo-card-container {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+}
+
+.fliqlo-flap {
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-origin: bottom center;
+  -webkit-transform-origin: bottom center;
+  animation: fliqlo-flip-down-180 0.58s cubic-bezier(0.35, 0, 0.25, 1) forwards;
+  will-change: transform;
 }
 
-.split-flap-white-card {
+.fliqlo-backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.fliqlo-flap-back {
+  transform: rotateX(180deg);
+  -webkit-transform: rotateX(180deg);
+}
+
+.fliqlo-shadow-front-anim {
+  animation: fliqlo-shadow-front 0.58s cubic-bezier(0.35, 0, 0.25, 1) forwards;
+}
+
+.fliqlo-shadow-back-anim {
+  animation: fliqlo-shadow-back 0.58s cubic-bezier(0.35, 0, 0.25, 1) forwards;
+}
+
+/* Postage Stamp Perforated Card Border (Matches Reference Card) */
+.postage-stamp-card {
+  --stamp-hole: 7px;
+  --stamp-gap: 24px;
   position: relative;
-  background: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 8px;
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.5), 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.95);
-  overflow: hidden;
-  perspective: 700px;
+  background-color: #FAF8F5;
+
+  /* Modern WebKit & Safari */
+  -webkit-mask-image:
+    radial-gradient(circle var(--stamp-hole) at 50% 0, transparent calc(var(--stamp-hole) - 0.5px), #000 var(--stamp-hole)),
+    radial-gradient(circle var(--stamp-hole) at 50% 100%, transparent calc(var(--stamp-hole) - 0.5px), #000 var(--stamp-hole)),
+    radial-gradient(circle var(--stamp-hole) at 0 50%, transparent calc(var(--stamp-hole) - 0.5px), #000 var(--stamp-hole)),
+    radial-gradient(circle var(--stamp-hole) at 100% 50%, transparent calc(var(--stamp-hole) - 0.5px), #000 var(--stamp-hole));
+  -webkit-mask-position: 50% 0, 50% 100%, 0 50%, 100% 50%;
+  -webkit-mask-size: var(--stamp-gap) 100%, var(--stamp-gap) 100%, 100% var(--stamp-gap), 100% var(--stamp-gap);
+  -webkit-mask-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  -webkit-mask-composite: source-in;
+
+  /* Standard CSS mask (Chrome, Firefox, Edge, Safari 15.4+) */
+  mask-image:
+    radial-gradient(circle var(--stamp-hole) at 50% 0, transparent calc(var(--stamp-hole) - 0.5px), #000 var(--stamp-hole)),
+    radial-gradient(circle var(--stamp-hole) at 50% 100%, transparent calc(var(--stamp-hole) - 0.5px), #000 var(--stamp-hole)),
+    radial-gradient(circle var(--stamp-hole) at 0 50%, transparent calc(var(--stamp-hole) - 0.5px), #000 var(--stamp-hole)),
+    radial-gradient(circle var(--stamp-hole) at 100% 50%, transparent calc(var(--stamp-hole) - 0.5px), #000 var(--stamp-hole));
+  mask-position: 50% 0, 50% 100%, 0 50%, 100% 50%;
+  mask-size: var(--stamp-gap) 100%, var(--stamp-gap) 100%, 100% var(--stamp-gap), 100% var(--stamp-gap);
+  mask-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  mask-composite: intersect;
 }
 
-.split-flap-white-crease {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1.5px;
-  background: #CBD5E1;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-  z-index: 20;
-}
 

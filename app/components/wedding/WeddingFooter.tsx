@@ -44,9 +44,6 @@ export function WeddingFooter() {
             <a href="#countdown" className="hover:text-[#B18A54] transition-colors">
               Countdown
             </a>
-            <a href="#moments" className="hover:text-[#B18A54] transition-colors">
-              Moments
-            </a>
             <a href="#wishes" className="hover:text-[#B18A54] transition-colors">
               Wishes
             </a>

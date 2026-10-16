@@ -2,7 +2,6 @@ import { WeddingHero } from "./components/wedding/WeddingHero";
 import { InvitationSection } from "./components/wedding/InvitationSection";
 import { WeddingCalendar } from "./components/wedding/WeddingCalendar";
 import { FlipCountdown } from "./components/wedding/FlipCountdown";
-import { PhotoStorySection } from "./components/wedding/PhotoStorySection";
 import { WishesSection } from "./components/wedding/WishesSection";
 import { RSVPSection } from "./components/wedding/RSVPSection";
 import { WeddingFooter } from "./components/wedding/WeddingFooter";
@@ -14,7 +13,6 @@ export default function Home() {
       <InvitationSection />
       <WeddingCalendar />
       <FlipCountdown />
-      <PhotoStorySection />
       <WishesSection />
       <RSVPSection />
       <WeddingFooter />
