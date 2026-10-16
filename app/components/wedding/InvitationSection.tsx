@@ -34,23 +34,43 @@ export function InvitationSection() {
   return (
     <section
       id="invitation"
-      className="relative py-16 sm:py-20 lg:py-6 xl:py-8 lg:h-[100dvh] lg:max-h-[100dvh] flex flex-col justify-center overflow-hidden bg-[#F5F7FA]"
+      className="relative py-16 sm:py-20 lg:py-16 xl:py-20 min-h-[100dvh] lg:min-h-[100dvh] lg:aspect-[1672/941] flex flex-col justify-center overflow-hidden bg-[#F3F2EE]"
     >
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto flex flex-col items-center justify-center">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-xl mx-auto mb-4 sm:mb-6 lg:mb-5">
-          <p className="eyebrow mb-1.5 text-[#8C6A3B] text-xs uppercase tracking-[0.26em] font-semibold">
-            Our Covenant
-          </p>
-          <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-[2.6rem] tracking-tight text-[#2B1810]">
-            A Day to Hold Close
-          </h2>
-          <div className="h-px w-14 mx-auto mt-2.5 mb-2.5 bg-[#8C6A3B]/50" />
-        </div>
+      {/* Background Image: invit img.png - natural aspect ratio preserved with left-top alignment across all screens */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none block">
+        <Image
+          src="/invit img.png"
+          alt="Invitation section background"
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="w-full h-full object-cover object-[-25px_top] sm:object-[left_top]"
+          style={{ objectFit: "cover" }}
+        />
+      </div>
 
-        {/* The Fine-Art Wedding Invitation Card - Grand, Prominent & Perfectly Proportioned */}
-        <div className="max-w-[560px] sm:max-w-[600px] md:max-w-[620px] mx-auto w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto flex flex-col items-center justify-center">
+        {/* Container shifted to the right on tablet & desktop to showcase the floral branch artwork on the left */}
+        <div className="w-full flex flex-col items-center justify-center translate-x-2 sm:translate-x-6 md:translate-x-14 lg:translate-x-28 xl:translate-x-40 2xl:translate-x-52 transition-transform duration-300">
+          
+          {/* Section Header with seamless luminous parchment vignette on small screens to prevent flower overlap */}
+          <div className="text-center max-w-xl mx-auto mb-4 sm:mb-6 lg:mb-5 relative z-10 px-3">
+            <div
+              className="pointer-events-none absolute inset-0 -inset-x-6 -inset-y-2 bg-[#EFEDEB]/90 md:hidden rounded-full blur-md -z-10 shadow-[0_0_28px_18px_#EFEDEB]"
+              aria-hidden
+            />
+            <p className="eyebrow mb-1.5 text-[#8C6A3B] text-xs uppercase tracking-[0.26em] font-semibold drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
+              Our Covenant
+            </p>
+            <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-[2.6rem] tracking-tight text-[#2B1810] drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
+              A Day to Hold Close
+            </h2>
+            <div className="h-px w-14 mx-auto mt-2.5 mb-2.5 bg-[#8C6A3B]/50" />
+          </div>
+
+          {/* The Fine-Art Wedding Invitation Card - Grand, Prominent & Perfectly Proportioned */}
+          <div className="max-w-[560px] sm:max-w-[600px] md:max-w-[620px] mx-auto w-full">
           <article className="relative z-20 bg-[#FAF5EE] rounded-sm p-6 sm:p-9 md:p-10 lg:p-8 xl:p-10 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
             
             {/* Fine Tactile Cotton Paper Texture Overlay */}
@@ -62,14 +82,14 @@ export function InvitationSection() {
               aria-hidden
             />
 
-            {/* Sculptural Pleated Silk Floral Artwork in Top-Right Corner - Dedicated Quadrant */}
-            <div className="pointer-events-none absolute top-0 right-0 w-[38%] sm:w-[40%] md:w-[42%] max-w-[245px] aspect-[1087/1447] select-none overflow-hidden z-10 opacity-95">
+            {/* Sculptural Pleated Silk Floral Artwork in Top-Right Corner - Inset gracefully & slender */}
+            <div className="pointer-events-none absolute top-2 right-2 sm:top-2.5 sm:right-2.5 md:top-3 md:right-3 w-[35%] sm:w-[37%] md:w-[39%] max-w-[230px] aspect-[1087/1447] select-none z-10 opacity-95">
               <Image
                 src="/card flower.png"
                 alt="Artisan pleated silk floral sculpture"
                 fill
                 priority
-                sizes="(max-width: 640px) 180px, 245px"
+                sizes="(max-width: 640px) 170px, 230px"
                 className="object-contain object-top-right filter saturate-[0.98] contrast-[1.02]"
               />
             </div>
@@ -182,6 +202,7 @@ export function InvitationSection() {
           </article>
         </div>
 
+        </div>
       </div>
     </section>
   );

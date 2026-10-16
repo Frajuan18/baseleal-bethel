@@ -6019,3 +6019,88 @@ Import trace:
 ✓ Compiled in 443ms
 ✓ Compiled in 278ms
 ✓ Compiled in 229ms
+✓ Compiled in 809ms
+✓ Compiled in 692ms
+✓ Compiled in 575ms
+✓ Compiled in 8.7s
+ GET / 200 in 7.0s (next.js: 301ms, application-code: 6.7s)
+ GET / 200 in 1949ms (next.js: 4ms, application-code: 1946ms)
+✓ Compiled in 2.5s
+ GET / 200 in 4.9s (next.js: 28ms, application-code: 4.9s)
+ GET / 200 in 2.8s (next.js: 766ms, application-code: 2.1s)
+ GET / 200 in 1383ms (next.js: 44ms, application-code: 1339ms)
+ GET / 200 in 1329ms (next.js: 4ms, application-code: 1326ms)
+ GET / 200 in 4.9s (next.js: 226ms, application-code: 4.7s)
+✓ Compiled in 317ms
+ GET / 200 in 395ms (next.js: 12ms, application-code: 383ms)
+⨯ The requested resource isn't a valid image for / received null
+✓ Compiled in 271ms
+ GET / 200 in 3.3s (next.js: 251ms, application-code: 3.0s)
+ GET / 200 in 3.2s (next.js: 575ms, application-code: 2.7s)
+✓ Compiled in 224ms
+✓ Compiled in 189ms
+✓ Compiled in 15.6s
+ GET / 200 in 1827ms (next.js: 274ms, application-code: 1553ms)
+✓ Compiled in 8.8s
+ GET / 200 in 259ms (next.js: 22ms, application-code: 237ms)
+✓ Compiled in 7.7s
+ GET / 200 in 2.3s (next.js: 125ms, application-code: 2.1s)
+✓ Compiled in 2.1s
+[browser] Uncaught ReferenceError: email is not defined
+    at RSVPSection (app/components/wedding/RSVPSection.tsx:224:28)
+    at Set.forEach (<anonymous>)
+    at Home (app\page.tsx:17:7)
+  222 |                     type="email"
+  223 |                     required
+> 224 |                     value={email}
+      |                            ^
+  225 |                     onChange={(e) => setEmail(e.target.value)}
+  226 |                     placeholder="For confirmation & directions"
+  227 |                     className="editorial-input-dark"
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+✓ Compiled in 2.6s
+ GET / 200 in 437ms (next.js: 13ms, application-code: 424ms)
+ GET / 200 in 1041ms (next.js: 23ms, application-code: 1017ms)
+○ Compiling /api/rsvp ...
+[RSVP RECEIVED]: {
+  name: 'Test Guest',
+  email: undefined,
+  response: 'accept',
+  guestCount: 2,
+  dietary: undefined,
+  note: 'So excited!',
+  receivedAt: '2026-10-16T08:26:51.420Z'
+}
+ POST /api/rsvp 200 in 7.1s (next.js: 5.1s, application-code: 2.0s)
+✓ Compiled in 4s
+ GET / 200 in 2.2s (next.js: 125ms, application-code: 2.0s)
+✓ Compiled in 2.5s
+ GET / 200 in 469ms (next.js: 19ms, application-code: 450ms)
+✓ Compiled in 1203ms
+✓ Compiled in 1616ms
+ GET / 200 in 399ms (next.js: 23ms, application-code: 376ms)
+✓ Compiled in 4.3s
+ GET / 200 in 305ms (next.js: 11ms, application-code: 293ms)
+✓ Compiled in 2.6s
+✓ Compiled in 1469ms
+ GET / 200 in 1308ms (next.js: 85ms, application-code: 1223ms)
+✓ Compiled in 815ms
+ GET / 200 in 889ms (next.js: 7ms, application-code: 883ms)
+✓ Compiled in 3.2s
+ GET / 200 in 791ms (next.js: 39ms, application-code: 752ms)
+✓ Compiled in 1851ms
+ GET / 200 in 710ms (next.js: 55ms, application-code: 656ms)
+✓ Compiled in 1675ms
+✓ Compiled in 3s
+✓ Compiled in 1033ms
+ GET / 200 in 265ms (next.js: 13ms, application-code: 252ms)
+✓ Compiled in 421ms
+ GET / 200 in 614ms (next.js: 22ms, application-code: 592ms)
+✓ Compiled in 1388ms
+ GET / 200 in 1786ms (next.js: 16ms, application-code: 1771ms)
+✓ Compiled in 952ms
+ GET / 200 in 1693ms (next.js: 178ms, application-code: 1515ms)
+✓ Compiled in 1894ms
+ GET / 200 in 578ms (next.js: 27ms, application-code: 551ms)
+✓ Compiled in 3.7s
+ GET / 200 in 150ms (next.js: 6ms, application-code: 144ms)

@@ -44,7 +44,7 @@ function FlipUnitCard({
       <div className="fliqlo-card-container relative w-full aspect-[1/1.12] sm:aspect-[1/1.16] rounded-xl sm:rounded-2xl bg-[#3A281E] shadow-[0_22px_45px_-8px_rgba(43,24,16,0.38),0_8px_18px_rgba(43,24,16,0.22),inset_0_1px_1px_rgba(254,232,133,0.18)] border border-[#5A4032] select-none">
         
         {/* 1. TOP STATIC HALF (Shows new incoming value in butter yellow, upper half) */}
-        <div className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden bg-gradient-to-b from-[#4A3528] via-[#3E2C20] to-[#36251A] rounded-t-xl sm:rounded-t-2xl z-10 border-b border-[#22150E]">
+        <div className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden bg-gradient-to-b from-[#422F24] to-[#36251C] rounded-t-xl sm:rounded-t-2xl z-10">
           {/* Tactile Embossed Paper Grain */}
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-overlay select-none z-10"
@@ -69,7 +69,7 @@ function FlipUnitCard({
         </div>
 
         {/* 2. BOTTOM STATIC HALF (Shows old value until the flap slaps down, lower half) */}
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden bg-gradient-to-b from-[#2E1E15] via-[#37261C] to-[#422E22] rounded-b-xl sm:rounded-b-2xl z-10 border-t border-[#1C120B]">
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden bg-gradient-to-b from-[#36251C] to-[#2B1B13] rounded-b-xl sm:rounded-b-2xl z-10">
           {/* Tactile Embossed Paper Grain */}
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-overlay select-none z-10"
@@ -100,7 +100,7 @@ function FlipUnitCard({
             className="fliqlo-flap absolute top-0 left-0 right-0 h-1/2 z-30"
           >
             {/* FRONT FACE (Top half of old value, folds down in 3D) */}
-            <div className="fliqlo-backface-hidden absolute inset-0 overflow-hidden bg-gradient-to-b from-[#4A3528] via-[#3E2C20] to-[#36251A] rounded-t-xl sm:rounded-t-2xl border-b border-[#22150E]">
+            <div className="fliqlo-backface-hidden absolute inset-0 overflow-hidden bg-gradient-to-b from-[#422F24] to-[#36251C] rounded-t-xl sm:rounded-t-2xl">
               {/* Flap Texture */}
               <div
                 className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-overlay select-none z-10"
@@ -119,7 +119,7 @@ function FlipUnitCard({
             </div>
 
             {/* BACK FACE (Bottom half of new value, rotated 180°, lands flat) */}
-            <div className="fliqlo-backface-hidden fliqlo-flap-back absolute inset-0 overflow-hidden bg-gradient-to-b from-[#2E1E15] via-[#37261C] to-[#422E22] rounded-b-xl sm:rounded-b-2xl border-t border-[#1C120B]">
+            <div className="fliqlo-backface-hidden fliqlo-flap-back absolute inset-0 overflow-hidden bg-gradient-to-b from-[#36251C] to-[#2B1B13] rounded-b-xl sm:rounded-b-2xl">
               {/* Flap Texture */}
               <div
                 className="pointer-events-none absolute inset-0 opacity-[0.24] mix-blend-overlay select-none z-10"
@@ -139,19 +139,9 @@ function FlipUnitCard({
           </div>
         )}
 
-        {/* Center Split Crease */}
+        {/* Delicate 1px Center Split Hairline (Clean split across the board) */}
         <div
-          className="absolute top-1/2 left-0 right-0 -translate-y-1/2 h-[2.5px] bg-[#1E120A] z-40 shadow-[0_1px_1px_rgba(254,232,133,0.18)] pointer-events-none"
-          aria-hidden
-        />
-
-        {/* Mechanical Side Hinges */}
-        <div
-          className="absolute top-1/2 -left-[1px] -translate-y-1/2 w-1.5 sm:w-2 h-3 sm:h-4 bg-[#1E120A] rounded-r-[2px] z-50 border border-[#553C2D] border-l-0 pointer-events-none"
-          aria-hidden
-        />
-        <div
-          className="absolute top-1/2 -right-[1px] -translate-y-1/2 w-1.5 sm:w-2 h-3 sm:h-4 bg-[#1E120A] rounded-l-[2px] z-50 border border-[#553C2D] border-r-0 pointer-events-none"
+          className="absolute top-1/2 left-0 right-0 -translate-y-1/2 h-px bg-[#180E07]/90 z-40 pointer-events-none"
           aria-hidden
         />
       </div>

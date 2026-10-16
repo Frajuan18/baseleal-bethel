@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { coupleName, wedding } from "@/config/wedding";
 
 function downloadICS(year: number, monthIndex: number, dayNumber: number) {
@@ -132,7 +133,7 @@ export function WeddingCalendar() {
             The Day of Our Vows
           </h2>
           <div className="h-px w-16 bg-[#8C6A3B]/50 mx-auto mt-5 mb-5" />
-          <p className="text-sm sm:text-base text-[#4A3B32] leading-relaxed font-light">
+          <p className="text-sm sm:text-base text-[#38281F] leading-relaxed font-normal">
             Mark your calendar to celebrate with us. We want nothing more than to share this sacred day with those who have shaped our lives.
           </p>
         </div>
@@ -140,147 +141,135 @@ export function WeddingCalendar() {
         {/* Two-Column Editorial & High-End Interactive Calendar */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           
-          {/* Left Column: Metallic White Celebration Details Card Beside Calendar */}
-          <div className="md:col-span-1 lg:col-span-6 flex flex-col justify-between">
-            <div className="h-full bg-gradient-to-br from-white via-[#FCFBF9] to-[#F7F4EE] border border-white/90 p-7 sm:p-10 md:p-11 shadow-[0_22px_55px_-12px_rgba(43,24,16,0.12),0_8px_24px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.95)] rounded-md relative flex flex-col justify-between overflow-hidden">
-              
-              {/* Fine Tactile Cotton Paper Texture Overlay */}
-              <div
-                className="pointer-events-none absolute inset-0 opacity-[0.045] mix-blend-multiply select-none z-10"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoiseLeft'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoiseLeft)'/%3E%3C/svg%3E")`,
-                }}
-                aria-hidden
-              />
-
-              {/* Subtle Metallic Corner Highlight */}
-              <div
-                className="pointer-events-none absolute -top-12 -left-12 w-36 h-36 bg-gradient-to-br from-white via-white/40 to-transparent rounded-full blur-xl opacity-80"
-                aria-hidden
-              />
-
-              <div className="relative z-20 flex-1 flex flex-col justify-between">
-                <div>
-                  {/* Eyebrow */}
-                  <div className="mb-3">
-                    <span className="eyebrow text-[#8C6A3B] text-[10px] tracking-[0.28em] font-semibold">
-                      Celebration Details
-                    </span>
-                  </div>
-
-                  {/* Weekday */}
-                  <h3 className="font-editorial-serif text-4xl sm:text-5xl text-[#1E140E] leading-none mb-2 tracking-tight">
-                    {weekdayName}
-                  </h3>
-                  
-                  {/* Date */}
-                  <p className="font-editorial-serif text-2xl sm:text-3xl italic text-[#8C6A3B] mb-5">
-                    {monthName} {dayNumber}, {year}
-                  </p>
-
-                  {/* Delicate Hairline Divider */}
-                  <div className="h-px w-14 bg-[#8C6A3B]/35 mb-5" />
-
-                  {/* Ceremony & Celebration Time - Pure Flowing Editorial Typography */}
-                  <div className="space-y-1.5 mb-5 max-w-[85%]">
-                    <p className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-snug">
-                      Ceremony begins promptly at{" "}
-                      <span className="font-semibold text-[#8C6A3B]">
-                        {wedding.timeDisplay || "10:00 AM Local Time"}
-                      </span>
-                    </p>
-                    <p className="text-xs sm:text-sm text-[#5C4A3E] font-light leading-relaxed">
-                      Reception and joyful celebration to follow immediately after the ceremony.
-                    </p>
-                  </div>
-
-                  {/* Location & Venue Inset Card - Single Refined Fine-Stationery Plaque */}
-                  <div className="rounded-sm border border-[#E8DFD3] bg-white/75 p-4 sm:p-5 backdrop-blur-xs shadow-[0_4px_16px_rgba(43,24,16,0.03)]">
-                    <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#FAF5EE] border border-[#D4AF37]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#8C6A3B]">
-                        <svg
-                          className="w-3.5 h-3.5"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden
-                        >
-                          <path d="M12 21c-4-4.5-7-8.5-7-12a7 7 0 1 1 14 0c0 3.5-3 7.5-7 12z" />
-                          <circle cx="12" cy="9" r="2.5" fill="#8C6A3B" fillOpacity="0.25" />
-                        </svg>
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.24em] text-[#8C6A3B]">
-                          Location &amp; Venue
-                        </p>
-                        <h4 className="font-editorial-serif text-base sm:text-lg text-[#1E140E] font-medium leading-snug mt-1">
-                          {wedding.venue} — {wedding.city}
-                        </h4>
-                        <p className="text-xs text-[#7A695C] mt-1 font-light leading-relaxed">
-                          {wedding.address}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              {/* Action Buttons */}
-              <div className="relative z-20 mt-8 pt-6 border-t border-[#E2E8F0] flex flex-wrap items-center gap-3.5">
-                <button
-                  type="button"
-                  onClick={handleAddToCalendar}
-                  className="min-h-[46px] px-7 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-xl bg-[#1E140E] text-[#FAF6F0] hover:bg-[#8C6A3B] group focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2"
-                  aria-label="Download Apple or Outlook iCal invitation"
-                >
-                  <span>{downloadSuccess ? "Invitation Downloaded ✓" : "Add to Calendar"}</span>
-                  <span className="group-hover:translate-y-0.5 transition-transform" aria-hidden>
-                    ↓
-                  </span>
-                </button>
-
-                <a
-                  href={getGoogleCalendarUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="min-h-[46px] px-6 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-medium inline-flex items-center justify-center gap-1.5 transition-all duration-300 bg-white/90 border border-[#CBD5E1] text-[#1E140E] hover:bg-[#F1F5F9] shadow-xs hover:shadow-sm"
-                >
-                  <span>Google Calendar</span>
-                  <span aria-hidden>↗</span>
-                </a>
-
-                {wedding.directionsUrl && (
-                  <a
-                    href={wedding.directionsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-sans uppercase tracking-[0.18em] text-[#1E140E] underline underline-offset-4 hover:text-[#8C6A3B] transition-colors ml-auto py-2"
-                  >
-                    Get Directions ↗
-                  </a>
-                )}
+          {/* Left Column: Celebration Details (Directly on Open Textured Background) */}
+          <div className="md:col-span-1 lg:col-span-6 flex flex-col justify-between py-2 sm:py-4 px-1 sm:px-3 lg:pr-8">
+            <div>
+              {/* Eyebrow */}
+              <div className="mb-3">
+                <span className="eyebrow text-[#8C6A3B] text-[11px] tracking-[0.28em] font-bold">
+                  Celebration Details
+                </span>
               </div>
 
+              {/* Weekday */}
+              <h3 className="font-editorial-serif font-semibold text-4xl sm:text-5xl lg:text-6xl text-[#1E140E] leading-none mb-2 tracking-tight">
+                {weekdayName}
+              </h3>
+              
+              {/* Date */}
+              <p className="font-editorial-serif font-medium text-2xl sm:text-3xl lg:text-4xl italic text-[#8C6A3B] mb-6">
+                {monthName} {dayNumber}, {year}
+              </p>
+
+              {/* Delicate Hairline Divider */}
+              <div className="h-0.5 w-16 bg-[#8C6A3B]/50 mb-6" />
+
+              {/* Ceremony & Celebration Time - Pure Flowing Editorial Typography */}
+              <div className="space-y-2 mb-8 max-w-lg">
+                <p className="font-editorial-serif font-medium text-lg sm:text-xl text-[#1E140E] leading-snug">
+                  Ceremony begins promptly at{" "}
+                  <span className="font-bold text-[#8C6A3B]">
+                    {wedding.timeDisplay || "10:00 AM Local Time"}
+                  </span>
+                </p>
+                <p className="text-sm sm:text-base text-[#3E2F26] font-normal leading-relaxed">
+                  Reception and joyful celebration to follow immediately after the ceremony.
+                </p>
+              </div>
+
+              {/* Location & Venue (Clean Minimal Border-Left Accent, No Card Box) */}
+              <div className="border-l-2 border-[#8C6A3B] pl-4 sm:pl-5 py-1.5 my-6">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-8 h-8 rounded-full bg-[#1E140E]/10 border border-[#8C6A3B]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#8C6A3B]">
+                    <svg
+                      className="w-3.5 h-3.5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <path d="M12 21c-4-4.5-7-8.5-7-12a7 7 0 1 1 14 0c0 3.5-3 7.5-7 12z" />
+                      <circle cx="12" cy="9" r="2.5" fill="#8C6A3B" fillOpacity="0.25" />
+                    </svg>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] font-sans font-bold uppercase tracking-[0.24em] text-[#8C6A3B]">
+                      Location &amp; Venue
+                    </p>
+                    <h4 className="font-editorial-serif text-lg sm:text-xl text-[#1E140E] font-semibold leading-snug mt-1">
+                      {wedding.venue} — {wedding.city}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-[#3E2F26] mt-1 font-normal leading-relaxed">
+                      {wedding.address}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-8 pt-6 border-t border-[#8C6A3B]/25 flex flex-wrap items-center gap-3.5">
+              <button
+                type="button"
+                onClick={handleAddToCalendar}
+                className="min-h-[46px] px-7 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-xl bg-[#1E140E] text-[#FAF6F0] hover:bg-[#8C6A3B] group focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2"
+                aria-label="Download Apple or Outlook iCal invitation"
+              >
+                <span>{downloadSuccess ? "Invitation Downloaded ✓" : "Add to Calendar"}</span>
+                <span className="group-hover:translate-y-0.5 transition-transform" aria-hidden>
+                  ↓
+                </span>
+              </button>
+
+              <a
+                href={getGoogleCalendarUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-h-[46px] px-6 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-medium inline-flex items-center justify-center gap-1.5 transition-all duration-300 bg-[#FAF5EE] border border-[#DED2C2] text-[#1E140E] hover:bg-[#FAF8F5] shadow-xs hover:shadow-sm"
+              >
+                <span>Google Calendar</span>
+                <span aria-hidden>↗</span>
+              </a>
+
+              {wedding.directionsUrl && (
+                <a
+                  href={wedding.directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-sans uppercase tracking-[0.18em] text-[#1E140E] underline underline-offset-4 hover:text-[#8C6A3B] transition-colors ml-auto py-2"
+                >
+                  Get Directions ↗
+                </a>
+              )}
             </div>
           </div>
-        </div>
 
-          {/* Right Column: Metallic White Visual Interactive Calendar Grid */}
+          {/* Right Column: Calendar Grid in Warm Ivory Linen */}
           <div className="md:col-span-1 lg:col-span-6 flex flex-col justify-between">
-            <div className="h-full bg-gradient-to-br from-white via-[#F8FAFC] to-[#EEF2F6] border border-white/90 p-6 sm:p-10 shadow-[0_22px_55px_-12px_rgba(43,24,16,0.12),0_8px_24px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,0.95)] rounded-md flex flex-col justify-between relative overflow-hidden">
+            <div className="h-full bg-[#FAF5EE] border border-[#DED2C2] p-6 sm:p-10 shadow-[0_16px_40px_-10px_rgba(43,24,16,0.07)] rounded-md flex flex-col justify-between relative overflow-hidden">
               
-              {/* Subtle Metallic Corner Highlight */}
+              {/* Botanical Corner Flower Illustration at Bottom Right */}
               <div
-                className="pointer-events-none absolute -bottom-12 -right-12 w-36 h-36 bg-gradient-to-tl from-white via-white/40 to-transparent rounded-full blur-xl opacity-80"
+                className="pointer-events-none absolute -bottom-3 -right-3 w-52 sm:w-64 md:w-72 lg:w-80 select-none z-10 opacity-80 sm:opacity-90 mix-blend-multiply"
                 aria-hidden
-              />
+              >
+                <Image
+                  src="/calendar flower.png"
+                  alt=""
+                  width={1024}
+                  height={1536}
+                  className="w-full h-auto object-contain"
+                  priority
+                />
+              </div>
 
-              <div>
+              <div className="relative z-20">
                 {/* Calendar Month & Year Bar */}
-                <div className="flex items-center justify-between pb-5 border-b border-[#E2E8F0]">
+                <div className="flex items-center justify-between pb-5 border-b border-[#E5DDD2]">
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-editorial-serif text-3xl sm:text-4xl text-[#1E140E] leading-tight">
@@ -290,13 +279,13 @@ export function WeddingCalendar() {
                         {year}
                       </span>
                     </div>
-                    <span className="block text-[10px] uppercase tracking-[0.25em] text-[#64748B] mt-1 font-medium">
+                    <span className="block text-[10px] uppercase tracking-[0.25em] text-[#857365] mt-1 font-medium">
                       Wedding Celebration Month
                     </span>
                   </div>
 
                   {/* Monogram Seal Badge */}
-                  <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37]/50 bg-white/90 shadow-sm flex items-center justify-center text-[#8C6A3B] text-sm font-editorial-serif italic tracking-wider">
+                  <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37]/50 bg-[#F8F4ED] shadow-xs flex items-center justify-center text-[#8C6A3B] text-sm font-editorial-serif italic tracking-wider">
                     {wedding.couple.monogram}
                   </div>
                 </div>
@@ -306,7 +295,7 @@ export function WeddingCalendar() {
                   {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
                     <span
                       key={day}
-                      className="text-[11px] font-sans font-semibold uppercase tracking-[0.16em] text-[#64748B] py-2"
+                      className="text-[11px] font-sans font-semibold uppercase tracking-[0.16em] text-[#857365] py-2"
                     >
                       {day}
                     </span>
@@ -333,8 +322,8 @@ export function WeddingCalendar() {
                         <span
                           className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-xs sm:text-sm font-medium transition-all duration-300 relative ${
                             isWeddingDay
-                              ? "bg-[#FFF8D6] text-[#1E140E] font-bold shadow-[0_3px_12px_rgba(180,140,20,0.25)] border-2 border-[#E8D47E] ring-4 ring-white scale-110 overflow-hidden"
-                              : "text-[#334155] hover:bg-[#E2E8F0]/70 hover:scale-105"
+                              ? "bg-[#F3ECE1] text-[#1E140E] font-bold shadow-[0_3px_12px_rgba(180,140,20,0.22)] border-2 border-[#D4AF37] ring-4 ring-[#FAF5EE] scale-110 overflow-hidden"
+                              : "text-[#422B20] hover:bg-[#EFE7DC] hover:scale-105"
                           }`}
                           title={isWeddingDay ? `${coupleName}'s Wedding Day!` : undefined}
                         >
@@ -361,19 +350,6 @@ export function WeddingCalendar() {
                     );
                   })}
                 </div>
-              </div>
-
-              {/* Legend Note Below Calendar */}
-              <div className="mt-8 pt-5 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3 text-xs text-[#64748B]">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-3.5 h-3.5 rounded-full bg-[#FFF8D6] border border-[#E8D47E] inline-block shadow-xs" />
-                  <span className="font-medium text-[#1E140E]">
-                    The Wedding Day ({monthName} {dayNumber})
-                  </span>
-                </div>
-                <span className="font-editorial-serif italic text-sm text-[#8C6A3B]">
-                  {wedding.city}
-                </span>
               </div>
 
             </div>

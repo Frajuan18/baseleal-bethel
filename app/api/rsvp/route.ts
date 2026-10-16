@@ -5,9 +5,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, response, guestCount, dietary, note } = body;
 
-    if (!name || !email || !response) {
+    if (!name || !response) {
       return NextResponse.json(
-        { error: "Name, email, and attendance response are required." },
+        { error: "Name and attendance response are required." },
         { status: 400 }
       );
     }
