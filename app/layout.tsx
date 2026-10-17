@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat, Playfair_Display } from "next/font/google";
+import "./fonts.css";
 import "./globals.css";
 import { coupleName } from "@/config/wedding";
 
@@ -58,7 +59,15 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${cormorant.variable} ${montserrat.variable} scroll-smooth`}
     >
-      <body className="min-h-full bg-[#F8F4ED] font-[family-name:var(--font-sans)] text-[#422B20] antialiased selection:bg-[#B18A54] selection:text-[#F8F4ED]">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full bg-[#F8F4ED] font-sans text-[#422B20] antialiased selection:bg-[#B18A54] selection:text-[#F8F4ED]">
         {children}
       </body>
     </html>

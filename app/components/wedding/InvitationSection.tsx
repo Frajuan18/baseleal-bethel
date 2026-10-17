@@ -1,7 +1,20 @@
 "use client";
 
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { wedding } from "@/config/wedding";
+
+/** Sequence step — staggered delay, duration and optional rise distance. */
+const seq = (
+  delay: string,
+  duration = "1200ms",
+  px?: string
+): CSSProperties =>
+  ({
+    "--seq-delay": delay,
+    "--seq-duration": duration,
+    ...(px ? { "--hero-rise": px } : {}),
+  }) as CSSProperties;
 
 export function InvitationSection() {
   // Structured date lockup data (matches reference: SATURDAY | SEPT 20 2028 | AT 10 AM)
@@ -34,10 +47,11 @@ export function InvitationSection() {
   return (
     <section
       id="invitation"
-      className="relative py-16 sm:py-20 lg:py-16 xl:py-20 min-h-[100dvh] lg:min-h-[100dvh] lg:aspect-[1672/941] flex flex-col justify-center overflow-hidden bg-[#F3F2EE]"
+      data-reveal
+      className="reveal-seq scroll-mt-24 relative py-16 sm:py-20 lg:py-16 xl:py-20 min-h-[100dvh] lg:min-h-[100dvh] lg:aspect-[1672/941] flex flex-col justify-center overflow-hidden bg-[#F3F2EE]"
     >
       {/* Background Image: invit img.png - natural aspect ratio preserved with left-top alignment across all screens */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none block">
+      <div data-seq="bg" className="absolute inset-0 z-0 pointer-events-none select-none block">
         <Image
           src="/invit img.png"
           alt="Invitation section background"
@@ -60,18 +74,18 @@ export function InvitationSection() {
               className="pointer-events-none absolute inset-0 -inset-x-6 -inset-y-2 bg-[#EFEDEB]/90 md:hidden rounded-full blur-md -z-10 shadow-[0_0_28px_18px_#EFEDEB]"
               aria-hidden
             />
-            <p className="eyebrow mb-1.5 text-[#8C6A3B] text-xs uppercase tracking-[0.26em] font-semibold drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
+            <p data-seq="rise" style={seq("0.6s", "1000ms", "7px")} className="eyebrow mb-1.5 text-[#8C6A3B] text-xs uppercase tracking-[0.26em] font-semibold drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
               Our Covenant
             </p>
-            <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-[2.6rem] tracking-tight text-[#2B1810] drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
+            <h2 data-seq="rise" style={seq("0.95s", "1100ms", "8px")} className="font-editorial-serif text-3xl sm:text-4xl md:text-[2.6rem] tracking-tight text-[#2B1810] drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
               A Day to Hold Close
             </h2>
-            <div className="h-px w-14 mx-auto mt-2.5 mb-2.5 bg-[#8C6A3B]/50" />
+            <div data-seq="unfold" style={seq("1.35s", "1000ms")} className="h-px w-14 mx-auto mt-2.5 mb-2.5 bg-[#8C6A3B]/50" />
           </div>
 
           {/* The Fine-Art Wedding Invitation Card - Grand, Prominent & Perfectly Proportioned */}
           <div className="max-w-[560px] sm:max-w-[600px] md:max-w-[620px] mx-auto w-full">
-          <article className="relative z-20 bg-[#FAF5EE] rounded-sm p-6 sm:p-9 md:p-10 lg:p-8 xl:p-10 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
+          <article data-seq="card" style={{ ...seq("1.7s", "1700ms"), "--photo-rise": "14px" } as CSSProperties} className="relative z-20 bg-[#FAF5EE] rounded-sm p-6 sm:p-9 md:p-10 lg:p-8 xl:p-10 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
             
             {/* Fine Tactile Cotton Paper Texture Overlay */}
             <div
@@ -83,7 +97,7 @@ export function InvitationSection() {
             />
 
             {/* Sculptural Pleated Silk Floral Artwork in Top-Right Corner - Inset gracefully & slender */}
-            <div className="pointer-events-none absolute top-2 right-2 sm:top-2.5 sm:right-2.5 md:top-3 md:right-3 w-[35%] sm:w-[37%] md:w-[39%] max-w-[230px] aspect-[1087/1447] select-none z-10 opacity-95">
+            <div data-seq="draw-down" style={seq("2.6s", "1800ms")} className="pointer-events-none absolute top-2 right-2 sm:top-2.5 sm:right-2.5 md:top-3 md:right-3 w-[35%] sm:w-[37%] md:w-[39%] max-w-[230px] aspect-[1087/1447] select-none z-10 opacity-95">
               <Image
                 src="/card flower.png"
                 alt="Artisan pleated silk floral sculpture"
@@ -102,24 +116,24 @@ export function InvitationSection() {
                 
                 {/* Couple Header - Title Case */}
                 <div className="space-y-1.5">
-                  <p className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-[#7C5A32]">
+                  <p data-seq="fade" style={seq("2.0s", "900ms")} className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-[#7C5A32]">
                     The Wedding Of
                   </p>
                   <h3 className="font-editorial-serif text-[clamp(1.75rem,3.8vw,2.35rem)] lg:text-[2.05rem] xl:text-[2.35rem] text-[#1E140E] leading-[1.05] tracking-[-0.01em]">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
-                      <span className="capitalize">{wedding.couple.first}</span>
-                      <span className="font-editorial-serif italic font-light text-[0.8em] tracking-normal text-[#9A7338]">
+                      <span data-seq="rise" style={seq("2.25s", "1000ms", "10px")} className="capitalize">{wedding.couple.first}</span>
+                      <span data-seq="rise" style={seq("2.6s", "1000ms", "8px")} className="font-editorial-serif italic font-light text-[0.8em] tracking-normal text-[#9A7338]">
                         and
                       </span>
                     </div>
-                    <span className="block mt-0.5 capitalize">
+                    <span data-seq="rise" style={seq("2.9s", "1000ms", "10px")} className="block mt-0.5 capitalize">
                       {wedding.couple.second}
                     </span>
                   </h3>
                 </div>
 
                 {/* Invitation Request Line */}
-                <div className="space-y-1">
+                <div data-seq="rise" style={seq("3.15s", "1000ms", "10px")} className="space-y-1">
                   <p className="font-editorial-serif uppercase tracking-[0.2em] text-[9.5px] sm:text-[10px] text-[#3E2B20]/90 font-medium leading-relaxed">
                     Request The Presence Of Your Company
                   </p>
@@ -129,7 +143,7 @@ export function InvitationSection() {
                 </div>
 
                 {/* 3-Column Vertical Hairline Date Lockup */}
-                <div className="pt-1.5 sm:pt-2">
+                <div data-seq="rise" style={seq("3.4s", "1000ms", "12px")} className="pt-1.5 sm:pt-2">
                   <div className="inline-flex items-center text-[#1E140E]">
                     
                     {/* Left: Day of Week */}
@@ -169,7 +183,7 @@ export function InvitationSection() {
                 </div>
 
                 {/* Venue & Location Block */}
-                <div className="space-y-0.5">
+                <div data-seq="rise" style={seq("3.65s", "1000ms", "10px")} className="space-y-0.5">
                   <p className="font-editorial-serif uppercase tracking-[0.18em] text-[11px] sm:text-xs text-[#22150D] font-medium leading-relaxed">
                     {wedding.venue}
                   </p>
@@ -179,10 +193,10 @@ export function InvitationSection() {
                 </div>
 
                 {/* RSVP Online CTA Button */}
-                <div className="pt-1">
+                <div data-seq="rise" style={seq("3.95s", "1000ms", "6px")} className="pt-1">
                   <a
                     href="#rsvp"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-[420ms] shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
                   >
                     <span>RSVP Online</span>
                     <span aria-hidden>→</span>
@@ -192,8 +206,8 @@ export function InvitationSection() {
               </div>
 
               {/* Scripture Blessing at Bottom */}
-              <div className="pt-4 sm:pt-5 opacity-80 max-w-[80%]">
-                <p className="font-editorial-serif italic text-xs sm:text-[13px] text-[#553C2D] leading-relaxed">
+              <div data-seq="fade" style={seq("4.7s", "1300ms")} className="pt-4 sm:pt-5 max-w-[80%]">
+                <p className="font-editorial-serif italic text-xs sm:text-[13px] text-[#553C2D] leading-relaxed opacity-80">
                   {wedding.scripture.verse}
                 </p>
               </div>

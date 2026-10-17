@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./fonts.css";
 
 @theme {
   --color-ivory: #F8F4ED;
@@ -12,9 +13,10 @@
   --color-coffee-dark: #2B1810;
   --color-beige: #DED2C2;
   --color-beige-light: #EDE4D8;
-  --font-serif: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
-  --font-hero-serif: var(--font-cormorant), 'Cormorant Garamond', var(--font-playfair), 'Playfair Display', Georgia, serif;
-  --font-sans: var(--font-montserrat), 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-hero-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-editorial-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 :root {
@@ -25,6 +27,13 @@
   --gold: #B18A54;
   --coffee: #4A2E22;
   --beige: #DED2C2;
+  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-montserrat: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-hero-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-editorial-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 html {
@@ -35,7 +44,7 @@ html {
 
 body {
   overflow-x: hidden;
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -44,6 +53,8 @@ body {
   *, *::before, *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
@@ -96,6 +107,22 @@ body {
   animation: float-butter-orb-secondary 22s ease-in-out infinite;
 }
 
+/* Fade-in reveal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out both;
+}
+
 /* Selection */
 ::selection {
   background: #B18A54;
@@ -104,11 +131,23 @@ body {
 
 /* Editorial typography classes */
 .font-editorial-serif {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
 }
 
 .font-hero-serif {
-  font-family: var(--font-hero-serif), var(--font-cormorant), 'Cormorant Garamond', var(--font-serif), Georgia, serif;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif !important;
+}
+
+.font-serif {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+}
+
+.font-sans {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.font-script {
+  font-family: 'Alex Brush', cursive !important;
 }
 
 .eyebrow {
@@ -321,6 +360,215 @@ body {
   mask-size: var(--stamp-gap) 100%, var(--stamp-gap) 100%, 100% var(--stamp-gap), 100% var(--stamp-gap);
   mask-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   mask-composite: intersect;
+}
+
+/* ============================================================
+   Hero — elegant cinematic entrance
+   ============================================================ */
+@keyframes heroFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--hero-rise, 14px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroPhotoIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--photo-rise, 18px), 0) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Botanical reveal — wipe drawn from the left edge */
+@keyframes heroWipeLeft {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Ornamental reveal — unfolds from the centre outward */
+@keyframes heroWipeCenter {
+  from {
+    opacity: 0;
+    clip-path: inset(0 50% 0 50%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Photograph unveiled inside its printed frame */
+@keyframes heroClipDown {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Barely perceptible ambient drift for floral artwork */
+@keyframes heroDrift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -3px, 0); }
+}
+
+/* Felt-not-seen shimmer of the gold accents */
+@keyframes goldBreath {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.07); }
+}
+
+.hero-anim {
+  animation-fill-mode: both;
+  animation-duration: 1400ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes heroSheen {
+  from { opacity: 0; }
+  to { opacity: 0.6; }
+}
+
+.hero-sheen {
+  animation: heroSheen 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-fade {
+  animation-name: heroFade;
+}
+
+.hero-rise {
+  animation-name: heroRise;
+}
+
+.hero-photo {
+  animation-name: heroPhotoIn;
+}
+
+.hero-wipe-left {
+  animation-name: heroWipeLeft;
+}
+
+.hero-wipe-center {
+  animation-name: heroWipeCenter;
+}
+
+.hero-clip-down {
+  animation-name: heroClipDown;
+}
+
+/* Ambient loops layered on top of the one-shot entrance */
+.hero-drift {
+  animation: heroDrift 34s ease-in-out 6s infinite both;
+}
+
+.gold-breath {
+  animation: goldBreath 22s ease-in-out 6s infinite both;
+}
+
+/* ============================================================
+   Scroll-entry reveals for sections below the hero
+   (Only active once JS adds .js-reveal, so content stays
+   visible if scripting or animations are unavailable.)
+   ============================================================ */
+.reveal-section {
+  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js-reveal .reveal-section {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  will-change: opacity, transform;
+}
+
+.js-reveal .reveal-section.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .reveal-section {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   Invitation section — cinematic sequence
+   Extends the scroll-reveal system above (no competing observer).
+   Reuses the hero keyframes, easing and duration philosophy so the
+   section reads as the next page of the same experience.
+   ============================================================ */
+
+/* Botanical / parchment unveil — soft diagonal clip from the upper-left */
+@keyframes invitBgVeil {
+  from { clip-path: inset(0 100% 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Hidden only once JS is running, so content stays visible without it */
+.js-reveal .reveal-seq [data-seq] {
+  opacity: 0;
+}
+
+/* Mask-only reveals keep their own resting opacity */
+.js-reveal .reveal-seq [data-seq="draw-down"] {
+  opacity: 0.95;
+}
+
+.js-reveal .reveal-seq.is-visible [data-seq] {
+  animation-name: heroFade;
+  animation-fill-mode: both;
+  animation-duration: var(--seq-duration, 1200ms);
+  animation-delay: calc(var(--seq-delay, 0ms) * var(--seq-speed, 1));
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js-reveal .reveal-seq.is-visible [data-seq="rise"] { animation-name: heroRise; }
+.js-reveal .reveal-seq.is-visible [data-seq="card"] { animation-name: heroPhotoIn; }
+.js-reveal .reveal-seq.is-visible [data-seq="wipe"] { animation-name: heroWipeLeft; }
+.js-reveal .reveal-seq.is-visible [data-seq="unfold"] { animation-name: heroWipeCenter; }
+.js-reveal .reveal-seq.is-visible [data-seq="draw-down"] { animation-name: heroClipDown; }
+
+/* Stage 1 + 2: parchment fades in, then the arrangement is unveiled */
+.js-reveal .reveal-seq.is-visible [data-seq="bg"] {
+  animation-name: heroFade, invitBgVeil;
+  animation-duration: 1400ms, 2200ms;
+  animation-delay: 0ms, 150ms;
+}
+
+/* Slightly tighter stagger on small screens — same character, less waiting */
+@media (max-width: 640px) {
+  .reveal-seq {
+    --seq-speed: 0.72;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .reveal-seq [data-seq] {
+    opacity: 1;
+    animation: none !important;
+  }
+  .js-reveal .reveal-seq.is-visible [data-seq="bg"] {
+    clip-path: none;
+  }
 }
 
 

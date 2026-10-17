@@ -102,7 +102,8 @@ export function WeddingCalendar() {
   return (
     <section
       id="date"
-      className="py-20 sm:py-28 lg:py-36 bg-[#FFF8D6] relative overflow-hidden transition-colors duration-500"
+      data-reveal
+      className="reveal-section scroll-mt-24 py-20 sm:py-28 lg:py-36 bg-[#FFF8D6] relative overflow-hidden transition-colors duration-500"
     >
       {/* High-Definition Tactile Paper Noise Layer */}
       <div
@@ -285,8 +286,14 @@ export function WeddingCalendar() {
                   </div>
 
                   {/* Monogram Seal Badge */}
-                  <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37]/50 bg-[#F8F4ED] shadow-xs flex items-center justify-center text-[#8C6A3B] text-sm font-editorial-serif italic tracking-wider">
-                    {wedding.couple.monogram}
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 select-none drop-shadow-[0_3px_6px_rgba(43,24,16,0.28)]">
+                    <Image
+                      src="/b and b.png"
+                      alt={`${wedding.couple.monogram} monogram seal`}
+                      fill
+                      sizes="112px"
+                      className="object-cover object-center"
+                    />
                   </div>
                 </div>
 

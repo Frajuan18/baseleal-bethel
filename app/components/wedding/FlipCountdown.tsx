@@ -198,7 +198,8 @@ export function FlipCountdown() {
   return (
     <section
       id="countdown"
-      className="py-20 sm:py-28 lg:py-32 relative overflow-hidden border-y border-[#EAE3D9] bg-[#FAF8F5]"
+      data-reveal
+      className="reveal-section scroll-mt-24 py-20 sm:py-28 lg:py-32 relative overflow-hidden border-y border-[#EAE3D9] bg-[#FAF8F5]"
     >
       {/* Background Image: countdown bg.png */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">

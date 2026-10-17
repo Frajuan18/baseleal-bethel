@@ -6106,3 +6106,1432 @@ Import trace:
  GET / 200 in 150ms (next.js: 6ms, application-code: 144ms)
 ✓ Compiled in 4s
  GET / 200 in 1320ms (next.js: 28ms, application-code: 1292ms)
+✓ Compiled in 4s
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 2.6s (next.js: 105ms, application-code: 2.4s)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+✓ Compiled in 126ms
+ GET / 200 in 584ms (next.js: 11ms, application-code: 573ms)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 519ms (next.js: 20ms, application-code: 498ms)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 1603ms (next.js: 176ms, application-code: 1426ms)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 949ms (next.js: 140ms, application-code: 808ms)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 562ms (next.js: 69ms, application-code: 493ms)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 202ms (next.js: 6ms, application-code: 196ms)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 285ms (next.js: 8ms, application-code: 277ms)
+✓ Compiled in 662ms
+✓ Compiled in 397ms
+✓ Compiled in 437ms
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 140ms (next.js: 42ms, application-code: 99ms)
+✓ Compiled in 288ms
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 370ms (next.js: 15ms, application-code: 355ms)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 148ms (next.js: 4ms, application-code: 144ms)
+✓ Compiled in 259ms
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 197ms (next.js: 6ms, application-code: 191ms)
+✓ Compiled in 313ms
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 483ms (next.js: 46ms, application-code: 436ms)
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+✓ Compiled in 3.7s
+✓ Compiled in 788ms
+✓ Compiled in 1816ms
+✓ Compiled in 239ms
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+Warning: next/font: warning:
+Failed to download Cormorant Garamond from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.module.css
+    [next]/internal/font/google/cormorant_garamond_9a7eb655.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/montserrat_45df9a18.module.css
+Warning: next/font: warning:
+Failed to download Montserrat from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/montserrat_45df9a18.module.css
+    [next]/internal/font/google/montserrat_45df9a18.js
+    ./app/layout.tsx
+
+
+⚠ [next]/internal/font/google/playfair_display_c34ed809.module.css
+Warning: next/font: warning:
+Failed to download Playfair Display from Google Fonts. Using a fallback font instead.
+If you are offline or behind a proxy, self-host the font with next/font/local, or set HTTP_PROXY/HTTPS_PROXY so Next.js can reach fonts.googleapis.com.
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/playfair_display_c34ed809.module.css
+    [next]/internal/font/google/playfair_display_c34ed809.js
+    ./app/layout.tsx
+
+
+ GET / 200 in 654ms (next.js: 71ms, application-code: 583ms)

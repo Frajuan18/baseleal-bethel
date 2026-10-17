@@ -1,7 +1,9 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { coupleName, wedding } from "@/config/wedding";
+import Image from "next/image";
+import { wedding } from "@/config/wedding";
+import { WeddingFooter } from "./WeddingFooter";
 
 export function RSVPSection() {
   const [response, setResponse] = useState<"accept" | "decline">("accept");
@@ -64,252 +66,297 @@ export function RSVPSection() {
   return (
     <section
       id="rsvp"
-      className="relative py-24 sm:py-32 lg:py-40 overflow-hidden text-[#1E1108]"
-      style={{
-        background: "linear-gradient(150deg, #A88F78 0%, #9B8069 50%, #8D725B 100%)",
-      }}
+      data-reveal
+      className="reveal-section scroll-mt-24 relative pt-32 sm:pt-40 md:pt-48 lg:pt-56 pb-0 flex flex-col overflow-hidden bg-[#FAF5EE]"
     >
-      {/* High-Definition Tactile Paper Texture Layer for Section */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.20] mix-blend-multiply select-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.4 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)'/%3E%3C/svg%3E")`,
-        }}
-        aria-hidden
-      />
-
-      {/* Subtle Warm Vignette */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-[#24130A]/20 via-transparent to-white/15"
-        aria-hidden
-      />
-
-      {/* Decorative Monogram Watermark */}
-      <div
-        className="pointer-events-none absolute -left-10 top-1/2 -translate-y-1/2 font-editorial-serif text-[20rem] text-[#24130A]/[0.06] select-none leading-none z-0"
-        aria-hidden
-      >
-        {wedding.couple.monogram}
+      {/* Background Image: rsvp bg1.jpg covering both RSVP section and the embedded footer */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+        <Image
+          src="/rsvp bg1.jpg"
+          alt="RSVP Background with delicate floral accents"
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="w-full h-full object-cover object-center"
+        />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8">
+      {/* Subtle Warm Linen Vignette to keep edges soft and luxurious */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#FAF5EE]/15 via-transparent to-[#FAF5EE]/20 select-none z-1"
+        aria-hidden
+      />
+
+      {/* Main Upper Content: Heading + Card */}
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 mb-16 sm:mb-24">
         
         {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <p className="eyebrow text-[#2D1B10] uppercase tracking-[0.26em] font-bold text-xs mb-3">
-            RSVP
+        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-12">
+          <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.26em] font-bold text-xs mb-1.5">
+            Join Our Celebration
           </p>
-          <h2 className="font-editorial-serif text-4xl sm:text-5xl md:text-6xl text-[#1E1108] drop-shadow-xs">
+          <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#2B1810]">
             Will You Join Us?
           </h2>
-          <div className="h-px w-16 bg-[#2D1B10]/40 mx-auto mt-5 mb-5" />
-          <p className="text-sm sm:text-base text-[#321F13] leading-relaxed font-sans font-medium">
-            We would be deeply honoured by your presence as we celebrate this holy sacrament.
-            {wedding.rsvpDeadline && (
-              <span className="block mt-2 font-semibold text-[#2D1B10]">
-                Kindly respond by {wedding.rsvpDeadline}.
-              </span>
-            )}
-          </p>
+          <div className="h-px w-14 bg-[#8C6A3B]/40 mx-auto mt-3.5 mb-3.5" />
         </div>
 
-        {/* RSVP Card Form in Darker Brown Beige with Rich Texture */}
-        <div
-          className="relative rounded-sm border border-[#5E412E] p-8 sm:p-12 md:p-16 shadow-[0_24px_55px_-12px_rgba(20,12,7,0.55),inset_0_1px_1px_rgba(255,235,185,0.12)] overflow-hidden"
-          style={{
-            background: "linear-gradient(160deg, #3E291C 0%, #301E13 100%)",
-          }}
-        >
-          {/* Tactile Embossed Paper Grain Overlay inside Card */}
+        {/* White stationery card */}
+        <div className="relative max-w-2xl lg:max-w-3xl w-full mx-auto bg-white rounded-lg border border-[#E7DDCB] p-8 sm:p-11 md:p-14 shadow-[0_30px_70px_-22px_rgba(43,24,16,0.22),0_14px_32px_-16px_rgba(43,24,16,0.12),0_2px_6px_rgba(0,0,0,0.04)] overflow-hidden">
+          
+          {/* Embossed hairline inner frame */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.22] mix-blend-overlay select-none z-0"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cardNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.5 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cardNoise)'/%3E%3C/svg%3E")`,
-            }}
+            className="pointer-events-none absolute inset-2.5 sm:inset-3.5 rounded-[6px] border border-[#D8CBB2]/70 select-none z-0"
             aria-hidden
           />
 
-          {/* Artisanal Paper Fiber Flecks inside Card */}
+          {/* Tactile cotton paper grain overlay */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.16] mix-blend-color-dodge select-none z-0"
+            className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-multiply select-none z-0"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='14' cy='18' r='1.2' fill='%23E8D5B5'/%3E%3Ccircle cx='68' cy='32' r='0.8' fill='%23D4BF9D'/%3E%3Ccircle cx='95' cy='15' r='1.1' fill='%23E8D5B5'/%3E%3Ccircle cx='32' cy='74' r='1.3' fill='%23C9A46E'/%3E%3Ccircle cx='85' cy='88' r='0.9' fill='%23E8D5B5'/%3E%3Ccircle cx='110' cy='62' r='1' fill='%23D4BF9D'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cardPaperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cardPaperNoise)'/%3E%3C/svg%3E")`,
+              backgroundSize: "200px 200px",
             }}
             aria-hidden
           />
 
           <div className="relative z-10">
             {submittedData ? (
-              /* Warm success confirmation */
-              <div className="text-center py-8 space-y-6 animate-fadeIn">
-                <div className="w-16 h-16 mx-auto rounded-full border border-[#C9A46E] flex items-center justify-center text-[#C9A46E] text-2xl font-editorial-serif shadow-[0_0_20px_rgba(201,164,110,0.2)]">
-                  ✦
+              /* Warm success confirmation matching stationery tone */
+              <div className="py-6 sm:py-8 space-y-4 animate-fadeIn">
+                <div className="mb-6">
+                  <h3 className="font-editorial-serif text-3xl sm:text-4xl text-[#1E140E] leading-none tracking-[0.04em]">
+                    RSVP
+                  </h3>
+                  <p className="mt-2.5 font-editorial-serif italic text-base sm:text-lg text-[#8C6A3B]">
+                    Received
+                  </p>
                 </div>
-                <h3 className="font-editorial-serif text-3xl sm:text-4xl text-[#FFF8D6]">
+                <h3 className="font-editorial-serif text-2xl sm:text-3xl text-[#1E140E]">
                   Thank You, {submittedData.name}!
                 </h3>
-                <p className="text-sm sm:text-base text-[#D5C2B2] max-w-md mx-auto leading-relaxed">
+                <p className="font-editorial-serif italic text-base text-[#5A4F46] leading-relaxed max-w-lg">
                   {submittedData.response === "accept"
-                    ? "Your attendance has been joyfully recorded. We cannot wait to embrace you and share this sacred day with you!"
-                    : "We have received your reply. Although you will be missed in person, we cherish your love and prayers from afar."}
+                    ? "Your attendance has been joyfully recorded. We cannot wait to celebrate with you!"
+                    : "We have received your reply. Although you will be missed in person, we cherish your love and prayers."}
                 </p>
                 <div className="pt-4">
                   <button
                     type="button"
                     onClick={() => setSubmittedData(null)}
-                    className="px-6 py-2.5 rounded-full border border-[#C9A46E] text-[#FFF8D6] hover:bg-[#C9A46E] hover:text-[#1E110A] transition-all duration-300 font-sans text-xs uppercase tracking-[0.16em] font-medium cursor-pointer"
+                    className="px-6 py-2 rounded-full border border-[#2B1810] text-[#1E140E] hover:bg-[#1E140E] hover:text-[#FAF5EE] transition-all duration-300 font-sans text-xs uppercase tracking-[0.16em] font-medium cursor-pointer"
                   >
-                    Edit or Submit Another Response
+                    Edit Response
                   </button>
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-8">
-                
-                {/* Radio Attendance Toggle */}
+              <form onSubmit={handleSubmit} className="space-y-7 sm:space-y-9">
+
+                {/* Header: RSVP with reply-by note */}
+                <div className="pb-6 sm:pb-7 border-b border-[#1E140E]/10">
+                  <h3 className="font-editorial-serif text-3xl sm:text-4xl lg:text-5xl text-[#1E140E] leading-none tracking-[0.04em]">
+                    RSVP
+                  </h3>
+                  <p className="mt-2.5 font-editorial-serif italic text-base sm:text-lg text-[#8C6A3B]">
+                    Kindly reply by {wedding.rsvpDeadline || "4th October"}
+                  </p>
+                </div>
+
+                {/* Interactive attendance choice */}
                 <fieldset>
-                  <legend className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#E5C387] mb-3 text-center sm:text-left">
-                    Will You Be Attending? <span className="text-[#C9A46E]">*</span>
+                  <legend className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-semibold text-[#2B1810] mb-3.5">
+                    Will you be joining us?
                   </legend>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+
+                    {/* Accept */}
                     <label
-                      className={`cursor-pointer border p-4 text-center transition-all rounded-sm ${
+                      className={`group relative flex items-center justify-between gap-3 rounded-xl border px-4 py-4 cursor-pointer select-none transition-all duration-300 ${
                         response === "accept"
-                          ? "border-[#C9A46E] bg-[#C9A46E]/18 text-[#FFF8D6] shadow-[0_0_15px_rgba(201,164,110,0.15)]"
-                          : "border-[#5E412E] bg-[#22140C]/60 text-[#D5C2B2] hover:border-[#C9A46E]/60"
+                          ? "border-[#8C6A3B] bg-[#8C6A3B]/[0.06] shadow-[0_16px_32px_-20px_rgba(140,106,59,0.85)]"
+                          : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)]"
                       }`}
                     >
                       <input
                         type="radio"
-                        name="response"
+                        name="attendance"
                         value="accept"
                         checked={response === "accept"}
                         onChange={() => setResponse("accept")}
                         className="sr-only"
                       />
-                      <span className="block font-editorial-serif text-lg text-[#FFF8D6]">
-                        Joyfully Accept
+                      <span className="flex items-center gap-3.5">
+                        <span
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                            response === "accept"
+                              ? "border-[#8C6A3B] bg-[#8C6A3B] text-white"
+                              : "border-[#1E140E]/15 bg-[#FAF7F1] text-[#8C6A3B] group-hover:border-[#8C6A3B]/50"
+                          }`}
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                            <path d="M20 6 9 17l-5-5" />
+                          </svg>
+                        </span>
+                        <span className="flex flex-col text-left">
+                          <span className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-tight">
+                            Joyfully Accept
+                          </span>
+                          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7A6B]">
+                            Count me in
+                          </span>
+                        </span>
                       </span>
-                      <span className="block text-[10px] uppercase tracking-[0.16em] text-[#E5C387] mt-1 font-medium">
-                        I will attend with joy
+                      <span
+                        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#8C6A3B] text-white transition-all duration-300 ${
+                          response === "accept" ? "scale-100 opacity-100" : "scale-50 opacity-0"
+                        }`}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg>
                       </span>
                     </label>
 
+                    {/* Decline */}
                     <label
-                      className={`cursor-pointer border p-4 text-center transition-all rounded-sm ${
+                      className={`group relative flex items-center justify-between gap-3 rounded-xl border px-4 py-4 cursor-pointer select-none transition-all duration-300 ${
                         response === "decline"
-                          ? "border-[#C9A46E] bg-[#C9A46E]/18 text-[#FFF8D6] shadow-[0_0_15px_rgba(201,164,110,0.15)]"
-                          : "border-[#5E412E] bg-[#22140C]/60 text-[#D5C2B2] hover:border-[#C9A46E]/60"
+                          ? "border-[#8C6A3B] bg-[#8C6A3B]/[0.06] shadow-[0_16px_32px_-20px_rgba(140,106,59,0.85)]"
+                          : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)]"
                       }`}
                     >
                       <input
                         type="radio"
-                        name="response"
+                        name="attendance"
                         value="decline"
                         checked={response === "decline"}
                         onChange={() => setResponse("decline")}
                         className="sr-only"
                       />
-                      <span className="block font-editorial-serif text-lg text-[#FFF8D6]">
-                        Regretfully Decline
+                      <span className="flex items-center gap-3.5">
+                        <span
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                            response === "decline"
+                              ? "border-[#8C6A3B] bg-[#8C6A3B] text-white"
+                              : "border-[#1E140E]/15 bg-[#FAF7F1] text-[#8C6A3B] group-hover:border-[#8C6A3B]/50"
+                          }`}
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                            <path d="M12 21s-6.5-4.35-9-8.5C1.2 9.1 3 5 7 5c2 0 3.2 1.2 4 2.2C11.8 6.2 13 5 15 5c4 0 5.8 4.1 4 7.5-2.5 4.15-9 8.5-9 8.5Z" />
+                          </svg>
+                        </span>
+                        <span className="flex flex-col text-left">
+                          <span className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-tight">
+                            Regretfully Decline
+                          </span>
+                          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7A6B]">
+                            Sending love
+                          </span>
+                        </span>
                       </span>
-                      <span className="block text-[10px] uppercase tracking-[0.16em] text-[#E5C387] mt-1 font-medium">
-                        Celebrating in spirit
+                      <span
+                        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#8C6A3B] text-white transition-all duration-300 ${
+                          response === "decline" ? "scale-100 opacity-100" : "scale-50 opacity-0"
+                        }`}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg>
                       </span>
                     </label>
+
                   </div>
                 </fieldset>
 
-                {/* Full Name */}
-                <div>
-                  <label
-                    htmlFor="guest-name"
-                    className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#E5C387] mb-1.5"
-                  >
-                    Full Name <span className="text-[#C9A46E]">*</span>
-                  </label>
-                  <input
-                    id="guest-name"
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your full name"
-                    className="w-full bg-transparent border-0 border-b border-[#5E412E] py-2.5 text-[#FFF8D6] placeholder-[#8F7766] text-base sm:text-lg font-editorial-serif focus:outline-none focus:border-[#C9A46E] transition-colors"
-                    disabled={isSubmitting}
-                  />
-                </div>
-
-                {/* Guest Count (Only if attending) */}
-                {response === "accept" && (
-                  <div className="pt-2 animate-fadeIn">
+                {/* Guest details */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                  <div>
                     <label
-                      htmlFor="guest-count"
-                      className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#E5C387] mb-1.5"
+                      htmlFor="guest-name"
+                      className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-medium text-[#2B1810]"
                     >
-                      Total Number of Guests Attending
+                      Full Name
                     </label>
-                    <select
-                      id="guest-count"
-                      value={guestCount}
-                      onChange={(e) => setGuestCount(e.target.value)}
-                      className="w-full bg-[#2A1A10] border-0 border-b border-[#5E412E] py-2.5 text-[#FFF8D6] text-sm sm:text-base font-sans focus:outline-none focus:border-[#C9A46E] cursor-pointer transition-colors"
+                    <input
+                      id="guest-name"
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name"
+                      className="mt-2 w-full bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
                       disabled={isSubmitting}
-                    >
-                      <option value="1" className="bg-[#2A1A10] text-[#FFF8D6]">1 Guest (Just myself)</option>
-                      <option value="2" className="bg-[#2A1A10] text-[#FFF8D6]">2 Guests (Myself + 1)</option>
-                      <option value="3" className="bg-[#2A1A10] text-[#FFF8D6]">3 Guests (Myself + 2)</option>
-                      <option value="4" className="bg-[#2A1A10] text-[#FFF8D6]">4 Guests (Family)</option>
-                    </select>
+                    />
                   </div>
-                )}
 
-                {/* Personal Note */}
-                <div className="pt-2">
-                  <label
-                    htmlFor="guest-note"
-                    className="block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#E5C387] mb-1.5"
-                  >
-                    A Personal Note for the Couple (Optional)
-                  </label>
-                  <textarea
-                    id="guest-note"
-                    rows={3}
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
-                    placeholder="Share a word of blessing with Baseleal and Bethel…"
-                    className="w-full bg-transparent border-0 border-b border-[#5E412E] py-2.5 text-[#FFF8D6] placeholder-[#8F7766] text-sm sm:text-base font-sans focus:outline-none focus:border-[#C9A46E] resize-none transition-colors"
-                    disabled={isSubmitting}
-                  />
+                  <div>
+                    <label
+                      htmlFor="guest-secondary"
+                      className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-medium text-[#2B1810]"
+                    >
+                      A Note{" "}
+                      <span className="normal-case tracking-normal text-[#8A7A6B] font-normal">(optional)</span>
+                    </label>
+                    <input
+                      id="guest-secondary"
+                      type="text"
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                      placeholder="Names of additional guests, etc."
+                      className="mt-2 w-full bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
+                      disabled={isSubmitting}
+                    />
+                  </div>
                 </div>
 
-                {/* Submit Button */}
-                <div className="text-center pt-4">
+                {/* Bottom Bar: Attending Count & Submit Button */}
+                <div className="pt-6 sm:pt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-[#1E140E]/10">
+                  {response === "accept" && (
+                    <div className="flex items-center gap-2 text-xs font-editorial-serif italic text-[#6A5D54] animate-fadeIn">
+                      <span>Attending party:</span>
+                      <select
+                        value={guestCount}
+                        onChange={(e) => setGuestCount(e.target.value)}
+                        className="bg-transparent border-0 border-b border-[#1E140E]/40 text-[#1E140E] font-editorial-serif text-sm px-1 outline-none cursor-pointer"
+                        disabled={isSubmitting}
+                      >
+                        <option value="1">1 Guest</option>
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                      </select>
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="min-h-[48px] px-10 py-3.5 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 shadow-xl bg-[#C9A46E] text-[#1E110A] hover:bg-[#E0BA7E] hover:shadow-2xl disabled:opacity-50 cursor-pointer"
+                    disabled={isSubmitting || !name.trim()}
+                    className="min-h-[46px] w-full sm:w-auto sm:min-w-[200px] sm:ml-auto px-8 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 bg-[#1E140E] text-[#FAF5EE] hover:bg-[#8C6A3B] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-[0_14px_30px_-14px_rgba(43,24,16,0.6)] hover:shadow-[0_18px_36px_-14px_rgba(140,106,59,0.7)] inline-flex items-center justify-center gap-2"
                   >
-                    <span>{isSubmitting ? "Recording Your Reply…" : "Confirm Your Reply"}</span>
+                    <span>{isSubmitting ? "Sending..." : "Submit Reply"}</span>
                     <span aria-hidden>→</span>
                   </button>
                 </div>
 
                 {errorMessage && (
-                  <div role="alert" className="p-4 border border-red-500/40 bg-red-950/40 text-red-200 text-xs text-center rounded-sm">
+                  <div role="alert" className="p-3 border border-red-500/40 bg-red-50 text-red-800 text-xs text-center rounded-md font-sans">
                     {errorMessage}
                   </div>
                 )}
-
-                <p className="text-center text-[10px] uppercase tracking-[0.18em] text-[#E5C387]/60 pt-4">
-                  Responses are saved locally and dispatched to <code className="text-[#C9A46E]">/api/rsvp</code>.
-                </p>
               </form>
             )}
           </div>
         </div>
 
       </div>
+
+      {/* Wedding Footer included at the bottom of the section */}
+      <div className="relative z-10 w-full mt-auto">
+        <WeddingFooter />
+      </div>
+
     </section>
   );
 }

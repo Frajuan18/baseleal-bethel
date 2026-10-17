@@ -120,7 +120,8 @@ export function WishesSection() {
   return (
     <section
       id="wishes"
-      className="relative py-20 sm:py-28 lg:py-36 overflow-hidden border-t border-b border-[#D8DFE8]"
+      data-reveal
+      className="reveal-section scroll-mt-24 relative py-20 sm:py-28 lg:py-36 overflow-hidden border-t border-b border-[#D8DFE8]"
       style={{
         background: "linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 22%, #EFF2F6 48%, #FFFFFF 72%, #F1F4F8 100%)",
       }}
