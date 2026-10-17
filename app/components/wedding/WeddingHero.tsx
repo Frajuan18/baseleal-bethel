@@ -133,7 +133,7 @@ export function WeddingHero() {
           <div className="min-h-[85dvh] sm:min-h-[90dvh] lg:min-h-0 lg:col-span-5 relative flex flex-col justify-center items-center py-12 lg:py-0 w-full">
             {/* Botanical backing — rotated diagonally on mobile so flowers land at top-left & bottom-right corners */}
             <div className="hero-drift pointer-events-none absolute inset-0 z-0 flex items-center justify-center select-none" style={{ animationDuration: "40s" }}>
-              <div className="relative flex-none -rotate-[35deg] lg:rotate-0 lg:translate-x-10 w-[165vw] sm:w-[130vw] md:w-[100vw] lg:w-[820px] max-w-none aspect-[1536/1024]">
+              <div className="relative flex-none rotate-[35deg] lg:rotate-0 lg:translate-x-10 w-[125vw] sm:w-[110vw] md:w-[85vw] lg:w-[820px] max-w-none aspect-[1536/1024]">
                 <Image
                   src="/behind image.png"
                   alt=""
@@ -150,8 +150,7 @@ export function WeddingHero() {
             <div className="hero-anim hero-photo w-full flex justify-center relative z-10" style={step("3.0s", "2200ms")}>
               {/* Camera-Printed Instant Photo Card */}
               <div
-                className="relative bg-white p-3 sm:p-4 pb-10 rounded-md border -rotate-1 hover:rotate-0 transition-all duration-[450ms] ease-out shadow-[0_22px_45px_rgba(30,40,55,0.12),0_6px_16px_rgba(0,0,0,0.05)] hover:shadow-[0_28px_54px_rgba(30,40,55,0.17)] border-[#E2E6EC] lg:translate-x-10"
-                style={{ width: 'min(80vw, 370px)' }}
+                className="relative bg-white p-3 sm:p-4 pb-10 rounded-md border -rotate-1 hover:rotate-0 transition-all duration-[450ms] ease-out shadow-[0_22px_45px_rgba(30,40,55,0.12),0_6px_16px_rgba(0,0,0,0.05)] hover:shadow-[0_28px_54px_rgba(30,40,55,0.17)] border-[#E2E6EC] lg:translate-x-10 w-[60vw] sm:w-[58vw] md:w-[46vw] lg:w-[400px]"
               >
                 {/* Photo frame — taller aspect to show full couple head-to-feet */}
                 <div className="hero-anim hero-clip-down relative aspect-[2/3] w-full overflow-hidden rounded-[2px] bg-[#F2EDE4] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]" style={step("3.6s", "1900ms")}>
