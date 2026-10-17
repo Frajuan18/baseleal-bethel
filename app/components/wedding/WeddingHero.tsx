@@ -52,7 +52,7 @@ export function WeddingHero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center w-full my-auto">
 
           {/* Left Column / Mobile Screen 1: Full-Screen Invitation Copy & Actions */}
-          <div className="min-h-[calc(100dvh-3rem)] sm:min-h-[calc(100dvh-4rem)] lg:min-h-0 lg:col-span-7 flex flex-col items-center justify-center text-center py-10 lg:py-0 w-full">
+          <div className="min-h-[calc(100dvh-3rem)] sm:min-h-[calc(100dvh-4rem)] lg:min-h-0 lg:col-span-7 relative z-10 flex flex-col items-center justify-center text-center py-10 lg:py-0 w-full">
 
             {/* Glassy Div with No Border Radius - Centered text */}
             <div className="hero-anim hero-rise inline-flex items-center justify-center mx-auto px-4 py-1.5 rounded-none backdrop-blur-md shadow-xs select-none border bg-white/75 border-[#D5DCE5] text-[#2B1810]" style={rise("0.4s", "8px", "1100ms")}>
@@ -129,21 +129,39 @@ export function WeddingHero() {
             </div>
           </div>
 
-          {/* Right Column / Mobile Screen 2: Hero Couple Photograph - Found after scroll on mobile */}
+          {/* Right Column / Mobile Screen 2: Hero Couple Photograph */}
           <div className="min-h-[85dvh] sm:min-h-[90dvh] lg:min-h-0 lg:col-span-5 relative flex flex-col justify-center items-center py-12 lg:py-0 w-full">
-            {/* Entrance wrapper — keeps the printed-photo card's own tilt & hover intact */}
-            <div className="hero-anim hero-photo w-full flex justify-center" style={step("3.0s", "2200ms")}>
+            {/* Botanical backing — rotated diagonally on mobile so flowers land at top-left & bottom-right corners */}
+            <div className="hero-drift pointer-events-none absolute inset-0 z-0 flex items-center justify-center select-none" style={{ animationDuration: "40s" }}>
+              <div className="relative flex-none -rotate-[35deg] lg:rotate-0 lg:translate-x-10 w-[165vw] sm:w-[130vw] md:w-[100vw] lg:w-[820px] max-w-none aspect-[1536/1024]">
+                <Image
+                  src="/behind image.png"
+                  alt=""
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 165vw, (max-width: 768px) 130vw, (max-width: 1024px) 100vw, 820px"
+                  className="hero-anim hero-wipe-left object-contain"
+                  style={step("2.7s", "2400ms")}
+                />
+              </div>
+            </div>
+
+            {/* Entrance wrapper */}
+            <div className="hero-anim hero-photo w-full flex justify-center relative z-10" style={step("3.0s", "2200ms")}>
               {/* Camera-Printed Instant Photo Card */}
-              <div className="relative bg-white p-3 sm:p-4 pb-8 sm:pb-10 rounded-md border transform -rotate-1 hover:rotate-0 transition-all duration-[450ms] ease-out max-w-[320px] sm:max-w-[370px] lg:max-w-[400px] w-full shadow-[0_22px_45px_rgba(30,40,55,0.12),0_6px_16px_rgba(0,0,0,0.05),0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_28px_54px_rgba(30,40,55,0.17),0_8px_18px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.06)] border-[#E2E6EC]">
-                {/* Photo Inset Frame with subtle darkroom inset border — unveiled inside its frame */}
-                <div className="hero-anim hero-clip-down relative aspect-[4/5] w-full overflow-hidden rounded-[2px] bg-[#F2EDE4] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]" style={step("3.6s", "1900ms")}>
+              <div
+                className="relative bg-white p-3 sm:p-4 pb-10 rounded-md border -rotate-1 hover:rotate-0 transition-all duration-[450ms] ease-out shadow-[0_22px_45px_rgba(30,40,55,0.12),0_6px_16px_rgba(0,0,0,0.05)] hover:shadow-[0_28px_54px_rgba(30,40,55,0.17)] border-[#E2E6EC] lg:translate-x-10"
+                style={{ width: 'min(80vw, 370px)' }}
+              >
+                {/* Photo frame — taller aspect to show full couple head-to-feet */}
+                <div className="hero-anim hero-clip-down relative aspect-[2/3] w-full overflow-hidden rounded-[2px] bg-[#F2EDE4] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]" style={step("3.6s", "1900ms")}>
                   <Image
                     src="/couple.JPG"
                     alt={`${coupleName} wedding portrait`}
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 400px"
-                    className="object-cover object-[center_20%]"
+                    className="object-cover object-[center_45%]"
                   />
                   {/* Subtle soft gradient reflection */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2B1810]/12 via-transparent to-transparent pointer-events-none" />

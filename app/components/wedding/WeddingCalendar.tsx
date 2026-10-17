@@ -1,8 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { coupleName, wedding } from "@/config/wedding";
+
+/** Sequence step — staggered delay, duration and optional rise distance. */
+const seq = (
+  delay: string,
+  duration = "1200ms",
+  px?: string
+): CSSProperties =>
+  ({
+    "--seq-delay": delay,
+    "--seq-duration": duration,
+    ...(px ? { "--hero-rise": px } : {}),
+  }) as CSSProperties;
 
 function downloadICS(year: number, monthIndex: number, dayNumber: number) {
   const timeString = wedding.time || "10:00";
@@ -103,7 +116,7 @@ export function WeddingCalendar() {
     <section
       id="date"
       data-reveal
-      className="reveal-section scroll-mt-24 py-20 sm:py-28 lg:py-36 bg-[#FFF8D6] relative overflow-hidden transition-colors duration-500"
+      className="reveal-seq scroll-mt-24 py-20 sm:py-28 lg:py-36 bg-[#FFF8D6] relative overflow-hidden transition-colors duration-500"
     >
       {/* High-Definition Tactile Paper Noise Layer */}
       <div
@@ -127,14 +140,14 @@ export function WeddingCalendar() {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
-          <p className="eyebrow text-[#8C6A3B] mb-2.5 font-semibold tracking-[0.28em]">
+          <p data-seq="rise" style={seq("0.5s", "1000ms", "7px")} className="eyebrow text-[#8C6A3B] mb-2.5 font-semibold tracking-[0.28em]">
             Save The Date
           </p>
-          <h2 className="font-editorial-serif text-4xl sm:text-5xl md:text-6xl text-[#2B1810] tracking-tight">
+          <h2 data-seq="rise" style={seq("0.85s", "1200ms", "11px")} className="font-editorial-serif text-4xl sm:text-5xl md:text-6xl text-[#2B1810] tracking-tight">
             The Day of Our Vows
           </h2>
-          <div className="h-px w-16 bg-[#8C6A3B]/50 mx-auto mt-5 mb-5" />
-          <p className="text-sm sm:text-base text-[#38281F] leading-relaxed font-normal">
+          <div data-seq="unfold" style={seq("1.25s", "1000ms")} className="h-px w-16 bg-[#8C6A3B]/50 mx-auto mt-5 mb-5" />
+          <p data-seq="rise" style={seq("1.55s", "1100ms", "8px")} className="text-sm sm:text-base text-[#38281F] leading-relaxed font-normal">
             Mark your calendar to celebrate with us. We want nothing more than to share this sacred day with those who have shaped our lives.
           </p>
         </div>
@@ -146,27 +159,27 @@ export function WeddingCalendar() {
           <div className="md:col-span-1 lg:col-span-6 flex flex-col justify-between py-2 sm:py-4 px-1 sm:px-3 lg:pr-8">
             <div>
               {/* Eyebrow */}
-              <div className="mb-3">
+              <div data-seq="fade" style={seq("1.8s", "900ms")} className="mb-3">
                 <span className="eyebrow text-[#8C6A3B] text-[11px] tracking-[0.28em] font-bold">
                   Celebration Details
                 </span>
               </div>
 
               {/* Weekday */}
-              <h3 className="font-editorial-serif font-semibold text-4xl sm:text-5xl lg:text-6xl text-[#1E140E] leading-none mb-2 tracking-tight">
+              <h3 data-seq="rise" style={seq("2.0s", "1100ms", "10px")} className="font-editorial-serif font-semibold text-4xl sm:text-5xl lg:text-6xl text-[#1E140E] leading-none mb-2 tracking-tight">
                 {weekdayName}
               </h3>
               
               {/* Date */}
-              <p className="font-editorial-serif font-medium text-2xl sm:text-3xl lg:text-4xl italic text-[#8C6A3B] mb-6">
+              <p data-seq="rise" style={seq("2.3s", "1100ms", "10px")} className="font-editorial-serif font-medium text-2xl sm:text-3xl lg:text-4xl italic text-[#8C6A3B] mb-6">
                 {monthName} {dayNumber}, {year}
               </p>
 
               {/* Delicate Hairline Divider */}
-              <div className="h-0.5 w-16 bg-[#8C6A3B]/50 mb-6" />
+              <div data-seq="unfold" style={seq("2.65s", "1000ms")} className="h-0.5 w-16 bg-[#8C6A3B]/50 mb-6" />
 
               {/* Ceremony & Celebration Time - Pure Flowing Editorial Typography */}
-              <div className="space-y-2 mb-8 max-w-lg">
+              <div data-seq="rise" style={seq("2.85s", "1100ms", "10px")} className="space-y-2 mb-8 max-w-lg">
                 <p className="font-editorial-serif font-medium text-lg sm:text-xl text-[#1E140E] leading-snug">
                   Ceremony begins promptly at{" "}
                   <span className="font-bold text-[#8C6A3B]">
@@ -179,7 +192,7 @@ export function WeddingCalendar() {
               </div>
 
               {/* Location & Venue (Clean Minimal Border-Left Accent, No Card Box) */}
-              <div className="border-l-2 border-[#8C6A3B] pl-4 sm:pl-5 py-1.5 my-6">
+              <div data-seq="rise" style={seq("3.15s", "1100ms", "10px")} className="border-l-2 border-[#8C6A3B] pl-4 sm:pl-5 py-1.5 my-6">
                 <div className="flex items-start gap-3.5">
                   <div className="w-8 h-8 rounded-full bg-[#1E140E]/10 border border-[#8C6A3B]/40 flex items-center justify-center shrink-0 mt-0.5 text-[#8C6A3B]">
                     <svg
@@ -213,11 +226,11 @@ export function WeddingCalendar() {
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-8 pt-6 border-t border-[#8C6A3B]/25 flex flex-wrap items-center gap-3.5">
+            <div data-seq="rise" style={seq("3.6s", "1000ms", "6px")} className="mt-8 pt-6 border-t border-[#8C6A3B]/25 flex flex-wrap items-center gap-3.5">
               <button
                 type="button"
                 onClick={handleAddToCalendar}
-                className="min-h-[46px] px-7 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold inline-flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-xl bg-[#1E140E] text-[#FAF6F0] hover:bg-[#8C6A3B] group focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2"
+                className="min-h-[46px] px-7 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold inline-flex items-center justify-center gap-2 transition-all duration-[420ms] shadow-md hover:shadow-xl bg-[#1E140E] text-[#FAF6F0] hover:bg-[#8C6A3B] group focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2"
                 aria-label="Download Apple or Outlook iCal invitation"
               >
                 <span>{downloadSuccess ? "Invitation Downloaded ✓" : "Add to Calendar"}</span>
@@ -230,7 +243,7 @@ export function WeddingCalendar() {
                 href={getGoogleCalendarUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[46px] px-6 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-medium inline-flex items-center justify-center gap-1.5 transition-all duration-300 bg-[#FAF5EE] border border-[#DED2C2] text-[#1E140E] hover:bg-[#FAF8F5] shadow-xs hover:shadow-sm"
+                className="min-h-[46px] px-6 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-medium inline-flex items-center justify-center gap-1.5 transition-all duration-[420ms] bg-[#FAF5EE] border border-[#DED2C2] text-[#1E140E] hover:bg-[#FAF8F5] shadow-xs hover:shadow-sm"
               >
                 <span>Google Calendar</span>
                 <span aria-hidden>↗</span>
@@ -251,10 +264,12 @@ export function WeddingCalendar() {
 
           {/* Right Column: Calendar Grid in Warm Ivory Linen */}
           <div className="md:col-span-1 lg:col-span-6 flex flex-col justify-between">
-            <div className="h-full bg-[#FAF5EE] border border-[#DED2C2] p-6 sm:p-10 shadow-[0_16px_40px_-10px_rgba(43,24,16,0.07)] rounded-md flex flex-col justify-between relative overflow-hidden">
+            <div data-seq="card" style={{ ...seq("1.7s", "1700ms"), "--photo-rise": "14px" } as CSSProperties} className="h-full bg-[#FAF5EE] border border-[#DED2C2] p-6 sm:p-10 shadow-[0_16px_40px_-10px_rgba(43,24,16,0.07)] rounded-md flex flex-col justify-between relative overflow-hidden">
               
               {/* Botanical Corner Flower Illustration at Bottom Right */}
               <div
+                data-seq="draw-down"
+                style={seq("3.3s", "2000ms")}
                 className="pointer-events-none absolute -bottom-3 -right-3 w-52 sm:w-64 md:w-72 lg:w-80 select-none z-10 opacity-80 sm:opacity-90 mix-blend-multiply"
                 aria-hidden
               >
@@ -270,9 +285,9 @@ export function WeddingCalendar() {
 
               <div className="relative z-20">
                 {/* Calendar Month & Year Bar */}
-                <div className="flex items-center justify-between pb-5 border-b border-[#E5DDD2]">
+                <div className="flex items-center justify-between pb-5">
                   <div>
-                    <div className="flex items-center gap-2">
+                    <div data-seq="fade" style={seq("2.05s", "1000ms")} className="flex items-center gap-2">
                       <span className="font-editorial-serif text-3xl sm:text-4xl text-[#1E140E] leading-tight">
                         {monthName}
                       </span>
@@ -280,13 +295,13 @@ export function WeddingCalendar() {
                         {year}
                       </span>
                     </div>
-                    <span className="block text-[10px] uppercase tracking-[0.25em] text-[#857365] mt-1 font-medium">
+                    <span data-seq="fade" style={seq("2.4s", "900ms")} className="block text-[10px] uppercase tracking-[0.25em] text-[#857365] mt-1 font-medium">
                       Wedding Celebration Month
                     </span>
                   </div>
 
                   {/* Monogram Seal Badge */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 select-none drop-shadow-[0_3px_6px_rgba(43,24,16,0.28)]">
+                  <div data-seq="card" style={{ ...seq("2.3s", "1400ms"), "--photo-rise": "0px" } as CSSProperties} className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 select-none drop-shadow-[0_3px_6px_rgba(43,24,16,0.28)]">
                     <Image
                       src="/b and b.png"
                       alt={`${wedding.couple.monogram} monogram seal`}
@@ -297,8 +312,11 @@ export function WeddingCalendar() {
                   </div>
                 </div>
 
+                {/* Calendar Divider */}
+                <div data-seq="fade" style={seq("2.5s", "900ms")} className="h-px w-full bg-[#E5DDD2]" />
+
                 {/* Weekday Labels (Sun Mon Tue Wed Thu Fri Sat) */}
-                <div className="grid grid-cols-7 gap-1 mt-6 text-center">
+                <div data-seq="fade" style={seq("2.7s", "1200ms")} className="grid grid-cols-7 gap-1 mt-6 text-center">
                   {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
                     <span
                       key={day}
@@ -310,7 +328,7 @@ export function WeddingCalendar() {
                 </div>
 
                 {/* Day Cells Grid */}
-                <div className="grid grid-cols-7 gap-y-2.5 gap-x-1 mt-3 text-center text-xs sm:text-sm">
+                <div data-seq="fade" style={seq("3.0s", "1500ms")} className="grid grid-cols-7 gap-y-2.5 gap-x-1 mt-3 text-center text-xs sm:text-sm">
                   {/* Empty offset days for start of month */}
                   {Array.from({ length: startDayOffset }).map((_, i) => (
                     <span key={`blank-${i}`} className="py-2.5 opacity-0 select-none">

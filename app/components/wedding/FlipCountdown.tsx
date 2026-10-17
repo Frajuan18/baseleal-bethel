@@ -1,8 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { wedding } from "@/config/wedding";
+
+/** Sequence step — staggered delay, duration and optional rise distance. */
+const seq = (
+  delay: string,
+  duration = "1200ms",
+  px?: string
+): CSSProperties =>
+  ({
+    "--seq-delay": delay,
+    "--seq-duration": duration,
+    ...(px ? { "--hero-rise": px } : {}),
+  }) as CSSProperties;
 
 interface TimeUnits {
   days: number;
@@ -14,9 +27,13 @@ interface TimeUnits {
 function FlipUnitCard({
   value,
   label,
+  dataSeq,
+  style,
 }: {
   value: string;
   label: string;
+  dataSeq?: string;
+  style?: CSSProperties;
 }) {
   const [currentVal, setCurrentVal] = useState(value);
   const [prevVal, setPrevVal] = useState(value);
@@ -39,7 +56,7 @@ function FlipUnitCard({
   }, [value, currentVal]);
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div data-seq={dataSeq} style={style} className="flex flex-col items-center w-full">
       {/* Authentic Fliqlo Split-Flap Clock Card in Textured Brown Beige */}
       <div className="fliqlo-card-container relative w-full aspect-[1/1.12] sm:aspect-[1/1.16] rounded-xl sm:rounded-2xl bg-[#3A281E] shadow-[0_22px_45px_-8px_rgba(43,24,16,0.38),0_8px_18px_rgba(43,24,16,0.22),inset_0_1px_1px_rgba(254,232,133,0.18)] border border-[#5A4032] select-none">
         
@@ -195,14 +212,16 @@ export function FlipCountdown() {
     { key: "seconds", label: "Seconds" },
   ];
 
+  const cardDelays = ["1.7s", "1.95s", "2.2s", "2.45s"];
+
   return (
     <section
       id="countdown"
       data-reveal
-      className="reveal-section scroll-mt-24 py-20 sm:py-28 lg:py-32 relative overflow-hidden border-y border-[#EAE3D9] bg-[#FAF8F5]"
+      className="reveal-seq scroll-mt-24 py-20 sm:py-28 lg:py-32 relative overflow-hidden border-y border-[#EAE3D9] bg-[#FAF8F5]"
     >
       {/* Background Image: countdown bg.png */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+      <div data-seq="bg" className="absolute inset-0 z-0 pointer-events-none select-none">
         <Image
           src="/countdown bg.png"
           alt="Countdown background"
@@ -224,17 +243,17 @@ export function FlipCountdown() {
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 text-center">
         
         {/* Eyebrow and Heading in Brown Beige */}
-        <p className="eyebrow text-[#8C6A3B] mb-2.5 tracking-[0.28em] font-semibold">
+        <p data-seq="rise" style={seq("0.5s", "1000ms", "7px")} className="eyebrow text-[#8C6A3B] mb-2.5 tracking-[0.28em] font-semibold">
           Until We Say &ldquo;I Do&rdquo;
         </p>
 
-        <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#2B1810] max-w-2xl mx-auto leading-tight">
+        <h2 data-seq="rise" style={seq("0.85s", "1200ms", "11px")} className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#2B1810] max-w-2xl mx-auto leading-tight">
           {isCelebrationDay
             ? "Today, With Joyous Hearts, We Celebrate!"
             : "The Journey to Our Wedding Day"}
         </h2>
 
-        <div className="h-px w-16 bg-[#8C6A3B]/40 mx-auto mt-5 mb-10 sm:mb-14" />
+        <div data-seq="unfold" style={seq("1.25s", "1000ms")} className="h-px w-16 bg-[#8C6A3B]/40 mx-auto mt-5 mb-10 sm:mb-14" />
 
         {/* Screen Reader Accessible Announcement */}
         <div className="sr-only" aria-live="polite">
@@ -246,13 +265,15 @@ export function FlipCountdown() {
         {/* Textured Brown Beige Cards Flip Countdown Display with Butter Yellow Digits */}
         {timeLeft && !isCelebrationDay && (
           <div className="grid grid-cols-4 gap-3 sm:gap-5 md:gap-7 max-w-3xl mx-auto">
-            {units.map((unit) => {
+            {units.map((unit, i) => {
               const val = String(timeLeft[unit.key]).padStart(2, "0");
               return (
                 <FlipUnitCard
                   key={unit.key}
                   value={val}
                   label={unit.label}
+                  dataSeq="card"
+                  style={{ ...seq(cardDelays[i], "1400ms"), "--photo-rise": "14px" } as CSSProperties}
                 />
               );
             })}
@@ -261,7 +282,7 @@ export function FlipCountdown() {
 
         {isCelebrationDay && (
           /* Celebration Day Banner */
-          <div className="bg-[#FAF6EE] border border-[#8C6A3B]/40 p-8 sm:p-12 max-w-xl mx-auto rounded-sm shadow-sm">
+          <div data-seq="card" style={{ ...seq("1.7s", "1400ms"), "--photo-rise": "14px" } as CSSProperties} className="bg-[#FAF6EE] border border-[#8C6A3B]/40 p-8 sm:p-12 max-w-xl mx-auto rounded-sm shadow-sm">
             <p className="font-editorial-serif text-3xl sm:text-4xl text-[#8C6A3B] italic mb-3">
               The day has arrived!
             </p>
@@ -272,7 +293,7 @@ export function FlipCountdown() {
         )}
 
         {/* Editorial Scripture Blessing in Warm Brown Beige */}
-        <p className="mt-12 text-xs sm:text-sm font-editorial-serif italic text-[#7A5A35] max-w-lg mx-auto">
+        <p data-seq="fade" style={seq("3.6s", "1300ms")} className="mt-12 text-xs sm:text-sm font-editorial-serif italic text-[#7A5A35] max-w-lg mx-auto">
           “Therefore what God has joined together, let no one separate.”
         </p>
       </div>

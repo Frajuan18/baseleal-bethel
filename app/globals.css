@@ -524,13 +524,17 @@ body {
 }
 
 /* Hidden only once JS is running, so content stays visible without it */
-.js-reveal .reveal-seq [data-seq] {
+.js-reveal .reveal-seq [data-seq="fade"],
+.js-reveal .reveal-seq [data-seq="rise"],
+.js-reveal .reveal-seq [data-seq="card"],
+.js-reveal .reveal-seq [data-seq="wipe"],
+.js-reveal .reveal-seq [data-seq="unfold"] {
   opacity: 0;
 }
 
-/* Mask-only reveals keep their own resting opacity */
+/* Mask-only reveal — hidden by clip so the artwork keeps its own opacity */
 .js-reveal .reveal-seq [data-seq="draw-down"] {
-  opacity: 0.95;
+  clip-path: inset(0 0 100% 0);
 }
 
 .js-reveal .reveal-seq.is-visible [data-seq] {
@@ -564,10 +568,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .js-reveal .reveal-seq [data-seq] {
     opacity: 1;
-    animation: none !important;
-  }
-  .js-reveal .reveal-seq.is-visible [data-seq="bg"] {
     clip-path: none;
+    animation: none !important;
   }
 }
 
