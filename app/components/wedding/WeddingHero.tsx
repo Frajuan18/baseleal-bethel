@@ -62,14 +62,14 @@ export function WeddingHero() {
             </div>
 
             {/* Main Headline - Sized grandly to fill the mobile first screen */}
-            <h1 className="mt-5 sm:mt-6 font-hero-serif text-[clamp(4.25rem,17vw,7.5rem)] leading-[0.88] sm:leading-[0.94] tracking-[-0.035em] font-normal text-center w-full">
-              <span className="hero-anim hero-rise block sm:inline whitespace-nowrap text-[#2B1810]" style={rise("0.85s", "12px", "1600ms")}>
+            <h1 className="relative mt-5 sm:mt-6 font-hero-serif text-[clamp(3.9rem,15vw,6.75rem)] leading-[1.08] tracking-[0.01em] font-normal text-center w-full">
+              <span className="font-brittany-signature hero-anim hero-rise block whitespace-nowrap text-[#2B1810]" style={rise("0.85s", "12px", "1600ms")}>
                 {wedding.couple.first}
-              </span>{" "}
-              <span className="hero-anim hero-rise block sm:inline my-2 sm:my-0 sm:mx-3 italic font-normal text-[#B18A54]" style={rise("1.25s", "10px", "1600ms")}>
+              </span>
+              <span className="hero-anim hero-rise block my-1 sm:absolute sm:top-[0.3em] sm:right-[4%] sm:my-0 italic font-normal text-[#B18A54]" style={rise("1.25s", "10px", "1600ms")}>
                 <span className="gold-breath inline-block">&amp;</span>
-              </span>{" "}
-              <span className="hero-anim hero-rise block sm:inline whitespace-nowrap text-[#2B1810]" style={rise("1.6s", "12px", "1600ms")}>
+              </span>
+              <span className="font-brittany-signature hero-anim hero-rise mt-3 sm:mt-5 block whitespace-nowrap text-[#2B1810]" style={rise("1.6s", "12px", "1600ms")}>
                 {wedding.couple.second}
               </span>
             </h1>

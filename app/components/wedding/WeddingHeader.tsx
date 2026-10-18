@@ -8,8 +8,7 @@ const navItems = [
   { label: "The Date", href: "#date" },
   { label: "Countdown", href: "#countdown" },
   { label: "Moments", href: "#moments" },
-  { label: "Wishes", href: "#wishes" },
-  { label: "RSVP", href: "#rsvp" },
+  { label: "RSVP & Wishes", href: "#rsvp" },
 ];
 
 export function WeddingHeader() {

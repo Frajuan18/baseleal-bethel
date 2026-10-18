@@ -49,6 +49,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.font-brittany-signature {
+  font-family: 'Brittany Signature', cursive;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
@@ -572,5 +576,4 @@ body {
     animation: none !important;
   }
 }
-
 

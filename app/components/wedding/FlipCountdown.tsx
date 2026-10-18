@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import Image from "next/image";
 import { wedding } from "@/config/wedding";
 
 /** Sequence step — staggered delay, duration and optional rise distance. */
@@ -220,16 +219,19 @@ export function FlipCountdown() {
       data-reveal
       className="reveal-seq scroll-mt-24 py-20 sm:py-28 lg:py-32 relative overflow-hidden border-y border-[#EAE3D9] bg-[#FAF8F5]"
     >
-      {/* Background Image: countdown bg.png */}
-      <div data-seq="bg" className="absolute inset-0 z-0 pointer-events-none select-none">
-        <Image
-          src="/countdown bg.png"
-          alt="Countdown background"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
+      {/* Ambient countdown film background */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/countdown bg.png"
+          className="h-full w-full object-cover object-center"
+          aria-hidden
+        >
+          <source src="/video bg.mp4" type="video/mp4" />
+        </video>
       </div>
 
       {/* Decorative Warm Brown Beige Watermark */}

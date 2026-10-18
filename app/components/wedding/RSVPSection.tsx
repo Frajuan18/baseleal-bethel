@@ -97,7 +97,7 @@ export function RSVPSection() {
             Join Our Celebration
           </p>
           <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#2B1810]">
-            Will You Join Us?
+            RSVP &amp; Leave a Wish
           </h2>
           <div className="h-px w-14 bg-[#8C6A3B]/40 mx-auto mt-3.5 mb-3.5" />
         </div>
@@ -138,8 +138,8 @@ export function RSVPSection() {
                 </h3>
                 <p className="font-editorial-serif italic text-base text-[#5A4F46] leading-relaxed max-w-lg">
                   {submittedData.response === "accept"
-                    ? "Your attendance has been joyfully recorded. We cannot wait to celebrate with you!"
-                    : "We have received your reply. Although you will be missed in person, we cherish your love and prayers."}
+                    ? "Your attendance and message have been joyfully recorded. We cannot wait to celebrate with you!"
+                    : "We have received your reply. Although you will be missed in person, we cherish your love, prayers, and message."}
                 </p>
                 <div className="pt-4">
                   <button
@@ -157,11 +157,31 @@ export function RSVPSection() {
                 {/* Header: RSVP with reply-by note */}
                 <div className="pb-6 sm:pb-7 border-b border-[#1E140E]/10">
                   <h3 className="font-editorial-serif text-3xl sm:text-4xl lg:text-5xl text-[#1E140E] leading-none tracking-[0.04em]">
-                    RSVP
+                    Make a Wish for the Couple
                   </h3>
                   <p className="mt-2.5 font-editorial-serif italic text-base sm:text-lg text-[#8C6A3B]">
-                    Kindly reply by {wedding.rsvpDeadline || "4th October"}
+                    Share your wish, then kindly reply by {wedding.rsvpDeadline || "4th October"}.
                   </p>
+                </div>
+
+                {/* Wishlist input */}
+                <div>
+                  <label
+                    htmlFor="guest-secondary"
+                    className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-medium text-[#2B1810]"
+                  >
+                    Your Wish for the Couple <span className="text-[#8C6A3B]">*</span>
+                  </label>
+                  <textarea
+                    id="guest-secondary"
+                    rows={3}
+                    required
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    placeholder="Share your love, prayer, or a note for the couple."
+                    className="mt-2 w-full resize-none bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 {/* Interactive attendance choice */}
@@ -271,7 +291,7 @@ export function RSVPSection() {
                 </fieldset>
 
                 {/* Guest details */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                <div>
                   <div>
                     <label
                       htmlFor="guest-name"
@@ -286,25 +306,6 @@ export function RSVPSection() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Your name"
-                      className="mt-2 w-full bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
-                      disabled={isSubmitting}
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="guest-secondary"
-                      className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-medium text-[#2B1810]"
-                    >
-                      A Note{" "}
-                      <span className="normal-case tracking-normal text-[#8A7A6B] font-normal">(optional)</span>
-                    </label>
-                    <input
-                      id="guest-secondary"
-                      type="text"
-                      value={note}
-                      onChange={(e) => setNote(e.target.value)}
-                      placeholder="Names of additional guests, etc."
                       className="mt-2 w-full bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
                       disabled={isSubmitting}
                     />
@@ -332,7 +333,7 @@ export function RSVPSection() {
 
                   <button
                     type="submit"
-                    disabled={isSubmitting || !name.trim()}
+                    disabled={isSubmitting || !name.trim() || !note.trim()}
                     className="min-h-[46px] w-full sm:w-auto sm:min-w-[200px] sm:ml-auto px-8 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 bg-[#1E140E] text-[#FAF5EE] hover:bg-[#8C6A3B] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-[0_14px_30px_-14px_rgba(43,24,16,0.6)] hover:shadow-[0_18px_36px_-14px_rgba(140,106,59,0.7)] inline-flex items-center justify-center gap-2"
                   >
                     <span>{isSubmitting ? "Sending..." : "Submit Reply"}</span>
