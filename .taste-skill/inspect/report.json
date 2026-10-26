@@ -1,0 +1,3202 @@
+{
+ "url": "http://localhost:3000",
+ "at": "2026-10-24T09:05:14.118Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    1,
+    0.99,
+    0.94,
+    1,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 73,
+    "css": 70,
+    "transitions": 2,
+    "scripted": 1,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 5383,
+     "screens": 6,
+     "words": 337,
+     "img": 6,
+     "video": 1,
+     "canvas": 0,
+     "svg": 5,
+     "sections": 5,
+     "horizontalOverflow": 159,
+     "overflowCulprits": [
+      "img.w-full.h-full (+159px)",
+      "div.w-full.flex (+128px)"
+     ],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fcouple%20main.JPG&w=750&q=75",
+      "invit%20img.png",
+      "image?url=%2Fcard%20flower.png&w=256&q=75",
+      "image?url=%2Fcalendar%20flower.png&w=1080&q=75",
+      "rsvp%20bg1.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [
+      "✦"
+     ],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Baseleal & Bethel",
+     "words": 3,
+     "chars": 17,
+     "lines": 2,
+     "size": 84,
+     "vw": 5.8,
+     "font": "Cormorant Garamond",
+     "weight": 400,
+     "tracking": -0.02,
+     "leading": 0.95,
+     "upper": false,
+     "italic": true,
+     "mono": false,
+     "align": "center",
+     "position": "left",
+     "widthRatio": 0.32,
+     "top": 300,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Baseleal & Bethel",
+     "words": 3,
+     "lines": 2,
+     "size": 84,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "Baseleal & Bethel",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 84,
+      "vw": 5.8,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": true,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 300,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "A Day to Hold Close",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 41.6,
+      "vw": 2.9,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.11,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.22,
+      "top": 1040,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Baseleal and Bethel",
+      "words": 3,
+      "chars": 19,
+      "lines": 2,
+      "size": 37.6,
+      "vw": 2.6,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.19,
+      "top": 1191,
+      "mixedFonts": [
+       "Cormorant Garamond",
+       "Cormorant Garamond italic"
+      ],
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "3",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 37.6,
+      "vw": 2.6,
+      "font": "Cormorant Garamond",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.01,
+      "top": 1387,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "The Day of Our Vows",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 60,
+      "vw": 4.2,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 1969,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Sunday",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 60,
+      "vw": 4.2,
+      "font": "Cormorant Garamond",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 2254,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "January",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 36,
+      "vw": 2.5,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.07,
+      "top": 2267,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "January 3, 2027",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 36,
+      "vw": 2.5,
+      "font": "Cormorant Garamond",
+      "weight": 500,
+      "tracking": 0,
+      "leading": 1.11,
+      "upper": false,
+      "italic": true,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 2322,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "The Journey to Our Wedding Day",
+      "words": 6,
+      "chars": 30,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 3122,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "70 70",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 96,
+      "vw": 6.7,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.12,
+      "top": 3259,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "21 21",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 96,
+      "vw": 6.7,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.12,
+      "top": 3259,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "54 54",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 96,
+      "vw": 6.7,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.12,
+      "top": 3259,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "33 34 34 33",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 96,
+      "vw": 6.7,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.12,
+      "top": 3259,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "&",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 384,
+      "vw": 26.7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.19,
+      "top": 3358,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "RSVP & Leave a Wish",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.4,
+      "top": 3932,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Make a Wish for the Couple",
+      "words": 6,
+      "chars": 26,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0.04,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.45,
+      "top": 4100,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "BASELEAL & BETHEL",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 136,
+      "vw": 9.4,
+      "font": "Cormorant Garamond",
+      "weight": 300,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.81,
+      "top": 4959,
+      "tag": "div",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 17,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 11,
+     "medianWords": 3,
+     "mixedFontHeadings": 1
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.5,
+       "mono": false
+      },
+      {
+       "family": "Montserrat",
+       "share": 0.5,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      16,
+      18,
+      20,
+      21,
+      24,
+      30,
+      36,
+      38,
+      42,
+      48,
+      60,
+      84,
+      96,
+      136,
+      384
+     ],
+     "sizeCount": 20,
+     "notLoaded": [],
+     "body": {
+      "font": "Montserrat",
+      "size": 16,
+      "leading": 1.63,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 13.2
+     },
+     "measureChars": 66,
+     "max": {
+      "size": 384,
+      "vw": 26.7,
+      "font": "Cormorant Garamond",
+      "text": "&"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 35,
+     "microLabelShare": 0.298,
+     "microSamples": [
+      "Our Covenant",
+      "The Wedding Of",
+      "Request The Presence Of Your Company",
+      "For Their Upcoming Wedding",
+      "JAN",
+      "2027"
+     ],
+     "upperShare": 0.37,
+     "centerShare": 0.37,
+     "smallText": 22
+    },
+    "eyebrows": [
+     {
+      "text": "Our Covenant",
+      "above": "A Day to Hold Close",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 1019
+     },
+     {
+      "text": "The Wedding Of",
+      "above": "Baseleal and Bethel",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 1168
+     },
+     {
+      "text": "JAN",
+      "above": "3",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 1368
+     },
+     {
+      "text": "Save The Date",
+      "above": "The Day of Our Vows",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 1944
+     },
+     {
+      "text": "Celebration Details",
+      "above": "Sunday",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 2224
+     },
+     {
+      "text": "Until We Say “I Do”",
+      "above": "The Journey to Our Wedding Day",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 3097
+     },
+     {
+      "text": "Join Our Celebration",
+      "above": "RSVP & Leave a Wish",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 3911
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f8f4ed",
+     "bodyBgHsl": {
+      "h": 38,
+      "s": 0.44,
+      "l": 0.95
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8f4ed",
+       "top": 0,
+       "hsl": {
+        "h": 38,
+        "s": 0.44,
+        "l": 0.95
+       }
+      },
+      {
+       "color": "#f4ebdd",
+       "top": 0,
+       "hsl": {
+        "h": 37,
+        "s": 0.51,
+        "l": 0.91
+       }
+      },
+      {
+       "color": "#f3f2ee",
+       "top": 900,
+       "hsl": {
+        "h": 48,
+        "s": 0.17,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#fff8d6",
+       "top": 1800,
+       "hsl": {
+        "h": 50,
+        "s": 1,
+        "l": 0.92
+       }
+      },
+      {
+       "color": "#faf8f5",
+       "top": 2968,
+       "hsl": {
+        "h": 36,
+        "s": 0.33,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#faf5ee",
+       "top": 3687,
+       "hsl": {
+        "h": 35,
+        "s": 0.55,
+        "l": 0.96
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 4043,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1e140e",
+       "share": 0.12
+      },
+      {
+       "color": "#8c6a3b",
+       "share": 0.12
+      },
+      {
+       "color": "#553c2d",
+       "share": 0.11
+      },
+      {
+       "color": "#2b1810",
+       "share": 0.1
+      },
+      {
+       "color": "#3e2f26",
+       "share": 0.1
+      }
+     ],
+     "button": {
+      "bg": "#1e140e",
+      "hsl": {
+       "h": 23,
+       "s": 0.36,
+       "l": 0.09
+      },
+      "fg": "#faf6f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 46,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 5,
+     "heroLabels": [
+      "RSVP NOW"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 13,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "article.relative.z-20 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "button.min-h-[46px].px-7 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.min-h-[46px].px-6 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 1,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.pointer-events-none.absolute → linear-gradient(lab(96.7841 0.836074 4.00157 / 0.15) 0%, rgba(0, 0, 0, 0) 50%, lab(96.7841 0.836074 4.00157 / "
+     ],
+     "gradientText": 0,
+     "hairlines": 11,
+     "hairlineSamples": [
+      "div.mt-8.pt-6 516px",
+      "section#countdown.reveal-seq.scroll-mt-24 1440px",
+      "div.pb-6.sm:pb-7 654px",
+      "div.pt-6.sm:pt-7 654px",
+      "footer.relative.bg-transparent 1440px"
+     ],
+     "outlinedBoxes": 8,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 7,
+     "boxRadius": 16,
+     "squareMedia": 6,
+     "roundedMedia": 4,
+     "mediaRadius": 4,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.5
+     }
+    ],
+    "nav": null,
+    "fontsLoaded": [
+     "cormorant garamond",
+     "montserrat"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 5383,
+    "margins": {
+     "left": 148,
+     "right": 177
+    },
+    "sections": [
+     {
+      "sel": "section#top.grid.min-h-[100svh]",
+      "tag": "section",
+      "top": 0,
+      "height": 900,
+      "words": 8,
+      "media": 1,
+      "middle": 233,
+      "heading": {
+       "text": "Baseleal",
+       "size": 84,
+       "tag": "h1"
+      },
+      "left": 247,
+      "right": 0,
+      "textLeft": 247,
+      "textRight": 953,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#invitation.reveal-seq.scroll-mt-24",
+      "tag": "section",
+      "top": 900,
+      "height": 900,
+      "words": 70,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "A Day to Hold Close",
+       "size": 42,
+       "tag": "h2"
+      },
+      "left": 691,
+      "right": 183,
+      "textLeft": 691,
+      "textRight": 320,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#date.reveal-seq.scroll-mt-24",
+      "tag": "section",
+      "top": 1800,
+      "height": 1168,
+      "words": 116,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "The Day of Our Vows",
+       "size": 60,
+       "tag": "h2"
+      },
+      "left": 148,
+      "right": 125,
+      "textLeft": 148,
+      "textRight": 196,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#countdown.reveal-seq.scroll-mt-24",
+      "tag": "section",
+      "top": 2968,
+      "height": 719,
+      "words": 36,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "70",
+       "size": 96,
+       "tag": "span"
+      },
+      "left": 337,
+      "right": 331,
+      "textLeft": 357,
+      "textRight": 354,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.absolute.inset-0",
+      "tag": "div",
+      "top": 3687,
+      "height": 1696,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 3687,
+      "height": 1696,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.relative.z-10",
+      "tag": "div",
+      "top": 3911,
+      "height": 871,
+      "words": 48,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "RSVP & Leave a Wish",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 337,
+      "right": 337,
+      "textLeft": 393,
+      "textRight": 446,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.relative.z-10",
+      "tag": "div",
+      "top": 4878,
+      "height": 505,
+      "words": 17,
+      "media": 0,
+      "middle": 79,
+      "heading": {
+       "text": "Baseleal",
+       "size": 136,
+       "tag": "span"
+      },
+      "left": 136,
+      "right": 136,
+      "textLeft": 136,
+      "textRight": 136,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Baseleal & Bethel",
+      "size": 84,
+      "top": 300,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 148,
+      "n": 2
+     },
+     {
+      "x": 691,
+      "n": 2
+     },
+     {
+      "x": 216,
+      "n": 1
+     },
+     {
+      "x": 393,
+      "n": 1
+     },
+     {
+      "x": 809,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 7,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.17,
+    "voidBox": {
+     "x": 0,
+     "y": 600,
+     "w": 720,
+     "h": 300
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    1,
+    1,
+    0.99,
+    0.94,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 70,
+    "css": 67,
+    "transitions": 2,
+    "scripted": 1,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 5849,
+     "screens": 5.7,
+     "words": 337,
+     "img": 6,
+     "video": 1,
+     "canvas": 0,
+     "svg": 5,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fcouple%20main.JPG&w=828&q=75",
+      "invit%20img.png",
+      "image?url=%2Fcard%20flower.png&w=256&q=75",
+      "image?url=%2Fcalendar%20flower.png&w=1080&q=75",
+      "rsvp%20bg1.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [
+      "✦"
+     ],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Baseleal & Bethel",
+     "words": 3,
+     "chars": 17,
+     "lines": 1,
+     "size": 53.8,
+     "vw": 7,
+     "font": "Cormorant Garamond",
+     "weight": 400,
+     "tracking": -0.02,
+     "leading": 0.95,
+     "upper": false,
+     "italic": true,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.41,
+     "top": 80,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Baseleal & Bethel",
+     "words": 3,
+     "lines": 1,
+     "size": 53.8,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "Baseleal & Bethel",
+      "words": 3,
+      "chars": 17,
+      "lines": 1,
+      "size": 53.8,
+      "vw": 7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": true,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.41,
+      "top": 80,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "A Day to Hold Close",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 41.6,
+      "vw": 5.4,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.11,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.42,
+      "top": 1579,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Baseleal and Bethel",
+      "words": 3,
+      "chars": 19,
+      "lines": 2,
+      "size": 29.2,
+      "vw": 3.8,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 1734,
+      "mixedFonts": [
+       "Cormorant Garamond",
+       "Cormorant Garamond italic"
+      ],
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "3",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 37.6,
+      "vw": 4.9,
+      "font": "Cormorant Garamond",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.02,
+      "top": 1912,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "The Day of Our Vows",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 60,
+      "vw": 7.8,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 2532,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "January",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.14,
+      "top": 2815,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "Sunday",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "Cormorant Garamond",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 2817,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "January 3, 2027",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 500,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": true,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 2873,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "The Journey to Our Wedding Day",
+      "words": 6,
+      "chars": 30,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 3771,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "70 70",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 72,
+      "vw": 9.4,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.2,
+      "top": 3908,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "21 21",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 72,
+      "vw": 9.4,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.2,
+      "top": 3908,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "54 54",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 72,
+      "vw": 9.4,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.2,
+      "top": 3908,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "24 25 25 24",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 72,
+      "vw": 9.4,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.2,
+      "top": 3909,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "&",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 384,
+      "vw": 50,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.35,
+      "top": 3972,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "RSVP & Leave a Wish",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.75,
+      "top": 4514,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Make a Wish for the Couple",
+      "words": 6,
+      "chars": 26,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0.04,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.73,
+      "top": 4682,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "BASELEAL & BETHEL",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 84.5,
+      "vw": 11,
+      "font": "Cormorant Garamond",
+      "weight": 300,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5528,
+      "tag": "div",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 17,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 11,
+     "medianWords": 3,
+     "mixedFontHeadings": 1
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.5,
+       "mono": false
+      },
+      {
+       "family": "Montserrat",
+       "share": 0.5,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      20,
+      23,
+      24,
+      29,
+      30,
+      36,
+      38,
+      42,
+      48,
+      54,
+      60,
+      72,
+      85,
+      384
+     ],
+     "sizeCount": 22,
+     "notLoaded": [],
+     "body": {
+      "font": "Montserrat",
+      "size": 16,
+      "leading": 1.63,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 13.2
+     },
+     "measureChars": 66,
+     "max": {
+      "size": 384,
+      "vw": 50,
+      "font": "Cormorant Garamond",
+      "text": "&"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 35,
+     "microLabelShare": 0.298,
+     "microSamples": [
+      "Our Covenant",
+      "The Wedding Of",
+      "Request The Presence Of Your Company",
+      "For Their Upcoming Wedding",
+      "JAN",
+      "2027"
+     ],
+     "upperShare": 0.37,
+     "centerShare": 0.37,
+     "smallText": 22
+    },
+    "eyebrows": [
+     {
+      "text": "Our Covenant",
+      "above": "A Day to Hold Close",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 1558
+     },
+     {
+      "text": "The Wedding Of",
+      "above": "Baseleal and Bethel",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 1711
+     },
+     {
+      "text": "JAN",
+      "above": "3",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 1894
+     },
+     {
+      "text": "Save The Date",
+      "above": "The Day of Our Vows",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 2506
+     },
+     {
+      "text": "Celebration Details",
+      "above": "Sunday",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 2787
+     },
+     {
+      "text": "Celebration Details",
+      "above": "January 3, 2027",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 2787
+     },
+     {
+      "text": "Until We Say “I Do”",
+      "above": "The Journey to Our Wedding Day",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 3745
+     },
+     {
+      "text": "Join Our Celebration",
+      "above": "RSVP & Leave a Wish",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 4493
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f8f4ed",
+     "bodyBgHsl": {
+      "h": 38,
+      "s": 0.44,
+      "l": 0.95
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8f4ed",
+       "top": 0,
+       "hsl": {
+        "h": 38,
+        "s": 0.44,
+        "l": 0.95
+       }
+      },
+      {
+       "color": "#f4ebdd",
+       "top": 0,
+       "hsl": {
+        "h": 37,
+        "s": 0.51,
+        "l": 0.91
+       }
+      },
+      {
+       "color": "#f3f2ee",
+       "top": 1370,
+       "hsl": {
+        "h": 48,
+        "s": 0.17,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#faf5ee",
+       "top": 1670,
+       "hsl": {
+        "h": 35,
+        "s": 0.55,
+        "l": 0.96
+       }
+      },
+      {
+       "color": "#fff8d6",
+       "top": 2394,
+       "hsl": {
+        "h": 50,
+        "s": 1,
+        "l": 0.92
+       }
+      },
+      {
+       "color": "#faf8f5",
+       "top": 3632,
+       "hsl": {
+        "h": 36,
+        "s": 0.33,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 4625,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1e140e",
+       "share": 0.12
+      },
+      {
+       "color": "#8c6a3b",
+       "share": 0.12
+      },
+      {
+       "color": "#553c2d",
+       "share": 0.11
+      },
+      {
+       "color": "#2b1810",
+       "share": 0.1
+      },
+      {
+       "color": "#3e2f26",
+       "share": 0.1
+      }
+     ],
+     "button": {
+      "bg": "#1e140e",
+      "hsl": {
+       "h": 23,
+       "s": 0.36,
+       "l": 0.09
+      },
+      "fg": "#faf6f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 46,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 5,
+     "heroLabels": [
+      "RSVP NOW"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 12,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "article.relative.z-20 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "button.min-h-[46px].px-7 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.min-h-[46px].px-6 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 1,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.pointer-events-none.absolute → linear-gradient(lab(96.7841 0.836074 4.00157 / 0.15) 0%, rgba(0, 0, 0, 0) 50%, lab(96.7841 0.836074 4.00157 / "
+     ],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "div.mt-8.pt-6 312px",
+      "section#countdown.reveal-seq.scroll-mt-24 768px",
+      "div.pb-6.sm:pb-7 558px",
+      "div.pt-6.sm:pt-7 558px",
+      "footer.relative.bg-transparent 768px"
+     ],
+     "outlinedBoxes": 8,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 7,
+     "boxRadius": 16,
+     "squareMedia": 6,
+     "roundedMedia": 4,
+     "mediaRadius": 4,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.66
+     }
+    ],
+    "nav": null,
+    "fontsLoaded": [
+     "cormorant garamond",
+     "montserrat"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 5849,
+    "margins": {
+     "left": 33,
+     "right": 33
+    },
+    "sections": [
+     {
+      "sel": "section#top.grid.min-h-[100svh]",
+      "tag": "section",
+      "top": 0,
+      "height": 1370,
+      "words": 8,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Baseleal",
+       "size": 54,
+       "tag": "h1"
+      },
+      "left": 225,
+      "right": 225,
+      "textLeft": 225,
+      "textRight": 225,
+      "fullBleed": true,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#invitation.reveal-seq.scroll-mt-24",
+      "tag": "section",
+      "top": 1370,
+      "height": 1024,
+      "words": 70,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "A Day to Hold Close",
+       "size": 42,
+       "tag": "h2"
+      },
+      "left": 171,
+      "right": 31,
+      "textLeft": 171,
+      "textRight": 168,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#date.reveal-seq.scroll-mt-24",
+      "tag": "section",
+      "top": 2394,
+      "height": 1238,
+      "words": 116,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "The Day of Our Vows",
+       "size": 60,
+       "tag": "h2"
+      },
+      "left": 44,
+      "right": 21,
+      "textLeft": 44,
+      "textRight": 57,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#countdown.reveal-seq.scroll-mt-24",
+      "tag": "section",
+      "top": 3632,
+      "height": 668,
+      "words": 25,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "70",
+       "size": 72,
+       "tag": "span"
+      },
+      "left": 33,
+      "right": 33,
+      "textLeft": 61,
+      "textRight": 61,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#rsvp.reveal-section.scroll-mt-24",
+      "tag": "section",
+      "top": 4301,
+      "height": 1549,
+      "words": 65,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "RSVP & Leave a Wish",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 32,
+      "fullBleed": true,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Baseleal & Bethel",
+      "size": 54,
+      "top": 80,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 44,
+      "n": 2
+     },
+     {
+      "x": 105,
+      "n": 2
+     },
+     {
+      "x": 171,
+      "n": 2
+     },
+     {
+      "x": 264,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 7,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.99,
+    0.98,
+    0.95,
+    0.99,
+    0.99,
+    0.99,
+    0.99
+   ],
+   "motion": {
+    "elements": 70,
+    "css": 67,
+    "transitions": 2,
+    "scripted": 1,
+    "videos": 1,
+    "playingVideos": 1
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 5170,
+     "screens": 6.1,
+     "words": 337,
+     "img": 6,
+     "video": 1,
+     "canvas": 0,
+     "svg": 5,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 1,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fcouple%20main.JPG&w=640&q=75",
+      "invit%20img.png",
+      "image?url=%2Fcard%20flower.png&w=256&q=75",
+      "image?url=%2Fcalendar%20flower.png&w=1080&q=75",
+      "rsvp%20bg1.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [
+      "✦"
+     ],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Baseleal & Bethel",
+     "words": 3,
+     "chars": 17,
+     "lines": 1,
+     "size": 44,
+     "vw": 11.3,
+     "font": "Cormorant Garamond",
+     "weight": 400,
+     "tracking": -0.02,
+     "leading": 0.95,
+     "upper": false,
+     "italic": true,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.67,
+     "top": 87,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Baseleal & Bethel",
+     "words": 3,
+     "lines": 1,
+     "size": 44,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "Baseleal & Bethel",
+      "words": 3,
+      "chars": 17,
+      "lines": 1,
+      "size": 44,
+      "vw": 11.3,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 0.95,
+      "upper": false,
+      "italic": true,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.67,
+      "top": 87,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "A Day to Hold Close",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.59,
+      "top": 994,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Baseleal and Bethel",
+      "words": 3,
+      "chars": 19,
+      "lines": 2,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 1113,
+      "mixedFonts": [
+       "Cormorant Garamond",
+       "Cormorant Garamond italic"
+      ],
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "3",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Cormorant Garamond",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.02,
+      "top": 1294,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "The Day of Our Vows",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": -0.025,
+      "leading": 1.11,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1793,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Sunday",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Cormorant Garamond",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 2043,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "January 3, 2027",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Cormorant Garamond",
+      "weight": 500,
+      "tracking": 0,
+      "leading": 1.33,
+      "upper": false,
+      "italic": true,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 2087,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "January 2027",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.52,
+      "top": 2667,
+      "mixedFonts": [
+       "Cormorant Garamond",
+       "Cormorant Garamond italic"
+      ],
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "The Journey to Our Wedding Day",
+      "words": 6,
+      "chars": 30,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 3365,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "70 70",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 3501,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "21 21",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 3501,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "54 54",
+      "words": 2,
+      "chars": 5,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.21,
+      "top": 3501,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "14 15 15 14",
+      "words": 4,
+      "chars": 11,
+      "lines": 1,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Montserrat",
+      "weight": 900,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.21,
+      "top": 3501,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "&",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 288,
+      "vw": 73.8,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.51,
+      "top": 3532,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "RSVP & Leave a Wish",
+      "words": 5,
+      "chars": 19,
+      "lines": 1,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 3915,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Make a Wish for the Couple",
+      "words": 6,
+      "chars": 26,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "Cormorant Garamond",
+      "weight": 400,
+      "tracking": 0.04,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.73,
+      "top": 4031,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "BASELEAL & BETHEL",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 44.8,
+      "vw": 11.5,
+      "font": "Cormorant Garamond",
+      "weight": 300,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 4915,
+      "tag": "div",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 17,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 11,
+     "medianWords": 3,
+     "mixedFontHeadings": 2
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.5,
+       "mono": false
+      },
+      {
+       "family": "Montserrat",
+       "share": 0.5,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      10,
+      11,
+      12,
+      14,
+      16,
+      17,
+      18,
+      22,
+      24,
+      28,
+      30,
+      36,
+      44,
+      45,
+      288
+     ],
+     "sizeCount": 15,
+     "notLoaded": [],
+     "body": {
+      "font": "Cormorant Garamond",
+      "size": 12,
+      "leading": 1.63,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 9.4
+     },
+     "measureChars": 41,
+     "max": {
+      "size": 288,
+      "vw": 73.8,
+      "font": "Cormorant Garamond",
+      "text": "&"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 37,
+     "microLabelShare": 0.307,
+     "microSamples": [
+      "Our Covenant",
+      "The Wedding Of",
+      "Request The Presence Of Your Company",
+      "For Their Upcoming Wedding",
+      "SUNDAY",
+      "JAN"
+     ],
+     "upperShare": 0.37,
+     "centerShare": 0.37,
+     "smallText": 25
+    },
+    "eyebrows": [
+     {
+      "text": "Our Covenant",
+      "above": "A Day to Hold Close",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 972
+     },
+     {
+      "text": "The Wedding Of",
+      "above": "Baseleal and Bethel",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 10,
+      "top": 1092
+     },
+     {
+      "text": "JAN",
+      "above": "3",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 10,
+      "top": 1277
+     },
+     {
+      "text": "Save The Date",
+      "above": "The Day of Our Vows",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 1768
+     },
+     {
+      "text": "Celebration Details",
+      "above": "Sunday",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 2013
+     },
+     {
+      "text": "Celebration Details",
+      "above": "January 3, 2027",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 2013
+     },
+     {
+      "text": "Until We Say “I Do”",
+      "above": "The Journey to Our Wedding Day",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 3340
+     },
+     {
+      "text": "Join Our Celebration",
+      "above": "RSVP & Leave a Wish",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 3893
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f8f4ed",
+     "bodyBgHsl": {
+      "h": 38,
+      "s": 0.44,
+      "l": 0.95
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8f4ed",
+       "top": 0,
+       "hsl": {
+        "h": 38,
+        "s": 0.44,
+        "l": 0.95
+       }
+      },
+      {
+       "color": "#f4ebdd",
+       "top": 0,
+       "hsl": {
+        "h": 37,
+        "s": 0.51,
+        "l": 0.91
+       }
+      },
+      {
+       "color": "#f3f2ee",
+       "top": 844,
+       "hsl": {
+        "h": 48,
+        "s": 0.17,
+        "l": 0.94
+       }
+      },
+      {
+       "color": "#faf5ee",
+       "top": 1067,
+       "hsl": {
+        "h": 35,
+        "s": 0.55,
+        "l": 0.96
+       }
+      },
+      {
+       "color": "#fff8d6",
+       "top": 1688,
+       "hsl": {
+        "h": 50,
+        "s": 1,
+        "l": 0.92
+       }
+      },
+      {
+       "color": "#faf8f5",
+       "top": 3259,
+       "hsl": {
+        "h": 36,
+        "s": 0.33,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 3998,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1e140e",
+       "share": 0.12
+      },
+      {
+       "color": "#8c6a3b",
+       "share": 0.12
+      },
+      {
+       "color": "#553c2d",
+       "share": 0.11
+      },
+      {
+       "color": "#2b1810",
+       "share": 0.1
+      },
+      {
+       "color": "#3e2f26",
+       "share": 0.1
+      }
+     ],
+     "button": {
+      "bg": "#1e140e",
+      "hsl": {
+       "h": 23,
+       "s": 0.36,
+       "l": 0.09
+      },
+      "fg": "#faf6f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 46,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 5,
+     "heroLabels": [
+      "RSVP NOW"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 13,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.pointer-events-none.absolute → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.relative.z-20 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "button.min-h-[46px].px-7 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 1,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.pointer-events-none.absolute → linear-gradient(lab(96.7841 0.836074 4.00157 / 0.15) 0%, rgba(0, 0, 0, 0) 50%, lab(96.7841 0.836074 4.00157 / "
+     ],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "div.mt-8.pt-6 342px",
+      "section#countdown.reveal-seq.scroll-mt-24 390px",
+      "div.pb-6.sm:pb-7 284px",
+      "div.pt-6.sm:pt-7 284px",
+      "footer.relative.bg-transparent 390px"
+     ],
+     "outlinedBoxes": 4,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 4,
+     "boxRadius": 6,
+     "squareMedia": 6,
+     "roundedMedia": 3,
+     "mediaRadius": 4,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.58
+     }
+    ],
+    "nav": null,
+    "fontsLoaded": [
+     "cormorant garamond",
+     "montserrat"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 5170,
+    "margins": {
+     "left": 17,
+     "right": 17
+    },
+    "sections": [
+     {
+      "sel": "section#top.grid.min-h-[100svh]",
+      "tag": "section",
+      "top": 0,
+      "height": 844,
+      "words": 8,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Baseleal",
+       "size": 44,
+       "tag": "h1"
+      },
+      "left": 65,
+      "right": 65,
+      "textLeft": 65,
+      "textRight": 65,
+      "fullBleed": true,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#invitation.reveal-seq.scroll-mt-24",
+      "tag": "section",
+      "top": 844,
+      "height": 844,
+      "words": 70,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "A Day to Hold Close",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 49,
+      "right": 17,
+      "textLeft": 49,
+      "textRight": 72,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 1688,
+      "height": 1571,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 1688,
+      "height": 1571,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.text-center.max-w-2xl",
+      "tag": "div",
+      "top": 1768,
+      "height": 175,
+      "words": 31,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The Day of Our Vows",
+       "size": 36,
+       "tag": "h2"
+      },
+      "left": 22,
+      "right": 22,
+      "textLeft": 22,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.grid.grid-cols-1",
+      "tag": "div",
+      "top": 1999,
+      "height": 1180,
+      "words": 85,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Sunday",
+       "size": 36,
+       "tag": "h3"
+      },
+      "left": 24,
+      "right": 30,
+      "textLeft": 24,
+      "textRight": 30,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#countdown.reveal-seq.scroll-mt-24",
+      "tag": "section",
+      "top": 3259,
+      "height": 507,
+      "words": 36,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "70",
+       "size": 36,
+       "tag": "span"
+      },
+      "left": 17,
+      "right": 16,
+      "textLeft": 25,
+      "textRight": 22,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.absolute.inset-0",
+      "tag": "div",
+      "top": 3765,
+      "height": 1405,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.pointer-events-none.absolute",
+      "tag": "div",
+      "top": 3765,
+      "height": 1405,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.relative.z-10",
+      "tag": "div",
+      "top": 3893,
+      "height": 892,
+      "words": 48,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "RSVP & Leave a Wish",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 21,
+      "right": 21,
+      "textLeft": 53,
+      "textRight": 66,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.relative.z-10",
+      "tag": "div",
+      "top": 4850,
+      "height": 321,
+      "words": 17,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Baseleal",
+       "size": 45,
+       "tag": "span"
+      },
+      "left": 20,
+      "right": 61,
+      "textLeft": 20,
+      "textRight": 61,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Baseleal & Bethel",
+      "size": 44,
+      "top": 87,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 49,
+      "n": 3
+     },
+     {
+      "x": 24,
+      "n": 2
+     },
+     {
+      "x": 138,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "mixed-font-headline",
+   "width": 1440,
+   "message": "1 headline(s) switch typeface or to italic mid-line (the \"one italic serif word\" move).",
+   "fix": "Set the whole headline in one face. Emphasis comes from the words.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 1440,
+   "message": "7 eyebrow/kicker label(s) above headings: \"Our Covenant\" above \"A Day to Hold Close\"; \"The Wedding Of\" above \"Baseleal and Bethel\"; \"JAN\" above \"3\"; \"Save The Date\" above \"The Day of Our Vows\"; \"Celebration Details\" above \"Sunday\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "micro-label",
+   "width": 1440,
+   "message": "35 tiny uppercase letter-spaced labels (e.g. \"Our Covenant\", \"The Wedding Of\", \"Request The Presence Of Your Company\", \"For Their Upcoming Wedding\").",
+   "fix": "Use sentence-case text at a readable size, or delete the label.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "emoji",
+   "width": 1440,
+   "message": "Emoji in the page: ✦",
+   "fix": "Remove. Use words or real imagery.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "1 gradient fill(s): div.pointer-events-none.absolute → linear-gradient(lab(96.7841 0.836074 4.00157 / 0.15) 0%, rgba(0, 0, 0, 0) 50%, lab(96.7841 0.836074 4.00157 / ",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "shadow",
+   "width": 1440,
+   "message": "13 box-shadow(s) on elements at rest: article.relative.z-20 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0 | a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0 | button.min-h-[46px].px-7 → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+   "fix": "Remove. Separate surfaces with a tone step or space. Shadows are for things that really float (menus, dialogs, sticky bars).",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "hairline",
+   "width": 1440,
+   "message": "11 thin rule(s)/divider line(s): div.mt-8.pt-6 516px | section#countdown.reveal-seq.scroll-mt-24 1440px | div.pb-6.sm:pb-7 654px | div.pt-6.sm:pt-7 654px",
+   "fix": "Delete. Separate with space, a tone change, or scale. Lines are only for real tables and form fields.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "outlined-box",
+   "width": 1440,
+   "message": "8 boxes drawn with a 1px outline.",
+   "fix": "Define a surface by its fill (one tone step from the page) or leave the content unboxed.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "palette-cream",
+   "width": 1440,
+   "message": "Yellow-cream background (page background #f8f4ed, section #f8f4ed, section #f4ebdd).",
+   "fix": "Use the drawn palette. If you want warmth, take a low-chroma stone or bone, not a yellow cream.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "20 different font sizes (10, 11, 12, 13, 14, 16, 18, 20, 21, 24, 30, 36, 38, 42, 48, 60, 84, 96, 136, 384).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "small-text",
+   "width": 1440,
+   "message": "22 text blocks under 13px.",
+   "fix": "Nothing meant to be read goes below 13px.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "overflow",
+   "width": 1440,
+   "message": "Page scrolls sideways by 159px at 1440px. Widest offenders: img.w-full.h-full (+159px), div.w-full.flex (+128px).",
+   "fix": "Constrain the element that is wider than the viewport (max-width: 100%, or overflow: clip on its section)."
+  },
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The margins differ: 148px on the left, 177px on the right, at 1440px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page."
+  },
+  {
+   "level": "WARN",
+   "id": "name-only-title",
+   "width": 1440,
+   "message": "The h1 is a bare name (\"Baseleal & Bethel\") and nothing else on the first screen says what this is.",
+   "fix": "Keep the name if it leads, and give the line under it (18px or more) the plain words: what it is, for whom, where or when. In the study of 97 Sites of the Day, first screens that named nothing lost usability and content points.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "body-size",
+   "width": 390,
+   "message": "Body text is 12px (the size most of the running text is set in).",
+   "fix": "Body copy 16–20px. Map small sizes from blueprints onto your body step."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\My portfolio projects\\BB\\baseleal-bethel\\.taste-skill\\inspect\\desktop-fold.jpg",
+   "pages": [
+    "D:\\My portfolio projects\\BB\\baseleal-bethel\\.taste-skill\\inspect\\desktop-page-01.jpg",
+    "D:\\My portfolio projects\\BB\\baseleal-bethel\\.taste-skill\\inspect\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\My portfolio projects\\BB\\baseleal-bethel\\.taste-skill\\inspect\\tablet-fold.jpg",
+   "pages": [
+    "D:\\My portfolio projects\\BB\\baseleal-bethel\\.taste-skill\\inspect\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\My portfolio projects\\BB\\baseleal-bethel\\.taste-skill\\inspect\\mobile-fold.jpg",
+   "pages": [
+    "D:\\My portfolio projects\\BB\\baseleal-bethel\\.taste-skill\\inspect\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}
