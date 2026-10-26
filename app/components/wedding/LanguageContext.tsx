@@ -12,8 +12,15 @@ const LanguageContext = createContext<{
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<WeddingLanguage>("en");
+  const toggleLanguage = () => {
+    setLanguage((value) => value === "en" ? "am" : "en");
+    window.requestAnimationFrame(() => {
+      document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((section) => section.classList.add("is-visible"));
+    });
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, isAmharic: language === "am", toggleLanguage: () => setLanguage((value) => value === "en" ? "am" : "en") }}>
+    <LanguageContext.Provider value={{ language, isAmharic: language === "am", toggleLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -50,44 +50,32 @@ export function InvitationSection() {
     <section
       id="invitation"
       data-reveal
-      className={`reveal-seq ${isAmharic ? "amharic-section" : ""} scroll-mt-24 relative py-16 sm:py-20 lg:py-16 xl:py-20 min-h-[100dvh] lg:min-h-[100dvh] lg:aspect-[1672/941] flex flex-col justify-center overflow-hidden bg-[#F3F2EE]`}
+      className={`reveal-seq ${isAmharic ? "amharic-section" : ""} scroll-mt-24 relative h-[100svh] min-h-[100svh] lg:h-screen flex flex-col justify-center overflow-hidden bg-[#F3F2EE]`}
     >
-      {/* Background Image: invit img.png - natural aspect ratio preserved with left-top alignment across all screens */}
+      {/* Invitation artwork background */}
       <div data-seq="bg" className="absolute inset-0 z-0 pointer-events-none select-none block">
         <Image
-          src="/invit img.png"
+          src="/main inv.png"
           alt="Invitation section background"
           fill
           priority
           unoptimized
           sizes="100vw"
-          className="w-full h-full object-cover object-[-25px_top] sm:object-[left_top]"
+          className="w-full h-full object-cover object-center"
           style={{ objectFit: "cover" }}
         />
       </div>
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-[#b38a62]/20 mix-blend-multiply" aria-hidden />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-16 bg-gradient-to-b from-[#c7a378]/55 via-[#dfc29f]/25 to-transparent" aria-hidden />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto flex flex-col items-center justify-center">
-        {/* Container shifted to the right on tablet & desktop to showcase the floral branch artwork on the left */}
-        <div className="w-full flex flex-col items-center justify-center translate-x-2 sm:translate-x-6 md:translate-x-14 lg:translate-x-28 xl:translate-x-40 2xl:translate-x-52 transition-transform duration-300">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="w-full flex flex-col items-center justify-center">
           
           {/* Section Header with seamless luminous parchment vignette on small screens to prevent flower overlap */}
-          <div className="text-center max-w-xl mx-auto mb-4 sm:mb-6 lg:mb-5 relative z-10 px-3">
-            <div
-              className="pointer-events-none absolute inset-0 -inset-x-6 -inset-y-2 bg-[#EFEDEB]/90 md:hidden rounded-full blur-md -z-10 shadow-[0_0_28px_18px_#EFEDEB]"
-              aria-hidden
-            />
-            <p data-seq="rise" style={seq("0.6s", "1000ms", "7px")} className="eyebrow mb-1.5 text-[#8C6A3B] text-xs uppercase tracking-[0.26em] font-semibold drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
-              {isAmharic ? "የእኛ ቃል ኪዳን" : "Our Covenant"}
-            </p>
-            <h2 data-seq="rise" style={seq("0.95s", "1100ms", "8px")} className="font-editorial-serif text-3xl sm:text-4xl md:text-[2.6rem] tracking-tight text-[#2B1810] drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
-              {isAmharic ? "ለዘላለም የምናስታውሰው ቀን" : "A Day to Hold Close"}
-            </h2>
-            <div data-seq="unfold" style={seq("1.35s", "1000ms")} className="h-px w-14 mx-auto mt-2.5 mb-2.5 bg-[#8C6A3B]/50" />
-          </div>
-
           {/* The Fine-Art Wedding Invitation Card - Grand, Prominent & Perfectly Proportioned */}
-          <div className="max-w-[560px] sm:max-w-[600px] md:max-w-[620px] mx-auto w-full">
-          <article data-seq="card" style={{ ...seq("1.7s", "1700ms"), "--photo-rise": "14px" } as CSSProperties} className="relative z-20 bg-[#FAF5EE] rounded-sm p-6 sm:p-9 md:p-10 lg:p-8 xl:p-10 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
+          <div className="w-full max-w-[460px] sm:max-w-[500px]">
+          <article data-seq="card" style={{ ...seq("0.6s", "1300ms"), "--photo-rise": "14px" } as CSSProperties} className="relative z-20 min-h-[520px] bg-[#FAF5EE] rounded-sm p-5 sm:min-h-[590px] sm:p-7 md:p-8 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
+            <Image src="/card bg.png" alt="" fill sizes="(max-width: 640px) 92vw, 500px" className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover" aria-hidden />
             
             {/* Fine Tactile Cotton Paper Texture Overlay */}
             <div
@@ -114,7 +102,7 @@ export function InvitationSection() {
             <div className="relative z-20 flex flex-col justify-between h-full text-left">
               
               {/* Main Typography Block - Left Column strictly separated from flower */}
-              <div className="max-w-[55%] sm:max-w-[52%] md:max-w-[50%] space-y-4 sm:space-y-4.5 lg:space-y-4 xl:space-y-4.5">
+              <div className="max-w-[72%] sm:max-w-[68%] space-y-4 sm:space-y-4.5 lg:space-y-4 xl:space-y-4.5">
                 
                 {/* Couple Header - Title Case */}
                 <div className="space-y-1.5">
@@ -132,16 +120,6 @@ export function InvitationSection() {
                       {wedding.couple.second}
                     </span>
                   </h3>
-                </div>
-
-                {/* Invitation Request Line */}
-                <div data-seq="rise" style={seq("3.15s", "1000ms", "10px")} className="space-y-1">
-                  <p className="font-editorial-serif uppercase tracking-[0.2em] text-[9.5px] sm:text-[10px] text-[#3E2B20]/90 font-medium leading-relaxed">
-                    {isAmharic ? "በዚህ ልዩ ቀን እንድትገኙ" : "Request The Presence Of Your Company"}
-                  </p>
-                  <p className="font-editorial-serif uppercase tracking-[0.2em] text-[9.5px] sm:text-[10px] text-[#3E2B20]/90 font-medium leading-relaxed">
-                    {isAmharic ? "በሰርጋችን ላይ እንድትታደሙ" : "For Their Upcoming Wedding"}
-                  </p>
                 </div>
 
                 {/* 3-Column Vertical Hairline Date Lockup */}
@@ -207,11 +185,11 @@ export function InvitationSection() {
 
               </div>
 
-              {/* Scripture Blessing at Bottom */}
-              <div data-seq="fade" style={seq("4.7s", "1300ms")} className="pt-4 sm:pt-5 max-w-[80%]">
-                <p className="font-editorial-serif italic text-xs sm:text-[13px] text-[#553C2D] leading-relaxed opacity-80">
-                  {wedding.scripture.verse}
+              <div data-seq="fade" style={seq("4.4s", "1100ms")} className="mt-10 max-w-[82%] border-t border-[#8C6A3B]/25 pt-4 sm:mt-14">
+                <p className="font-editorial-serif text-xs italic leading-relaxed text-[#553C2D] opacity-85 sm:text-sm">
+                  {isAmharic ? "ፍቅር ታጋሽ ነው፣ ፍቅር ቸር ነው። ፍቅር አይወድቅም።" : wedding.scripture.verse}
                 </p>
+                <span className="mt-2 block font-sans text-[9px] uppercase tracking-[0.18em] text-[#8C6A3B]">1 Corinthians 13:4–8</span>
               </div>
 
             </div>

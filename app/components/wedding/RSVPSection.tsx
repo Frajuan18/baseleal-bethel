@@ -59,7 +59,7 @@ export function RSVPSection() {
         response,
       });
     } catch {
-      setErrorMessage("We could not record your RSVP at this moment. Please check your connection and try again.");
+      setErrorMessage(isAmharic ? "RSVP ማስተናገድ አልተቻለም። እባክዎ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።" : "We could not record your RSVP at this moment. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -94,18 +94,18 @@ export function RSVPSection() {
       <div className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 mb-16 sm:mb-24">
         
         {/* Section Heading */}
-        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-12">
+        <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8">
           <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.26em] font-bold text-xs mb-1.5">
             {isAmharic ? "የደስታችን ተካፋይ ይሁኑ" : "Join Our Celebration"}
           </p>
-          <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#2B1810]">
+          <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-4xl text-[#2B1810]">
             {isAmharic ? "RSVP እና ምኞት ያስቀምጡ" : "RSVP & Leave a Wish"}
           </h2>
           <div className="h-px w-14 bg-[#8C6A3B]/40 mx-auto mt-3.5 mb-3.5" />
         </div>
 
         {/* White stationery card */}
-        <div className="relative max-w-2xl lg:max-w-3xl w-full mx-auto bg-white rounded-lg border border-[#E7DDCB] p-8 sm:p-11 md:p-14 shadow-[0_30px_70px_-22px_rgba(43,24,16,0.22),0_14px_32px_-16px_rgba(43,24,16,0.12),0_2px_6px_rgba(0,0,0,0.04)] overflow-hidden">
+        <div className="relative max-w-xl lg:max-w-2xl w-full mx-auto bg-white rounded-lg border border-[#E7DDCB] p-6 sm:p-8 md:p-10 shadow-[0_24px_56px_-22px_rgba(43,24,16,0.22),0_12px_26px_-16px_rgba(43,24,16,0.12)] overflow-hidden">
           
           {/* Embossed hairline inner frame */}
           <div
@@ -154,11 +154,11 @@ export function RSVPSection() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-7 sm:space-y-9">
+              <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-7">
 
                 {/* Header: RSVP with reply-by note */}
                 <div className="pb-6 sm:pb-7 border-b border-[#1E140E]/10">
-                  <h3 className="font-editorial-serif text-3xl sm:text-4xl lg:text-5xl text-[#1E140E] leading-none tracking-[0.04em]">
+                  <h3 className="font-editorial-serif text-2xl sm:text-3xl lg:text-4xl text-[#1E140E] leading-none tracking-[0.04em]">
                     {isAmharic ? "ለጥንዶቹ ምኞት ያስቀምጡ" : "Make a Wish for the Couple"}
                   </h3>
                   <p className="mt-2.5 font-editorial-serif italic text-base sm:text-lg text-[#8C6A3B]">
@@ -167,12 +167,12 @@ export function RSVPSection() {
                 </div>
 
                 {/* Wishlist input */}
-                <div>
+                <div className="rounded-md transition-transform duration-300 focus-within:-translate-y-0.5">
                   <label
                     htmlFor="guest-secondary"
                     className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-medium text-[#2B1810]"
                   >
-                    Your Wish for the Couple <span className="text-[#8C6A3B]">*</span>
+                    {isAmharic ? "ለጥንዶቹ ያለዎት ምኞት" : "Your Wish for the Couple"} <span className="text-[#8C6A3B]">*</span>
                   </label>
                   <textarea
                     id="guest-secondary"
@@ -180,7 +180,7 @@ export function RSVPSection() {
                     required
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
-                    placeholder="Share your love, prayer, or a note for the couple."
+                    placeholder={isAmharic ? "ፍቅርዎን፣ ጸሎትዎን ወይም ለጥንዶቹ መልዕክት ያካፍሉ።" : "Share your love, prayer, or a note for the couple."}
                     className="mt-2 w-full resize-none bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
                     disabled={isSubmitting}
                   />
@@ -189,7 +189,7 @@ export function RSVPSection() {
                 {/* Interactive attendance choice */}
                 <fieldset>
                   <legend className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-semibold text-[#2B1810] mb-3.5">
-                    Will you be joining us?
+                    {isAmharic ? "ከእኛ ጋር ይገኛሉ?" : "Will you be joining us?"}
                   </legend>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 
@@ -198,7 +198,7 @@ export function RSVPSection() {
                       className={`group relative flex items-center justify-between gap-3 rounded-xl border px-4 py-4 cursor-pointer select-none transition-all duration-300 ${
                         response === "accept"
                           ? "border-[#8C6A3B] bg-[#8C6A3B]/[0.06] shadow-[0_16px_32px_-20px_rgba(140,106,59,0.85)]"
-                          : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)]"
+                        : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)] active:scale-[0.99]"
                       }`}
                     >
                       <input
@@ -223,10 +223,10 @@ export function RSVPSection() {
                         </span>
                         <span className="flex flex-col text-left">
                           <span className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-tight">
-                            Joyfully Accept
+                            {isAmharic ? "በደስታ እቀበላለሁ" : "Joyfully Accept"}
                           </span>
                           <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7A6B]">
-                            Count me in
+                            {isAmharic ? "እገኛለሁ" : "Count me in"}
                           </span>
                         </span>
                       </span>
@@ -246,7 +246,7 @@ export function RSVPSection() {
                       className={`group relative flex items-center justify-between gap-3 rounded-xl border px-4 py-4 cursor-pointer select-none transition-all duration-300 ${
                         response === "decline"
                           ? "border-[#8C6A3B] bg-[#8C6A3B]/[0.06] shadow-[0_16px_32px_-20px_rgba(140,106,59,0.85)]"
-                          : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)]"
+                        : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)] active:scale-[0.99]"
                       }`}
                     >
                       <input
@@ -271,10 +271,10 @@ export function RSVPSection() {
                         </span>
                         <span className="flex flex-col text-left">
                           <span className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-tight">
-                            Regretfully Decline
+                            {isAmharic ? "በጸጸት እቀንሳለሁ" : "Regretfully Decline"}
                           </span>
                           <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7A6B]">
-                            Sending love
+                            {isAmharic ? "ፍቅር እልካለሁ" : "Sending love"}
                           </span>
                         </span>
                       </span>
@@ -294,12 +294,12 @@ export function RSVPSection() {
 
                 {/* Guest details */}
                 <div>
-                  <div>
+                  <div className="rounded-md transition-transform duration-300 focus-within:-translate-y-0.5">
                     <label
                       htmlFor="guest-name"
                       className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-medium text-[#2B1810]"
                     >
-                      Full Name
+                      {isAmharic ? "ሙሉ ስም" : "Full Name"}
                     </label>
                     <input
                       id="guest-name"
@@ -307,7 +307,7 @@ export function RSVPSection() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
+                      placeholder={isAmharic ? "ስምዎ" : "Your name"}
                       className="mt-2 w-full bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
                       disabled={isSubmitting}
                     />
@@ -318,17 +318,17 @@ export function RSVPSection() {
                 <div className="pt-6 sm:pt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-[#1E140E]/10">
                   {response === "accept" && (
                     <div className="flex items-center gap-2 text-xs font-editorial-serif italic text-[#6A5D54] animate-fadeIn">
-                      <span>Attending party:</span>
+                      <span>{isAmharic ? "የሚገኙ እንግዶች:" : "Attending party:"}</span>
                       <select
                         value={guestCount}
                         onChange={(e) => setGuestCount(e.target.value)}
                         className="bg-transparent border-0 border-b border-[#1E140E]/40 text-[#1E140E] font-editorial-serif text-sm px-1 outline-none cursor-pointer"
                         disabled={isSubmitting}
                       >
-                        <option value="1">1 Guest</option>
-                        <option value="2">2 Guests</option>
-                        <option value="3">3 Guests</option>
-                        <option value="4">4 Guests</option>
+                        <option value="1">1 {isAmharic ? "እንግዳ" : "Guest"}</option>
+                        <option value="2">2 {isAmharic ? "እንግዶች" : "Guests"}</option>
+                        <option value="3">3 {isAmharic ? "እንግዶች" : "Guests"}</option>
+                        <option value="4">4 {isAmharic ? "እንግዶች" : "Guests"}</option>
                       </select>
                     </div>
                   )}
@@ -336,9 +336,9 @@ export function RSVPSection() {
                   <button
                     type="submit"
                     disabled={isSubmitting || !name.trim() || !note.trim()}
-                    className="min-h-[46px] w-full sm:w-auto sm:min-w-[200px] sm:ml-auto px-8 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 bg-[#1E140E] text-[#FAF5EE] hover:bg-[#8C6A3B] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-[0_14px_30px_-14px_rgba(43,24,16,0.6)] hover:shadow-[0_18px_36px_-14px_rgba(140,106,59,0.7)] inline-flex items-center justify-center gap-2"
+                    className="min-h-[46px] w-full sm:w-auto sm:min-w-[200px] sm:ml-auto px-8 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 bg-[#1E140E] text-[#FAF5EE] hover:bg-[#8C6A3B] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-[0_14px_30px_-14px_rgba(43,24,16,0.6)] hover:shadow-[0_18px_36px_-14px_rgba(140,106,59,0.7)] inline-flex items-center justify-center gap-2"
                   >
-                    <span>{isSubmitting ? "Sending..." : "Submit Reply"}</span>
+                    <span>{isSubmitting ? (isAmharic ? "በመላክ ላይ..." : "Sending...") : (isAmharic ? "መልስ ላክ" : "Submit Reply")}</span>
                     <span aria-hidden>→</span>
                   </button>
                 </div>
