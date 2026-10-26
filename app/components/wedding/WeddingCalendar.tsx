@@ -89,7 +89,7 @@ export function WeddingCalendar() {
         </div>
 
         <div data-seq="rise" style={seq("0.5s")} className="min-w-0 pt-4 sm:pt-6 lg:pt-0">
-          <p className={`${isAmharic ? "font-balderasu" : "font-brittany-signature"} text-[1.75rem] leading-none text-[#8C6A3B] sm:text-3xl`}>{isAmharic ? "እስከ ‘አዎ’ የምንልበት ቀን ቆጠራ" : "Counting down to the moment we say “I do”"}</p>
+          <p className={`${isAmharic ? "font-balderasu" : "font-brittany-signature"} text-[1.5rem] leading-none text-[#8C6A3B] sm:text-2xl`}>{isAmharic ? "እስከ ‘አዎ’ የምንልበት ቀን ቆጠራ" : "Counting down to the moment we say “I do”"}</p>
           <div className="mx-auto mt-8 w-full max-w-none lg:mx-0 lg:max-w-[820px]"><FlipCountdownDisplay /></div>
         </div>
       </div>
