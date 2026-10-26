@@ -3,6 +3,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { wedding } from "@/config/wedding";
+import { useWeddingLanguage } from "./LanguageContext";
 
 /** Sequence step — staggered delay, duration and optional rise distance. */
 const seq = (
@@ -17,6 +18,7 @@ const seq = (
   }) as CSSProperties;
 
 export function InvitationSection() {
+  const { isAmharic } = useWeddingLanguage();
   // Structured date lockup data (matches reference: SATURDAY | SEPT 20 2028 | AT 10 AM)
   const parsedDate = (() => {
     if (wedding.date) {
@@ -24,14 +26,14 @@ export function InvitationSection() {
       if (parts.length === 3) {
         const [y, m, d] = parts;
         const dt = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
-        const weekdays = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
-        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+        const weekdays = isAmharic ? ["እሁድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"] : ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+        const months = isAmharic ? ["ጃን", "ፌብ", "ማር", "ኤፕሪ", "ሜይ", "ጁን", "ጁላይ", "ኦገስት", "ሴፕቴ", "ኦክቶ", "ኖቬ", "ዲሴ"] : ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
         return {
           weekday: weekdays[dt.getUTCDay()] ?? "SATURDAY",
           month: months[m - 1] ?? "SEPT",
           day: String(d),
           year: String(y),
-          time: wedding.time ? `AT ${wedding.time}` : "AT 10 AM",
+          time: wedding.time ? `${isAmharic ? "በ" : "AT"} ${wedding.time}` : (isAmharic ? "በ10 AM" : "AT 10 AM"),
         };
       }
     }
@@ -48,7 +50,7 @@ export function InvitationSection() {
     <section
       id="invitation"
       data-reveal
-      className="reveal-seq scroll-mt-24 relative py-16 sm:py-20 lg:py-16 xl:py-20 min-h-[100dvh] lg:min-h-[100dvh] lg:aspect-[1672/941] flex flex-col justify-center overflow-hidden bg-[#F3F2EE]"
+      className={`reveal-seq ${isAmharic ? "amharic-section" : ""} scroll-mt-24 relative py-16 sm:py-20 lg:py-16 xl:py-20 min-h-[100dvh] lg:min-h-[100dvh] lg:aspect-[1672/941] flex flex-col justify-center overflow-hidden bg-[#F3F2EE]`}
     >
       {/* Background Image: invit img.png - natural aspect ratio preserved with left-top alignment across all screens */}
       <div data-seq="bg" className="absolute inset-0 z-0 pointer-events-none select-none block">
@@ -75,10 +77,10 @@ export function InvitationSection() {
               aria-hidden
             />
             <p data-seq="rise" style={seq("0.6s", "1000ms", "7px")} className="eyebrow mb-1.5 text-[#8C6A3B] text-xs uppercase tracking-[0.26em] font-semibold drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
-              Our Covenant
+              {isAmharic ? "የእኛ ቃል ኪዳን" : "Our Covenant"}
             </p>
             <h2 data-seq="rise" style={seq("0.95s", "1100ms", "8px")} className="font-editorial-serif text-3xl sm:text-4xl md:text-[2.6rem] tracking-tight text-[#2B1810] drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
-              A Day to Hold Close
+              {isAmharic ? "ለዘላለም የምናስታውሰው ቀን" : "A Day to Hold Close"}
             </h2>
             <div data-seq="unfold" style={seq("1.35s", "1000ms")} className="h-px w-14 mx-auto mt-2.5 mb-2.5 bg-[#8C6A3B]/50" />
           </div>
@@ -117,13 +119,13 @@ export function InvitationSection() {
                 {/* Couple Header - Title Case */}
                 <div className="space-y-1.5">
                   <p data-seq="fade" style={seq("2.0s", "900ms")} className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-[#7C5A32]">
-                    The Wedding Of
+                    {isAmharic ? "የሰርግ ግብዣ" : "The Wedding Of"}
                   </p>
                   <h3 className="font-editorial-serif text-[clamp(1.75rem,3.8vw,2.35rem)] lg:text-[2.05rem] xl:text-[2.35rem] text-[#1E140E] leading-[1.05] tracking-[-0.01em]">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
                       <span data-seq="rise" style={seq("2.25s", "1000ms", "10px")} className="capitalize">{wedding.couple.first}</span>
                       <span data-seq="rise" style={seq("2.6s", "1000ms", "8px")} className="font-editorial-serif italic font-light text-[0.8em] tracking-normal text-[#9A7338]">
-                        and
+                        {isAmharic ? "እና" : "and"}
                       </span>
                     </div>
                     <span data-seq="rise" style={seq("2.9s", "1000ms", "10px")} className="block mt-0.5 capitalize">
@@ -135,10 +137,10 @@ export function InvitationSection() {
                 {/* Invitation Request Line */}
                 <div data-seq="rise" style={seq("3.15s", "1000ms", "10px")} className="space-y-1">
                   <p className="font-editorial-serif uppercase tracking-[0.2em] text-[9.5px] sm:text-[10px] text-[#3E2B20]/90 font-medium leading-relaxed">
-                    Request The Presence Of Your Company
+                    {isAmharic ? "በዚህ ልዩ ቀን እንድትገኙ" : "Request The Presence Of Your Company"}
                   </p>
                   <p className="font-editorial-serif uppercase tracking-[0.2em] text-[9.5px] sm:text-[10px] text-[#3E2B20]/90 font-medium leading-relaxed">
-                    For Their Upcoming Wedding
+                    {isAmharic ? "በሰርጋችን ላይ እንድትታደሙ" : "For Their Upcoming Wedding"}
                   </p>
                 </div>
 
@@ -198,7 +200,7 @@ export function InvitationSection() {
                     href="#rsvp"
                     className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-[420ms] shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
                   >
-                    <span>RSVP Online</span>
+                    <span>{isAmharic ? "RSVP በመስመር ላይ" : "RSVP Online"}</span>
                     <span aria-hidden>→</span>
                   </a>
                 </div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { wedding } from "@/config/wedding";
+import { useWeddingLanguage } from "./LanguageContext";
 
 /** Sequence step — staggered delay, duration and optional rise distance. */
 const seq = (
@@ -57,7 +58,7 @@ function FlipUnitCard({
   return (
     <div data-seq={dataSeq} style={style} className="flex flex-col items-center w-full">
       {/* Authentic Fliqlo Split-Flap Clock Card in Textured Brown Beige */}
-      <div className="fliqlo-card-container relative w-full aspect-[1/1.12] sm:aspect-[1/1.16] rounded-xl sm:rounded-2xl bg-[#3A281E] shadow-[0_22px_45px_-8px_rgba(43,24,16,0.38),0_8px_18px_rgba(43,24,16,0.22),inset_0_1px_1px_rgba(254,232,133,0.18)] border border-[#5A4032] select-none">
+      <div className="fliqlo-card-container relative w-full aspect-[1/0.72] sm:aspect-[1/1.04] rounded-xl sm:rounded-2xl bg-[#3A281E] shadow-[0_22px_45px_-8px_rgba(43,24,16,0.38),0_8px_18px_rgba(43,24,16,0.22),inset_0_1px_1px_rgba(254,232,133,0.18)] border border-[#5A4032] select-none">
         
         {/* 1. TOP STATIC HALF (Shows new incoming value in butter yellow, upper half) */}
         <div className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden bg-gradient-to-b from-[#422F24] to-[#36251C] rounded-t-xl sm:rounded-t-2xl z-10">
@@ -78,7 +79,7 @@ function FlipUnitCard({
             aria-hidden
           />
           <div className="absolute top-0 left-0 right-0 h-[200%] flex items-center justify-center">
-            <span className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
+            <span className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
               {currentVal}
             </span>
           </div>
@@ -103,7 +104,7 @@ function FlipUnitCard({
             aria-hidden
           />
           <div className="absolute -top-[100%] left-0 right-0 h-[200%] flex items-center justify-center">
-            <span className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
+            <span className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
               {isFlipping ? prevVal : currentVal}
             </span>
           </div>
@@ -126,7 +127,7 @@ function FlipUnitCard({
                 aria-hidden
               />
               <div className="absolute top-0 left-0 right-0 h-[200%] flex items-center justify-center">
-                <span className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
+                <span className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
                   {prevVal}
                 </span>
               </div>
@@ -145,7 +146,7 @@ function FlipUnitCard({
                 aria-hidden
               />
               <div className="absolute -top-[100%] left-0 right-0 h-[200%] flex items-center justify-center">
-                <span className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
+                <span className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-[#FFF8D6] drop-shadow-[0_2px_8px_rgba(254,232,133,0.22)] tabular-nums select-none leading-none">
                   {currentVal}
                 </span>
               </div>
@@ -166,6 +167,72 @@ function FlipUnitCard({
       <span className="mt-3.5 sm:mt-4 text-[10px] sm:text-xs font-sans font-semibold uppercase tracking-[0.25em] text-[#4A3528]">
         {label}
       </span>
+    </div>
+  );
+}
+
+export function FlipCountdownDisplay() {
+  const { isAmharic } = useWeddingLanguage();
+  const [timeLeft, setTimeLeft] = useState<TimeUnits | null>(null);
+  const [isCelebrationDay, setIsCelebrationDay] = useState(false);
+
+  useEffect(() => {
+    const targetDateStr = wedding.date || "2027-01-03";
+    const timeStr = wedding.time || "10:00";
+    const targetTime = new Date(`${targetDateStr}T${timeStr}:00`).getTime();
+
+    const calculateTimeLeft = () => {
+      const difference = targetTime - Date.now();
+      if (difference <= 0) {
+        setIsCelebrationDay(true);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+      setTimeLeft({
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      });
+    };
+
+    calculateTimeLeft();
+    const interval = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const units: { key: keyof TimeUnits; label: string }[] = [
+    { key: "days", label: isAmharic ? "ቀናት" : "Days" },
+    { key: "hours", label: isAmharic ? "ሰዓታት" : "Hours" },
+    { key: "minutes", label: isAmharic ? "ደቂቃዎች" : "Minutes" },
+    { key: "seconds", label: isAmharic ? "ሰከንዶች" : "Seconds" },
+  ];
+
+  return (
+    <div className="w-full">
+      <div className="sr-only" aria-live="polite">
+        {timeLeft
+          ? `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds until the wedding`
+          : "Wedding countdown ticking"}
+      </div>
+      {timeLeft && !isCelebrationDay && (
+        <div className="grid grid-cols-4 gap-2 sm:gap-4">
+          {units.map((unit, i) => (
+            <FlipUnitCard
+              key={unit.key}
+              value={String(timeLeft[unit.key]).padStart(2, "0")}
+              label={unit.label}
+              dataSeq="card"
+              style={seq(`${i * 0.15}s`, "900ms", "8px")}
+            />
+          ))}
+        </div>
+      )}
+      {isCelebrationDay && (
+        <div className="rounded-sm border border-[#8C6A3B]/40 bg-[#FAF6EE] p-8 text-center shadow-sm">
+          <p className="font-editorial-serif text-3xl italic text-[#8C6A3B]">{isAmharic ? "ቀኑ ደርሷል!" : "The day has arrived!"}</p>
+        </div>
+      )}
     </div>
   );
 }

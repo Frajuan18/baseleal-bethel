@@ -6,7 +6,6 @@ import { coupleName, wedding } from "@/config/wedding";
 const navItems = [
   { label: "Invitation", href: "#invitation" },
   { label: "The Date", href: "#date" },
-  { label: "Countdown", href: "#countdown" },
   { label: "Moments", href: "#moments" },
   { label: "RSVP & Wishes", href: "#rsvp" },
 ];

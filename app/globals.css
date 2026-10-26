@@ -68,6 +68,26 @@ body {
   font-family: 'Brittany Signature', cursive;
 }
 
+.font-jegna-title {
+  font-family: 'Jegna Title', serif;
+}
+
+.font-balderasu {
+  font-family: 'Balderasu', sans-serif;
+}
+
+.amharic-section .font-editorial-serif,
+.amharic-section .font-hero-serif,
+.amharic-section .font-serif,
+.amharic-section .font-sans,
+.amharic-section .eyebrow {
+  font-family: 'Balderasu', sans-serif !important;
+}
+
+.amharic-section .amharic-title {
+  font-family: 'Jegna Title', serif !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;

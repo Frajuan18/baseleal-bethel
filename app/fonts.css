@@ -1,3 +1,19 @@
+@font-face {
+  font-family: 'Jegna Title';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/JegenaTitle-zamaric.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Balderasu';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/Balderasu-Regular.ttf) format('truetype');
+}
+
 /* cyrillic-ext */
 @font-face {
   font-family: 'Cormorant Garamond';

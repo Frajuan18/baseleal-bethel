@@ -4,8 +4,10 @@ import { FormEvent, useState } from "react";
 import Image from "next/image";
 import { wedding } from "@/config/wedding";
 import { WeddingFooter } from "./WeddingFooter";
+import { useWeddingLanguage } from "./LanguageContext";
 
 export function RSVPSection() {
+  const { isAmharic } = useWeddingLanguage();
   const [response, setResponse] = useState<"accept" | "decline">("accept");
   const [name, setName] = useState("");
   const [guestCount, setGuestCount] = useState("1");
@@ -67,7 +69,7 @@ export function RSVPSection() {
     <section
       id="rsvp"
       data-reveal
-      className="reveal-section scroll-mt-24 relative pt-32 sm:pt-40 md:pt-48 lg:pt-56 pb-0 flex flex-col overflow-hidden bg-[#FAF5EE]"
+      className={`reveal-section ${isAmharic ? "amharic-section" : ""} scroll-mt-24 relative pt-32 sm:pt-40 md:pt-48 lg:pt-56 pb-0 flex flex-col overflow-hidden bg-[#FAF5EE]`}
     >
       {/* Background Image: rsvp bg1.jpg covering both RSVP section and the embedded footer */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
@@ -94,10 +96,10 @@ export function RSVPSection() {
         {/* Section Heading */}
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-12">
           <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.26em] font-bold text-xs mb-1.5">
-            Join Our Celebration
+            {isAmharic ? "የደስታችን ተካፋይ ይሁኑ" : "Join Our Celebration"}
           </p>
           <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-5xl text-[#2B1810]">
-            RSVP &amp; Leave a Wish
+            {isAmharic ? "RSVP እና ምኞት ያስቀምጡ" : "RSVP & Leave a Wish"}
           </h2>
           <div className="h-px w-14 bg-[#8C6A3B]/40 mx-auto mt-3.5 mb-3.5" />
         </div>
@@ -127,19 +129,19 @@ export function RSVPSection() {
               <div className="py-6 sm:py-8 space-y-4 animate-fadeIn">
                 <div className="mb-6">
                   <h3 className="font-editorial-serif text-3xl sm:text-4xl text-[#1E140E] leading-none tracking-[0.04em]">
-                    RSVP
+                    {isAmharic ? "RSVP" : "RSVP"}
                   </h3>
                   <p className="mt-2.5 font-editorial-serif italic text-base sm:text-lg text-[#8C6A3B]">
-                    Received
+                    {isAmharic ? "ደርሶናል" : "Received"}
                   </p>
                 </div>
                 <h3 className="font-editorial-serif text-2xl sm:text-3xl text-[#1E140E]">
-                  Thank You, {submittedData.name}!
+                  {isAmharic ? `እናመሰግናለን፣ ${submittedData.name}!` : `Thank You, ${submittedData.name}!`}
                 </h3>
                 <p className="font-editorial-serif italic text-base text-[#5A4F46] leading-relaxed max-w-lg">
                   {submittedData.response === "accept"
-                    ? "Your attendance and message have been joyfully recorded. We cannot wait to celebrate with you!"
-                    : "We have received your reply. Although you will be missed in person, we cherish your love, prayers, and message."}
+                    ? (isAmharic ? "መገኘታችሁና መልዕክታችሁ በደስታ ተመዝግቧል። ከእናንተ ጋር ለመደሰት እንጓጓለን!" : "Your attendance and message have been joyfully recorded. We cannot wait to celebrate with you!")
+                    : (isAmharic ? "መልሳችሁ ደርሶናል። በአካል ባትገኙም ፍቅራችሁን፣ ጸሎታችሁን እና መልዕክታችሁን እናከብራለን።" : "We have received your reply. Although you will be missed in person, we cherish your love, prayers, and message.")}
                 </p>
                 <div className="pt-4">
                   <button
@@ -147,7 +149,7 @@ export function RSVPSection() {
                     onClick={() => setSubmittedData(null)}
                     className="px-6 py-2 rounded-full border border-[#2B1810] text-[#1E140E] hover:bg-[#1E140E] hover:text-[#FAF5EE] transition-all duration-300 font-sans text-xs uppercase tracking-[0.16em] font-medium cursor-pointer"
                   >
-                    Edit Response
+                    {isAmharic ? "መልሱን ያስተካክሉ" : "Edit Response"}
                   </button>
                 </div>
               </div>
@@ -157,10 +159,10 @@ export function RSVPSection() {
                 {/* Header: RSVP with reply-by note */}
                 <div className="pb-6 sm:pb-7 border-b border-[#1E140E]/10">
                   <h3 className="font-editorial-serif text-3xl sm:text-4xl lg:text-5xl text-[#1E140E] leading-none tracking-[0.04em]">
-                    Make a Wish for the Couple
+                    {isAmharic ? "ለጥንዶቹ ምኞት ያስቀምጡ" : "Make a Wish for the Couple"}
                   </h3>
                   <p className="mt-2.5 font-editorial-serif italic text-base sm:text-lg text-[#8C6A3B]">
-                    Share your wish, then kindly reply by {wedding.rsvpDeadline || "4th October"}.
+                    {isAmharic ? `ምኞትዎን ያካፍሉ፣ እባክዎ እስከ ${wedding.rsvpDeadline || "4th October"} ይመልሱ።` : `Share your wish, then kindly reply by ${wedding.rsvpDeadline || "4th October"}.`}
                   </p>
                 </div>
 
