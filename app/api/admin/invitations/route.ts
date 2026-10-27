@@ -9,7 +9,7 @@ export async function GET() {
   if (auth instanceof NextResponse) return auth;
   try {
     await connectMongo();
-    const items = await Invitation.find().sort({ createdAt: -1 }).limit(100).populate("guestId", "fullName email").lean();
+    const items = await Invitation.find({ status: { $ne: "REVOKED" } }).sort({ createdAt: -1 }).limit(100).populate("guestId", "fullName email").lean();
     const rsvps = await RSVP.find({ invitationId: { $in: items.map((item) => item._id) } }).lean();
     return NextResponse.json({ items: items.map((item) => ({ ...item, rsvp: rsvps.find((rsvp) => String(rsvp.invitationId) === String(item._id)) || null })) });
   } catch {
@@ -26,9 +26,10 @@ export async function POST(request: Request) {
     await connectMongo();
     const guest = await Guest.findOneAndUpdate({ fullName: body.fullName.trim() }, { $set: { fullName: body.fullName.trim(), ...(body.email ? { email: body.email.toLowerCase().trim() } : {}) } }, { upsert: true, new: true, setDefaultsOnInsert: true });
     const { token, tokenHash } = createInvitationToken();
-    const invitation = await Invitation.create({ guestId: guest._id, tokenHash, invitationType: body.invitationType, expiresAt: body.expiresAt ? new Date(body.expiresAt) : undefined, note: body.note?.slice(0, 500) });
+    const shareUrl = `/invite/${token}`;
+    const invitation = await Invitation.create({ guestId: guest._id, tokenHash, shareUrl, invitationType: body.invitationType, expiresAt: body.expiresAt ? new Date(body.expiresAt) : undefined, note: body.note?.slice(0, 500) });
     await AuditLog.create({ action: "INVITATION_CREATED", actor: auth.email, targetId: String(invitation._id) });
-    return NextResponse.json({ invitation: { id: invitation._id, guestName: guest.fullName, invitationType: invitation.invitationType, url: `/invite/${token}` } }, { status: 201 });
+    return NextResponse.json({ invitation: { id: invitation._id, guestName: guest.fullName, invitationType: invitation.invitationType, url: shareUrl } }, { status: 201 });
   } catch {
     return NextResponse.json({ error: "Could not create invitation." }, { status: 503 });
   }

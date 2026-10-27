@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose, { Schema, type Model } from "mongoose";
 
 export type InvitationType = "CHURCH_ONLY" | "CHURCH_AND_HOME";
@@ -12,6 +13,7 @@ const guestSchema = new Schema({
 const invitationSchema = new Schema({
   guestId: { type: Schema.Types.ObjectId, ref: "Guest", required: true, index: true },
   tokenHash: { type: String, required: true, unique: true, index: true },
+  shareUrl: { type: String, maxlength: 200 },
   invitationType: { type: String, enum: ["CHURCH_ONLY", "CHURCH_AND_HOME"], required: true },
   status: { type: String, enum: ["ACTIVE", "REVOKED", "EXPIRED"], default: "ACTIVE", index: true },
   expiresAt: { type: Date },
