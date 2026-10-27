@@ -9,16 +9,20 @@ import { useWeddingLanguage } from "./LanguageContext";
 
 const seq = (delay: string): CSSProperties => ({ "--seq-delay": delay, "--seq-duration": "900ms", "--hero-rise": "10px" }) as CSSProperties;
 
+const churchSlot = wedding.schedule.church;
+const homeSlot = wedding.schedule.home;
+const timeCode = (time: string) => `${time.replace(":", "")}00`;
+const scheduleText = `Wedding day schedule\n${churchSlot.start}–${churchSlot.end}  Church ceremony — ${wedding.locations.church.address}\n${homeSlot.start}–${homeSlot.end}  Home reception — ${wedding.locations.home.address}\n\nWe cannot wait to celebrate with you.`;
+const locationText = `${wedding.locations.church.address} | ${wedding.locations.home.address}`;
+
 function downloadICS(year: number, monthIndex: number, dayNumber: number) {
-  const [hours, minutes] = (wedding.time || "10:00").split(":").map(Number);
-  const startDate = new Date(year, monthIndex, dayNumber, hours || 10, minutes || 0);
-  const endDate = new Date(startDate.getTime() + 5 * 60 * 60 * 1000);
   const pad = (n: number) => String(n).padStart(2, "0");
-  const format = (date: Date) => `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}00`;
+  const date = `${year}${pad(monthIndex + 1)}${pad(dayNumber)}`;
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
   const content = [
     "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Baseleal & Bethel//Wedding Invitation//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "BEGIN:VEVENT",
-    `UID:wedding-${year}-${monthIndex + 1}-${dayNumber}@baseleal-bethel.wedding`, `DTSTAMP:${format(new Date())}`, `DTSTART:${format(startDate)}`, `DTEND:${format(endDate)}`,
-    `SUMMARY:${coupleName}'s Wedding Celebration`, `LOCATION:${wedding.venue}, ${wedding.city}`, "STATUS:CONFIRMED", "END:VEVENT", "END:VCALENDAR",
+    `UID:wedding-${date}@baseleal-bethel.wedding`, `DTSTAMP:${stamp}`, `DTSTART:${date}T${timeCode(churchSlot.start)}`, `DTEND:${date}T${timeCode(homeSlot.end)}`,
+    `SUMMARY:${coupleName}'s Wedding Celebration`, `LOCATION:${locationText}`, `DESCRIPTION:${scheduleText.replace(/\n/g, "\\n")}`, "STATUS:CONFIRMED", "END:VEVENT", "END:VCALENDAR",
   ].join("\r\n");
   const url = window.URL.createObjectURL(new Blob([content], { type: "text/calendar;charset=utf-8" }));
   const link = document.createElement("a");
@@ -44,7 +48,7 @@ export function WeddingCalendar() {
   const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
   const startDayOffset = new Date(year, monthIndex, 1).getDay();
   const days = Array.from({ length: daysInMonth }, (_, index) => index + 1);
-  const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`${coupleName}'s Wedding Celebration`)}&dates=${year}${String(monthIndex + 1).padStart(2, "0")}${String(dayNumber).padStart(2, "0")}T100000/${year}${String(monthIndex + 1).padStart(2, "0")}${String(dayNumber).padStart(2, "0")}T150000`;
+  const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`${coupleName}'s Wedding Celebration`)}&dates=${year}${String(monthIndex + 1).padStart(2, "0")}${String(dayNumber).padStart(2, "0")}T${timeCode(churchSlot.start)}/${year}${String(monthIndex + 1).padStart(2, "0")}${String(dayNumber).padStart(2, "0")}T${timeCode(homeSlot.end)}&details=${encodeURIComponent(scheduleText)}&location=${encodeURIComponent(locationText)}&ctz=${encodeURIComponent("Africa/Addis_Ababa")}`;
 
   const handleDownload = () => {
     downloadICS(year, monthIndex, dayNumber);

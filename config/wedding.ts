@@ -29,6 +29,14 @@ export interface WeddingConfig {
   address: string;
   directionsUrl: string | null;
   rsvpDeadline: string | null; // e.g. "July 1, 2027" or null
+  locations: {
+    church: { label: string; address: string; mapsQuery: string };
+    home: { label: string; address: string; mapsQuery: string };
+  };
+  schedule: {
+    church: { start: string; end: string };
+    home: { start: string; end: string };
+  };
   scripture: {
     verse: string;
     reference: string;
@@ -73,6 +81,27 @@ export const wedding: WeddingConfig = {
 
   // RSVP deadline:
   rsvpDeadline: null, // e.g. "July 15, 2027"
+
+  // Addresses shown on the personalized invitation. Replace with the real
+  // addresses (and set mapsQuery to the exact place so Google Maps opens it).
+  locations: {
+    church: {
+      label: "Church ceremony",
+      address: "Church location, Addis Ababa",
+      mapsQuery: "Addis Ababa, Ethiopia",
+    },
+    home: {
+      label: "Home reception",
+      address: "Home location, Addis Ababa",
+      mapsQuery: "Addis Ababa, Ethiopia",
+    },
+  },
+
+  // Day schedule used by the calendar buttons (24-hr local time).
+  schedule: {
+    church: { start: "10:00", end: "12:30" },
+    home: { start: "14:00", end: "17:00" },
+  },
 
   // Scripture blessing:
   scripture: {
