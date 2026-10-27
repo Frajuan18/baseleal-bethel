@@ -94,7 +94,19 @@ export function InvitationSection() {
           
           {/* Section Header with seamless luminous parchment vignette on small screens to prevent flower overlap */}
           {/* The Fine-Art Wedding Invitation Card - Grand, Prominent & Perfectly Proportioned */}
-          <div className="w-full max-w-[460px] sm:max-w-[500px]">
+          <div className="relative w-full max-w-[460px] sm:max-w-[500px]">
+          <div
+            className="pointer-events-none absolute left-1/2 top-[-2.85rem] z-30 h-10 w-[84%] -translate-x-1/2 sm:top-[-3rem] md:hidden"
+            aria-hidden
+          >
+            <Image
+              src="/flower underline light.png"
+              alt=""
+              fill
+              sizes="84vw"
+              className="object-contain object-center"
+            />
+          </div>
           <article data-seq="card" style={{ ...seq("0.6s", "1300ms"), "--photo-rise": "14px" } as CSSProperties} className="relative z-20 min-h-[520px] bg-[#FAF5EE] rounded-sm p-5 sm:min-h-[590px] sm:p-7 md:p-8 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
             <Image src="/card bg.png" alt="" fill sizes="(max-width: 640px) 92vw, 500px" className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover" aria-hidden />
             
@@ -216,6 +228,18 @@ export function InvitationSection() {
 
             </div>
           </article>
+          <div
+            className="pointer-events-none absolute bottom-[-2.85rem] left-1/2 z-30 h-10 w-[84%] -translate-x-1/2 sm:bottom-[-3rem] md:hidden"
+            aria-hidden
+          >
+            <Image
+              src="/flower underline light.png"
+              alt=""
+              fill
+              sizes="84vw"
+              className="object-contain object-center"
+            />
+          </div>
         </div>
 
         </div>
