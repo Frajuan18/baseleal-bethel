@@ -37,15 +37,13 @@ export default function AdminDashboardPage() {
     { label: "Invitation responses", value: `${responseRate}%`, detail: `${data.pending} pending`, dark: true, kind: "link" as const },
   ], [data.church, data.home, data.pending, responseRate]);
 
-  async function logout() { await fetch("/api/admin/auth/logout", { method: "POST" }); window.location.assign("/admin/login"); }
-
   return <main className="min-h-screen bg-[#D0D0D0] p-0 text-[#171717] sm:p-5 lg:p-9">
     <AdminSidebar active="/admin" hideDesktop />
     <div className="mx-auto min-h-[calc(100svh-2.5rem)] max-w-[1440px] overflow-hidden rounded-none bg-[#F8F8F7] sm:rounded-[22px]">
       <header className="flex flex-wrap items-center gap-4 border-b border-[#E7E5E1] px-5 py-4 sm:px-8 lg:px-10">
         <a href="/admin" className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#171717] font-serif text-lg text-[#F2D69B]">B</span><span className="hidden font-serif text-lg sm:inline">Baseleal &amp; Bethel</span></a>
         <nav className="order-3 flex w-full gap-1 overflow-x-auto lg:order-none lg:ml-10 lg:w-auto">{[["Overview", "/admin", "home"], ["Guests & RSVPs", "/admin/guests", "users"], ["Invitations", "/admin/invitations", "link"], ["Guest Wishes", "/admin/wishes", "heart"]].map(([label, href, kind]) => <a key={href} href={href} className={`flex shrink-0 items-center gap-2 rounded-full px-3 py-2 text-xs transition ${href === "/admin" ? "bg-[#171717] text-white" : "bg-[#F0F0EE] text-[#777774] hover:bg-white"}`}><LineIcon kind={kind as "home"} />{label}</a>)}</nav>
-        <div className="ml-auto flex items-center gap-2"><button className="hidden rounded-full bg-white p-2.5 text-[#777774] sm:block" aria-label="Notifications">♡</button><button onClick={logout} className="rounded-full border border-[#E2DFDA] bg-white px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#6C625B]">Sign out</button></div>
+        <div className="ml-auto flex items-center gap-2"><button className="hidden rounded-full bg-white p-2.5 text-[#777774] sm:block" aria-label="Notifications">♡</button></div>
       </header>
       <div className="px-5 py-7 sm:px-8 lg:px-10 lg:py-9">
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><div><p className="text-xs text-[#777774]">Tuesday, October 27, 2026</p><h1 className="mt-2 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Wedding Overview</h1><p className="mt-2 text-sm text-[#777774]">Manage your guests, RSVPs, and wedding invitations.</p></div><div className="flex flex-wrap gap-2"><button className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-xs text-[#55534F]"><LineIcon kind="filter" />Filters</button><a href="/api/admin/guests/export" className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-xs text-[#55534F]"><LineIcon kind="download" />Export</a><a href="/admin/invitations" className="flex items-center gap-2 rounded-full bg-[#E85A0C] px-4 py-2.5 text-xs font-semibold text-white"><LineIcon kind="plus" />Create invitation</a></div></div>
@@ -63,4 +61,3 @@ export default function AdminDashboardPage() {
 function Metric({ label, value }: { label: string; value: number }) { return <div className="px-2"><p className="text-[10px] text-[#999690]">{label}</p><p className="mt-2 text-2xl font-semibold">{value}</p></div>; }
 function SmallMetric({ label, value }: { label: string; value: number }) { return <div className="rounded-2xl bg-white p-4"><p className="text-[10px] text-[#999690]">{label}</p><p className="mt-3 text-xl font-semibold">{value}</p></div>; }
 function SmallPanel({ label, value, detail }: { label: string; value: number; detail: string }) { return <div className="rounded-2xl bg-[#EEEEEC] p-4"><p className="text-xs text-[#777774]">{label}</p><p className="mt-5 text-2xl font-semibold">{value}</p><p className="mt-1 text-[10px] text-[#A09B94]">{detail}</p></div>; }
-
