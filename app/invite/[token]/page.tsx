@@ -1,6 +1,16 @@
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { InvitationRedirect } from "./redirect";
 
-export default async function InvitationRedirect({ params }: { params: Promise<{ token: string }> }) {
-  const { token } = await params;
-  redirect(`/?invite=${encodeURIComponent(token)}`);
+export default function InvitationRedirectPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-dvh items-center justify-center bg-[#F7F0E6] p-6 text-center font-serif text-xl text-[#4A3025]">
+          Opening your invitation…
+        </main>
+      }
+    >
+      <InvitationRedirect />
+    </Suspense>
+  );
 }

@@ -7,6 +7,8 @@ import { LanguageProvider } from "./components/wedding/LanguageContext";
 import { LanguageToggle } from "./components/wedding/LanguageToggle";
 import { InvitationProvider } from "./components/wedding/InvitationContext";
 
+export const instant = false;
+
 export default async function Home({ searchParams }: { searchParams: Promise<{ invite?: string }> }) {
   const { invite } = await searchParams;
   return (
