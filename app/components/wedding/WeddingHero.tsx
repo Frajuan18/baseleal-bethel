@@ -15,7 +15,7 @@ export function WeddingHero() {
 
       <div className="relative mx-auto grid min-h-[100svh] max-w-[1440px] grid-cols-1 lg:h-full lg:grid-cols-[42%_58%]">
         <div className="relative z-10 flex flex-col justify-center px-8 pb-16 pt-20 sm:px-12 lg:px-12 xl:px-16">
-          <h1 className={`hero-anim hero-veil mb-6 flex flex-col gap-6 font-normal text-[#fffdf5] [-webkit-text-stroke:0.2px_currentColor] sm:gap-7 lg:gap-10 ${isAmharic ? "font-jegna-title text-[clamp(3.4rem,7vw,6.5rem)] leading-[1.2]" : "font-brittany-signature whitespace-nowrap text-[clamp(4.2rem,7vw,7rem)] leading-[1.12] tracking-normal"}`} style={{ animationDelay: "420ms" }}>
+          <h1 className={`hero-anim hero-veil mb-6 flex flex-col gap-6 font-normal text-[#fffdf5] [-webkit-text-stroke:0.2px_currentColor] sm:gap-7 lg:gap-10 ${isAmharic ? "font-jegna-title text-[clamp(4.3rem,9vw,6.5rem)] leading-[1.2]" : "font-brittany-signature whitespace-nowrap text-[clamp(5.1rem,11vw,7rem)] leading-[1.12] tracking-normal"}`} style={{ animationDelay: "420ms" }}>
             <span className="block">{isAmharic ? "ባስልኤል" : "Baseleal"}</span>
             <span className="block">{isAmharic ? "እና ቤተል" : "& Bethel"}</span>
           </h1>
