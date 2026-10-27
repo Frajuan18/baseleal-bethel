@@ -42,16 +42,21 @@ function FlipUnitCard({
 
   useEffect(() => {
     if (value !== currentVal) {
-      setPrevVal(currentVal);
-      setCurrentVal(value);
-      setIsFlipping(true);
-      setFlipKey((k) => k + 1);
+      const frame = requestAnimationFrame(() => {
+        setPrevVal(currentVal);
+        setCurrentVal(value);
+        setIsFlipping(true);
+        setFlipKey((k) => k + 1);
+      });
 
       const timer = setTimeout(() => {
         setIsFlipping(false);
       }, 580);
 
-      return () => clearTimeout(timer);
+      return () => {
+        cancelAnimationFrame(frame);
+        clearTimeout(timer);
+      };
     }
   }, [value, currentVal]);
 
