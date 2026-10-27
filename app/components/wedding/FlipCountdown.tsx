@@ -58,7 +58,7 @@ function FlipUnitCard({
   return (
     <div data-seq={dataSeq} style={style} className="flex flex-col items-center w-full">
       {/* Authentic Fliqlo Split-Flap Clock Card in Textured Brown Beige */}
-      <div className="fliqlo-card-container relative w-full aspect-[1/0.82] sm:aspect-[1/1.08] rounded-xl sm:rounded-2xl bg-[#3A281E] shadow-[0_22px_45px_-8px_rgba(43,24,16,0.38),0_8px_18px_rgba(43,24,16,0.22),inset_0_1px_1px_rgba(254,232,133,0.18)] border border-[#5A4032] select-none">
+      <div className="fliqlo-card-container relative w-full aspect-[1/1.05] sm:aspect-[1/1.08] rounded-xl sm:rounded-2xl bg-[#3A281E] shadow-[0_22px_45px_-8px_rgba(43,24,16,0.38),0_8px_18px_rgba(43,24,16,0.22),inset_0_1px_1px_rgba(254,232,133,0.18)] border border-[#5A4032] select-none">
         
         {/* 1. TOP STATIC HALF (Shows new incoming value in butter yellow, upper half) */}
         <div className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden bg-gradient-to-b from-[#422F24] to-[#36251C] rounded-t-xl sm:rounded-t-2xl z-10">

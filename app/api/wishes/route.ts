@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { connectMongo } from "@/app/lib/mongo";
+import { Guest, GuestWish } from "@/app/lib/models";
 
 export async function POST(request: Request) {
   try {
@@ -12,35 +14,31 @@ export async function POST(request: Request) {
       );
     }
 
-    // In a production backend setup with a database (e.g. Supabase, PostgreSQL, Prisma):
-    // await prisma.wish.create({ data: { name, relationship, message } });
-
-    console.log("[WISH RECEIVED]:", {
-      name,
-      relationship,
-      message,
-      receivedAt: new Date().toISOString(),
-    });
+    if (typeof name !== "string" || name.trim().length > 120 || typeof message !== "string" || message.trim().length > 2000) {
+      return NextResponse.json({ error: "Invalid wish data." }, { status: 400 });
+    }
+    await connectMongo();
+    const guest = await Guest.findOneAndUpdate({ fullName: name.trim() }, { $setOnInsert: { fullName: name.trim() } }, { upsert: true, new: true, setDefaultsOnInsert: true });
+    const wish = await GuestWish.create({ guestId: guest._id, message: message.trim() });
 
     return NextResponse.json(
       {
         success: true,
         message: "Wish received successfully with love.",
         wish: {
-          id: `wish-${Date.now()}`,
+          id: String(wish._id),
           name,
           relationship: relationship || "Guest",
           message,
-          date: new Date().toISOString(),
+          date: wish.createdAt,
         },
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("[WISH ERROR]:", error);
+  } catch {
     return NextResponse.json(
       { error: "Failed to process wish submission." },
-      { status: 500 }
+      { status: 503 }
     );
   }
 }

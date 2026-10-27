@@ -11,7 +11,7 @@ const LanguageContext = createContext<{
 } | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<WeddingLanguage>("en");
+  const [language, setLanguage] = useState<WeddingLanguage>("am");
   const toggleLanguage = () => {
     setLanguage((value) => value === "en" ? "am" : "en");
     window.requestAnimationFrame(() => {

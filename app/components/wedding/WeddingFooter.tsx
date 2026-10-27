@@ -4,7 +4,7 @@ import { useWeddingLanguage } from "./LanguageContext";
 export function WeddingFooter() {
   const { isAmharic } = useWeddingLanguage();
   return (
-    <footer className={`relative ${isAmharic ? "amharic-section" : ""} bg-transparent text-[#422B20] border-t border-[#DED2C2]/50 overflow-hidden pt-16 pb-12 sm:pt-20 sm:pb-16 w-full z-10`}>
+    <footer data-language={isAmharic ? "am" : "en"} className="amharic-section relative bg-transparent text-[#422B20] border-t border-[#DED2C2]/50 overflow-hidden pt-16 pb-12 sm:pt-20 sm:pb-16 w-full z-10">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
         
         {/* Grand Signature Wordmark (Soulify-style from reference) */}

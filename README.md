@@ -1,5 +1,17 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Private administration
+
+The private administration area is available at `/admin/login`. It uses an HTTP-only, signed session cookie and has no public registration route. Configure `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, and an `ADMIN_SESSION_SECRET` of at least 32 characters in `.env.local`.
+
+Generate a password hash without placing the password in source control:
+
+```bash
+node scripts/create-admin-password.mjs "use-a-long-unique-password"
+```
+
+The project does not yet include a MongoDB driver or production data models. The dashboard therefore shows an explicit configuration state instead of fabricated guest numbers. Connect the protected admin endpoints to MongoDB using `MONGODB_URI` and `MONGODB_DB` from `.env.example` before using it with real guest data.
+
 ## Getting Started
 
 First, run the development server:

@@ -2,8 +2,6 @@
 
 import { FormEvent, useState } from "react";
 import Image from "next/image";
-import { wedding } from "@/config/wedding";
-import { WeddingFooter } from "./WeddingFooter";
 import { useWeddingLanguage } from "./LanguageContext";
 
 export function RSVPSection() {
@@ -69,7 +67,8 @@ export function RSVPSection() {
     <section
       id="rsvp"
       data-reveal
-      className={`reveal-section ${isAmharic ? "amharic-section" : ""} scroll-mt-24 relative pt-32 sm:pt-40 md:pt-48 lg:pt-56 pb-0 flex flex-col overflow-hidden bg-[#FAF5EE]`}
+      data-language={isAmharic ? "am" : "en"}
+      className="reveal-section amharic-section scroll-mt-24 relative min-h-[100svh] lg:min-h-screen pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-0 flex flex-col overflow-hidden bg-[#FAF5EE]"
     >
       {/* Background Image: rsvp bg1.jpg covering both RSVP section and the embedded footer */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
@@ -91,21 +90,21 @@ export function RSVPSection() {
       />
 
       {/* Main Upper Content: Heading + Card */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 mb-16 sm:mb-24">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 mb-8 sm:mb-12">
         
         {/* Section Heading */}
-        <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8">
+        <div className="text-center max-w-xl mx-auto mb-4 sm:mb-6">
           <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.26em] font-bold text-xs mb-1.5">
             {isAmharic ? "የደስታችን ተካፋይ ይሁኑ" : "Join Our Celebration"}
           </p>
-          <h2 className="font-editorial-serif text-3xl sm:text-4xl md:text-4xl text-[#2B1810]">
-            {isAmharic ? "RSVP እና ምኞት ያስቀምጡ" : "RSVP & Leave a Wish"}
+          <h2 className={`${isAmharic ? "amharic-title text-3xl sm:text-4xl md:text-5xl" : "font-editorial-serif text-2xl sm:text-3xl md:text-4xl"} text-[#2B1810]`}>
+            {isAmharic ? "ምኞቶን ያስቀምጡ" : "RSVP & Leave a Wish"}
           </h2>
           <div className="h-px w-14 bg-[#8C6A3B]/40 mx-auto mt-3.5 mb-3.5" />
         </div>
 
         {/* White stationery card */}
-        <div className="relative max-w-xl lg:max-w-2xl w-full mx-auto bg-white rounded-lg border border-[#E7DDCB] p-6 sm:p-8 md:p-10 shadow-[0_24px_56px_-22px_rgba(43,24,16,0.22),0_12px_26px_-16px_rgba(43,24,16,0.12)] overflow-hidden">
+        <div className="relative max-w-lg lg:max-w-xl w-full mx-auto bg-white rounded-lg border border-[#E7DDCB] p-5 sm:p-6 md:p-7 shadow-[0_24px_56px_-22px_rgba(43,24,16,0.22),0_12px_26px_-16px_rgba(43,24,16,0.12)] overflow-hidden">
           
           {/* Embossed hairline inner frame */}
           <div
@@ -154,29 +153,19 @@ export function RSVPSection() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-7">
-
-                {/* Header: RSVP with reply-by note */}
-                <div className="pb-6 sm:pb-7 border-b border-[#1E140E]/10">
-                  <h3 className="font-editorial-serif text-2xl sm:text-3xl lg:text-4xl text-[#1E140E] leading-none tracking-[0.04em]">
-                    {isAmharic ? "ለጥንዶቹ ምኞት ያስቀምጡ" : "Make a Wish for the Couple"}
-                  </h3>
-                  <p className="mt-2.5 font-editorial-serif italic text-base sm:text-lg text-[#8C6A3B]">
-                    {isAmharic ? `ምኞትዎን ያካፍሉ፣ እባክዎ እስከ ${wedding.rsvpDeadline || "4th October"} ይመልሱ።` : `Share your wish, then kindly reply by ${wedding.rsvpDeadline || "4th October"}.`}
-                  </p>
-                </div>
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
 
                 {/* Wishlist input */}
                 <div className="rounded-md transition-transform duration-300 focus-within:-translate-y-0.5">
                   <label
                     htmlFor="guest-secondary"
-                    className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-medium text-[#2B1810]"
+                    className={`${isAmharic ? "font-benaiah" : "font-sans"} block text-[10px] sm:text-[11px] uppercase tracking-[0.24em] font-medium text-[#2B1810]`}
                   >
                     {isAmharic ? "ለጥንዶቹ ያለዎት ምኞት" : "Your Wish for the Couple"} <span className="text-[#8C6A3B]">*</span>
                   </label>
                   <textarea
                     id="guest-secondary"
-                    rows={3}
+                    rows={2}
                     required
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
@@ -188,14 +177,14 @@ export function RSVPSection() {
 
                 {/* Interactive attendance choice */}
                 <fieldset>
-                  <legend className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-semibold text-[#2B1810] mb-3.5">
+                  <legend className={`${isAmharic ? "font-benaiah" : "font-sans"} block text-[10px] sm:text-[11px] uppercase tracking-[0.24em] font-semibold text-[#2B1810] mb-3.5`}>
                     {isAmharic ? "ከእኛ ጋር ይገኛሉ?" : "Will you be joining us?"}
                   </legend>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 
                     {/* Accept */}
                     <label
-                      className={`group relative flex items-center justify-between gap-3 rounded-xl border px-4 py-4 cursor-pointer select-none transition-all duration-300 ${
+                      className={`group relative flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3 cursor-pointer select-none transition-all duration-300 ${
                         response === "accept"
                           ? "border-[#8C6A3B] bg-[#8C6A3B]/[0.06] shadow-[0_16px_32px_-20px_rgba(140,106,59,0.85)]"
                         : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)] active:scale-[0.99]"
@@ -211,22 +200,19 @@ export function RSVPSection() {
                       />
                       <span className="flex items-center gap-3.5">
                         <span
-                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                             response === "accept"
                               ? "border-[#8C6A3B] bg-[#8C6A3B] text-white"
                               : "border-[#1E140E]/15 bg-[#FAF7F1] text-[#8C6A3B] group-hover:border-[#8C6A3B]/50"
                           }`}
                         >
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                             <path d="M20 6 9 17l-5-5" />
                           </svg>
                         </span>
                         <span className="flex flex-col text-left">
                           <span className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-tight">
-                            {isAmharic ? "በደስታ እቀበላለሁ" : "Joyfully Accept"}
-                          </span>
-                          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7A6B]">
-                            {isAmharic ? "እገኛለሁ" : "Count me in"}
+                            {isAmharic ? "በደስታ እገኛለሁ" : "Joyfully Accept"}
                           </span>
                         </span>
                       </span>
@@ -243,7 +229,7 @@ export function RSVPSection() {
 
                     {/* Decline */}
                     <label
-                      className={`group relative flex items-center justify-between gap-3 rounded-xl border px-4 py-4 cursor-pointer select-none transition-all duration-300 ${
+                      className={`group relative flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3 cursor-pointer select-none transition-all duration-300 ${
                         response === "decline"
                           ? "border-[#8C6A3B] bg-[#8C6A3B]/[0.06] shadow-[0_16px_32px_-20px_rgba(140,106,59,0.85)]"
                         : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)] active:scale-[0.99]"
@@ -259,22 +245,19 @@ export function RSVPSection() {
                       />
                       <span className="flex items-center gap-3.5">
                         <span
-                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                             response === "decline"
                               ? "border-[#8C6A3B] bg-[#8C6A3B] text-white"
                               : "border-[#1E140E]/15 bg-[#FAF7F1] text-[#8C6A3B] group-hover:border-[#8C6A3B]/50"
                           }`}
                         >
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                             <path d="M12 21s-6.5-4.35-9-8.5C1.2 9.1 3 5 7 5c2 0 3.2 1.2 4 2.2C11.8 6.2 13 5 15 5c4 0 5.8 4.1 4 7.5-2.5 4.15-9 8.5-9 8.5Z" />
                           </svg>
                         </span>
                         <span className="flex flex-col text-left">
                           <span className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-tight">
-                            {isAmharic ? "በጸጸት እቀንሳለሁ" : "Regretfully Decline"}
-                          </span>
-                          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7A6B]">
-                            {isAmharic ? "ፍቅር እልካለሁ" : "Sending love"}
+                            {isAmharic ? "መገኘት አልችልም" : "Regretfully Decline"}
                           </span>
                         </span>
                       </span>
@@ -297,7 +280,7 @@ export function RSVPSection() {
                   <div className="rounded-md transition-transform duration-300 focus-within:-translate-y-0.5">
                     <label
                       htmlFor="guest-name"
-                      className="block text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.24em] font-medium text-[#2B1810]"
+                      className={`${isAmharic ? "font-benaiah" : "font-sans"} block text-[10px] sm:text-[11px] uppercase tracking-[0.24em] font-medium text-[#2B1810]`}
                     >
                       {isAmharic ? "ሙሉ ስም" : "Full Name"}
                     </label>
@@ -315,10 +298,10 @@ export function RSVPSection() {
                 </div>
 
                 {/* Bottom Bar: Attending Count & Submit Button */}
-                <div className="pt-6 sm:pt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-[#1E140E]/10">
+                <div className="pt-4 sm:pt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-[#1E140E]/10">
                   {response === "accept" && (
                     <div className="flex items-center gap-2 text-xs font-editorial-serif italic text-[#6A5D54] animate-fadeIn">
-                      <span>{isAmharic ? "የሚገኙ እንግዶች:" : "Attending party:"}</span>
+                      <span className={isAmharic ? "font-benaiah" : ""}>{isAmharic ? "የሚገኙ እንግዶች:" : "Attending party:"}</span>
                       <select
                         value={guestCount}
                         onChange={(e) => setGuestCount(e.target.value)}
@@ -353,11 +336,6 @@ export function RSVPSection() {
           </div>
         </div>
 
-      </div>
-
-      {/* Wedding Footer included at the bottom of the section */}
-      <div className="relative z-10 w-full mt-auto">
-        <WeddingFooter />
       </div>
 
     </section>

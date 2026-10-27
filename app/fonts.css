@@ -14,6 +14,14 @@
   src: url(/fonts/Balderasu-Regular.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: 'Benaiah';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/Benaiah.otf) format('opentype');
+}
+
 /* cyrillic-ext */
 @font-face {
   font-family: 'Cormorant Garamond';

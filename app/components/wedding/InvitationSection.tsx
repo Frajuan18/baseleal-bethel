@@ -26,8 +26,8 @@ export function InvitationSection() {
       if (parts.length === 3) {
         const [y, m, d] = parts;
         const dt = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
-        const weekdays = isAmharic ? ["እሁድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"] : ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
-        const months = isAmharic ? ["ጃን", "ፌብ", "ማር", "ኤፕሪ", "ሜይ", "ጁን", "ጁላይ", "ኦገስት", "ሴፕቴ", "ኦክቶ", "ኖቬ", "ዲሴ"] : ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+        const weekdays = isAmharic ? ["እሑድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"] : ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+        const months = isAmharic ? ["ጃንዋሪ", "ፌብሩወሪ", "ማርች", "ኤፕሪል", "ሜይ", "ጁን", "ጁላይ", "ኦገስት", "ሴፕቴምበር", "ኦክቶበር", "ኖቬምበር", "ዲሴምበር"] : ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
         return {
           weekday: weekdays[dt.getUTCDay()] ?? "SATURDAY",
           month: months[m - 1] ?? "SEPT",
@@ -50,7 +50,8 @@ export function InvitationSection() {
     <section
       id="invitation"
       data-reveal
-      className={`reveal-seq ${isAmharic ? "amharic-section" : ""} scroll-mt-24 relative h-[100svh] min-h-[100svh] lg:h-screen flex flex-col justify-center overflow-hidden bg-[#F3F2EE]`}
+      data-language={isAmharic ? "am" : "en"}
+      className="reveal-seq amharic-section scroll-mt-24 relative h-[100svh] min-h-[100svh] lg:h-screen flex flex-col justify-center overflow-hidden bg-[#F3F2EE]"
     >
       {/* Invitation artwork background */}
       <div data-seq="bg" className="absolute inset-0 z-0 pointer-events-none select-none block">
@@ -69,6 +70,26 @@ export function InvitationSection() {
       <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-16 bg-gradient-to-b from-[#c7a378]/55 via-[#dfc29f]/25 to-transparent" aria-hidden />
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
+        {/* White botanical artwork frames the card on larger screens without competing with its content. */}
+        <div className="pointer-events-none absolute left-[11%] top-1/2 z-0 hidden h-[82%] w-[25%] -translate-y-1/2 opacity-75 md:block lg:left-[13%] lg:w-[23%]" aria-hidden>
+          <Image
+            src="/white flower.png"
+            alt=""
+            fill
+            sizes="25vw"
+            className="object-contain object-right"
+          />
+        </div>
+        <div className="pointer-events-none absolute right-[11%] top-1/2 z-0 hidden h-[82%] w-[25%] -translate-y-1/2 opacity-75 md:block lg:right-[13%] lg:w-[23%]" aria-hidden>
+          <Image
+            src="/white flower.png"
+            alt=""
+            fill
+            sizes="25vw"
+            className="object-contain object-left scale-x-[-1]"
+          />
+        </div>
+
         <div className="w-full flex flex-col items-center justify-center">
           
           {/* Section Header with seamless luminous parchment vignette on small screens to prevent flower overlap */}
@@ -107,17 +128,17 @@ export function InvitationSection() {
                 {/* Couple Header - Title Case */}
                 <div className="space-y-1.5">
                   <p data-seq="fade" style={seq("2.0s", "900ms")} className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-[#7C5A32]">
-                    {isAmharic ? "የሰርግ ግብዣ" : "The Wedding Of"}
+                    {isAmharic ? "የጋብቻ ሥነ-ሥርዓት" : "The Wedding Of"}
                   </p>
                   <h3 className="font-editorial-serif text-[clamp(1.75rem,3.8vw,2.35rem)] lg:text-[2.05rem] xl:text-[2.35rem] text-[#1E140E] leading-[1.05] tracking-[-0.01em]">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
-                      <span data-seq="rise" style={seq("2.25s", "1000ms", "10px")} className="capitalize">{wedding.couple.first}</span>
+                      <span data-seq="rise" style={seq("2.25s", "1000ms", "10px")} className={`capitalize font-semibold ${isAmharic ? "amharic-title" : ""}`}>{isAmharic ? "ባስልኤል" : wedding.couple.first}</span>
                       <span data-seq="rise" style={seq("2.6s", "1000ms", "8px")} className="font-editorial-serif italic font-light text-[0.8em] tracking-normal text-[#9A7338]">
                         {isAmharic ? "እና" : "and"}
                       </span>
                     </div>
-                    <span data-seq="rise" style={seq("2.9s", "1000ms", "10px")} className="block mt-0.5 capitalize">
-                      {wedding.couple.second}
+                    <span data-seq="rise" style={seq("2.9s", "1000ms", "10px")} className={`block mt-0.5 capitalize font-semibold ${isAmharic ? "amharic-title" : ""}`}>
+                      {isAmharic ? "ቤቴል" : wedding.couple.second}
                     </span>
                   </h3>
                 </div>
@@ -128,7 +149,7 @@ export function InvitationSection() {
                     
                     {/* Left: Day of Week */}
                     <div className="pr-3.5 sm:pr-5 text-left">
-                      <span className="font-editorial-serif uppercase tracking-[0.16em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]">
+                      <span className={`${isAmharic ? "amharic-title" : "font-editorial-serif"} uppercase tracking-[0.16em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]`}>
                         {parsedDate.weekday}
                       </span>
                     </div>
@@ -138,13 +159,13 @@ export function InvitationSection() {
 
                     {/* Center: Stacked Month, Day Number, Year */}
                     <div className="px-3.5 sm:px-5 text-center flex flex-col items-center justify-center">
-                      <span className="font-sans uppercase tracking-[0.22em] text-[10px] sm:text-[11px] font-semibold text-[#7C5A32]">
+                      <span className={`${isAmharic ? "amharic-title" : "font-sans"} uppercase tracking-[0.22em] text-[10px] sm:text-[11px] font-semibold text-[#7C5A32]`}>
                         {parsedDate.month}
                       </span>
-                      <span className="font-editorial-serif text-2xl sm:text-3xl md:text-[2.35rem] lg:text-[2.35rem] font-semibold leading-none my-0.5 text-[#1E140E]">
+                      <span className={`${isAmharic ? "amharic-title" : "font-editorial-serif"} text-2xl sm:text-3xl md:text-[2.35rem] lg:text-[2.35rem] font-semibold leading-none my-0.5 text-[#1E140E]`}>
                         {parsedDate.day}
                       </span>
-                      <span className="font-sans uppercase tracking-[0.2em] text-[10px] sm:text-[11px] font-medium text-[#7C5A32]">
+                      <span className={`${isAmharic ? "amharic-title" : "font-sans"} uppercase tracking-[0.2em] text-[10px] sm:text-[11px] font-medium text-[#7C5A32]`}>
                         {parsedDate.year}
                       </span>
                     </div>
@@ -154,21 +175,22 @@ export function InvitationSection() {
 
                     {/* Right: Time */}
                     <div className="pl-3.5 sm:pl-5 text-left">
-                      <span className="font-editorial-serif uppercase tracking-[0.16em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]">
-                        {parsedDate.time}
+                      <span className={`${isAmharic ? "font-balderasu" : "font-editorial-serif"} uppercase tracking-[0.16em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]`}>
+                        {isAmharic ? "ከጠዋቱ 4:00 ሰዓት" : parsedDate.time}
                       </span>
                     </div>
 
                   </div>
+                  {isAmharic && <p className="font-benaiah mt-2 text-[10px] leading-relaxed tracking-[0.08em] text-[#634838]">በኢትዮጵያ አቆጣጠር፡ ታኅሣሥ 25፣ 2019 ዓ.ም.</p>}
                 </div>
 
                 {/* Venue & Location Block */}
                 <div data-seq="rise" style={seq("3.65s", "1000ms", "10px")} className="space-y-0.5">
                   <p className="font-editorial-serif uppercase tracking-[0.18em] text-[11px] sm:text-xs text-[#22150D] font-medium leading-relaxed">
-                    {wedding.venue}
+                    {isAmharic ? "የሥነ-ሥርዓቱ ቦታ ወደፊት ይገለጻል" : wedding.venue}
                   </p>
                   <p className="font-editorial-serif uppercase tracking-[0.16em] text-[10px] sm:text-[11px] text-[#634838] leading-relaxed">
-                    {wedding.city}
+                    {isAmharic ? "አዲስ አበባ፣ ኢትዮጵያ" : wedding.city}
                   </p>
                 </div>
 
@@ -178,7 +200,7 @@ export function InvitationSection() {
                     href="#rsvp"
                     className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-[420ms] shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
                   >
-                    <span>{isAmharic ? "RSVP በመስመር ላይ" : "RSVP Online"}</span>
+                    <span>{isAmharic ? "በኦንላይን መገኘትዎን ያረጋግጡ (RSVP)" : "RSVP Online"}</span>
                     <span aria-hidden>→</span>
                   </a>
                 </div>
@@ -186,10 +208,10 @@ export function InvitationSection() {
               </div>
 
               <div data-seq="fade" style={seq("4.4s", "1100ms")} className="mt-10 max-w-[82%] border-t border-[#8C6A3B]/25 pt-4 sm:mt-14">
-                <p className="font-editorial-serif text-xs italic leading-relaxed text-[#553C2D] opacity-85 sm:text-sm">
-                  {isAmharic ? "ፍቅር ታጋሽ ነው፣ ፍቅር ቸር ነው። ፍቅር አይወድቅም።" : wedding.scripture.verse}
+                <p className="font-benaiah text-xs italic leading-relaxed text-[#553C2D] opacity-85 sm:text-sm">
+                  {isAmharic ? "«ፍቅር ይታገሣል፥ ቸርነትንም ያደርጋል፤ ፍቅር አይቀናም፤ ፍቅር አይመካም፥ አይታበይም... ሁሉን ይታገሣል፥ ሁሉን ያምናል፥ ሁሉን ተስፋ ያደርጋል፥ በሁሉ ይጸናል፤ ፍቅር ለዘወትር አይወድቅም።»" : wedding.scripture.verse}
                 </p>
-                <span className="mt-2 block font-sans text-[9px] uppercase tracking-[0.18em] text-[#8C6A3B]">1 Corinthians 13:4–8</span>
+                <span className="mt-2 block font-sans text-[9px] uppercase tracking-[0.18em] text-[#8C6A3B]">{isAmharic ? "1ኛ ቆሮንቶስ 13፥4–8" : "1 Corinthians 13:4–8"}</span>
               </div>
 
             </div>

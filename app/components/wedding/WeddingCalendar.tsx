@@ -53,7 +53,7 @@ export function WeddingCalendar() {
   };
 
   return (
-    <section id="date" data-reveal className={`reveal-seq ${isAmharic ? "amharic-section" : ""} relative overflow-hidden bg-[#FFF8D6] py-16 sm:py-20 lg:py-24`}>
+    <section id="date" data-reveal data-language={isAmharic ? "am" : "en"} className="reveal-seq amharic-section relative overflow-hidden bg-[#FFF8D6] py-16 sm:py-20 lg:py-24">
       <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-multiply" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='18' cy='24' r='1.3' fill='%234A350E'/%3E%3Ccircle cx='76' cy='42' r='.9' fill='%235A4215'/%3E%3Ccircle cx='124' cy='18' r='1.2' fill='%233D2B09'/%3E%3Ccircle cx='36' cy='92' r='1.4' fill='%234C3710'/%3E%3Ccircle cx='104' cy='82' r='.8' fill='%23563F14'/%3E%3C/svg%3E")` }} aria-hidden />
       <div className="pointer-events-none absolute left-0 top-0 z-0 h-40 w-40 opacity-65 sm:h-56 sm:w-56 lg:h-72 lg:w-72" aria-hidden>
         <Image src="/top left dark.png" alt="" fill sizes="(max-width: 640px) 160px, (max-width: 1024px) 224px, 288px" className="object-contain object-left-top" />

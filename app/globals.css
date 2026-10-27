@@ -76,15 +76,19 @@ body {
   font-family: 'Balderasu', sans-serif;
 }
 
-.amharic-section .font-editorial-serif,
-.amharic-section .font-hero-serif,
-.amharic-section .font-serif,
-.amharic-section .font-sans,
-.amharic-section .eyebrow {
+.font-benaiah {
+  font-family: 'Benaiah', cursive;
+}
+
+.amharic-section[data-language="am"] .font-editorial-serif,
+.amharic-section[data-language="am"] .font-hero-serif,
+.amharic-section[data-language="am"] .font-serif,
+.amharic-section[data-language="am"] .font-sans,
+.amharic-section[data-language="am"] .eyebrow {
   font-family: 'Balderasu', sans-serif !important;
 }
 
-.amharic-section .amharic-title {
+.amharic-section[data-language="am"] .amharic-title {
   font-family: 'Jegna Title', serif !important;
 }
 
@@ -644,5 +648,17 @@ body {
     clip-path: none;
     animation: none !important;
   }
+}
+
+@media (min-width: 1024px) {
+  main[class*="lg:pl-[320px]"] { padding-left: 3.5rem !important; }
+}
+
+@media (max-width: 1023px) {
+  main[class*="lg:pl-[320px]"] { padding-bottom: 7rem !important; }
+}
+
+main[class*="lg:pl-[320px]"] {
+  background-color: #F8F8F7 !important;
 }
 

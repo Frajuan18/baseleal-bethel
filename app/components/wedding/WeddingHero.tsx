@@ -14,12 +14,14 @@ export function WeddingHero() {
       <div className="relative mx-auto grid min-h-[100svh] max-w-[1440px] grid-cols-1 lg:h-full lg:grid-cols-[42%_58%]">
         <div className="relative z-10 flex flex-col justify-center px-8 pb-16 pt-20 sm:px-12 lg:px-12 xl:px-16">
           <h1 className={`hero-anim hero-veil mb-6 flex flex-col gap-6 font-normal text-[#fffdf5] [-webkit-text-stroke:0.2px_currentColor] sm:gap-7 lg:gap-10 ${isAmharic ? "font-jegna-title text-[clamp(3.4rem,7vw,6.5rem)] leading-[1.2]" : "font-brittany-signature whitespace-nowrap text-[clamp(4.2rem,7vw,7rem)] leading-[1.12] tracking-normal"}`} style={{ animationDelay: "420ms" }}>
-            <span className="block">{isAmharic ? "ባሰላል" : "Baseleal"}</span>
+            <span className="block">{isAmharic ? "ባስልኤል" : "Baseleal"}</span>
             <span className="block">{isAmharic ? "እና ቤተል" : "& Bethel"}</span>
           </h1>
-          <p className={`hero-anim hero-rise text-lg leading-snug text-[#fff6e3] sm:text-xl ${isAmharic ? "font-balderasu" : "font-serif italic"}`} style={{ animationDelay: "820ms" }}>{isAmharic ? "ሁለት ልቦች፣ አንድ ውብ ጅምር።" : "Two hearts, one beautiful beginning."}</p>
-          <p className={`hero-anim hero-rise mt-3 max-w-[390px] text-sm leading-[1.8] text-[#fff6e3]/90 sm:text-base ${isAmharic ? "font-balderasu" : "font-sans"}`} style={{ animationDelay: "960ms" }}>{isAmharic ? "በምስጋና የተሞላ ልብ፣ የዘላለም ጉዟችንን ለመጀመር ከእኛ ጋር እንድትደሰቱ በክብር እንጋብዛችኋለን። መገኘታችሁ ይህን ልዩ ቀን የበለጠ ውብ ያደርገዋል።" : "With grateful hearts, we invite you to celebrate the beginning of our forever. Your presence would make our special day even more meaningful."}</p>
-          <button className={`hero-anim hero-rise mt-7 w-fit rounded-full bg-[#f4e5c9] px-7 py-4 text-xs text-[#8b6c4d] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/80 ${isAmharic ? "font-balderasu font-normal" : "font-sans font-semibold uppercase tracking-[.16em]"}`} style={{ animationDelay: "1120ms" }}>{isAmharic ? "ተጋብዘዋል" : "You're Invited"} <span aria-hidden>↓</span></button>
+          <p className={`hero-anim hero-rise text-lg leading-snug text-[#fff6e3] sm:text-xl ${isAmharic ? "font-balderasu" : "font-serif italic"}`} style={{ animationDelay: "820ms" }}>{isAmharic ? "ሁለት ልቦች፣ አንድ ውብ ጅማሬ።" : "Two hearts, one beautiful beginning."}</p>
+          <p className={`hero-anim hero-rise mt-3 max-w-[390px] text-sm leading-[1.8] text-[#fff6e3]/90 sm:text-base ${isAmharic ? "font-balderasu" : "font-sans"}`} style={{ animationDelay: "960ms" }}>
+            {isAmharic ? <>በምስጋና በተሞላ ልብ፣ <strong>የዕድሜ ልክ</strong> አብሮነታችንን ጅማሬ አብረውን እንዲያከብሩ በክብር ጋብዘንዎታል። መገኘትዎ ለዚህ ልዩ ቀናችን ይበልጥ ትርጉም ይሰጠዋል።</> : "With grateful hearts, we invite you to celebrate the beginning of our forever. Your presence would make our special day even more meaningful."}
+          </p>
+          <a href="#invitation" className={`hero-anim hero-rise mt-7 inline-flex w-fit rounded-full bg-[#f4e5c9] px-7 py-4 text-xs text-[#8b6c4d] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/80 ${isAmharic ? "font-balderasu font-normal" : "font-sans font-semibold uppercase tracking-[.16em]"}`} style={{ animationDelay: "1120ms" }}>{isAmharic ? "ተጋብዘዋል" : "You're Invited"} <span aria-hidden>↓</span></a>
 
         </div>
 
