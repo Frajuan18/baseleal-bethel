@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     }
     await connectMongo();
     const guest = await Guest.findOneAndUpdate({ fullName: name.trim() }, { $setOnInsert: { fullName: name.trim() } }, { upsert: true, new: true, setDefaultsOnInsert: true });
-    const wish = await GuestWish.create({ guestId: guest._id, message: message.trim() });
+    const wish = await GuestWish.create({ guestId: guest._id, message: message.trim(), source: "GUESTBOOK" });
 
     return NextResponse.json(
       {

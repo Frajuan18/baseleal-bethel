@@ -27,7 +27,17 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [recent, setRecent] = useState<Recent[]>([]);
   const [error, setError] = useState(false);
-  useEffect(() => { fetch("/api/admin/dashboard/stats").then((r) => r.ok ? r.json() : Promise.reject()).then((data) => { setStats(data.stats || emptyStats); setRecent(data.recent || []); }).catch(() => setError(true)); }, []);
+  useEffect(() => {
+    const load = () => {
+      fetch("/api/admin/dashboard/stats")
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((data) => { setStats(data.stats || emptyStats); setRecent(data.recent || []); setError(false); })
+        .catch(() => setError(true));
+    };
+    load();
+    window.addEventListener("focus", load);
+    return () => window.removeEventListener("focus", load);
+  }, []);
   const data = stats || emptyStats;
   const maxAttendance = Math.max(data.attending, data.notAttending, 1);
   const responseRate = data.pending + data.total ? Math.round((data.total / (data.total + data.pending)) * 100) : 0;

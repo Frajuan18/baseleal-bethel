@@ -32,6 +32,7 @@ rsvpSchema.index({ guestId: 1, invitationId: 1 }, { unique: true });
 const wishSchema = new Schema({
   guestId: { type: Schema.Types.ObjectId, ref: "Guest", index: true },
   message: { type: String, required: true, trim: true, maxlength: 2000 },
+  source: { type: String, enum: ["GUESTBOOK", "RSVP"], default: "GUESTBOOK", index: true },
 }, { timestamps: true });
 
 const auditSchema = new Schema({

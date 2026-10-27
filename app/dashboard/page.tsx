@@ -39,7 +39,15 @@ export default function DashboardPage() {
     setError(results.some((result) => result.status === "rejected"));
   };
 
-  useEffect(() => { refresh(); }, []);
+  useEffect(() => {
+    const load = () => { void refresh(); };
+    const timer = window.setTimeout(load, 0);
+    window.addEventListener("focus", load);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("focus", load);
+    };
+  }, []);
 
   const filteredGuests = useMemo(() => guests.filter((guest) => guest.fullName.toLowerCase().includes(query.toLowerCase())), [guests, query]);
   const filteredWishes = useMemo(() => wishes.filter((wish) => (wish.message + " " + (wish.guestId?.fullName || "")).toLowerCase().includes(query.toLowerCase())), [wishes, query]);

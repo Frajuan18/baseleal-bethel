@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectMongo } from "@/app/lib/mongo";
-import { Guest, RSVP } from "@/app/lib/models";
+import { Guest, GuestWish, RSVP } from "@/app/lib/models";
 
 export async function POST(request: Request) {
   try {
@@ -25,6 +25,13 @@ export async function POST(request: Request) {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
+    // Mirror the message into the guestbook so it shows on the admin Wishes tab.
+    await GuestWish.findOneAndUpdate(
+      { guestId: guest._id, source: "RSVP" },
+      { $set: { message: note.trim(), guestId: guest._id, source: "RSVP" } },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
     return NextResponse.json(
       {
         success: true,
@@ -37,7 +44,8 @@ export async function POST(request: Request) {
       },
       { status: 200 }
     );
-  } catch {
+  } catch (error) {
+    console.error(`[RSVP_ERROR] name=${error instanceof Error ? error.name : "UnknownError"} message=${error instanceof Error ? error.message : String(error)}`);
     return NextResponse.json(
       { error: "Failed to process RSVP submission." }, { status: 503 }
     );
