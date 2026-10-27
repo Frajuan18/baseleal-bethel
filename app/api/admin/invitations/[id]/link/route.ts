@@ -15,7 +15,7 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
       return NextResponse.json({ error: "Invitation not found." }, { status: 404 });
     }
     const { token, tokenHash } = createInvitationToken();
-    const shareUrl = `/invite/${token}`;
+    const shareUrl = `/?invite=${token}`;
     invitation.tokenHash = tokenHash;
     invitation.shareUrl = shareUrl;
     await invitation.save();

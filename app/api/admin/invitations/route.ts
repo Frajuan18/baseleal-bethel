@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     await connectMongo();
     const guest = await Guest.findOneAndUpdate({ fullName: body.fullName.trim() }, { $set: { fullName: body.fullName.trim(), ...(body.email ? { email: body.email.toLowerCase().trim() } : {}) } }, { upsert: true, new: true, setDefaultsOnInsert: true });
     const { token, tokenHash } = createInvitationToken();
-    const shareUrl = `/invite/${token}`;
+    const shareUrl = `/?invite=${token}`;
     const invitation = await Invitation.create({ guestId: guest._id, tokenHash, shareUrl, invitationType: body.invitationType, expiresAt: body.expiresAt ? new Date(body.expiresAt) : undefined, note: body.note?.slice(0, 500) });
     await AuditLog.create({ action: "INVITATION_CREATED", actor: auth.email, targetId: String(invitation._id) });
     return NextResponse.json({ invitation: { id: invitation._id, guestName: guest.fullName, invitationType: invitation.invitationType, url: shareUrl } }, { status: 201 });

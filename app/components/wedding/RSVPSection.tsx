@@ -3,9 +3,17 @@
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 import { useWeddingLanguage } from "./LanguageContext";
+import { useInvitation } from "./InvitationContext";
+import { wedding } from "@/config/wedding";
+
+function mapsLink(query: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
 
 export function RSVPSection() {
   const { isAmharic } = useWeddingLanguage();
+  const { invitation, hasToken, token } = useInvitation();
+  const withHome = !hasToken || invitation?.invitationType === "CHURCH_AND_HOME";
   const [response, setResponse] = useState<"accept" | "decline">("accept");
   const [name, setName] = useState("");
   const [guestCount, setGuestCount] = useState("1");
@@ -33,14 +41,31 @@ export function RSVPSection() {
     };
 
     try {
-      // Attempt to post to /api/rsvp endpoint
-      await fetch("/api/rsvp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }).catch(() => {
-        // Fallback gracefully if server endpoint is running client-only
-      });
+      // Personalized links record against the invitation; everyone else uses the public endpoint.
+      if (token) {
+        await fetch(`/api/public/invitations/${encodeURIComponent(token)}/rsvp`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name.trim(),
+            attendance: response === "accept" ? "ATTENDING" : "NOT_ATTENDING",
+            churchAttendance: response === "accept",
+            homeAttendance: response === "accept" && withHome,
+            attendeeCount: response === "accept" ? parseInt(guestCount, 10) : 0,
+            wish: note.trim(),
+          }),
+        }).catch(() => {
+          // Fallback gracefully if server endpoint is running client-only
+        });
+      } else {
+        await fetch("/api/rsvp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }).catch(() => {
+          // Fallback gracefully if server endpoint is running client-only
+        });
+      }
 
       // Save locally to localStorage
       try {
@@ -336,6 +361,55 @@ export function RSVPSection() {
           </div>
         </div>
 
+      </div>
+
+      {/* Directions — customized for personalized invitation links */}
+      <div id="directions" className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 pb-12 sm:pb-16 scroll-mt-24">
+        <div className="mx-auto max-w-lg lg:max-w-xl rounded-2xl border border-[#E7DDCB] bg-white/85 p-5 sm:p-6 shadow-[0_18px_40px_-24px_rgba(43,24,16,0.35)]">
+          <div className="text-center">
+            <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.26em] font-bold text-xs mb-1.5">Getting There</p>
+            <h3 className="font-editorial-serif text-2xl sm:text-3xl text-[#2B1810]">Directions</h3>
+          </div>
+          <div className={`mt-5 grid gap-3 ${withHome ? "sm:grid-cols-2" : ""}`}>
+            <a
+              href={mapsLink(wedding.locations.church.mapsQuery)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex min-h-[64px] items-center gap-3 rounded-xl border border-[#E1D3C2] bg-[#FCFAF6] px-4 py-3 transition hover:border-[#8C6A3B] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EFE5D5] text-[#8C6A3B]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+                  <path d="M12 21s-6-5.4-6-10a6 6 0 1 1 12 0c0 4.6-6 10-6 10Z" />
+                  <circle cx="12" cy="11" r="2.2" />
+                </svg>
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[11px] font-sans font-semibold uppercase tracking-[0.14em] text-[#2B1810]">Check address of church</span>
+                <span className="mt-0.5 block truncate text-xs text-[#6A5D54]">{wedding.locations.church.address}</span>
+              </span>
+            </a>
+
+            {withHome && (
+              <a
+                href={mapsLink(wedding.locations.home.mapsQuery)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex min-h-[64px] items-center gap-3 rounded-xl border border-[#E1D3C2] bg-[#FCFAF6] px-4 py-3 transition hover:border-[#8C6A3B] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EFE5D5] text-[#8C6A3B]">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+                    <path d="M3 11 12 4l9 7" />
+                    <path d="M5 10v10h14V10M9 20v-6h6v6" />
+                  </svg>
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[11px] font-sans font-semibold uppercase tracking-[0.14em] text-[#2B1810]">Check address of home</span>
+                  <span className="mt-0.5 block truncate text-xs text-[#6A5D54]">{wedding.locations.home.address}</span>
+                </span>
+              </a>
+            )}
+          </div>
+        </div>
       </div>
 
     </section>

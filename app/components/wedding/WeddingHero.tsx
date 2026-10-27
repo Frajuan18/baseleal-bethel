@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useWeddingLanguage } from "./LanguageContext";
+import { useInvitation } from "./InvitationContext";
 
 export function WeddingHero() {
   const { isAmharic } = useWeddingLanguage();
+  const { hasToken } = useInvitation();
 
   return (
     <section id="top" lang={isAmharic ? "am" : "en"} className="relative isolate min-h-[100svh] overflow-hidden bg-[#c6a276] text-[#fff9ed] lg:h-screen">
@@ -21,7 +23,7 @@ export function WeddingHero() {
           <p className={`hero-anim hero-rise mt-3 max-w-[390px] text-sm leading-[1.8] text-[#fff6e3]/90 sm:text-base ${isAmharic ? "font-balderasu" : "font-sans"}`} style={{ animationDelay: "960ms" }}>
             {isAmharic ? <>በምስጋና በተሞላ ልብ፣ <strong>የዕድሜ ልክ</strong> አብሮነታችንን ጅማሬ አብረውን እንዲያከብሩ በክብር ጋብዘንዎታል። መገኘትዎ ለዚህ ልዩ ቀናችን ይበልጥ ትርጉም ይሰጠዋል።</> : "With grateful hearts, we invite you to celebrate the beginning of our forever. Your presence would make our special day even more meaningful."}
           </p>
-          <a href="#invitation" className={`hero-anim hero-rise mt-7 inline-flex w-fit rounded-full bg-[#f4e5c9] px-7 py-4 text-xs text-[#8b6c4d] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/80 ${isAmharic ? "font-balderasu font-normal" : "font-sans font-semibold uppercase tracking-[.16em]"}`} style={{ animationDelay: "1120ms" }}>{isAmharic ? "ተጋብዘዋል" : "You're Invited"} <span aria-hidden>↓</span></a>
+          <a href={hasToken ? "#directions" : "#invitation"} className={`hero-anim hero-rise mt-7 inline-flex w-fit rounded-full bg-[#f4e5c9] px-7 py-4 text-xs text-[#8b6c4d] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/80 ${isAmharic ? "font-balderasu font-normal" : "font-sans font-semibold uppercase tracking-[.16em]"}`} style={{ animationDelay: "1120ms" }}>{isAmharic ? "ተጋብዘዋል" : "You're Invited"} <span aria-hidden>↓</span></a>
 
         </div>
 

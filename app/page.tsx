@@ -5,18 +5,22 @@ import { RSVPSection } from "./components/wedding/RSVPSection";
 import { ScrollReveal } from "./components/wedding/ScrollReveal";
 import { LanguageProvider } from "./components/wedding/LanguageContext";
 import { LanguageToggle } from "./components/wedding/LanguageToggle";
+import { InvitationProvider } from "./components/wedding/InvitationContext";
 
-export default function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ invite?: string }> }) {
+  const { invite } = await searchParams;
   return (
     <LanguageProvider>
-      <LanguageToggle />
-      <main className="min-h-screen bg-[#F8F4ED] text-[#422B20]">
-        <ScrollReveal />
-        <WeddingHero />
-        <InvitationSection />
-        <WeddingCalendar />
-        <RSVPSection />
-      </main>
+      <InvitationProvider token={invite}>
+        <LanguageToggle />
+        <main className="min-h-screen bg-[#F8F4ED] text-[#422B20]">
+          <ScrollReveal />
+          <WeddingHero />
+          <InvitationSection />
+          <WeddingCalendar />
+          <RSVPSection />
+        </main>
+      </InvitationProvider>
     </LanguageProvider>
   );
 }
