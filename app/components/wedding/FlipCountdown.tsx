@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import { wedding } from "@/config/wedding";
+import { formatFullWeddingDate, wedding } from "@/config/wedding";
 import { useWeddingLanguage } from "./LanguageContext";
 
 /** Sequence step — staggered delay, duration and optional rise distance. */
@@ -182,7 +182,7 @@ export function FlipCountdownDisplay() {
   const [isCelebrationDay, setIsCelebrationDay] = useState(false);
 
   useEffect(() => {
-    const targetDateStr = wedding.date || "2027-01-03";
+    const targetDateStr = wedding.date || "2026-12-26";
     const timeStr = wedding.time || "10:00";
     const targetTime = new Date(`${targetDateStr}T${timeStr}:00`).getTime();
 
@@ -247,8 +247,8 @@ export function FlipCountdown() {
   const [isCelebrationDay, setIsCelebrationDay] = useState(false);
 
   useEffect(() => {
-    // January 3, 2027 Celebration Target
-    const targetDateStr = wedding.date || "2027-01-03";
+    // Wedding celebration target
+    const targetDateStr = wedding.date || "2026-12-26";
     const timeStr = wedding.time || "10:00";
     const targetTime = new Date(`${targetDateStr}T${timeStr}:00`).getTime();
 
@@ -332,7 +332,7 @@ export function FlipCountdown() {
         {/* Screen Reader Accessible Announcement */}
         <div className="sr-only" aria-live="polite">
           {timeLeft
-            ? `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds until January 3, 2027`
+            ? `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds until ${formatFullWeddingDate(wedding.date)}`
             : "Wedding countdown ticking"}
         </div>
 

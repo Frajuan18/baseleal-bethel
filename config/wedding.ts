@@ -69,7 +69,7 @@ export const wedding: WeddingConfig = {
   },
 
   // Editable Date & Time:
-  date: "2027-01-03",
+  date: "2026-12-26",
   time: "10:00",
   timeDisplay: "10:00 AM",
 
@@ -167,4 +167,54 @@ export function formatFullWeddingDate(dateStr: string | null): string {
   const dt = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
   const weekday = WEEKDAY_NAMES[dt.getUTCDay()] ?? "";
   return `${weekday}, ${month} ${d}, ${y}`;
+}
+
+/** Weekday index for an ISO date, 0 = Sunday (computed in fixed UTC). */
+export function weekdayIndex(dateStr: string): number {
+  const parts = dateStr.split("-").map(Number);
+  const dt = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2], 12, 0, 0));
+  return dt.getUTCDay();
+}
+
+// Ethiopian (Ge'ez) calendar month names — index 3 uses the common "ታህሳስ" spelling.
+const ETHIOPIAN_MONTH_NAMES = [
+  "መስከረም", "ጥቅምት", "ኅዳር", "ታህሳስ", "ጥር", "የካቲት",
+  "መጋቢት", "ሚያዝያ", "ግንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ጳጉሜን",
+];
+
+const ETHIOPIAN_EPOCH_JDN = 1723856;
+
+function gregorianToJdn(year: number, month: number, day: number): number {
+  const a = Math.floor((14 - month) / 12);
+  const y = year + 4800 - a;
+  const m = month + 12 * a - 3;
+  return day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+}
+
+function jdnToEthiopian(jdn: number) {
+  const r = (jdn - ETHIOPIAN_EPOCH_JDN) % 1461;
+  const n = (r % 365) + 365 * Math.floor(r / 1460);
+  const year = 4 * Math.floor((jdn - ETHIOPIAN_EPOCH_JDN) / 1461) + Math.floor(r / 365) - Math.floor(r / 1460);
+  const month = Math.floor(n / 30) + 1;
+  const day = (n % 30) + 1;
+  return { year, month, day };
+}
+
+export interface EthiopianDate {
+  year: number;
+  month: number;
+  day: number;
+  monthName: string;
+  daysInMonth: number;
+}
+
+/** Convert an ISO Gregorian date (YYYY-MM-DD) to the Ethiopian calendar. */
+export function toEthiopian(dateStr: string | null): EthiopianDate | null {
+  if (!dateStr) return null;
+  const parts = dateStr.split("-").map(Number);
+  if (parts.length !== 3 || parts.some((value) => !Number.isFinite(value))) return null;
+  const [year, month, day] = parts;
+  const eth = jdnToEthiopian(gregorianToJdn(year, month, day));
+  const daysInMonth = eth.month === 13 ? (eth.year % 4 === 3 ? 6 : 5) : 30;
+  return { ...eth, monthName: ETHIOPIAN_MONTH_NAMES[eth.month - 1] ?? "", daysInMonth };
 }

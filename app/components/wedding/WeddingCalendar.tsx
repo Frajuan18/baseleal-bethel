@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import { coupleName, wedding } from "@/config/wedding";
+import { coupleName, toEthiopian, weekdayIndex, wedding } from "@/config/wedding";
 import { FlipCountdownDisplay } from "./FlipCountdown";
 import { useWeddingLanguage } from "./LanguageContext";
 
@@ -37,16 +37,22 @@ function downloadICS(year: number, monthIndex: number, dayNumber: number) {
 export function WeddingCalendar() {
   const { isAmharic } = useWeddingLanguage();
   const [downloadSuccess, setDownloadSuccess] = useState(false);
-  let year = 2027;
-  let monthIndex = 0;
-  let dayNumber = 3;
+  let year = 2026;
+  let monthIndex = 11;
+  let dayNumber = 26;
   if (wedding.date) {
     const parts = wedding.date.split("-").map(Number);
     if (parts.length === 3) [year, monthIndex, dayNumber] = [parts[0], parts[1] - 1, parts[2]];
   }
-  const monthName = new Date(year, monthIndex, 1).toLocaleDateString(isAmharic ? "am-ET" : "en-US", { month: "long" });
-  const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
-  const startDayOffset = new Date(year, monthIndex, 1).getDay();
+  // The Amharic view uses the Ethiopian (Ge'ez) calendar; English stays Gregorian.
+  const ethiopian = isAmharic ? toEthiopian(wedding.date) : null;
+  const monthName = ethiopian ? ethiopian.monthName : new Date(year, monthIndex, 1).toLocaleDateString("en-US", { month: "long" });
+  const displayYear = ethiopian ? ethiopian.year : year;
+  const daysInMonth = ethiopian ? ethiopian.daysInMonth : new Date(year, monthIndex + 1, 0).getDate();
+  const highlightDay = ethiopian ? ethiopian.day : dayNumber;
+  const startDayOffset = ethiopian && wedding.date
+    ? ((weekdayIndex(wedding.date) - (ethiopian.day - 1)) % 7 + 7) % 7
+    : new Date(year, monthIndex, 1).getDay();
   const days = Array.from({ length: daysInMonth }, (_, index) => index + 1);
   const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`${coupleName}'s Wedding Celebration`)}&dates=${year}${String(monthIndex + 1).padStart(2, "0")}${String(dayNumber).padStart(2, "0")}T${timeCode(churchSlot.start)}/${year}${String(monthIndex + 1).padStart(2, "0")}${String(dayNumber).padStart(2, "0")}T${timeCode(homeSlot.end)}&details=${encodeURIComponent(scheduleText)}&location=${encodeURIComponent(locationText)}&ctz=${encodeURIComponent("Africa/Addis_Ababa")}`;
 
@@ -69,7 +75,7 @@ export function WeddingCalendar() {
       <div className="relative z-10 mx-auto grid max-w-[1120px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-[minmax(280px,390px)_minmax(0,1fr)] lg:gap-20 lg:px-12">
         <div data-seq="card" style={seq("0.2s")} className="mx-auto w-full max-w-[390px]">
           <p data-seq="fade" style={seq("0.3s")} className="mb-3 font-sans text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8C6A3B]">{isAmharic ? "ቀኑን ያስታውሱ" : "Save the date"}</p>
-          <h2 data-seq="rise" style={seq("0.4s")} className="font-editorial-serif text-4xl leading-none text-[#1E140E] sm:text-5xl">{monthName} <em className="text-2xl font-normal text-[#8C6A3B] sm:text-3xl">{year}</em></h2>
+          <h2 data-seq="rise" style={seq("0.4s")} className="font-editorial-serif text-4xl leading-none text-[#1E140E] sm:text-5xl">{monthName} <em className="text-2xl font-normal text-[#8C6A3B] sm:text-3xl">{displayYear}</em></h2>
 
           <div className="relative mt-6 overflow-hidden rounded-sm border border-[#DED2C2] bg-[#FAF5EE] p-5 shadow-[0_18px_42px_-18px_rgba(43,24,16,.25)] sm:p-7">
             <div className="flex items-center justify-between border-b border-[#E5DDD2] pb-4">
@@ -81,7 +87,7 @@ export function WeddingCalendar() {
             </div>
             <div className="relative z-10 mt-2 grid grid-cols-7 gap-y-1 text-center font-sans text-xs text-[#422B20] sm:gap-y-2 sm:text-sm">
               {Array.from({ length: startDayOffset }).map((_, index) => <span key={`blank-${index}`} className="py-2 opacity-0">0</span>)}
-              {days.map((day) => <span key={day} className={`mx-auto grid h-7 w-7 place-items-center rounded-full sm:h-8 sm:w-8 ${day === dayNumber ? "border-2 border-[#D4AF37] bg-[#F3ECE1] font-bold shadow-[0_3px_12px_rgba(180,140,20,.22)]" : ""}`}>{day}</span>)}
+              {days.map((day) => <span key={day} className={`mx-auto grid h-7 w-7 place-items-center rounded-full sm:h-8 sm:w-8 ${day === highlightDay ? "border-2 border-[#D4AF37] bg-[#F3ECE1] font-bold shadow-[0_3px_12px_rgba(180,140,20,.22)]" : ""}`}>{day}</span>)}
             </div>
             <Image src="/calendar flower.png" alt="" width={400} height={600} className="pointer-events-none absolute -bottom-14 -right-14 z-0 w-44 opacity-50" aria-hidden />
           </div>

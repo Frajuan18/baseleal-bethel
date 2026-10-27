@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import { wedding } from "@/config/wedding";
+import { toEthiopian, wedding } from "@/config/wedding";
 import { useWeddingLanguage } from "./LanguageContext";
 
 /** Sequence step — staggered delay, duration and optional rise distance. */
@@ -19,6 +19,7 @@ const seq = (
 
 export function InvitationSection() {
   const { isAmharic } = useWeddingLanguage();
+  const ethiopian = toEthiopian(wedding.date);
   // Structured date lockup data (matches reference: SATURDAY | SEPT 20 2028 | AT 10 AM)
   const parsedDate = (() => {
     if (wedding.date) {
@@ -193,7 +194,7 @@ export function InvitationSection() {
                     </div>
 
                   </div>
-                  {isAmharic && <p className="font-benaiah mt-2 text-[10px] leading-relaxed tracking-[0.08em] text-[#634838]">በኢትዮጵያ አቆጣጠር፡ ታኅሣሥ 25፣ 2019 ዓ.ም.</p>}
+                  {isAmharic && ethiopian && <p className="font-benaiah mt-2 text-[10px] leading-relaxed tracking-[0.08em] text-[#634838]">በኢትዮጵያ አቆጣጠር፡ {ethiopian.monthName} {ethiopian.day} {ethiopian.year} ዓ.ም.</p>}
                 </div>
 
                 {/* Venue & Location Block */}
