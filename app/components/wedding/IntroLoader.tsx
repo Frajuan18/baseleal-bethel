@@ -23,12 +23,7 @@ export function IntroLoader() {
     };
   }, [phase]);
 
-  // Respect reduced-motion: skip straight to the hero.
-  useEffect(() => {
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setTimeout(() => setPhase("done"), 0);
-    return () => window.clearTimeout(timer);
-  }, []);
+  
 
   const reveal = useCallback(() => {
     setPhase("revealing");
@@ -46,7 +41,13 @@ export function IntroLoader() {
       video.currentTime = 0;
       await video.play();
     } catch {
-      reveal();
+      // Some mobile/in-app browsers only allow muted programmatic playback.
+      try {
+        video.muted = true;
+        await video.play();
+      } catch {
+        reveal();
+      }
     }
   }, [reveal]);
 
@@ -85,6 +86,7 @@ export function IntroLoader() {
       <video
         ref={videoRef}
         src="/loader.mp4"
+        poster="/loader.jpg"
         className="h-full w-full object-cover"
         playsInline
         preload="auto"
