@@ -86,7 +86,6 @@ export function IntroLoader() {
       <video
         ref={videoRef}
         src="/loader.mp4"
-        poster="/loader.jpg"
         className="h-full w-full object-cover"
         playsInline
         preload="auto"
