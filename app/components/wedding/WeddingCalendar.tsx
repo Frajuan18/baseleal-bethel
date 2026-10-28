@@ -20,7 +20,7 @@ function downloadICS(year: number, monthIndex: number, dayNumber: number) {
   const date = `${year}${pad(monthIndex + 1)}${pad(dayNumber)}`;
   const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
   const content = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Baseleal & Bethel//Wedding Invitation//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "BEGIN:VEVENT",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Basseleal & Bethel//Wedding Invitation//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "BEGIN:VEVENT",
     `UID:wedding-${date}@baseleal-bethel.wedding`, `DTSTAMP:${stamp}`, `DTSTART:${date}T${timeCode(churchSlot.start)}`, `DTEND:${date}T${timeCode(homeSlot.end)}`,
     `SUMMARY:${coupleName}'s Wedding Celebration`, `LOCATION:${locationText}`, `DESCRIPTION:${scheduleText.replace(/\n/g, "\\n")}`, "STATUS:CONFIRMED", "END:VEVENT", "END:VCALENDAR",
   ].join("\r\n");

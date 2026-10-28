@@ -143,7 +143,7 @@ function AppHeader({ tab, onTab }: { tab: Tab; onTab: (value: Tab) => void }) {
         >
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#171717] font-serif text-base text-[#F2D69B]">B</span>
           <span className="min-w-0">
-            <span className="block truncate font-serif text-base leading-tight sm:text-lg">Baseleal &amp; Bethel</span>
+            <span className="block truncate font-serif text-base leading-tight sm:text-lg">Basseleal &amp; Bethel</span>
             <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-[#736C64]">Wedding admin</span>
           </span>
         </button>

@@ -6,7 +6,7 @@ import { coupleName } from "@/config/wedding";
 export const metadata: Metadata = {
   title: `${coupleName} — Wedding Celebration`,
   description: `Together with our families, ${coupleName} request the honour of your presence as they unite in holy matrimony and celebrate a lifetime of love.`,
-  keywords: ["Baseleal", "Bethel", "Wedding", "Invitation", "RSVP", "Addis Ababa"],
+  keywords: ["Basseleal", "Bethel", "Wedding", "Invitation", "RSVP", "Addis Ababa"],
   openGraph: {
     title: `${coupleName} — Wedding Celebration`,
     description: `Celebrate the wedding of ${coupleName}. You are warmly invited.`,

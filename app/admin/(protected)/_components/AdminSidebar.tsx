@@ -16,7 +16,7 @@ export function AdminSidebar({ active, hideDesktop = false }: { active: string; 
         <header className="sticky top-0 z-40 hidden items-center gap-6 border-b border-[#E1DED9] bg-[#F8F8F7]/90 px-5 py-4 backdrop-blur-xl lg:flex lg:px-8">
           <a href="/dashboard" className="flex shrink-0 items-center gap-3">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#171717] font-serif text-lg text-[#F2D69B]">B</span>
-            <span className="font-serif text-lg">Baseleal &amp; Bethel</span>
+            <span className="font-serif text-lg">Basseleal &amp; Bethel</span>
           </a>
           <nav aria-label="Admin navigation" className="flex items-center gap-1 rounded-full bg-[#EFEBE5] p-1">
             {items.map(({ label, href, icon }) => {

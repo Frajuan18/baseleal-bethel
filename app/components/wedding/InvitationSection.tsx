@@ -20,29 +20,39 @@ const seq = (
 export function InvitationSection() {
   const { isAmharic } = useWeddingLanguage();
   const ethiopian = toEthiopian(wedding.date);
-  // Structured date lockup data (matches reference: SATURDAY | SEPT 20 2028 | AT 10 AM)
+  // Structured date lockup data — Amharic uses the Ethiopian calendar date
   const parsedDate = (() => {
     if (wedding.date) {
       const parts = wedding.date.split("-").map(Number);
       if (parts.length === 3) {
         const [y, m, d] = parts;
         const dt = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
-        const weekdays = isAmharic ? ["እሑድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"] : ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
-        const months = isAmharic ? ["ጃንዋሪ", "ፌብሩወሪ", "ማርች", "ኤፕሪል", "ሜይ", "ጁን", "ጁላይ", "ኦገስት", "ሴፕቴምበር", "ኦክቶበር", "ኖቬምበር", "ዲሴምበር"] : ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+        if (isAmharic && ethiopian) {
+          const weekdaysAm = ["እሑድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"];
+          return {
+            weekday: weekdaysAm[dt.getUTCDay()] ?? "",
+            month: ethiopian.monthName,
+            day: String(ethiopian.day),
+            year: String(ethiopian.year),
+            time: "ከጠዋቱ 4:00 ሰዓት",
+          };
+        }
+        const weekdays = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
         return {
           weekday: weekdays[dt.getUTCDay()] ?? "SATURDAY",
-          month: months[m - 1] ?? "SEPT",
+          month: months[m - 1] ?? "DEC",
           day: String(d),
           year: String(y),
-          time: wedding.time ? `${isAmharic ? "በ" : "AT"} ${wedding.time}` : (isAmharic ? "በ10 AM" : "AT 10 AM"),
+          time: wedding.time ? `AT ${wedding.time}` : "AT 10 AM",
         };
       }
     }
     return {
       weekday: "SATURDAY",
-      month: "SEPT",
-      day: "20",
-      year: "2028",
+      month: "DEC",
+      day: "26",
+      year: "2026",
       time: "AT 10 AM",
     };
   })();
@@ -108,7 +118,7 @@ export function InvitationSection() {
               className="object-contain object-center"
             />
           </div>
-          <article data-seq="card" style={{ ...seq("0.6s", "1300ms"), "--photo-rise": "14px" } as CSSProperties} className="relative z-20 min-h-[520px] bg-[#FAF5EE] rounded-sm p-5 sm:min-h-[590px] sm:p-7 md:p-8 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
+          <article data-seq="card" style={{ ...seq("0.6s", "1300ms"), "--photo-rise": "14px" } as CSSProperties} className="relative z-20 bg-[#FAF5EE] rounded-sm p-5 sm:p-7 md:p-8 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
             <Image src="/card bg.png" alt="" fill sizes="(max-width: 640px) 92vw, 500px" className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover" aria-hidden />
             
             {/* Fine Tactile Cotton Paper Texture Overlay */}
@@ -136,7 +146,7 @@ export function InvitationSection() {
             <div className="relative z-20 flex flex-col justify-between h-full text-left">
               
               {/* Main Typography Block - Left Column strictly separated from flower */}
-              <div className="max-w-[72%] sm:max-w-[68%] space-y-4 sm:space-y-4.5 lg:space-y-4 xl:space-y-4.5">
+              <div className="max-w-[72%] sm:max-w-[68%] space-y-3.5 sm:space-y-4">
                 
                 {/* Couple Header - Title Case */}
                 <div className="space-y-1.5">
@@ -194,8 +204,7 @@ export function InvitationSection() {
                     </div>
 
                   </div>
-                  {isAmharic && ethiopian && <p className="font-benaiah mt-2 text-[10px] leading-relaxed tracking-[0.08em] text-[#634838]">በኢትዮጵያ አቆጣጠር፡ {ethiopian.monthName} {ethiopian.day} {ethiopian.year} ዓ.ም.</p>}
-                </div>
+                  </div>
 
                 {/* Venue & Location Block */}
                 <div data-seq="rise" style={seq("3.65s", "1000ms", "10px")} className="space-y-0.5">
@@ -207,24 +216,30 @@ export function InvitationSection() {
                   </p>
                 </div>
 
-                {/* RSVP Online CTA Button */}
-                <div data-seq="rise" style={seq("3.95s", "1000ms", "6px")} className="pt-1">
-                  <a
-                    href="#rsvp"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-[420ms] shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
-                  >
-                    <span>{isAmharic ? "በኦንላይን መገኘትዎን ያረጋግጡ (RSVP)" : "RSVP Online"}</span>
-                    <span aria-hidden>→</span>
-                  </a>
+                {/* Two-statement invitation */}
+                <div data-seq="rise" style={seq("3.95s", "1100ms", "6px")} className="space-y-2 pt-1 text-[#4A3527]">
+                  <p className={`leading-relaxed ${isAmharic ? "font-benaiah text-[13px]" : "font-editorial-serif text-[13px] italic"}`}>
+                    {isAmharic
+                      ? "ከቤተሰቦቻችን ጋር በመሆን፣ በጋብቻ ሥነ ሥርዓታችን ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮት እንጋብዝዎታለን።"
+                      : "Together with our families, we warmly invite you to share in the joy as we exchange our vows and begin our life together."}
+                  </p>
+                  <p className={`leading-relaxed ${isAmharic ? "font-benaiah text-[13px]" : "font-editorial-serif text-[13px] italic"}`}>
+                    {isAmharic
+                      ? "መገኘትዎ፣ ፍቅርዎ እና በረከትዎ የደስታችን ሙሉ ይሆናል።"
+                      : "Your presence, love, and blessings would make our celebration complete."}
+                  </p>
                 </div>
 
               </div>
 
-              <div data-seq="fade" style={seq("4.4s", "1100ms")} className="mt-10 max-w-[82%] border-t border-[#8C6A3B]/25 pt-4 sm:mt-14">
-                <p className="font-benaiah text-xs italic leading-relaxed text-[#553C2D] opacity-85 sm:text-sm">
-                  {isAmharic ? "«ፍቅር ይታገሣል፥ ቸርነትንም ያደርጋል፤ ፍቅር አይቀናም፤ ፍቅር አይመካም፥ አይታበይም... ሁሉን ይታገሣል፥ ሁሉን ያምናል፥ ሁሉን ተስፋ ያደርጋል፥ በሁሉ ይጸናል፤ ፍቅር ለዘወትር አይወድቅም።»" : wedding.scripture.verse}
-                </p>
-                <span className="mt-2 block font-sans text-[9px] uppercase tracking-[0.18em] text-[#8C6A3B]">{isAmharic ? "1ኛ ቆሮንቶስ 13፥4–8" : "1 Corinthians 13:4–8"}</span>
+              <div data-seq="rise" style={seq("4.4s", "1100ms", "6px")} className="mt-6 max-w-[82%] border-t border-[#8C6A3B]/25 pt-5 sm:mt-8">
+                <a
+                  href="#rsvp"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-[420ms] shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
+                >
+                  <span>{isAmharic ? "በኦንላይን መገኘትዎን ያረጋግጡ (RSVP)" : "RSVP Online"}</span>
+                  <span aria-hidden>→</span>
+                </a>
               </div>
 
             </div>

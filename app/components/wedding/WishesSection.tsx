@@ -25,7 +25,7 @@ const defaultWishes: WishItem[] = [
     name: "Selamawit T.",
     relationship: "Maid of Honour & Lifelong Friend",
     message:
-      "Watching your love story blossom from the start has been the greatest gift. Bethel and Baseleal, your kindness and devotion inspire everyone around you. Can't wait to dance and rejoice with you both!",
+      "Watching your love story blossom from the start has been the greatest gift. Bethel and Basseleal, your kindness and devotion inspire everyone around you. Can't wait to dance and rejoice with you both!",
     date: "October 14, 2026",
   },
 ];

@@ -1,5 +1,5 @@
 /**
- * Wedding Configuration for Baseleal & Bethel
+ * Wedding Configuration for Basseleal & Bethel
  * 
  * Central source of truth for all wedding celebration details, dates, venues,
  * contact information, and editorial imagery.
@@ -61,11 +61,11 @@ export interface WeddingConfig {
 
 export const wedding: WeddingConfig = {
   couple: {
-    first: "Baseleal",
+    first: "Basseleal",
     second: "Bethel",
     monogram: "B & B",
-    title: "Baseleal & Bethel",
-    hashtag: "#BaselealAndBethel",
+    title: "Basseleal & Bethel",
+    hashtag: "#BasselealAndBethel",
   },
 
   // Editable Date & Time:
@@ -116,7 +116,7 @@ export const wedding: WeddingConfig = {
   },
 
   // Curated high-resolution Unsplash editorial wedding photography
-  // Easily replaceable with actual portraits of Baseleal and Bethel later:
+  // Easily replaceable with actual portraits of Basseleal and Bethel later:
   images: {
     // Primary couple portrait
     heroMain: "/couple.JPG",
