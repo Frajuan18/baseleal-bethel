@@ -24,6 +24,20 @@ export function RSVPSection() {
     response: "accept" | "decline";
   } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [copiedType, setCopiedType] = useState<"church" | "home" | null>(null);
+  const [activeVenueTab, setActiveVenueTab] = useState<"church" | "home">("church");
+
+  const copyAddress = async (type: "church" | "home", text: string) => {
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+        setCopiedType(type);
+        setTimeout(() => setCopiedType(null), 2500);
+      }
+    } catch {
+      // ignore
+    }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -364,50 +378,219 @@ export function RSVPSection() {
       </div>
 
       {/* Directions — customized for personalized invitation links */}
-      <div id="directions" className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 pb-12 sm:pb-16 scroll-mt-24">
-        <div className="mx-auto max-w-lg lg:max-w-xl rounded-2xl border border-[#E7DDCB] bg-white/85 p-5 sm:p-6 shadow-[0_18px_40px_-24px_rgba(43,24,16,0.35)]">
+      <div id="directions" className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 pb-14 sm:pb-20 scroll-mt-24">
+        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E7DDCB] bg-white/90 p-6 sm:p-8 shadow-[0_20px_50px_-20px_rgba(43,24,16,0.25)] backdrop-blur-sm">
+          {/* Section Header */}
           <div className="text-center">
-            <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.26em] font-bold text-xs mb-1.5">Getting There</p>
-            <h3 className="font-editorial-serif text-2xl sm:text-3xl text-[#2B1810]">Directions</h3>
+            <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.24em] font-bold text-xs mb-1.5">
+              {isAmharic ? "አቅጣጫዎችና ቦታዎች" : "Getting There"}
+            </p>
+            <h3 className={`text-2xl sm:text-3xl md:text-4xl text-[#2B1810] ${isAmharic ? "font-jegna-title" : "font-editorial-serif"}`}>
+              {isAmharic ? "የቦታው አቅጣጫዎችና ካርታ" : "Event Locations & Directions"}
+            </h3>
+            <p className={`mt-2 text-xs sm:text-sm text-[#6A5D54] max-w-md mx-auto ${isAmharic ? "font-balderasu" : "font-sans font-light"}`}>
+              {isAmharic
+                ? "ወደ ቤተክርስቲያን እና ወደ ቤታችን የሚወስዱትን ትክክለኛ አቅጣጫዎች በካርታ ይመልከቱ ወይም አድራሻውን ይቅዱ።"
+                : "View live map navigation or copy the exact venue addresses for church ceremony and home reception."}
+            </p>
           </div>
-          <div className={`mt-5 grid gap-3 ${withHome ? "sm:grid-cols-2" : ""}`}>
-            <a
-              href={mapsLink(wedding.locations.church.mapsQuery)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex min-h-[64px] items-center gap-3 rounded-xl border border-[#E1D3C2] bg-[#FCFAF6] px-4 py-3 transition hover:border-[#8C6A3B] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EFE5D5] text-[#8C6A3B]">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
-                  <path d="M12 21s-6-5.4-6-10a6 6 0 1 1 12 0c0 4.6-6 10-6 10Z" />
-                  <circle cx="12" cy="11" r="2.2" />
-                </svg>
-              </span>
-              <span className="min-w-0">
-                <span className="block text-[11px] font-sans font-semibold uppercase tracking-[0.14em] text-[#2B1810]">Check address of church</span>
-                <span className="mt-0.5 block truncate text-xs text-[#6A5D54]">{wedding.locations.church.address}</span>
-              </span>
-            </a>
 
-            {withHome && (
-              <a
-                href={mapsLink(wedding.locations.home.mapsQuery)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex min-h-[64px] items-center gap-3 rounded-xl border border-[#E1D3C2] bg-[#FCFAF6] px-4 py-3 transition hover:border-[#8C6A3B] hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]"
+          {/* Interactive Mobile Tabs (visible if withHome) */}
+          {withHome && (
+            <div className="mt-6 flex sm:hidden items-center justify-center p-1 rounded-xl bg-[#F4EFE6] border border-[#E5DAC8]">
+              <button
+                type="button"
+                onClick={() => setActiveVenueTab("church")}
+                className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+                  activeVenueTab === "church"
+                    ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
+                    : "text-[#6A5D54] hover:text-[#2B1810]"
+                }`}
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EFE5D5] text-[#8C6A3B]">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
-                    <path d="M3 11 12 4l9 7" />
-                    <path d="M5 10v10h14V10M9 20v-6h6v6" />
+                <span className="inline-flex items-center justify-center gap-1.5">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M12 2v4M10 4h4" />
+                    <path d="M12 6L4 12v9h16v-9z" />
+                    <path d="M10 21v-4a2 2 0 0 1 4 0v4" />
                   </svg>
+                  <span>{isAmharic ? "ሀልዎት አማኑኤል (9:00)" : "Halwot Emmanuel (9:00)"}</span>
                 </span>
-                <span className="min-w-0">
-                  <span className="block text-[11px] font-sans font-semibold uppercase tracking-[0.14em] text-[#2B1810]">Check address of home</span>
-                  <span className="mt-0.5 block truncate text-xs text-[#6A5D54]">{wedding.locations.home.address}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveVenueTab("home")}
+                className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+                  activeVenueTab === "home"
+                    ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
+                    : "text-[#6A5D54] hover:text-[#2B1810]"
+                }`}
+              >
+                <span className="inline-flex items-center justify-center gap-1.5">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
+                  <span>{isAmharic ? "ቤት (4:30)" : "Home (4:30)"}</span>
                 </span>
-              </a>
+              </button>
+            </div>
+          )}
+
+          {/* Venue Cards Grid */}
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {/* Church Card */}
+            <div
+              className={`flex flex-col justify-between rounded-2xl border border-[#E1D3C2] bg-[#FCFAF6] p-5 sm:p-6 transition-all hover:border-[#8C6A3B]/60 hover:shadow-md ${
+                withHome && activeVenueTab !== "church" ? "hidden sm:flex" : "flex"
+              }`}
+            >
+              <div>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EFE5D5] text-[#8C6A3B] shadow-inner">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+                        <path d="M12 21s-6-5.4-6-10a6 6 0 1 1 12 0c0 4.6-6 10-6 10Z" />
+                        <circle cx="12" cy="11" r="2.2" />
+                      </svg>
+                    </span>
+                    <div>
+                      <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
+                        {isAmharic ? "ከጠዋቱ 9:00 ሰዓት" : "9:00 Local Time"}
+                      </span>
+                      <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
+                        {isAmharic ? "ሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን" : "Halwot Emmanuel Church"}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              {/* Action Buttons */}
+              <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-3 border-t border-[#EFE5D5]/80">
+                <a
+                  href={mapsLink(wedding.locations.church.mapsQuery)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-4 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                  </svg>
+                  <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "በካርታ አቅጣጫ ክፈት" : "Open in Google Maps"}</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => copyAddress("church", isAmharic ? "ሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን፣ አዲስ አበባ" : wedding.locations.church.address)}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D5C6B5] bg-white px-3.5 py-2.5 text-xs font-semibold text-[#2B1810] hover:bg-[#F7F2EB] hover:border-[#8C6A3B] transition-colors active:scale-98"
+                >
+                  {copiedType === "church" ? (
+                    <>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600" aria-hidden>
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span className={`text-emerald-700 ${isAmharic ? "font-benaiah text-sm" : ""}`}>{isAmharic ? "ተቀድቷል!" : "Copied!"}</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                      </svg>
+                      <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "አድራሻ ቅዳ" : "Copy"}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Home Card (when withHome) */}
+            {withHome && (
+              <div
+                className={`flex flex-col justify-between rounded-2xl border border-[#E1D3C2] bg-[#FCFAF6] p-5 sm:p-6 transition-all hover:border-[#8C6A3B]/60 hover:shadow-md ${
+                  activeVenueTab !== "home" ? "hidden sm:flex" : "flex"
+                }`}
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EFE5D5] text-[#8C6A3B] shadow-inner">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+                          <path d="M3 11 12 4l9 7" />
+                          <path d="M5 10v10h14V10M9 20v-6h6v6" />
+                        </svg>
+                      </span>
+                      <div>
+                        <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
+                          {isAmharic ? "ከቀኑ 4:30 ሰዓት" : "4:30 PM"}
+                        </span>
+                        <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
+                          {isAmharic ? "የቤት አቀባበልና ደስታ" : "Home Reception"}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-3 border-t border-[#EFE5D5]/80">
+                  <a
+                    href={mapsLink(wedding.locations.home.mapsQuery)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-4 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                    </svg>
+                    <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "በካርታ አቅጣጫ ክፈት" : "Open in Google Maps"}</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => copyAddress("home", isAmharic ? "የሙሽሮች ቤት አቀባበል ቦታ፣ አዲስ አበባ" : wedding.locations.home.address)}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D5C6B5] bg-white px-3.5 py-2.5 text-xs font-semibold text-[#2B1810] hover:bg-[#F7F2EB] hover:border-[#8C6A3B] transition-colors active:scale-98"
+                  >
+                    {copiedType === "home" ? (
+                      <>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600" aria-hidden>
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                        <span className={`text-emerald-700 ${isAmharic ? "font-benaiah text-sm" : ""}`}>{isAmharic ? "ተቀድቷል!" : "Copied!"}</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                        </svg>
+                        <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "አድራሻ ቅዳ" : "Copy"}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             )}
+          </div>
+
+          {/* Helpful Rideshare / Transport Note */}
+          <div className="mt-6 rounded-xl bg-[#FAF6F0] border border-[#EADFCF] p-3 sm:p-3.5 flex items-center gap-2.5 text-left">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#8C6A3B]/15 text-[#8C6A3B]">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 3.3C2 11.4 2 11.7 2 12v4c0 .6.4 1 1 1h2" />
+                <circle cx="7" cy="17" r="2" />
+                <path d="M9 17h6" />
+                <circle cx="17" cy="17" r="2" />
+              </svg>
+            </span>
+            <p className={`text-[11px] sm:text-xs text-[#6A5D54] leading-relaxed ${isAmharic ? "font-benaiah text-xs sm:text-sm" : ""}`}>
+
+              {isAmharic
+                ? "ጠቃሚ ምክር፦ ለ RIDE፣ Feres ወይም ታክሲ ለመጠቀም «አድራሻ ቅዳ» የሚለውን ይጫኑና በቀላሉ ይለጥፉት።"
+                : "Helpful tip: Tap \"Copy\" to easily paste the exact address into RIDE, Feres, or navigation apps."}
+            </p>
           </div>
         </div>
       </div>

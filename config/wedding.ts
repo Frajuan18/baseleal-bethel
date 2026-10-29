@@ -74,9 +74,9 @@ export const wedding: WeddingConfig = {
   timeDisplay: "10:00 AM",
 
   // Venue & Location placeholders:
-  venue: "Ceremony Venue to be Announced",
+  venue: "Halwot Emmanuel Church",
   city: "Addis Ababa, Ethiopia",
-  address: "Venue details and formal guest passes will be shared with invited guests.",
+  address: "Halwot Emmanuel Church, Addis Ababa, Ethiopia",
   directionsUrl: null, // e.g. "https://maps.google.com/..."
 
   // RSVP deadline:
@@ -86,9 +86,9 @@ export const wedding: WeddingConfig = {
   // addresses (and set mapsQuery to the exact place so Google Maps opens it).
   locations: {
     church: {
-      label: "Church ceremony",
-      address: "Church location, Addis Ababa",
-      mapsQuery: "Addis Ababa, Ethiopia",
+      label: "Halwot Emmanuel Church",
+      address: "Halwot Emmanuel Church, Addis Ababa",
+      mapsQuery: "Halwot Emmanuel Church, Addis Ababa, Ethiopia",
     },
     home: {
       label: "Home reception",

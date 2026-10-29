@@ -10,8 +10,8 @@ type Phase = "idle" | "playing" | "card-amharic" | "card-english" | "revealing" 
  * 1. The video is the first thing seen when the page loads on all screen sizes, paused at frame 0.
  * 2. Pressing anywhere starts playback with unmuted audio.
  * 3. When the video ends, a #765038 invitation card emerges with a smooth dissolve.
- * 4. Displays "ተጋብዘዋል" + Amharic invitation for 3 seconds.
- * 5. Smoothly cross-fades to "YOU ARE INVITED" + English invitation for 3 seconds.
+ * 4. Displays prominent "ተጋብዘዋል" + Amharic invitation with large bottom date for 3 seconds.
+ * 5. Smoothly cross-fades to prominent "YOU ARE INVITED" + English invitation with large bottom date for 3 seconds.
  * 6. Smoothly dissolves into the hero section.
  */
 export function IntroLoader() {
@@ -171,7 +171,7 @@ export function IntroLoader() {
 
         {/* Vertically and horizontally centered stationery card with harmonious, tight level spacing */}
         <div
-          className={`relative flex flex-col items-center justify-center w-full max-w-[540px] px-6 py-7 sm:px-10 sm:py-9 rounded-2xl border border-[#F3D77A]/35 bg-[#765038] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5),0_0_30px_rgba(243,215,122,0.06)] text-center overflow-hidden transition-all duration-1000 ease-out transform ${
+          className={`relative flex flex-col items-center justify-center w-full max-w-[560px] px-6 py-7 sm:px-10 sm:py-9 rounded-2xl border border-[#F3D77A]/35 bg-[#765038] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5),0_0_30px_rgba(243,215,122,0.06)] text-center overflow-hidden transition-all duration-1000 ease-out transform ${
             isCardVisible ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-[0.96] translate-y-2"
           }`}
         >
@@ -193,20 +193,17 @@ export function IntroLoader() {
                 phase === "card-amharic" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
               }`}
             >
-              {/* Top: "You Are Invited" + Wedding Date */}
-              <div className="space-y-1">
-                <p className="font-balderasu text-xs sm:text-sm font-semibold tracking-[0.24em] text-[#F3D77A] uppercase">
+              {/* Top: Large prominent "ተጋብዘዋል" */}
+              <div className="w-full">
+                <p className="font-balderasu text-lg sm:text-xl md:text-2xl font-bold tracking-[0.2em] text-[#F3D77A] uppercase">
                   ተጋብዘዋል
-                </p>
-                <p className="font-balderasu text-xs sm:text-sm text-[#FFFDF5]/90 tracking-wider">
-                  ቅዳሜ፣ ታህሳስ 17 ቀን 2019 ዓ.ም
                 </p>
               </div>
 
               {/* Middle: Couple Names + Floral Divider */}
-              <div className="mt-5 sm:mt-6 flex flex-col items-center">
-                <h2 className="font-jegna-title text-4xl sm:text-5xl text-[#FFFDF5] leading-[1.2] tracking-wide text-center">
-                  ባስልኤል እና ቤተል
+              <div className="mt-4 sm:mt-5 flex flex-col items-center">
+                <h2 className="font-jegna-title text-4xl sm:text-5xl md:text-6xl text-[#FFFDF5] leading-[1.2] tracking-wide text-center">
+                  ባስልኤል እና ቤቴል
                 </h2>
                 <div className="relative mt-2 h-4 sm:h-4.5 w-40 sm:w-48 opacity-85">
                   <Image
@@ -219,13 +216,20 @@ export function IntroLoader() {
                 </div>
               </div>
 
-              {/* Bottom: Bible Verse */}
-              <div className="mt-5 sm:mt-6 max-w-[420px] space-y-1 text-center">
+              {/* Verse */}
+              <div className="mt-4 sm:mt-5 max-w-[440px] space-y-1 text-center">
                 <p className="font-balderasu text-[11px] sm:text-xs text-[#F3D77A] font-semibold tracking-wide">
                   ኦሪት ዘፍጥረት 35:3
                 </p>
                 <p className="font-balderasu text-xs sm:text-sm leading-relaxed text-[#FAF4ED]/90">
                   “ተነሥተን ወደ ቤቴል እንውጣ፤ እዚያም በመከራዬ ጊዜ ለሰማኝ፣ በሄድሁበትም ስፍራ ሁሉ ላልተለየኝ አምላክ መሠዊያ እሠራለሁ።”
+                </p>
+              </div>
+
+              {/* Bottom: Big, Noticeable Wedding Date */}
+              <div className="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-[#F3D77A]/25 w-full flex flex-col items-center">
+                <p className="font-balderasu text-base sm:text-lg md:text-xl font-bold tracking-[0.14em] text-[#F3D77A]">
+                  ቅዳሜ፣ ታህሳስ 17 ቀን 2019 ዓ.ም
                 </p>
               </div>
             </div>
@@ -238,19 +242,16 @@ export function IntroLoader() {
                   : "opacity-0 pointer-events-none"
               }`}
             >
-              {/* Top: "You Are Invited" + Wedding Date */}
-              <div className="space-y-1">
-                <p className="font-sans text-[11px] sm:text-xs font-semibold tracking-[0.28em] text-[#F3D77A] uppercase">
+              {/* Top: Large prominent "YOU ARE INVITED" */}
+              <div className="w-full">
+                <p className="font-sans text-base sm:text-lg md:text-xl font-bold tracking-[0.28em] text-[#F3D77A] uppercase">
                   YOU ARE INVITED
-                </p>
-                <p className="font-sans text-[11px] sm:text-xs tracking-[0.22em] text-[#FFFDF5]/90 uppercase font-light">
-                  Saturday, December 26, 2026
                 </p>
               </div>
 
               {/* Middle: Couple Names + Floral Divider */}
-              <div className="mt-5 sm:mt-6 flex flex-col items-center">
-                <h2 className="font-brittany-signature text-5xl sm:text-6xl text-[#FFFDF5] leading-[1.1] text-center">
+              <div className="mt-4 sm:mt-5 flex flex-col items-center">
+                <h2 className="font-brittany-signature text-5xl sm:text-6xl md:text-7xl text-[#FFFDF5] leading-[1.1] text-center">
                   Basseleal & Bethel
                 </h2>
                 <div className="relative mt-2 h-4 sm:h-4.5 w-40 sm:w-48 opacity-85">
@@ -264,13 +265,20 @@ export function IntroLoader() {
                 </div>
               </div>
 
-              {/* Bottom: Bible Verse */}
-              <div className="mt-5 sm:mt-6 max-w-[440px] space-y-1 text-center">
+              {/* Verse */}
+              <div className="mt-4 sm:mt-5 max-w-[450px] space-y-1 text-center">
                 <p className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.24em] text-[#F3D77A] font-semibold">
                   GENESIS 35:3
                 </p>
                 <p className="font-editorial-serif italic text-sm sm:text-base leading-relaxed text-[#FAF4ED]/90">
                   “Then come, let us go up to Bethel, where I will build an altar to God, who answered me in the day of my distress and who has been with me wherever I have gone.”
+                </p>
+              </div>
+
+              {/* Bottom: Big, Noticeable Wedding Date */}
+              <div className="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-[#F3D77A]/25 w-full flex flex-col items-center">
+                <p className="font-sans text-sm sm:text-base md:text-lg font-bold tracking-[0.22em] text-[#F3D77A] uppercase">
+                  Saturday, December 26, 2026
                 </p>
               </div>
             </div>

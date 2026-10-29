@@ -1,5 +1,6 @@
 import { WeddingHero } from "./components/wedding/WeddingHero";
 import { InvitationSection } from "./components/wedding/InvitationSection";
+import { GallerySection } from "./components/wedding/GallerySection";
 import { WeddingCalendar } from "./components/wedding/WeddingCalendar";
 import { RSVPSection } from "./components/wedding/RSVPSection";
 import { ScrollReveal } from "./components/wedding/ScrollReveal";
@@ -23,6 +24,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ i
           <ScrollReveal />
           <WeddingHero />
           <InvitationSection />
+          <GallerySection />
           <WeddingCalendar />
           <RSVPSection />
         </main>

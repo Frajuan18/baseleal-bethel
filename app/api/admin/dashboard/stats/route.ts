@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectMongo } from "@/app/lib/mongo";
-import { Guest, Invitation, RSVP } from "@/app/lib/models";
+import { Invitation, RSVP } from "@/app/lib/models";
 import { requireAdmin } from "@/app/lib/admin-api";
 
 export async function GET() {

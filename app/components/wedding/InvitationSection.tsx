@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import { toEthiopian, wedding } from "@/config/wedding";
 import { useWeddingLanguage } from "./LanguageContext";
+import { useInvitation } from "./InvitationContext";
 
 /** Sequence step — staggered delay, duration and optional rise distance. */
 const seq = (
@@ -19,6 +20,9 @@ const seq = (
 
 export function InvitationSection() {
   const { isAmharic } = useWeddingLanguage();
+  const { invitation, hasToken } = useInvitation();
+  const isBoth = !hasToken || invitation?.invitationType === "CHURCH_AND_HOME";
+  const isHomeOnly = hasToken && invitation?.invitationType === "HOME";
   const ethiopian = toEthiopian(wedding.date);
   // Structured date lockup data — Amharic uses the Ethiopian calendar date
   const parsedDate = (() => {
@@ -150,6 +154,11 @@ export function InvitationSection() {
                 
                 {/* Couple Header - Title Case */}
                 <div className="space-y-1.5">
+                  {invitation?.guestName && (
+                    <p data-seq="fade" style={seq("1.8s", "900ms")} className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.22em] font-semibold text-[#8C6A3B]">
+                      {isAmharic ? `ክቡር/ት ${invitation.guestName}` : `Honored Guest: ${invitation.guestName}`}
+                    </p>
+                  )}
                   <p data-seq="fade" style={seq("2.0s", "900ms")} className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-[#7C5A32]">
                     {isAmharic ? "የጋብቻ ሥነ-ሥርዓት" : "The Wedding Of"}
                   </p>
@@ -166,50 +175,139 @@ export function InvitationSection() {
                   </h3>
                 </div>
 
-                {/* 3-Column Vertical Hairline Date Lockup */}
+                {/* 2-Column Vertical Hairline Date Lockup */}
                 <div data-seq="rise" style={seq("3.4s", "1000ms", "12px")} className="pt-1.5 sm:pt-2">
                   <div className="inline-flex items-center text-[#1E140E]">
-                    
                     {/* Left: Day of Week */}
-                    <div className="pr-3.5 sm:pr-5 text-left">
-                      <span className={`${isAmharic ? "amharic-title" : "font-editorial-serif"} uppercase tracking-[0.16em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]`}>
+                    <div className="pr-4 sm:pr-6 text-left">
+                      <span className={`${isAmharic ? "amharic-title" : "font-editorial-serif"} uppercase tracking-[0.18em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]`}>
                         {parsedDate.weekday}
                       </span>
                     </div>
 
-                    {/* Left Hairline Separator */}
-                    <div className="h-13 sm:h-16 w-px bg-[#2B1810]/40" />
+                    {/* Hairline Separator */}
+                    <div className="h-12 sm:h-14 w-px bg-[#2B1810]/40" />
 
-                    {/* Center: Stacked Month, Day Number, Year */}
-                    <div className="px-3.5 sm:px-5 text-center flex flex-col items-center justify-center">
+                    {/* Right: Stacked Month, Day Number, Year */}
+                    <div className="pl-4 sm:pl-6 text-center flex flex-col items-center justify-center">
                       <span className={`${isAmharic ? "amharic-title" : "font-sans"} uppercase tracking-[0.22em] text-[10px] sm:text-[11px] font-semibold text-[#7C5A32]`}>
                         {parsedDate.month}
                       </span>
-                      <span className={`${isAmharic ? "amharic-title" : "font-editorial-serif"} text-2xl sm:text-3xl md:text-[2.35rem] lg:text-[2.35rem] font-semibold leading-none my-0.5 text-[#1E140E]`}>
+                      <span className={`${isAmharic ? "amharic-title" : "font-editorial-serif"} text-2xl sm:text-3xl md:text-[2.2rem] font-semibold leading-none my-0.5 text-[#1E140E]`}>
                         {parsedDate.day}
                       </span>
                       <span className={`${isAmharic ? "amharic-title" : "font-sans"} uppercase tracking-[0.2em] text-[10px] sm:text-[11px] font-medium text-[#7C5A32]`}>
                         {parsedDate.year}
                       </span>
                     </div>
+                  </div>
+                </div>
 
-                    {/* Right Hairline Separator */}
-                    <div className="h-13 sm:h-16 w-px bg-[#2B1810]/40" />
+                {/* Prominently Positioned Time Indications */}
+                <div data-seq="rise" style={seq("3.55s", "1000ms", "10px")} className="pt-1">
+                  {isBoth ? (
+                    <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5">
+                      {/* Church Time Badge */}
+                      <div className="inline-flex items-center gap-2.5 sm:gap-3 rounded-xl border border-[#8C6A3B]/40 bg-[#FAF5EE] px-3.5 py-2 shadow-[0_2px_8px_rgba(43,24,16,0.06)]">
+                        <div className="flex flex-col text-left leading-tight">
+                          <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.18em] font-bold text-[#7C5A32]">
+                            {isAmharic ? "ቤተክርስቲያን" : "Church"}
+                          </span>
+                          <span className="text-[9px] sm:text-[10px] text-[#8C6A3B] font-medium tracking-wider mt-0.5">
+                            {isAmharic ? "የሀገር ውስጥ" : "Local Time"}
+                          </span>
+                        </div>
+                        <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
+                        <div className="flex items-baseline gap-1">
+                          <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
+                            9:00
+                          </span>
+                          {isAmharic && (
+                            <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
+                              ሰዓት
+                            </span>
+                          )}
+                        </div>
+                      </div>
 
-                    {/* Right: Time */}
-                    <div className="pl-3.5 sm:pl-5 text-left">
-                      <span className={`${isAmharic ? "font-balderasu" : "font-editorial-serif"} uppercase tracking-[0.16em] text-sm sm:text-base md:text-lg font-medium text-[#2B1810]`}>
-                        {isAmharic ? "ከጠዋቱ 4:00 ሰዓት" : parsedDate.time}
-                      </span>
+                      {/* Home Time Badge */}
+                      <div className="inline-flex items-center gap-2.5 sm:gap-3 rounded-xl border border-[#8C6A3B]/40 bg-[#FAF5EE] px-3.5 py-2 shadow-[0_2px_8px_rgba(43,24,16,0.06)]">
+                        <div className="flex flex-col text-left leading-tight">
+                          <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.18em] font-bold text-[#7C5A32]">
+                            {isAmharic ? "ቤት" : "Home"}
+                          </span>
+                          <span className="text-[9px] sm:text-[10px] text-[#8C6A3B] font-medium tracking-wider mt-0.5">
+                            {isAmharic ? "አቀባበል" : "Reception"}
+                          </span>
+                        </div>
+                        <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
+                        <div className="flex items-baseline gap-1">
+                          <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
+                            4:30
+                          </span>
+                          {isAmharic && (
+                            <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
+                              ሰዓት
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-
-                  </div>
-                  </div>
+                  ) : isHomeOnly ? (
+                    <div className="inline-flex items-center gap-3 rounded-xl border border-[#8C6A3B]/40 bg-[#FAF5EE] px-4 py-2 shadow-[0_2px_8px_rgba(43,24,16,0.06)]">
+                      <div className="flex flex-col text-left leading-tight">
+                        <span className="font-sans text-[10px] uppercase tracking-[0.18em] font-bold text-[#7C5A32]">
+                          {isAmharic ? "ቤት" : "Home"}
+                        </span>
+                        <span className="text-[10px] text-[#8C6A3B] font-medium tracking-wider mt-0.5">
+                          {isAmharic ? "አቀባበል" : "Reception"}
+                        </span>
+                      </div>
+                      <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
+                      <div className="flex items-baseline gap-1">
+                        <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
+                          4:30
+                        </span>
+                        {isAmharic && (
+                          <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
+                            ሰዓት
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="inline-flex items-center gap-3 rounded-xl border border-[#8C6A3B]/40 bg-[#FAF5EE] px-4 py-2 shadow-[0_2px_8px_rgba(43,24,16,0.06)]">
+                      <div className="flex flex-col text-left leading-tight">
+                        <span className="font-sans text-[10px] uppercase tracking-[0.18em] font-bold text-[#7C5A32]">
+                          {isAmharic ? "ቤተክርስቲያን" : "Church"}
+                        </span>
+                        <span className="text-[10px] text-[#8C6A3B] font-medium tracking-wider mt-0.5">
+                          {isAmharic ? "የሀገር ውስጥ" : "Local Time"}
+                        </span>
+                      </div>
+                      <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
+                      <div className="flex items-baseline gap-1">
+                        <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
+                          9:00
+                        </span>
+                        {isAmharic && (
+                          <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
+                            ሰዓት
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
 
                 {/* Venue & Location Block */}
                 <div data-seq="rise" style={seq("3.65s", "1000ms", "10px")} className="space-y-0.5">
                   <p className="font-editorial-serif uppercase tracking-[0.18em] text-[11px] sm:text-xs text-[#22150D] font-medium leading-relaxed">
-                    {isAmharic ? "የሥነ-ሥርዓቱ ቦታ ወደፊት ይገለጻል" : wedding.venue}
+                    {isBoth
+                      ? (isAmharic ? "ሀልዎት አማኑኤል (9:00) እና ቤት (4:30)" : "Halwot Emmanuel Church (9:00) & Home (4:30)")
+                      : isHomeOnly
+                      ? (isAmharic ? "የቤት አቀባበል (4:30)" : "Home Reception (4:30)")
+                      : (isAmharic ? "ሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን (9:00)" : "Halwot Emmanuel Church (9:00 Local Time)")}
                   </p>
                   <p className="font-editorial-serif uppercase tracking-[0.16em] text-[10px] sm:text-[11px] text-[#634838] leading-relaxed">
                     {isAmharic ? "አዲስ አበባ፣ ኢትዮጵያ" : wedding.city}
@@ -219,9 +317,17 @@ export function InvitationSection() {
                 {/* Two-statement invitation */}
                 <div data-seq="rise" style={seq("3.95s", "1100ms", "6px")} className="space-y-2 pt-1 text-[#4A3527]">
                   <p className={`leading-relaxed ${isAmharic ? "font-benaiah text-[13px]" : "font-editorial-serif text-[13px] italic"}`}>
-                    {isAmharic
-                      ? "ከቤተሰቦቻችን ጋር በመሆን፣ በጋብቻ ሥነ ሥርዓታችን ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮት እንጋብዝዎታለን።"
-                      : "Together with our families, we warmly invite you to share in the joy as we exchange our vows and begin our life together."}
+                    {isBoth
+                      ? (isAmharic
+                          ? "ከቤተሰቦቻችን ጋር በመሆን፣ በሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን (በ 9:00 ሰዓት) እና በቤታችን አቀባበል (በ 4:30 ሰዓት) ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮት እንጋብዝዎታለን።"
+                          : "Together with our families, we warmly invite you to join us at Halwot Emmanuel Church at 9:00 (Local Time) and home celebration at 4:30 as we exchange our vows and begin our life together.")
+                      : isHomeOnly
+                      ? (isAmharic
+                          ? "ከቤተሰቦቻችን ጋር በመሆን፣ በቤታችን አቀባበል (በ 4:30 ሰዓት) ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮት እንጋብዝዎታለን።"
+                          : "Together with our families, we warmly invite you to join our home celebration at 4:30 as we begin our life together.")
+                      : (isAmharic
+                          ? "ከቤተሰቦቻችን ጋር በመሆን፣ በሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን (በ 9:00 ሰዓት) ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮት እንጋብዝዎታለን።"
+                          : "Together with our families, we warmly invite you to Halwot Emmanuel Church at 9:00 (Local Time) as we exchange our vows.")}
                   </p>
                   <p className={`leading-relaxed ${isAmharic ? "font-benaiah text-[13px]" : "font-editorial-serif text-[13px] italic"}`}>
                     {isAmharic
