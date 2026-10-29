@@ -1,19 +1,47 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import Image from "next/image";
+import { wedding, type VenueLocation } from "@/config/wedding";
 import { useWeddingLanguage } from "./LanguageContext";
 import { useInvitation } from "./InvitationContext";
-import { wedding } from "@/config/wedding";
 
-function mapsLink(query: string) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-}
+type LocationsState = {
+  church: VenueLocation;
+  basselealHome: VenueLocation;
+  bethelHome: VenueLocation;
+};
 
 export function RSVPSection() {
   const { isAmharic } = useWeddingLanguage();
   const { invitation, hasToken, token } = useInvitation();
-  const withHome = !hasToken || invitation?.invitationType === "CHURCH_AND_HOME";
+
+  // Guest invitation permission checks
+  const isChurchOnly = hasToken && invitation?.invitationType === "CHURCH_ONLY";
+  const withBasseleal = !hasToken || ["CHURCH_AND_HOME", "CHURCH_AND_BOTH", "CHURCH_AND_BASSELEAL"].includes(invitation?.invitationType || "");
+  const withBethel = !hasToken || ["CHURCH_AND_HOME", "CHURCH_AND_BOTH", "CHURCH_AND_BETHEL"].includes(invitation?.invitationType || "");
+  const withAnyHome = withBasseleal || withBethel;
+
+  const [activeLocations, setActiveLocations] = useState<LocationsState>({
+    church: wedding.locations.church,
+    basselealHome: wedding.locations.basselealHome,
+    bethelHome: wedding.locations.bethelHome,
+  });
+
+  // Load live admin configured locations from public API
+  useEffect(() => {
+    fetch("/api/public/locations")
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data) => {
+        if (data.locations) {
+          setActiveLocations(data.locations);
+        }
+      })
+      .catch(() => {
+        // use default wedding.locations
+      });
+  }, []);
+
   const [response, setResponse] = useState<"accept" | "decline">("accept");
   const [name, setName] = useState("");
   const [guestCount, setGuestCount] = useState("1");
@@ -24,10 +52,10 @@ export function RSVPSection() {
     response: "accept" | "decline";
   } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [copiedType, setCopiedType] = useState<"church" | "home" | null>(null);
-  const [activeVenueTab, setActiveVenueTab] = useState<"church" | "home">("church");
+  const [copiedType, setCopiedType] = useState<"church" | "basseleal" | "bethel" | null>(null);
+  const [activeVenueTab, setActiveVenueTab] = useState<"church" | "basseleal" | "bethel">("church");
 
-  const copyAddress = async (type: "church" | "home", text: string) => {
+  const copyAddress = async (type: "church" | "basseleal" | "bethel", text: string) => {
     try {
       if (typeof navigator !== "undefined" && navigator.clipboard) {
         await navigator.clipboard.writeText(text);
@@ -48,47 +76,37 @@ export function RSVPSection() {
 
     const payload = {
       name: name.trim(),
-      response,
+      attendance: response,
       guestCount: response === "accept" ? parseInt(guestCount, 10) : 0,
-      note: note.trim(),
-      submittedAt: new Date().toISOString(),
+      note: note.trim() || undefined,
     };
 
     try {
-      // Personalized links record against the invitation; everyone else uses the public endpoint.
-      if (token) {
-        await fetch(`/api/public/invitations/${encodeURIComponent(token)}/rsvp`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: name.trim(),
-            attendance: response === "accept" ? "ATTENDING" : "NOT_ATTENDING",
-            churchAttendance: response === "accept",
-            homeAttendance: response === "accept" && withHome,
-            attendeeCount: response === "accept" ? parseInt(guestCount, 10) : 0,
-            wish: note.trim(),
-          }),
-        }).catch(() => {
-          // Fallback gracefully if server endpoint is running client-only
-        });
-      } else {
-        await fetch("/api/rsvp", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }).catch(() => {
-          // Fallback gracefully if server endpoint is running client-only
-        });
+      let endpoint = "/api/rsvp";
+      let method = "POST";
+      let reqBody: Record<string, unknown> = payload;
+
+      if (hasToken && token) {
+        endpoint = `/api/public/invitations/${encodeURIComponent(token)}/rsvp`;
+        method = "PUT";
+        const partySize = Math.max(1, parseInt(guestCount, 10) || 1);
+        reqBody = {
+          attendanceStatus: response === "accept" ? "ATTENDING" : "NOT_ATTENDING",
+          churchAttendance: response === "accept",
+          homeAttendance: response === "accept" && withAnyHome,
+          attendeeCount: response === "accept" ? partySize : 0,
+          wish: note.trim() || undefined,
+        };
       }
 
-      // Save locally to localStorage
-      try {
-        const stored = localStorage.getItem("bb_wedding_rsvps") || "[]";
-        const rsvps = JSON.parse(stored);
-        rsvps.push(payload);
-        localStorage.setItem("bb_wedding_rsvps", JSON.stringify(rsvps));
-      } catch {
-        // Ignore local storage error
+      const res = await fetch(endpoint, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reqBody),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to submit RSVP");
       }
 
       setSubmittedData({
@@ -96,290 +114,206 @@ export function RSVPSection() {
         response,
       });
     } catch {
-      setErrorMessage(isAmharic ? "RSVP ማስተናገድ አልተቻለም። እባክዎ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።" : "We could not record your RSVP at this moment. Please check your connection and try again.");
+      setErrorMessage(
+        isAmharic
+          ? "ምላሽዎን መላክ አልተቻለም። እባክዎ ትንሽ ቆይተው እንደገና ይሞክሩ።"
+          : "Could not submit your RSVP. Please try again in a moment."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const mapsLink = (query: string) =>
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+
+  const totalVenuesCount = 1 + (withBasseleal ? 1 : 0) + (withBethel ? 1 : 0);
+  const hasMultipleVenues = totalVenuesCount > 1;
 
   return (
     <section
       id="rsvp"
       data-reveal
       data-language={isAmharic ? "am" : "en"}
-      className="reveal-section amharic-section scroll-mt-24 relative min-h-[100svh] lg:min-h-screen pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-0 flex flex-col overflow-hidden bg-[#FAF5EE]"
+      className="reveal-seq amharic-section scroll-mt-24 relative overflow-hidden bg-[#FFFDF5] text-center"
     >
-      {/* Background Image: rsvp bg1.jpg covering both RSVP section and the embedded footer */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+      {/* Background Image Layer */}
+      <div className="absolute inset-0 z-0">
         <Image
-          src="/rsvp bg1.jpg"
-          alt="RSVP Background with delicate floral accents"
+          src="/card bg main.jpg"
+          alt=""
           fill
-          priority
-          unoptimized
           sizes="100vw"
-          className="w-full h-full object-cover object-center"
+          className="object-cover object-center opacity-40 mix-blend-multiply"
+          priority={false}
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDF5] via-transparent to-[#FFFDF5]/90 pointer-events-none" />
       </div>
 
-      {/* Subtle Warm Linen Vignette to keep edges soft and luxurious */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#FAF5EE]/15 via-transparent to-[#FAF5EE]/20 select-none z-1"
-        aria-hidden
-      />
+      {/* Main Content Container */}
+      <div className="relative z-10 w-full max-w-xl mx-auto px-5 sm:px-8 pt-16 sm:pt-20 pb-12 sm:pb-16">
+        {/* Section Eyebrow & Title */}
+        <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.24em] font-semibold text-xs mb-2">
+          {isAmharic ? "መገኘትዎን ያረጋግጡ" : "Kindly Respond"}
+        </p>
 
-      {/* Main Upper Content: Heading + Card */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 mb-8 sm:mb-12">
-        
-        {/* Section Heading */}
-        <div className="text-center max-w-xl mx-auto mb-4 sm:mb-6">
-          <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.26em] font-bold text-xs mb-1.5">
-            {isAmharic ? "የደስታችን ተካፋይ ይሁኑ" : "Join Our Celebration"}
-          </p>
-          <h2 className={`${isAmharic ? "amharic-title text-3xl sm:text-4xl md:text-5xl" : "font-editorial-serif text-2xl sm:text-3xl md:text-4xl"} text-[#2B1810]`}>
-            {isAmharic ? "ምኞቶን ያስቀምጡ" : "RSVP & Leave a Wish"}
-          </h2>
-          <div className="h-px w-14 bg-[#8C6A3B]/40 mx-auto mt-3.5 mb-3.5" />
-        </div>
+        <h2 className={`text-4xl sm:text-5xl md:text-6xl text-[#1E140E] ${isAmharic ? "font-jegna-title" : "font-editorial-serif"}`}>
+          RSVP
+        </h2>
 
-        {/* White stationery card */}
-        <div className="relative max-w-lg lg:max-w-xl w-full mx-auto bg-white rounded-lg border border-[#E7DDCB] p-5 sm:p-6 md:p-7 shadow-[0_24px_56px_-22px_rgba(43,24,16,0.22),0_12px_26px_-16px_rgba(43,24,16,0.12)] overflow-hidden">
-          
-          {/* Embossed hairline inner frame */}
-          <div
-            className="pointer-events-none absolute inset-2.5 sm:inset-3.5 rounded-[6px] border border-[#D8CBB2]/70 select-none z-0"
-            aria-hidden
-          />
+        <p className={`mt-3 text-sm sm:text-base text-[#5A4638] max-w-md mx-auto ${isAmharic ? "font-balderasu" : "font-sans font-light"}`}>
+          {isAmharic
+            ? "በደስታችን ላይ አብረውን እንዲሆኑ በአክብሮት ተጋብዘዋል። እባክዎ እስከ ህዳር 20 ድረስ መገኘትዎን ያረጋግጡ።"
+            : "We would be honored by your presence. Please let us know if you can join our celebration."}
+        </p>
 
-          {/* Tactile cotton paper grain overlay */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-multiply select-none z-0"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cardPaperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cardPaperNoise)'/%3E%3C/svg%3E")`,
-              backgroundSize: "200px 200px",
-            }}
-            aria-hidden
-          />
+        {submittedData ? (
+          /* Confirmation State */
+          <div className="mt-8 p-8 rounded-3xl bg-white/95 border border-[#E7DDCB] shadow-[0_20px_50px_-20px_rgba(43,24,16,0.3)] backdrop-blur-sm animate-fade-in">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#8C6A3B]/10 flex items-center justify-center text-[#8C6A3B]">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </div>
 
-          <div className="relative z-10">
-            {submittedData ? (
-              /* Warm success confirmation matching stationery tone */
-              <div className="py-6 sm:py-8 space-y-4 animate-fadeIn">
-                <div className="mb-6">
-                  <h3 className="font-editorial-serif text-3xl sm:text-4xl text-[#1E140E] leading-none tracking-[0.04em]">
-                    {isAmharic ? "RSVP" : "RSVP"}
-                  </h3>
-                  <p className="mt-2.5 font-editorial-serif italic text-base sm:text-lg text-[#8C6A3B]">
-                    {isAmharic ? "ደርሶናል" : "Received"}
-                  </p>
-                </div>
-                <h3 className="font-editorial-serif text-2xl sm:text-3xl text-[#1E140E]">
-                  {isAmharic ? `እናመሰግናለን፣ ${submittedData.name}!` : `Thank You, ${submittedData.name}!`}
-                </h3>
-                <p className="font-editorial-serif italic text-base text-[#5A4F46] leading-relaxed max-w-lg">
-                  {submittedData.response === "accept"
-                    ? (isAmharic ? "መገኘታችሁና መልዕክታችሁ በደስታ ተመዝግቧል። ከእናንተ ጋር ለመደሰት እንጓጓለን!" : "Your attendance and message have been joyfully recorded. We cannot wait to celebrate with you!")
-                    : (isAmharic ? "መልሳችሁ ደርሶናል። በአካል ባትገኙም ፍቅራችሁን፣ ጸሎታችሁን እና መልዕክታችሁን እናከብራለን።" : "We have received your reply. Although you will be missed in person, we cherish your love, prayers, and message.")}
-                </p>
-                <div className="pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setSubmittedData(null)}
-                    className="px-6 py-2 rounded-full border border-[#2B1810] text-[#1E140E] hover:bg-[#1E140E] hover:text-[#FAF5EE] transition-all duration-300 font-sans text-xs uppercase tracking-[0.16em] font-medium cursor-pointer"
-                  >
-                    {isAmharic ? "መልሱን ያስተካክሉ" : "Edit Response"}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+            <h3 className={`text-2xl font-bold text-[#1E140E] ${isAmharic ? "font-jegna-title" : "font-editorial-serif"}`}>
+              {isAmharic ? "እናመሰግናለን!" : "Thank You!"}
+            </h3>
 
-                {/* Wishlist input */}
-                <div className="rounded-md transition-transform duration-300 focus-within:-translate-y-0.5">
-                  <label
-                    htmlFor="guest-secondary"
-                    className={`${isAmharic ? "font-benaiah" : "font-sans"} block text-[10px] sm:text-[11px] uppercase tracking-[0.24em] font-medium text-[#2B1810]`}
-                  >
-                    {isAmharic ? "ለጥንዶቹ ያለዎት ምኞት" : "Your Wish for the Couple"} <span className="text-[#8C6A3B]">*</span>
-                  </label>
-                  <textarea
-                    id="guest-secondary"
-                    rows={2}
-                    required
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
-                    placeholder={isAmharic ? "ፍቅርዎን፣ ጸሎትዎን ወይም ለጥንዶቹ መልዕክት ያካፍሉ።" : "Share your love, prayer, or a note for the couple."}
-                    className="mt-2 w-full resize-none bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
-                    disabled={isSubmitting}
-                  />
-                </div>
+            <p className={`mt-2 text-sm text-[#5A4638] ${isAmharic ? "font-balderasu" : "font-sans"}`}>
+              {submittedData.response === "accept"
+                ? isAmharic
+                  ? `ውድ ${submittedData.name}፣ መገኘትዎን ስላረጋገጡ ከልብ እናመሰግናለን። በሠርጉ ቀን በደስታ እንጠብቅዎታለን!`
+                  : `Dear ${submittedData.name}, your attendance is confirmed. We cannot wait to celebrate with you!`
+                : isAmharic
+                  ? `ውድ ${submittedData.name}፣ መልስዎን ስላሳወቁን እናመሰግናለን። በጸሎትና በሃሳብ አብረውን እንዳሉ እናውቃለን።`
+                  : `Dear ${submittedData.name}, thank you for letting us know. You will be missed dearly!`
+              }
+            </p>
 
-                {/* Interactive attendance choice */}
-                <fieldset>
-                  <legend className={`${isAmharic ? "font-benaiah" : "font-sans"} block text-[10px] sm:text-[11px] uppercase tracking-[0.24em] font-semibold text-[#2B1810] mb-3.5`}>
-                    {isAmharic ? "ከእኛ ጋር ይገኛሉ?" : "Will you be joining us?"}
-                  </legend>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-
-                    {/* Accept */}
-                    <label
-                      className={`group relative flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3 cursor-pointer select-none transition-all duration-300 ${
-                        response === "accept"
-                          ? "border-[#8C6A3B] bg-[#8C6A3B]/[0.06] shadow-[0_16px_32px_-20px_rgba(140,106,59,0.85)]"
-                        : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)] active:scale-[0.99]"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="attendance"
-                        value="accept"
-                        checked={response === "accept"}
-                        onChange={() => setResponse("accept")}
-                        className="sr-only"
-                      />
-                      <span className="flex items-center gap-3.5">
-                        <span
-                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-                            response === "accept"
-                              ? "border-[#8C6A3B] bg-[#8C6A3B] text-white"
-                              : "border-[#1E140E]/15 bg-[#FAF7F1] text-[#8C6A3B] group-hover:border-[#8C6A3B]/50"
-                          }`}
-                        >
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                            <path d="M20 6 9 17l-5-5" />
-                          </svg>
-                        </span>
-                        <span className="flex flex-col text-left">
-                          <span className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-tight">
-                            {isAmharic ? "በደስታ እገኛለሁ" : "Joyfully Accept"}
-                          </span>
-                        </span>
-                      </span>
-                      <span
-                        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#8C6A3B] text-white transition-all duration-300 ${
-                          response === "accept" ? "scale-100 opacity-100" : "scale-50 opacity-0"
-                        }`}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                          <path d="M20 6 9 17l-5-5" />
-                        </svg>
-                      </span>
-                    </label>
-
-                    {/* Decline */}
-                    <label
-                      className={`group relative flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3 cursor-pointer select-none transition-all duration-300 ${
-                        response === "decline"
-                          ? "border-[#8C6A3B] bg-[#8C6A3B]/[0.06] shadow-[0_16px_32px_-20px_rgba(140,106,59,0.85)]"
-                        : "border-[#1E140E]/12 bg-[#FCFAF6] hover:border-[#8C6A3B]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-20px_rgba(43,24,16,0.55)] active:scale-[0.99]"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="attendance"
-                        value="decline"
-                        checked={response === "decline"}
-                        onChange={() => setResponse("decline")}
-                        className="sr-only"
-                      />
-                      <span className="flex items-center gap-3.5">
-                        <span
-                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-                            response === "decline"
-                              ? "border-[#8C6A3B] bg-[#8C6A3B] text-white"
-                              : "border-[#1E140E]/15 bg-[#FAF7F1] text-[#8C6A3B] group-hover:border-[#8C6A3B]/50"
-                          }`}
-                        >
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                            <path d="M12 21s-6.5-4.35-9-8.5C1.2 9.1 3 5 7 5c2 0 3.2 1.2 4 2.2C11.8 6.2 13 5 15 5c4 0 5.8 4.1 4 7.5-2.5 4.15-9 8.5-9 8.5Z" />
-                          </svg>
-                        </span>
-                        <span className="flex flex-col text-left">
-                          <span className="font-editorial-serif text-base sm:text-lg text-[#1E140E] leading-tight">
-                            {isAmharic ? "መገኘት አልችልም" : "Regretfully Decline"}
-                          </span>
-                        </span>
-                      </span>
-                      <span
-                        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#8C6A3B] text-white transition-all duration-300 ${
-                          response === "decline" ? "scale-100 opacity-100" : "scale-50 opacity-0"
-                        }`}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                          <path d="M20 6 9 17l-5-5" />
-                        </svg>
-                      </span>
-                    </label>
-
-                  </div>
-                </fieldset>
-
-                {/* Guest details */}
-                <div>
-                  <div className="rounded-md transition-transform duration-300 focus-within:-translate-y-0.5">
-                    <label
-                      htmlFor="guest-name"
-                      className={`${isAmharic ? "font-benaiah" : "font-sans"} block text-[10px] sm:text-[11px] uppercase tracking-[0.24em] font-medium text-[#2B1810]`}
-                    >
-                      {isAmharic ? "ሙሉ ስም" : "Full Name"}
-                    </label>
-                    <input
-                      id="guest-name"
-                      type="text"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder={isAmharic ? "ስምዎ" : "Your name"}
-                      className="mt-2 w-full bg-transparent border-0 border-b border-[#1E140E]/25 focus:border-[#8C6A3B] text-[#1E140E] font-editorial-serif text-base sm:text-lg pb-1.5 placeholder:text-[#1E140E]/25 focus:outline-none transition-colors"
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                </div>
-
-                {/* Bottom Bar: Attending Count & Submit Button */}
-                <div className="pt-4 sm:pt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-[#1E140E]/10">
-                  {response === "accept" && (
-                    <div className="flex items-center gap-2 text-xs font-editorial-serif italic text-[#6A5D54] animate-fadeIn">
-                      <span className={isAmharic ? "font-benaiah" : ""}>{isAmharic ? "የሚገኙ እንግዶች:" : "Attending party:"}</span>
-                      <select
-                        value={guestCount}
-                        onChange={(e) => setGuestCount(e.target.value)}
-                        className="bg-transparent border-0 border-b border-[#1E140E]/40 text-[#1E140E] font-editorial-serif text-sm px-1 outline-none cursor-pointer"
-                        disabled={isSubmitting}
-                      >
-                        <option value="1">1 {isAmharic ? "እንግዳ" : "Guest"}</option>
-                        <option value="2">2 {isAmharic ? "እንግዶች" : "Guests"}</option>
-                        <option value="3">3 {isAmharic ? "እንግዶች" : "Guests"}</option>
-                        <option value="4">4 {isAmharic ? "እንግዶች" : "Guests"}</option>
-                      </select>
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || !name.trim() || !note.trim()}
-                    className="min-h-[46px] w-full sm:w-auto sm:min-w-[200px] sm:ml-auto px-8 py-3 rounded-full font-sans text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 bg-[#1E140E] text-[#FAF5EE] hover:bg-[#8C6A3B] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-[0_14px_30px_-14px_rgba(43,24,16,0.6)] hover:shadow-[0_18px_36px_-14px_rgba(140,106,59,0.7)] inline-flex items-center justify-center gap-2"
-                  >
-                    <span>{isSubmitting ? (isAmharic ? "በመላክ ላይ..." : "Sending...") : (isAmharic ? "መልስ ላክ" : "Submit Reply")}</span>
-                    <span aria-hidden>→</span>
-                  </button>
-                </div>
-
-                {errorMessage && (
-                  <div role="alert" className="p-3 border border-red-500/40 bg-red-50 text-red-800 text-xs text-center rounded-md font-sans">
-                    {errorMessage}
-                  </div>
-                )}
-              </form>
-            )}
+            <button
+              type="button"
+              onClick={() => setSubmittedData(null)}
+              className="mt-6 inline-flex items-center justify-center px-6 py-2.5 rounded-full border border-[#8C6A3B]/30 text-xs font-semibold uppercase tracking-wider text-[#1E140E] hover:bg-[#8C6A3B]/10 transition-colors"
+            >
+              {isAmharic ? "ምላሽን አስተካክል" : "Update Response"}
+            </button>
           </div>
-        </div>
+        ) : (
+          /* Interactive RSVP Form */
+          <form
+            onSubmit={handleSubmit}
+            className="mt-8 p-6 sm:p-8 rounded-3xl bg-white/95 border border-[#E7DDCB] shadow-[0_20px_50px_-20px_rgba(43,24,16,0.3)] backdrop-blur-sm text-left space-y-5"
+          >
+            {/* Error Message Alert */}
+            {errorMessage && (
+              <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700">
+                {errorMessage}
+              </div>
+            )}
 
+            {/* Attendance Choice Buttons */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#8C6A3B] mb-2">
+                {isAmharic ? "መገኘትዎን ይምረጡ" : "Will you be attending?"}
+              </label>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setResponse("accept")}
+                  className={`py-3 px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
+                    response === "accept"
+                      ? "border-[#8C6A3B] bg-[#2B1810] text-[#FAF6F0] shadow-sm"
+                      : "border-[#E1D9CF] bg-[#FAF8F5] text-[#5A4638] hover:border-[#8C6A3B]/50"
+                  }`}
+                >
+                  {isAmharic ? "በደስታ እገኛለሁ ✓" : "Joyfully Accept ✓"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setResponse("decline")}
+                  className={`py-3 px-4 rounded-xl border text-xs sm:text-sm font-semibold transition-all ${
+                    response === "decline"
+                      ? "border-[#8C6A3B] bg-[#2B1810] text-[#FAF6F0] shadow-sm"
+                      : "border-[#E1D9CF] bg-[#FAF8F5] text-[#5A4638] hover:border-[#8C6A3B]/50"
+                  }`}
+                >
+                  {isAmharic ? "መገኘት አልችልም" : "Regretfully Decline"}
+                </button>
+              </div>
+            </div>
+
+            {/* Guest Name Input */}
+            <div>
+              <label htmlFor="rsvp-name" className="block text-xs font-bold uppercase tracking-wider text-[#8C6A3B] mb-1.5">
+                {isAmharic ? "ሙሉ ስም *" : "Full Name *"}
+              </label>
+              <input
+                id="rsvp-name"
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={isAmharic ? "ስምዎትን ያስገቡ" : "Your full name"}
+                className="w-full px-4 py-3 rounded-xl border border-[#E1D9CF] bg-[#FAF8F5] text-sm text-[#1E140E] placeholder:text-[#A8988B] focus:border-[#8C6A3B] focus:outline-none focus:ring-1 focus:ring-[#8C6A3B] transition"
+              />
+            </div>
+
+            {/* Guest Count (only if attending) */}
+            {response === "accept" && (
+              <div>
+                <label htmlFor="rsvp-guests" className="block text-xs font-bold uppercase tracking-wider text-[#8C6A3B] mb-1.5">
+                  {isAmharic ? "የተጋባዦች ብዛት" : "Number of Guests"}
+                </label>
+                <select
+                  id="rsvp-guests"
+                  value={guestCount}
+                  onChange={(e) => setGuestCount(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-[#E1D9CF] bg-[#FAF8F5] text-sm text-[#1E140E] focus:border-[#8C6A3B] focus:outline-none focus:ring-1 focus:ring-[#8C6A3B] transition"
+                >
+                  <option value="1">{isAmharic ? "1 ሰው" : "1 Person"}</option>
+                  <option value="2">{isAmharic ? "2 ሰዎች" : "2 People"}</option>
+                  <option value="3">{isAmharic ? "3 ሰዎች" : "3 People"}</option>
+                  <option value="4">{isAmharic ? "4 ሰዎች" : "4 People"}</option>
+                </select>
+              </div>
+            )}
+
+            {/* Note / Well-Wish Message */}
+            <div>
+              <label htmlFor="rsvp-note" className="block text-xs font-bold uppercase tracking-wider text-[#8C6A3B] mb-1.5">
+                {isAmharic ? "የመልካም ምኞት መልእክት (አማራጭ)" : "A Note for the Couple (Optional)"}
+              </label>
+              <textarea
+                id="rsvp-note"
+                rows={3}
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder={isAmharic ? "ለሙሽሮች መልካም ምኞትዎን ይጻፉ..." : "Share your blessings or congratulations..."}
+                className="w-full px-4 py-3 rounded-xl border border-[#E1D9CF] bg-[#FAF8F5] text-sm text-[#1E140E] placeholder:text-[#A8988B] focus:border-[#8C6A3B] focus:outline-none focus:ring-1 focus:ring-[#8C6A3B] transition resize-none"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-3.5 px-6 rounded-full bg-[#2B1810] text-[#FAF6F0] font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#8C6A3B] transition-colors shadow-sm disabled:opacity-50"
+            >
+              {isSubmitting
+                ? isAmharic ? "በመላክ ላይ..." : "Submitting..."
+                : isAmharic ? "ምላሽን ላክ" : "Send RSVP"
+              }
+            </button>
+          </form>
+        )}
       </div>
 
-      {/* Directions — customized for personalized invitation links */}
-      <div id="directions" className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 pb-14 sm:pb-20 scroll-mt-24">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E7DDCB] bg-white/90 p-6 sm:p-8 shadow-[0_20px_50px_-20px_rgba(43,24,16,0.25)] backdrop-blur-sm">
+      {/* Directions — customized for personalized invitation links & homes */}
+      <div id="directions" className="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-8 pb-14 sm:pb-20 scroll-mt-24">
+        <div className="mx-auto rounded-3xl border border-[#E7DDCB] bg-white/90 p-6 sm:p-8 shadow-[0_20px_50px_-20px_rgba(43,24,16,0.25)] backdrop-blur-sm">
           {/* Section Header */}
           <div className="text-center">
             <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.24em] font-bold text-xs mb-1.5">
@@ -388,60 +322,111 @@ export function RSVPSection() {
             <h3 className={`text-2xl sm:text-3xl md:text-4xl text-[#2B1810] ${isAmharic ? "font-jegna-title" : "font-editorial-serif"}`}>
               {isAmharic ? "የቦታው አቅጣጫዎችና ካርታ" : "Event Locations & Directions"}
             </h3>
-            <p className={`mt-2 text-xs sm:text-sm text-[#6A5D54] max-w-md mx-auto ${isAmharic ? "font-balderasu" : "font-sans font-light"}`}>
+            <p className={`mt-2 text-xs sm:text-sm text-[#6A5D54] max-w-lg mx-auto ${isAmharic ? "font-balderasu" : "font-sans font-light"}`}>
               {isAmharic
-                ? "ወደ ቤተክርስቲያን እና ወደ ቤታችን የሚወስዱትን ትክክለኛ አቅጣጫዎች በካርታ ይመልከቱ ወይም አድራሻውን ይቅዱ።"
-                : "View live map navigation or copy the exact venue addresses for church ceremony and home reception."}
+                ? isChurchOnly
+                  ? "ወደ ቤተክርስቲያን የሚወስደውን ትክክለኛ አቅጣጫ በካርታ ይመልከቱ ወይም አድራሻውን ይቅዱ።"
+                  : "ወደ ቤተክርስቲያን እና ወደ ቤቶቹ የሚወስዱትን ትክክለኛ አቅጣጫዎች በካርታ ይመልከቱ ወይም አድራሻውን ይቅዱ።"
+                : isChurchOnly
+                  ? "View live Google Maps navigation or copy the church ceremony address."
+                  : "View live Google Maps navigation or copy the exact venue addresses for church ceremony and home receptions."}
             </p>
           </div>
 
-          {/* Interactive Mobile Tabs (visible if withHome) */}
-          {withHome && (
-            <div className="mt-6 flex sm:hidden items-center justify-center p-1 rounded-xl bg-[#F4EFE6] border border-[#E5DAC8]">
+          {/* Interactive Mobile Tabs (visible when more than 1 venue is available) */}
+          {hasMultipleVenues && (
+            <div className={`mt-6 flex sm:hidden items-center justify-center p-1 rounded-xl bg-[#F4EFE6] border border-[#E5DAC8] ${totalVenuesCount === 3 ? "gap-1" : ""}`}>
+              {/* Church Tab */}
               <button
                 type="button"
                 onClick={() => setActiveVenueTab("church")}
-                className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+                className={`flex-1 py-2 px-1.5 rounded-lg transition-all ${
                   activeVenueTab === "church"
-                    ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
+                    ? "bg-[#2B1810] text-[#FAF6F0] shadow-sm"
                     : "text-[#6A5D54] hover:text-[#2B1810]"
                 }`}
               >
-                <span className="inline-flex items-center justify-center gap-1.5">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                    <path d="M12 2v4M10 4h4" />
-                    <path d="M12 6L4 12v9h16v-9z" />
-                    <path d="M10 21v-4a2 2 0 0 1 4 0v4" />
-                  </svg>
-                  <span>{isAmharic ? "ሀልዎት አማኑኤል (9:00)" : "Halwot Emmanuel (9:00)"}</span>
-                </span>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="inline-flex items-center justify-center gap-1 text-[11px] font-semibold">
+                    <svg className="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M12 2v4M10 4h4" />
+                      <path d="M12 6L4 12v9h16v-9z" />
+                      <path d="M10 21v-4a2 2 0 0 1 4 0v4" />
+                    </svg>
+                    <span className="whitespace-nowrap truncate max-w-[90px]">{isAmharic ? "ሀልዎት አማኑኤል" : "Church"}</span>
+                  </div>
+                  <span className={`font-benaiah text-[11px] font-semibold mt-0.5 tracking-wider ${
+                    activeVenueTab === "church" ? "text-[#E6C687]" : "text-[#8C6A3B]"
+                  }`}>
+                    (9:00)
+                  </span>
+                </div>
               </button>
-              <button
-                type="button"
-                onClick={() => setActiveVenueTab("home")}
-                className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
-                  activeVenueTab === "home"
-                    ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
-                    : "text-[#6A5D54] hover:text-[#2B1810]"
-                }`}
-              >
-                <span className="inline-flex items-center justify-center gap-1.5">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
-                  </svg>
-                  <span>{isAmharic ? "ቤት (4:30)" : "Home (4:30)"}</span>
-                </span>
-              </button>
+
+              {/* Basseleal's House Tab */}
+              {withBasseleal && (
+                <button
+                  type="button"
+                  onClick={() => setActiveVenueTab("basseleal")}
+                  className={`flex-1 py-2 px-1.5 rounded-lg transition-all ${
+                    activeVenueTab === "basseleal"
+                      ? "bg-[#2B1810] text-[#FAF6F0] shadow-sm"
+                      : "text-[#6A5D54] hover:text-[#2B1810]"
+                  }`}
+                >
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="inline-flex items-center justify-center gap-1 text-[11px] font-semibold">
+                      <svg className="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                      </svg>
+                      <span className="whitespace-nowrap truncate max-w-[95px]">{isAmharic ? "የባስልኤል ቤት" : "Basseleal's"}</span>
+                    </div>
+                    <span className={`font-benaiah text-[11px] font-semibold mt-0.5 tracking-wider ${
+                      activeVenueTab === "basseleal" ? "text-[#E6C687]" : "text-[#8C6A3B]"
+                    }`}>
+                      (4:30)
+                    </span>
+                  </div>
+                </button>
+              )}
+
+              {/* Bethel's House Tab */}
+              {withBethel && (
+                <button
+                  type="button"
+                  onClick={() => setActiveVenueTab("bethel")}
+                  className={`flex-1 py-2 px-1.5 rounded-lg transition-all ${
+                    activeVenueTab === "bethel"
+                      ? "bg-[#2B1810] text-[#FAF6F0] shadow-sm"
+                      : "text-[#6A5D54] hover:text-[#2B1810]"
+                  }`}
+                >
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="inline-flex items-center justify-center gap-1 text-[11px] font-semibold">
+                      <svg className="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                      </svg>
+                      <span className="whitespace-nowrap truncate max-w-[95px]">{isAmharic ? "የቤቴል ቤት" : "Bethel's"}</span>
+                    </div>
+                    <span className={`font-benaiah text-[11px] font-semibold mt-0.5 tracking-wider ${
+                      activeVenueTab === "bethel" ? "text-[#E6C687]" : "text-[#8C6A3B]"
+                    }`}>
+                      (4:30)
+                    </span>
+                  </div>
+                </button>
+              )}
             </div>
           )}
 
           {/* Venue Cards Grid */}
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {/* Church Card */}
+          <div className={`mt-6 grid gap-4 ${totalVenuesCount === 3 ? "sm:grid-cols-2 lg:grid-cols-3" : totalVenuesCount === 2 ? "sm:grid-cols-2" : "max-w-md mx-auto"}`}>
+            {/* 1. Church Card */}
             <div
               className={`flex flex-col justify-between rounded-2xl border border-[#E1D3C2] bg-[#FCFAF6] p-5 sm:p-6 transition-all hover:border-[#8C6A3B]/60 hover:shadow-md ${
-                withHome && activeVenueTab !== "church" ? "hidden sm:flex" : "flex"
+                hasMultipleVenues && activeVenueTab !== "church" ? "hidden sm:flex" : "flex"
               }`}
             >
               <div>
@@ -449,8 +434,9 @@ export function RSVPSection() {
                   <div className="flex items-center gap-3">
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EFE5D5] text-[#8C6A3B] shadow-inner">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
-                        <path d="M12 21s-6-5.4-6-10a6 6 0 1 1 12 0c0 4.6-6 10-6 10Z" />
-                        <circle cx="12" cy="11" r="2.2" />
+                        <path d="M12 2v4M10 4h4" />
+                        <path d="M12 6L4 12v9h16v-9z" />
+                        <path d="M10 21v-4a2 2 0 0 1 4 0v4" />
                       </svg>
                     </span>
                     <div>
@@ -458,33 +444,35 @@ export function RSVPSection() {
                         {isAmharic ? "ከጠዋቱ 9:00 ሰዓት" : "9:00 Local Time"}
                       </span>
                       <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
-                        {isAmharic ? "ሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን" : "Halwot Emmanuel Church"}
+                        {isAmharic ? activeLocations.church.labelAm : activeLocations.church.label}
                       </h4>
                     </div>
                   </div>
                 </div>
 
-
+                <p className="mt-3 text-xs text-[#6A5D54] leading-relaxed">
+                  {isAmharic ? activeLocations.church.addressAm : activeLocations.church.address}
+                </p>
               </div>
 
               {/* Action Buttons */}
               <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-3 border-t border-[#EFE5D5]/80">
                 <a
-                  href={mapsLink(wedding.locations.church.mapsQuery)}
+                  href={mapsLink(activeLocations.church.mapsQuery)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-4 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-3.5 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <polygon points="3 11 22 2 13 21 11 13 3 11" />
                   </svg>
-                  <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "በካርታ አቅጣጫ ክፈት" : "Open in Google Maps"}</span>
+                  <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "በካርታ አቅጣጫ ክፈት" : "Open in Maps"}</span>
                 </a>
 
                 <button
                   type="button"
-                  onClick={() => copyAddress("church", isAmharic ? "ሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን፣ አዲስ አበባ" : wedding.locations.church.address)}
-                  className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D5C6B5] bg-white px-3.5 py-2.5 text-xs font-semibold text-[#2B1810] hover:bg-[#F7F2EB] hover:border-[#8C6A3B] transition-colors active:scale-98"
+                  onClick={() => copyAddress("church", isAmharic ? activeLocations.church.addressAm : activeLocations.church.address)}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D5C6B5] bg-white px-3 py-2.5 text-xs font-semibold text-[#2B1810] hover:bg-[#F7F2EB] hover:border-[#8C6A3B] transition-colors active:scale-98"
                 >
                   {copiedType === "church" ? (
                     <>
@@ -506,11 +494,11 @@ export function RSVPSection() {
               </div>
             </div>
 
-            {/* Home Card (when withHome) */}
-            {withHome && (
+            {/* 2. Basseleal's House Card */}
+            {withBasseleal && (
               <div
                 className={`flex flex-col justify-between rounded-2xl border border-[#E1D3C2] bg-[#FCFAF6] p-5 sm:p-6 transition-all hover:border-[#8C6A3B]/60 hover:shadow-md ${
-                  activeVenueTab !== "home" ? "hidden sm:flex" : "flex"
+                  hasMultipleVenues && activeVenueTab !== "basseleal" ? "hidden sm:flex" : "flex"
                 }`}
               >
                 <div>
@@ -518,46 +506,122 @@ export function RSVPSection() {
                     <div className="flex items-center gap-3">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EFE5D5] text-[#8C6A3B] shadow-inner">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
-                          <path d="M3 11 12 4l9 7" />
-                          <path d="M5 10v10h14V10M9 20v-6h6v6" />
+                          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                          <polyline points="9 22 9 12 15 12 15 22" />
                         </svg>
                       </span>
                       <div>
                         <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
-                          {isAmharic ? "ከቀኑ 4:30 ሰዓት" : "4:30 PM"}
+                          {isAmharic ? "ከቀኑ 4:30 ሰዓት" : "4:30 PM (Reception)"}
                         </span>
                         <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
-                          {isAmharic ? "የቤት አቀባበልና ደስታ" : "Home Reception"}
+                          {isAmharic ? activeLocations.basselealHome.labelAm : activeLocations.basselealHome.label}
                         </h4>
                       </div>
                     </div>
                   </div>
+
+                  <p className="mt-3 text-xs text-[#6A5D54] leading-relaxed">
+                    {isAmharic ? activeLocations.basselealHome.addressAm : activeLocations.basselealHome.address}
+                  </p>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-3 border-t border-[#EFE5D5]/80">
                   <a
-                    href={mapsLink(wedding.locations.home.mapsQuery)}
+                    href={mapsLink(activeLocations.basselealHome.mapsQuery)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-4 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-3.5 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                       <polygon points="3 11 22 2 13 21 11 13 3 11" />
                     </svg>
-                    <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "በካርታ አቅጣጫ ክፈት" : "Open in Google Maps"}</span>
+                    <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "በካርታ አቅጣጫ ክፈት" : "Open in Maps"}</span>
                   </a>
 
                   <button
                     type="button"
-                    onClick={() => copyAddress("home", isAmharic ? "የሙሽሮች ቤት አቀባበል ቦታ፣ አዲስ አበባ" : wedding.locations.home.address)}
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D5C6B5] bg-white px-3.5 py-2.5 text-xs font-semibold text-[#2B1810] hover:bg-[#F7F2EB] hover:border-[#8C6A3B] transition-colors active:scale-98"
+                    onClick={() => copyAddress("basseleal", isAmharic ? activeLocations.basselealHome.addressAm : activeLocations.basselealHome.address)}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D5C6B5] bg-white px-3 py-2.5 text-xs font-semibold text-[#2B1810] hover:bg-[#F7F2EB] hover:border-[#8C6A3B] transition-colors active:scale-98"
                   >
-                    {copiedType === "home" ? (
+                    {copiedType === "basseleal" ? (
                       <>
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600" aria-hidden>
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        <span className={`text-emerald-700 ${isAmharic ? "font-benaiah text-sm" : ""}`}>{isAmharic ? "ተቀድቷል!" : "Copied!"}</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                        </svg>
+                        <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "አድራሻ ቅዳ" : "Copy"}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 3. Bethel's House Card */}
+            {withBethel && (
+              <div
+                className={`flex flex-col justify-between rounded-2xl border border-[#E1D3C2] bg-[#FCFAF6] p-5 sm:p-6 transition-all hover:border-[#8C6A3B]/60 hover:shadow-md ${
+                  hasMultipleVenues && activeVenueTab !== "bethel" ? "hidden sm:flex" : "flex"
+                }`}
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EFE5D5] text-[#8C6A3B] shadow-inner">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+                          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                          <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                      </span>
+                      <div>
+                        <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
+                          {isAmharic ? "ከቀኑ 4:30 ሰዓት" : "4:30 PM (Reception)"}
+                        </span>
+                        <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
+                          {isAmharic ? activeLocations.bethelHome.labelAm : activeLocations.bethelHome.label}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="mt-3 text-xs text-[#6A5D54] leading-relaxed">
+                    {isAmharic ? activeLocations.bethelHome.addressAm : activeLocations.bethelHome.address}
+                  </p>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-3 border-t border-[#EFE5D5]/80">
+                  <a
+                    href={mapsLink(activeLocations.bethelHome.mapsQuery)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-3.5 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                    </svg>
+                    <span className={isAmharic ? "font-benaiah text-sm" : ""}>{isAmharic ? "በካርታ አቅጣጫ ክፈት" : "Open in Maps"}</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => copyAddress("bethel", isAmharic ? activeLocations.bethelHome.addressAm : activeLocations.bethelHome.address)}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D5C6B5] bg-white px-3 py-2.5 text-xs font-semibold text-[#2B1810] hover:bg-[#F7F2EB] hover:border-[#8C6A3B] transition-colors active:scale-98"
+                  >
+                    {copiedType === "bethel" ? (
+                      <>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600" aria-hidden>
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
                         <span className={`text-emerald-700 ${isAmharic ? "font-benaiah text-sm" : ""}`}>{isAmharic ? "ተቀድቷል!" : "Copied!"}</span>
                       </>
                     ) : (
@@ -586,7 +650,6 @@ export function RSVPSection() {
               </svg>
             </span>
             <p className={`text-[11px] sm:text-xs text-[#6A5D54] leading-relaxed ${isAmharic ? "font-benaiah text-xs sm:text-sm" : ""}`}>
-
               {isAmharic
                 ? "ጠቃሚ ምክር፦ ለ RIDE፣ Feres ወይም ታክሲ ለመጠቀም «አድራሻ ቅዳ» የሚለውን ይጫኑና በቀላሉ ይለጥፉት።"
                 : "Helpful tip: Tap \"Copy\" to easily paste the exact address into RIDE, Feres, or navigation apps."}
@@ -594,7 +657,6 @@ export function RSVPSection() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }

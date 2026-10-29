@@ -11,6 +11,15 @@
  * 4. Set `rsvpDeadline`, e.g. "July 1, 2027"
  */
 
+export interface VenueLocation {
+  label: string;
+  labelAm: string;
+  address: string;
+  addressAm: string;
+  mapsQuery: string;
+  directionsUrl?: string | null;
+}
+
 export interface WeddingConfig {
   couple: {
     first: string;
@@ -30,8 +39,10 @@ export interface WeddingConfig {
   directionsUrl: string | null;
   rsvpDeadline: string | null; // e.g. "July 1, 2027" or null
   locations: {
-    church: { label: string; address: string; mapsQuery: string };
-    home: { label: string; address: string; mapsQuery: string };
+    church: VenueLocation;
+    basselealHome: VenueLocation;
+    bethelHome: VenueLocation;
+    home: VenueLocation;
   };
   schedule: {
     church: { start: string; end: string };
@@ -82,18 +93,34 @@ export const wedding: WeddingConfig = {
   // RSVP deadline:
   rsvpDeadline: null, // e.g. "July 15, 2027"
 
-  // Addresses shown on the personalized invitation. Replace with the real
-  // addresses (and set mapsQuery to the exact place so Google Maps opens it).
+  // Addresses shown on the personalized invitation.
   locations: {
     church: {
       label: "Halwot Emmanuel Church",
-      address: "Halwot Emmanuel Church, Addis Ababa",
+      labelAm: "ሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን",
+      address: "Halwot Emmanuel Church, Addis Ababa, Ethiopia",
+      addressAm: "ሀልዎት አማኑኤል አጥቢያ ቤተክርስቲያን፣ አዲስ አበባ",
       mapsQuery: "Halwot Emmanuel Church, Addis Ababa, Ethiopia",
+      directionsUrl: null,
     },
-    home: {
-      label: "Home reception",
-      address: "Home location, Addis Ababa",
-      mapsQuery: "Addis Ababa, Ethiopia",
+    basselealHome: {
+      label: "Basseleal's house",
+      labelAm: "የባስልኤል ቤት",
+      address: "Basseleal's house, Addis Ababa, Ethiopia",
+      addressAm: "የባስልኤል ቤት፣ አዲስ አበባ",
+      mapsQuery: "Basseleal's house, Addis Ababa, Ethiopia",
+      directionsUrl: null,
+    },
+    bethelHome: {
+      label: "Bethel's house",
+      labelAm: "የቤቴል ቤት",
+      address: "Bethel's house, Addis Ababa, Ethiopia",
+      addressAm: "የቤቴል ቤት፣ አዲስ አበባ",
+      mapsQuery: "Bethel's house, Addis Ababa, Ethiopia",
+      directionsUrl: null,
+    },
+    get home() {
+      return this.basselealHome;
     },
   },
 
@@ -116,23 +143,15 @@ export const wedding: WeddingConfig = {
   },
 
   // Curated high-resolution Unsplash editorial wedding photography
-  // Easily replaceable with actual portraits of Basseleal and Bethel later:
   images: {
-    // Primary couple portrait
     heroMain: "/couple.JPG",
-    // Secondary intimate portrait
     heroSecondary: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=85",
-    // Fine floral styling & ceremony detail
     heroDetail: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85",
-    // Fine-art stationery & rings
     invitationCard: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85",
-    // Romantic walk in golden light
     calendarAccent: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1200&q=85",
-    // Editorial gallery moments
     galleryFirst: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1000&q=85",
     gallerySecond: "https://images.unsplash.com/photo-1545232979-fbf71fe97799?auto=format&fit=crop&w=1000&q=85",
     galleryThird: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1000&q=85",
-    // Evening candlelight atmosphere
     rsvpBackdrop: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=85",
   },
 };
@@ -163,7 +182,6 @@ export function formatFullWeddingDate(dateStr: string | null): string {
   if (parts.length !== 3) return dateStr;
   const [y, m, d] = parts;
   const month = MONTH_NAMES[m - 1] ?? "";
-  // Deterministic weekday calculation (Zeller's or Date in fixed UTC)
   const dt = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
   const weekday = WEEKDAY_NAMES[dt.getUTCDay()] ?? "";
   return `${weekday}, ${month} ${d}, ${y}`;

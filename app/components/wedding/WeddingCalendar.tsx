@@ -65,17 +65,17 @@ export function WeddingCalendar() {
   return (
     <section id="date" data-reveal data-language={isAmharic ? "am" : "en"} className="reveal-seq amharic-section relative overflow-hidden bg-[#FFF8D6] py-16 sm:py-20 lg:py-24">
       <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-multiply" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='18' cy='24' r='1.3' fill='%234A350E'/%3E%3Ccircle cx='76' cy='42' r='.9' fill='%235A4215'/%3E%3Ccircle cx='124' cy='18' r='1.2' fill='%233D2B09'/%3E%3Ccircle cx='36' cy='92' r='1.4' fill='%234C3710'/%3E%3Ccircle cx='104' cy='82' r='.8' fill='%23563F14'/%3E%3C/svg%3E")` }} aria-hidden />
-      <div className="pointer-events-none absolute left-0 top-0 z-0 h-40 w-40 opacity-65 sm:h-56 sm:w-56 lg:h-72 lg:w-72" aria-hidden>
-        <Image src="/top left dark.png" alt="" fill sizes="(max-width: 640px) 160px, (max-width: 1024px) 224px, 288px" className="object-contain object-left-top" />
+      <div className="pointer-events-none absolute -left-3 -top-3 z-0 h-24 w-24 opacity-35 sm:left-0 sm:top-0 sm:h-40 sm:w-40 sm:opacity-45 lg:h-56 lg:w-56" aria-hidden>
+        <Image src="/top left dark.png" alt="" fill sizes="(max-width: 640px) 96px, (max-width: 1024px) 160px, 224px" className="object-contain object-left-top" />
       </div>
       <div className="pointer-events-none absolute bottom-0 right-0 z-0 hidden h-[38%] w-[38%] opacity-60 sm:block lg:h-[48%] lg:w-[34%]" aria-hidden>
         <Image src="/brown flower hero.png" alt="" fill sizes="(max-width: 1024px) 38vw, 34vw" className="object-contain object-right-bottom" />
       </div>
 
       <div className="relative z-10 mx-auto grid max-w-[1120px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-[minmax(280px,390px)_minmax(0,1fr)] lg:gap-20 lg:px-12">
-        <div data-seq="card" style={seq("0.2s")} className="mx-auto w-full max-w-[390px]">
+        <div data-seq="card" style={seq("0.2s")} className="mx-auto w-full max-w-[390px] pt-4 sm:pt-0">
           <p data-seq="fade" style={seq("0.3s")} className="mb-3 font-sans text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8C6A3B]">{isAmharic ? "ቀኑን ያስታውሱ" : "Save the date"}</p>
-          <h2 data-seq="rise" style={seq("0.4s")} className="font-editorial-serif text-4xl leading-none text-[#1E140E] sm:text-5xl">{monthName} <em className="text-2xl font-normal text-[#8C6A3B] sm:text-3xl">{displayYear}</em></h2>
+          <h2 data-seq="rise" style={seq("0.4s")} className="font-editorial-serif text-4xl leading-none text-[#1E140E] sm:text-5xl">{monthName} <em className="font-benaiah text-2xl font-normal not-italic text-[#8C6A3B] sm:text-3xl ml-1.5">{displayYear}</em></h2>
 
           <div className="relative mt-6 overflow-hidden rounded-sm border border-[#DED2C2] bg-[#FAF5EE] p-5 shadow-[0_18px_42px_-18px_rgba(43,24,16,.25)] sm:p-7">
             <div className="flex items-center justify-between border-b border-[#E5DDD2] pb-4">
@@ -85,11 +85,21 @@ export function WeddingCalendar() {
             <div className="mt-4 grid grid-cols-7 text-center font-sans text-[9px] font-semibold uppercase tracking-[0.12em] text-[#857365] sm:text-[10px]">
               {(isAmharic ? ["እሁድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((label) => <span key={label} className="py-2">{label}</span>)}
             </div>
-            <div className="relative z-10 mt-2 grid grid-cols-7 gap-y-1 text-center font-sans text-xs text-[#422B20] sm:gap-y-2 sm:text-sm">
+            <div className="relative z-10 mt-2 grid grid-cols-7 gap-y-1 text-center font-benaiah text-sm text-[#422B20] sm:gap-y-2 sm:text-base">
               {Array.from({ length: startDayOffset }).map((_, index) => <span key={`blank-${index}`} className="py-2 opacity-0">0</span>)}
-              {days.map((day) => <span key={day} className={`mx-auto grid h-7 w-7 place-items-center rounded-full sm:h-8 sm:w-8 ${day === highlightDay ? "border-2 border-[#D4AF37] bg-[#F3ECE1] font-bold shadow-[0_3px_12px_rgba(180,140,20,.22)]" : ""}`}>{day}</span>)}
+              {days.map((day) => (
+                <span
+                  key={day}
+                  className={`mx-auto grid h-7 w-7 place-items-center rounded-full sm:h-8 sm:w-8 transition-all ${
+                    day === highlightDay
+                      ? "border-2 border-[#D4AF37] bg-[#F3ECE1] font-bold text-base sm:text-lg text-[#1E140E] shadow-[0_3px_12px_rgba(180,140,20,.28)] ring-2 ring-[#D4AF37]/30 ring-offset-1"
+                      : "hover:bg-[#ECE3D5]/60"
+                  }`}
+                >
+                  {day}
+                </span>
+              ))}
             </div>
-            <Image src="/calendar flower.png" alt="" width={400} height={600} className="pointer-events-none absolute -bottom-14 -right-14 z-0 w-44 opacity-50" aria-hidden />
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2">

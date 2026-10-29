@@ -7,6 +7,22 @@ import { InviteLinkActions } from "@/app/components/dashboard/InviteLinkActions"
 
 type Invitation = { _id: string; createdAt: string; invitationType: string; status: string; shareUrl?: string; guestId?: { fullName?: string } };
 
+function getInvitationTypeLabel(type: string) {
+  switch (type) {
+    case "CHURCH_ONLY":
+      return "Church only";
+    case "CHURCH_AND_BASSELEAL":
+      return "Church + Basseleal's house";
+    case "CHURCH_AND_BETHEL":
+      return "Church + Bethel's house";
+    case "CHURCH_AND_BOTH":
+    case "CHURCH_AND_HOME":
+      return "Church + Both houses";
+    default:
+      return type;
+  }
+}
+
 export default function InvitationsPage() {
   const [items, setItems] = useState<Invitation[]>([]);
   const [name, setName] = useState("");
@@ -55,9 +71,9 @@ export default function InvitationsPage() {
       active="/admin/invitations"
       eyebrow="Access control"
       title="Invitation links"
-      description="Create, share, and revoke personalised wedding access."
+      description="Create, assign venue directions (church & homes), and revoke personalised wedding access."
     >
-      <form onSubmit={submit} className="grid gap-2.5 rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:grid-cols-[1.4fr_1fr_auto] sm:items-center sm:gap-3">
+      <form onSubmit={submit} className="grid gap-2.5 rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:grid-cols-[1.4fr_1.3fr_auto] sm:items-center sm:gap-3">
         <label htmlFor="admin-inv-name" className="sr-only">
           Guest full name
         </label>
@@ -78,8 +94,10 @@ export default function InvitationsPage() {
           onChange={(e) => setType(e.target.value)}
           className="h-11 w-full rounded-full border border-[#E1D9CF] bg-[#FBFAF8] px-4 text-base outline-none transition focus:border-[#C9B79F] focus:ring-2 focus:ring-[#C2491A]/15 sm:text-sm"
         >
-          <option value="CHURCH_ONLY">Church only</option>
-          <option value="CHURCH_AND_HOME">Church + home</option>
+          <option value="CHURCH_ONLY">Church ceremony only</option>
+          <option value="CHURCH_AND_BASSELEAL">Church + Basseleal&apos;s house</option>
+          <option value="CHURCH_AND_BETHEL">Church + Bethel&apos;s house</option>
+          <option value="CHURCH_AND_BOTH">Church + Both houses</option>
         </select>
         <button
           type="submit"
@@ -92,7 +110,7 @@ export default function InvitationsPage() {
       {created && <CreatedLink url={created} />}
 
       <div className="mt-3 overflow-hidden rounded-2xl border border-[#EDE9E2] bg-white">
-        <div className="hidden grid-cols-[1.4fr_1fr_0.8fr_auto] gap-4 border-b border-[#E7E2DB] bg-[#FBFAF8] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6B6660] md:grid">
+        <div className="hidden grid-cols-[1.4fr_1.3fr_0.8fr_auto] gap-4 border-b border-[#E7E2DB] bg-[#FBFAF8] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6B6660] md:grid">
           <span>Guest</span>
           <span>Permission</span>
           <span>Status</span>
@@ -129,7 +147,7 @@ function InvitationRow({ item, revoke, createLink }: { item: Invitation; revoke:
   const statusClass = active ? "bg-[#E7EFE5] text-[#4C6B48]" : "bg-[#F6E5DE] text-[#9B4A2C]";
 
   return (
-    <div className="border-b border-[#F0EEEB] p-4 last:border-0 md:grid md:grid-cols-[1.4fr_1fr_0.8fr_auto] md:items-center md:gap-4">
+    <div className="border-b border-[#F0EEEB] p-4 last:border-0 md:grid md:grid-cols-[1.4fr_1.3fr_0.8fr_auto] md:items-center md:gap-4">
       <div className="flex items-start justify-between gap-3 md:block">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{item.guestId?.fullName || "Guest"}</p>
@@ -139,7 +157,7 @@ function InvitationRow({ item, revoke, createLink }: { item: Invitation; revoke:
       </div>
 
       <span className="mt-2 inline-flex w-fit rounded-full bg-[#F3EFE9] px-2.5 py-1 text-[11px] font-medium text-[#6B6660] md:mt-0">
-        {item.invitationType === "CHURCH_ONLY" ? "Church only" : "Church + home"}
+        {getInvitationTypeLabel(item.invitationType)}
       </span>
 
       <span className={`hidden w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold md:block ${statusClass}`}>{item.status}</span>

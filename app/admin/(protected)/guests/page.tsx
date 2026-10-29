@@ -6,6 +6,23 @@ import { Icon } from "@/app/components/dashboard/Icon";
 
 type Guest = { _id: string; fullName: string; email?: string; invitation?: { invitationType?: string } | null; rsvp?: { attendanceStatus?: string; attendeeCount?: number } | null };
 
+function getInvitationTypeLabel(type?: string) {
+  if (!type) return "Not invited";
+  switch (type) {
+    case "CHURCH_ONLY":
+      return "Church only";
+    case "CHURCH_AND_BASSELEAL":
+      return "Church + Basseleal's house";
+    case "CHURCH_AND_BETHEL":
+      return "Church + Bethel's house";
+    case "CHURCH_AND_BOTH":
+    case "CHURCH_AND_HOME":
+      return "Church + Both houses";
+    default:
+      return type;
+  }
+}
+
 export default function GuestsPage() {
   const [query, setQuery] = useState("");
   const [guests, setGuests] = useState<Guest[]>([]);
@@ -26,7 +43,7 @@ export default function GuestsPage() {
       active="/admin/guests"
       eyebrow="People"
       title="Guests & RSVPs"
-      description="Search every guest, invitation permission, and response."
+      description="Search every guest, assigned venue directions, and response."
       action={
         <a
           href="/api/admin/guests/export"
@@ -54,7 +71,7 @@ export default function GuestsPage() {
       </div>
 
       <div className="mt-3 overflow-hidden rounded-2xl border border-[#EDE9E2] bg-white">
-        <div className="hidden grid-cols-[1.6fr_1fr_1fr_0.7fr] gap-4 border-b border-[#E7E2DB] bg-[#FBFAF8] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6B6660] md:grid">
+        <div className="hidden grid-cols-[1.6fr_1.3fr_1fr_0.6fr] gap-4 border-b border-[#E7E2DB] bg-[#FBFAF8] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6B6660] md:grid">
           <span>Guest</span>
           <span>Invitation</span>
           <span>RSVP status</span>
@@ -81,10 +98,10 @@ function GuestRow({ guest }: { guest: Guest }) {
   const attending = status === "ATTENDING";
   const declined = status === "NOT_ATTENDING";
   const statusClass = attending ? "bg-[#E7EFE5] text-[#4C6B48]" : declined ? "bg-[#F6E5DE] text-[#9B4A2C]" : "bg-[#F1EDE7] text-[#6A5D51]";
-  const invite = !guest.invitation ? "Not invited" : guest.invitation.invitationType === "CHURCH_ONLY" ? "Church only" : "Church + home";
+  const invite = getInvitationTypeLabel(guest.invitation?.invitationType);
 
   return (
-    <div className="border-b border-[#F0EEEB] p-4 last:border-0 md:grid md:grid-cols-[1.6fr_1fr_1fr_0.7fr] md:items-center md:gap-4">
+    <div className="border-b border-[#F0EEEB] p-4 last:border-0 md:grid md:grid-cols-[1.6fr_1.3fr_1fr_0.6fr] md:items-center md:gap-4">
       <div className="flex items-start justify-between gap-3 md:block">
         <div className="min-w-0">
           <p className="truncate text-[15px] font-semibold leading-tight">{guest.fullName}</p>

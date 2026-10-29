@@ -5,6 +5,7 @@ import { Icon, type IconName } from "@/app/components/dashboard/Icon";
 const items: { label: string; href: string; icon: IconName }[] = [
   { label: "Overview", href: "/admin", icon: "home" },
   { label: "Guests", href: "/admin/guests", icon: "users" },
+  { label: "Locations", href: "/admin/locations", icon: "map-pin" },
   { label: "Wishes", href: "/admin/wishes", icon: "heart" },
   { label: "Links", href: "/admin/invitations", icon: "link" },
 ];
@@ -44,7 +45,7 @@ export function AdminSidebar({ active, hideDesktop = false }: { active: string; 
         aria-label="Admin navigation"
         className="fixed inset-x-0 bottom-0 z-50 border-t border-[#E4DED6] bg-[#FBF9F6]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
       >
-        <div className="mx-auto grid max-w-md grid-cols-4 gap-1 px-2 py-1.5">
+        <div className="mx-auto grid max-w-lg grid-cols-5 gap-1 px-2 py-1.5">
           {items.map(({ label, href, icon }) => {
             const isActive = active === href;
             return (
@@ -52,12 +53,12 @@ export function AdminSidebar({ active, hideDesktop = false }: { active: string; 
                 key={href}
                 href={href}
                 aria-current={isActive ? "page" : undefined}
-                className={`flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 text-[10px] font-semibold transition active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2491A]/40 ${
+                className={`flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 text-[9px] font-semibold transition active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2491A]/40 ${
                   isActive ? "bg-[#F0E6D9] text-[#7A4A2A]" : "text-[#6F665D]"
                 }`}
               >
-                <Icon name={icon} className="h-5 w-5" />
-                <span>{label}</span>
+                <Icon name={icon} className="h-4 w-4" />
+                <span className="truncate">{label}</span>
               </a>
             );
           })}

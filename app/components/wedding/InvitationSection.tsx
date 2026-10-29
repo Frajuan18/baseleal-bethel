@@ -21,7 +21,12 @@ const seq = (
 export function InvitationSection() {
   const { isAmharic } = useWeddingLanguage();
   const { invitation, hasToken } = useInvitation();
-  const isBoth = !hasToken || invitation?.invitationType === "CHURCH_AND_HOME";
+  const isBoth = !hasToken || ["CHURCH_AND_HOME", "CHURCH_AND_BOTH", "CHURCH_AND_BASSELEAL", "CHURCH_AND_BETHEL"].includes(invitation?.invitationType || "");
+  const homeBadgeLabel = invitation?.invitationType === "CHURCH_AND_BASSELEAL"
+    ? (isAmharic ? "የባስልኤል ቤት" : "Basseleal's")
+    : invitation?.invitationType === "CHURCH_AND_BETHEL"
+    ? (isAmharic ? "የቤቴል ቤት" : "Bethel's")
+    : (isAmharic ? "ቤት" : "Home");
   const isHomeOnly = hasToken && invitation?.invitationType === "HOME";
   const ethiopian = toEthiopian(wedding.date);
   // Structured date lockup data — Amharic uses the Ethiopian calendar date
@@ -107,21 +112,8 @@ export function InvitationSection() {
 
         <div className="w-full flex flex-col items-center justify-center">
           
-          {/* Section Header with seamless luminous parchment vignette on small screens to prevent flower overlap */}
           {/* The Fine-Art Wedding Invitation Card - Grand, Prominent & Perfectly Proportioned */}
           <div className="relative w-full max-w-[460px] sm:max-w-[500px]">
-          <div
-            className="pointer-events-none absolute left-1/2 top-[-2.85rem] z-30 h-10 w-[84%] -translate-x-1/2 sm:top-[-3rem] md:hidden"
-            aria-hidden
-          >
-            <Image
-              src="/flower underline light.png"
-              alt=""
-              fill
-              sizes="84vw"
-              className="object-contain object-center"
-            />
-          </div>
           <article data-seq="card" style={{ ...seq("0.6s", "1300ms"), "--photo-rise": "14px" } as CSSProperties} className="relative z-20 bg-[#FAF5EE] rounded-sm p-5 sm:p-7 md:p-8 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
             <Image src="/card bg.png" alt="" fill sizes="(max-width: 640px) 92vw, 500px" className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover" aria-hidden />
             
@@ -234,7 +226,7 @@ export function InvitationSection() {
                       <div className="inline-flex items-center gap-2.5 sm:gap-3 rounded-xl border border-[#8C6A3B]/40 bg-[#FAF5EE] px-3.5 py-2 shadow-[0_2px_8px_rgba(43,24,16,0.06)]">
                         <div className="flex flex-col text-left leading-tight">
                           <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.18em] font-bold text-[#7C5A32]">
-                            {isAmharic ? "ቤት" : "Home"}
+                            {homeBadgeLabel}
                           </span>
                           <span className="text-[9px] sm:text-[10px] text-[#8C6A3B] font-medium tracking-wider mt-0.5">
                             {isAmharic ? "አቀባበል" : "Reception"}
@@ -350,18 +342,6 @@ export function InvitationSection() {
 
             </div>
           </article>
-          <div
-            className="pointer-events-none absolute bottom-[-2.85rem] left-1/2 z-30 h-10 w-[84%] -translate-x-1/2 sm:bottom-[-3rem] md:hidden"
-            aria-hidden
-          >
-            <Image
-              src="/flower underline light.png"
-              alt=""
-              fill
-              sizes="84vw"
-              className="object-contain object-center"
-            />
-          </div>
         </div>
 
         </div>

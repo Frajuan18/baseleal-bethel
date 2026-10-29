@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
-import Image from "next/image";
 
 type Phase = "idle" | "playing" | "card-amharic" | "card-english" | "revealing" | "done";
 
@@ -200,20 +199,11 @@ export function IntroLoader() {
                 </p>
               </div>
 
-              {/* Middle: Couple Names + Floral Divider */}
+              {/* Middle: Couple Names */}
               <div className="mt-4 sm:mt-5 flex flex-col items-center">
                 <h2 className="font-jegna-title text-4xl sm:text-5xl md:text-6xl text-[#FFFDF5] leading-[1.2] tracking-wide text-center">
                   ባስልኤል እና ቤቴል
                 </h2>
-                <div className="relative mt-2 h-4 sm:h-4.5 w-40 sm:w-48 opacity-85">
-                  <Image
-                    src="/flower underline light.png"
-                    alt=""
-                    fill
-                    className="object-contain"
-                    aria-hidden
-                  />
-                </div>
               </div>
 
               {/* Verse */}
@@ -249,20 +239,11 @@ export function IntroLoader() {
                 </p>
               </div>
 
-              {/* Middle: Couple Names + Floral Divider */}
+              {/* Middle: Couple Names */}
               <div className="mt-4 sm:mt-5 flex flex-col items-center">
                 <h2 className="font-brittany-signature text-5xl sm:text-6xl md:text-7xl text-[#FFFDF5] leading-[1.1] text-center">
                   Basseleal & Bethel
                 </h2>
-                <div className="relative mt-2 h-4 sm:h-4.5 w-40 sm:w-48 opacity-85">
-                  <Image
-                    src="/flower underline light.png"
-                    alt=""
-                    fill
-                    className="object-contain"
-                    aria-hidden
-                  />
-                </div>
               </div>
 
               {/* Verse */}

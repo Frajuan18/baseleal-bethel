@@ -4,6 +4,8 @@ import { AuditLog, Guest, Invitation, RSVP } from "@/app/lib/models";
 import { requireAdmin } from "@/app/lib/admin-api";
 import { createInvitationToken } from "@/app/lib/invitation-token";
 
+const VALID_TYPES = ["CHURCH_ONLY", "CHURCH_AND_HOME", "CHURCH_AND_BASSELEAL", "CHURCH_AND_BETHEL", "CHURCH_AND_BOTH"];
+
 export async function GET() {
   const auth = await requireAdmin();
   if (auth instanceof NextResponse) return auth;
@@ -22,7 +24,9 @@ export async function POST(request: Request) {
   if (auth instanceof NextResponse) return auth;
   try {
     const body = await request.json() as { fullName?: string; email?: string; invitationType?: string; expiresAt?: string; note?: string };
-    if (!body.fullName?.trim() || !["CHURCH_ONLY", "CHURCH_AND_HOME"].includes(body.invitationType || "")) return NextResponse.json({ error: "Name and invitation type are required." }, { status: 400 });
+    if (!body.fullName?.trim() || !VALID_TYPES.includes(body.invitationType || "")) {
+      return NextResponse.json({ error: "Name and invitation type are required." }, { status: 400 });
+    }
     await connectMongo();
     const guest = await Guest.findOneAndUpdate({ fullName: body.fullName.trim() }, { $set: { fullName: body.fullName.trim(), ...(body.email ? { email: body.email.toLowerCase().trim() } : {}) } }, { upsert: true, new: true, setDefaultsOnInsert: true });
     const { token, tokenHash } = createInvitationToken();
@@ -34,4 +38,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Could not create invitation." }, { status: 503 });
   }
 }
-
