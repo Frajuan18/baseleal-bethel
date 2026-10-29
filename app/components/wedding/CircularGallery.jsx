@@ -226,13 +226,13 @@ const link = gl => {
 };
 
 const CircularGallery = ({
-  items,
-  galleryRef,
+  items = DEFAULT_ITEMS,
+  galleryRef = undefined,
   bend = 3,
   textColor = '#ffffff',
   borderRadius = 0.05,
   font = DEFAULT_FONT,
-  fontUrl,
+  fontUrl = undefined,
   scrollSpeed = 2,
   scrollEase = 0.05,
   itemSize = 1,
@@ -247,11 +247,11 @@ const CircularGallery = ({
   autoScroll = 0,
   openOnClick = true,
   intro = true,
-  onItemClick,
-  onActiveChange,
-  dpr,
+  onItemClick = undefined,
+  onActiveChange = undefined,
+  dpr = undefined,
   className = '',
-  style,
+  style = undefined,
   ...rest
 }) => {
   const containerRef = useRef(null);
