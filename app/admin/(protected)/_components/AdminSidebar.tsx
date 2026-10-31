@@ -5,27 +5,33 @@ import { Icon, type IconName } from "@/app/components/dashboard/Icon";
 const items: { label: string; href: string; icon: IconName }[] = [
   { label: "Overview", href: "/admin", icon: "home" },
   { label: "Guests", href: "/admin/guests", icon: "users" },
-  { label: "Locations", href: "/admin/locations", icon: "map-pin" },
+  { label: "Directions", href: "/admin/directions", icon: "map-pin" },
   { label: "Wishes", href: "/admin/wishes", icon: "heart" },
   { label: "Links", href: "/admin/invitations", icon: "link" },
 ];
 
 export function AdminSidebar({ active, hideDesktop = false }: { active: string; hideDesktop?: boolean }) {
+  const isItemActive = (href: string) => {
+    if (active === href) return true;
+    if ((href === "/admin/directions" && active === "/admin/locations") || (href === "/admin/locations" && active === "/admin/directions")) return true;
+    return false;
+  };
+
   return (
     <>
       {!hideDesktop && (
         <header className="sticky top-0 z-40 hidden items-center gap-6 border-b border-[#E1DED9] bg-[#F8F8F7]/90 px-5 py-4 backdrop-blur-xl lg:flex lg:px-8">
-          <a href="/dashboard" className="flex shrink-0 items-center gap-3">
+          <a href="/admin" className="flex shrink-0 items-center gap-3">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#171717] font-serif text-lg text-[#F2D69B]">B</span>
             <span className="font-serif text-lg">Basseleal &amp; Bethel</span>
           </a>
           <nav aria-label="Admin navigation" className="flex items-center gap-1 rounded-full bg-[#EFEBE5] p-1">
             {items.map(({ label, href, icon }) => {
-              const isActive = active === href;
+              const isActive = isItemActive(href);
               return (
                 <a
                   key={href}
-                  href={href.replace("/admin", "/dashboard")}
+                  href={href}
                   aria-current={isActive ? "page" : undefined}
                   className={`flex min-h-[38px] items-center gap-2 rounded-full px-3.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2491A]/40 ${
                     isActive ? "bg-white text-[#171717] shadow-[0_2px_8px_rgba(43,33,29,0.08)]" : "text-[#6B6660] hover:text-[#171717]"
@@ -47,7 +53,7 @@ export function AdminSidebar({ active, hideDesktop = false }: { active: string; 
       >
         <div className="mx-auto grid max-w-lg grid-cols-5 gap-1 px-2 py-1.5">
           {items.map(({ label, href, icon }) => {
-            const isActive = active === href;
+            const isActive = isItemActive(href);
             return (
               <a
                 key={href}

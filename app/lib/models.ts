@@ -60,6 +60,8 @@ const venueLocationSchema = new Schema({
   addressAm: { type: String, default: "" },
   mapsQuery: { type: String, default: "" },
   directionsUrl: { type: String, default: "" },
+  note: { type: String, default: "" },
+  noteAm: { type: String, default: "" },
 }, { _id: false });
 
 const locationSettingSchema = new Schema({

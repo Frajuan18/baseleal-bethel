@@ -18,6 +18,8 @@ export interface VenueLocation {
   addressAm: string;
   mapsQuery: string;
   directionsUrl?: string | null;
+  note?: string;
+  noteAm?: string;
 }
 
 export interface WeddingConfig {
@@ -102,6 +104,8 @@ export const wedding: WeddingConfig = {
       addressAm: "ህልዎት አማኑኤል ቤተክርስቲያን፣ አዲስ አበባ፣ ኢትዮጵያ",
       mapsQuery: "Halwot Emmanuel Church, Addis Ababa, Ethiopia",
       directionsUrl: null,
+      note: "Morning service begins at 9:00 AM (3:00 LT). Parking is available on church premises.",
+      noteAm: "የጧቱ ስነ-ስርዓት ከጠዋቱ 3:00 (9:00 LT) ይጀምራል። በቤተክርስቲያኑ ግቢ ውስጥ ሰፊ የመኪና ማቆሚያ ተዘጋጅቷል።",
     },
     basselealHome: {
       label: "Basseleal's house",
@@ -110,6 +114,8 @@ export const wedding: WeddingConfig = {
       addressAm: "ባስልኤል ቤት፣ አዲስ አበባ፣ ኢትዮጵያ",
       mapsQuery: "Basseleal's house, Addis Ababa, Ethiopia",
       directionsUrl: null,
+      note: "Afternoon reception begins at 4:30 PM (10:30 LT). Follow the wedding celebration signs upon arrival.",
+      noteAm: "የከሰዓቱ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።",
     },
     bethelHome: {
       label: "Bethel's house",
@@ -118,6 +124,8 @@ export const wedding: WeddingConfig = {
       addressAm: "ቤቴል ቤት፣ አዲስ አበባ፣ ኢትዮጵያ",
       mapsQuery: "Bethel's house, Addis Ababa, Ethiopia",
       directionsUrl: null,
+      note: "Afternoon reception begins at 4:30 PM (10:30 LT). Follow the wedding celebration signs upon arrival.",
+      noteAm: "የከሰዓቱ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።",
     },
     get home() {
       return this.basselealHome;

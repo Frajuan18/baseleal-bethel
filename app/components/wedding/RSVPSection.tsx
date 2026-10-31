@@ -137,8 +137,13 @@ export function RSVPSection() {
     }
   };
 
-  const mapsLink = (query: string) =>
-    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  const getVenueMapUrl = (venue: VenueLocation) => {
+    if (venue.directionsUrl?.trim()) return venue.directionsUrl.trim();
+    if (venue.mapsQuery?.trim()) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.mapsQuery.trim())}`;
+    }
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.address || "Addis Ababa")}`;
+  };
 
   const totalVenuesCount = 1 + (withBasseleal ? 1 : 0) + (withBethel ? 1 : 0);
   const hasMultipleVenues = totalVenuesCount > 1;
@@ -552,12 +557,28 @@ export function RSVPSection() {
                 <p className="mt-3 text-xs text-[#6A5D54] leading-relaxed">
                   {isAmharic ? activeLocations.church.addressAm : activeLocations.church.address}
                 </p>
+
+                {/* Driving Directions & Landmark Guide */}
+                {((isAmharic ? activeLocations.church.noteAm : activeLocations.church.note) || activeLocations.church.note) && (
+                  <div className="mt-3.5 flex items-start gap-2.5 rounded-xl bg-[#FAF5EE] border border-[#EBE1D3] p-2.5 sm:p-3 text-left">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#8C6A3B]/15 text-[#8C6A3B] mt-0.5">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                      </svg>
+                    </span>
+                    <p className={`text-[11px] sm:text-xs text-[#6A5D54] leading-relaxed ${isAmharic ? "font-balderasu" : ""}`}>
+                      {isAmharic ? (activeLocations.church.noteAm || activeLocations.church.note) : (activeLocations.church.note || activeLocations.church.noteAm)}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Action Buttons */}
               <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-3 border-t border-[#EFE5D5]/80">
                 <a
-                  href={mapsLink(activeLocations.church.mapsQuery)}
+                  href={getVenueMapUrl(activeLocations.church)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-3.5 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
@@ -623,12 +644,28 @@ export function RSVPSection() {
                   <p className="mt-3 text-xs text-[#6A5D54] leading-relaxed">
                     {isAmharic ? activeLocations.basselealHome.addressAm : activeLocations.basselealHome.address}
                   </p>
+
+                  {/* Driving Directions & Landmark Guide */}
+                  {((isAmharic ? activeLocations.basselealHome.noteAm : activeLocations.basselealHome.note) || activeLocations.basselealHome.note) && (
+                    <div className="mt-3.5 flex items-start gap-2.5 rounded-xl bg-[#FAF5EE] border border-[#EBE1D3] p-2.5 sm:p-3 text-left">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#8C6A3B]/15 text-[#8C6A3B] mt-0.5">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="16" x2="12" y2="12" />
+                          <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                      </span>
+                      <p className={`text-[11px] sm:text-xs text-[#6A5D54] leading-relaxed ${isAmharic ? "font-balderasu" : ""}`}>
+                        {isAmharic ? (activeLocations.basselealHome.noteAm || activeLocations.basselealHome.note) : (activeLocations.basselealHome.note || activeLocations.basselealHome.noteAm)}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Action Buttons */}
                 <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-3 border-t border-[#EFE5D5]/80">
                   <a
-                    href={mapsLink(activeLocations.basselealHome.mapsQuery)}
+                    href={getVenueMapUrl(activeLocations.basselealHome)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-3.5 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"
@@ -695,12 +732,28 @@ export function RSVPSection() {
                   <p className="mt-3 text-xs text-[#6A5D54] leading-relaxed">
                     {isAmharic ? activeLocations.bethelHome.addressAm : activeLocations.bethelHome.address}
                   </p>
+
+                  {/* Driving Directions & Landmark Guide */}
+                  {((isAmharic ? activeLocations.bethelHome.noteAm : activeLocations.bethelHome.note) || activeLocations.bethelHome.note) && (
+                    <div className="mt-3.5 flex items-start gap-2.5 rounded-xl bg-[#FAF5EE] border border-[#EBE1D3] p-2.5 sm:p-3 text-left">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#8C6A3B]/15 text-[#8C6A3B] mt-0.5">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="16" x2="12" y2="12" />
+                          <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                      </span>
+                      <p className={`text-[11px] sm:text-xs text-[#6A5D54] leading-relaxed ${isAmharic ? "font-balderasu" : ""}`}>
+                        {isAmharic ? (activeLocations.bethelHome.noteAm || activeLocations.bethelHome.note) : (activeLocations.bethelHome.note || activeLocations.bethelHome.noteAm)}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Action Buttons */}
                 <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-3 border-t border-[#EFE5D5]/80">
                   <a
-                    href={mapsLink(activeLocations.bethelHome.mapsQuery)}
+                    href={getVenueMapUrl(activeLocations.bethelHome)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2B1810] px-3.5 py-2.5 text-xs font-semibold text-[#FAF6F0] hover:bg-[#8C6A3B] transition-colors shadow-xs active:scale-98"

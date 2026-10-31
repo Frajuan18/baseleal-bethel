@@ -4,18 +4,47 @@ import { FormEvent, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Icon, type IconName } from "@/app/components/dashboard/Icon";
 import { InviteLinkActions } from "@/app/components/dashboard/InviteLinkActions";
 
-type Tab = "overview" | "guests" | "wishes" | "invitations";
+type Tab = "overview" | "guests" | "directions" | "wishes" | "invitations";
 type Stats = { total: number; attending: number; notAttending: number; pending: number; church: number; home: number };
 type Guest = { _id: string; fullName: string; email?: string; invitation?: { invitationType?: string } | null; rsvp?: { attendanceStatus?: string; attendeeCount?: number } | null };
 type Wish = { _id: string; message: string; createdAt: string; guestId?: { fullName?: string } };
 type Invitation = { _id: string; createdAt: string; invitationType: string; status: string; shareUrl?: string; guestId?: { fullName?: string } };
 type RecentItem = { _id: string; updatedAt?: string; attendanceStatus?: string; guestId?: { fullName?: string }; invitationId?: { invitationType?: string } | null };
 
+type DashboardVenueData = {
+  label: string;
+  labelAm: string;
+  address: string;
+  addressAm: string;
+  mapsQuery: string;
+  directionsUrl?: string;
+  note?: string;
+  noteAm?: string;
+};
+
+type DashboardLocations = {
+  church: DashboardVenueData;
+  basselealHome: DashboardVenueData;
+  bethelHome: DashboardVenueData;
+};
+
+const emptyDashboardVenue: DashboardVenueData = {
+  label: "",
+  labelAm: "",
+  address: "",
+  addressAm: "",
+  mapsQuery: "",
+  directionsUrl: "",
+  note: "",
+  noteAm: "",
+};
+
 const emptyStats: Stats = { total: 0, attending: 0, notAttending: 0, pending: 0, church: 0, home: 0 };
 
 const TABS: { value: Tab; label: string; icon: IconName }[] = [
   { value: "overview", label: "Overview", icon: "home" },
   { value: "guests", label: "Guests", icon: "users" },
+  { value: "directions", label: "Directions", icon: "map-pin" },
   { value: "wishes", label: "Wishes", icon: "heart" },
   { value: "invitations", label: "Links", icon: "link" },
 ];
@@ -111,6 +140,7 @@ export default function DashboardPage() {
           )}
           {tab === "overview" && <Overview stats={stats} recent={recent} onNavigate={setTab} />}
           {tab === "guests" && <Guests guests={filteredGuests} query={query} setQuery={setQuery} />}
+          {tab === "directions" && <DirectionsSection />}
           {tab === "wishes" && <Wishes wishes={filteredWishes} query={query} setQuery={setQuery} />}
           {tab === "invitations" && (
             <Invitations
@@ -178,7 +208,7 @@ function BottomNav({ tab, onTab }: { tab: Tab; onTab: (value: Tab) => void }) {
       aria-label="Dashboard sections"
       className="fixed inset-x-0 bottom-0 z-50 border-t border-[#E4DED6] bg-[#FBF9F6]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
     >
-      <div className="mx-auto grid max-w-md grid-cols-4 gap-1 px-2 py-1.5">
+      <div className="mx-auto grid max-w-lg grid-cols-5 gap-1 px-2 py-1.5">
         {TABS.map((item) => {
           const active = tab === item.value;
           return (
@@ -617,4 +647,400 @@ function invitationLabel(type?: string | null) {
   if (type === "CHURCH_ONLY") return "Church only";
   if (type === "CHURCH_AND_HOME") return "Church + home";
   return "Public RSVP";
+}
+
+function DirectionsSection() {
+  const [locations, setLocations] = useState<DashboardLocations>({
+    church: { ...emptyDashboardVenue },
+    basselealHome: { ...emptyDashboardVenue },
+    bethelHome: { ...emptyDashboardVenue },
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    fetch("/api/admin/locations")
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data) => {
+        if (data.locations) setLocations(data.locations);
+      })
+      .catch(() => {
+        setErrorMsg("Failed to load saved directions. Default settings are displayed.");
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleChange = (
+    venue: "church" | "basselealHome" | "bethelHome",
+    field: keyof DashboardVenueData,
+    value: string
+  ) => {
+    setLocations((prev) => ({
+      ...prev,
+      [venue]: { ...prev[venue], [field]: value },
+    }));
+    setSavedSuccess(false);
+  };
+
+  const handleSubmit = async (e?: FormEvent) => {
+    if (e) e.preventDefault();
+    setSaving(true);
+    setErrorMsg("");
+    setSavedSuccess(false);
+
+    try {
+      const res = await fetch("/api/admin/locations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(locations),
+      });
+
+      if (!res.ok) throw new Error("Save failed");
+      const data = await res.json();
+      if (data.locations) setLocations(data.locations);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 5000);
+    } catch {
+      setErrorMsg("Failed to save directions updates. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const getMapsUrl = (venue: DashboardVenueData) => {
+    if (venue.directionsUrl?.trim()) return venue.directionsUrl.trim();
+    if (venue.mapsQuery?.trim()) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.mapsQuery.trim())}`;
+    }
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.address || "Addis Ababa")}`;
+  };
+
+  return (
+    <SectionFrame
+      title="Wedding Directions"
+      description="Update Google Maps links, addresses, and route instructions for Church and both Homes. Stored directly in the database."
+    >
+      <div className="mb-4 flex items-center justify-between">
+        <a
+          href="/admin/directions"
+          className="text-xs font-semibold text-[#8C6A3B] underline hover:text-[#C2491A]"
+        >
+          Open Full Directions Editor ↗
+        </a>
+        <button
+          onClick={() => handleSubmit()}
+          disabled={saving || loading}
+          className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-full bg-[#C2491A] px-5 text-xs font-semibold text-white shadow-sm transition hover:bg-[#A83E15] active:scale-[0.99] disabled:opacity-60"
+        >
+          <Icon name="check" className="h-4 w-4" />
+          {saving ? "Saving..." : "Save All Directions"}
+        </button>
+      </div>
+
+      {savedSuccess && (
+        <div className="mb-5 flex items-center gap-2 rounded-2xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-xs text-emerald-800">
+          <Icon name="check" className="h-4 w-4 shrink-0 text-emerald-600" />
+          <span>Directions saved successfully! Stored in the database and active on the website.</span>
+        </div>
+      )}
+
+      {errorMsg && (
+        <div className="mb-5 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-xs text-amber-900">
+          {errorMsg}
+        </div>
+      )}
+
+      {loading ? (
+        <div className="py-12 text-center text-xs text-[#736C64]">Loading directions...</div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* 1. Church */}
+          <div className="rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[#F0ECE6] pb-3">
+              <div className="flex items-center gap-2.5">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#2B1810] text-[#FAF6F0]">
+                  <Icon name="home" className="h-4 w-4" />
+                </span>
+                <div>
+                  <h3 className="text-sm font-semibold text-[#1E140E]">Church Ceremony (9:00 LT)</h3>
+                  <p className="text-[11px] text-[#8C6A3B]">Halwot Emmanuel Church</p>
+                </div>
+              </div>
+              <a
+                href={getMapsUrl(locations.church)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-semibold text-[#8C6A3B] hover:underline"
+              >
+                Test in Maps ↗
+              </a>
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Name (English)</label>
+                <input
+                  type="text"
+                  value={locations.church.label}
+                  onChange={(e) => handleChange("church", "label", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">ስም (Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.church.labelAm}
+                  onChange={(e) => handleChange("church", "labelAm", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Address (English)</label>
+                <input
+                  type="text"
+                  value={locations.church.address}
+                  onChange={(e) => handleChange("church", "address", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">አድራሻ (Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.church.addressAm}
+                  onChange={(e) => handleChange("church", "addressAm", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Google Maps Direct URL</label>
+                <input
+                  type="url"
+                  value={locations.church.directionsUrl || ""}
+                  onChange={(e) => handleChange("church", "directionsUrl", e.target.value)}
+                  placeholder="https://maps.app.goo.gl/..."
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Search Query or Coordinates</label>
+                <input
+                  type="text"
+                  value={locations.church.mapsQuery}
+                  onChange={(e) => handleChange("church", "mapsQuery", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Route Directions &amp; Landmarks (English / Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.church.note || ""}
+                  onChange={(e) => handleChange("church", "note", e.target.value)}
+                  placeholder="Route instructions or landmark guidance"
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 2. Basseleal's House */}
+          <div className="rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[#F0ECE6] pb-3">
+              <div className="flex items-center gap-2.5">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#2B1810] text-[#FAF6F0]">
+                  <Icon name="home" className="h-4 w-4" />
+                </span>
+                <div>
+                  <h3 className="text-sm font-semibold text-[#1E140E]">Basseleal&apos;s House (4:30 LT)</h3>
+                  <p className="text-[11px] text-[#8C6A3B]">Afternoon celebration</p>
+                </div>
+              </div>
+              <a
+                href={getMapsUrl(locations.basselealHome)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-semibold text-[#8C6A3B] hover:underline"
+              >
+                Test in Maps ↗
+              </a>
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Name (English)</label>
+                <input
+                  type="text"
+                  value={locations.basselealHome.label}
+                  onChange={(e) => handleChange("basselealHome", "label", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">ስም (Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.basselealHome.labelAm}
+                  onChange={(e) => handleChange("basselealHome", "labelAm", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Address (English)</label>
+                <input
+                  type="text"
+                  value={locations.basselealHome.address}
+                  onChange={(e) => handleChange("basselealHome", "address", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">አድራሻ (Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.basselealHome.addressAm}
+                  onChange={(e) => handleChange("basselealHome", "addressAm", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Google Maps Direct URL</label>
+                <input
+                  type="url"
+                  value={locations.basselealHome.directionsUrl || ""}
+                  onChange={(e) => handleChange("basselealHome", "directionsUrl", e.target.value)}
+                  placeholder="https://maps.app.goo.gl/..."
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Search Query or Coordinates</label>
+                <input
+                  type="text"
+                  value={locations.basselealHome.mapsQuery}
+                  onChange={(e) => handleChange("basselealHome", "mapsQuery", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Route Directions &amp; Landmarks (English / Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.basselealHome.note || ""}
+                  onChange={(e) => handleChange("basselealHome", "note", e.target.value)}
+                  placeholder="Route instructions or landmark guidance"
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Bethel's House */}
+          <div className="rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[#F0ECE6] pb-3">
+              <div className="flex items-center gap-2.5">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#2B1810] text-[#FAF6F0]">
+                  <Icon name="home" className="h-4 w-4" />
+                </span>
+                <div>
+                  <h3 className="text-sm font-semibold text-[#1E140E]">Bethel&apos;s House (4:30 LT)</h3>
+                  <p className="text-[11px] text-[#8C6A3B]">Afternoon celebration</p>
+                </div>
+              </div>
+              <a
+                href={getMapsUrl(locations.bethelHome)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-semibold text-[#8C6A3B] hover:underline"
+              >
+                Test in Maps ↗
+              </a>
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Name (English)</label>
+                <input
+                  type="text"
+                  value={locations.bethelHome.label}
+                  onChange={(e) => handleChange("bethelHome", "label", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">ስም (Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.bethelHome.labelAm}
+                  onChange={(e) => handleChange("bethelHome", "labelAm", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Address (English)</label>
+                <input
+                  type="text"
+                  value={locations.bethelHome.address}
+                  onChange={(e) => handleChange("bethelHome", "address", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">አድራሻ (Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.bethelHome.addressAm}
+                  onChange={(e) => handleChange("bethelHome", "addressAm", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Google Maps Direct URL</label>
+                <input
+                  type="url"
+                  value={locations.bethelHome.directionsUrl || ""}
+                  onChange={(e) => handleChange("bethelHome", "directionsUrl", e.target.value)}
+                  placeholder="https://maps.app.goo.gl/..."
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Search Query or Coordinates</label>
+                <input
+                  type="text"
+                  value={locations.bethelHome.mapsQuery}
+                  onChange={(e) => handleChange("bethelHome", "mapsQuery", e.target.value)}
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="mb-1 block text-[11px] font-semibold text-[#4A443E]">Route Directions &amp; Landmarks (English / Amharic)</label>
+                <input
+                  type="text"
+                  value={locations.bethelHome.note || ""}
+                  onChange={(e) => handleChange("bethelHome", "note", e.target.value)}
+                  placeholder="Route instructions or landmark guidance"
+                  className="h-10 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3 text-xs outline-none focus:border-[#C2491A]"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end pt-2">
+            <button
+              type="submit"
+              disabled={saving}
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[#C2491A] px-6 text-xs font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] disabled:opacity-60"
+            >
+              <Icon name="check" className="h-4 w-4" />
+              {saving ? "Saving directions..." : "Save All Directions"}
+            </button>
+          </div>
+        </form>
+      )}
+    </SectionFrame>
+  );
 }

@@ -20,6 +20,8 @@ function getMergedLocations(stored?: LocationPayload | null) {
       addressAm: stored?.church?.addressAm?.trim() || def.church.addressAm,
       mapsQuery: stored?.church?.mapsQuery?.trim() || def.church.mapsQuery,
       directionsUrl: stored?.church?.directionsUrl?.trim() || def.church.directionsUrl || "",
+      note: stored?.church?.note?.trim() ?? def.church.note ?? "",
+      noteAm: stored?.church?.noteAm?.trim() ?? def.church.noteAm ?? "",
     },
     basselealHome: {
       label: stored?.basselealHome?.label?.trim() || def.basselealHome.label,
@@ -28,6 +30,8 @@ function getMergedLocations(stored?: LocationPayload | null) {
       addressAm: stored?.basselealHome?.addressAm?.trim() || def.basselealHome.addressAm,
       mapsQuery: stored?.basselealHome?.mapsQuery?.trim() || def.basselealHome.mapsQuery,
       directionsUrl: stored?.basselealHome?.directionsUrl?.trim() || def.basselealHome.directionsUrl || "",
+      note: stored?.basselealHome?.note?.trim() ?? def.basselealHome.note ?? "",
+      noteAm: stored?.basselealHome?.noteAm?.trim() ?? def.basselealHome.noteAm ?? "",
     },
     bethelHome: {
       label: stored?.bethelHome?.label?.trim() || def.bethelHome.label,
@@ -36,6 +40,8 @@ function getMergedLocations(stored?: LocationPayload | null) {
       addressAm: stored?.bethelHome?.addressAm?.trim() || def.bethelHome.addressAm,
       mapsQuery: stored?.bethelHome?.mapsQuery?.trim() || def.bethelHome.mapsQuery,
       directionsUrl: stored?.bethelHome?.directionsUrl?.trim() || def.bethelHome.directionsUrl || "",
+      note: stored?.bethelHome?.note?.trim() ?? def.bethelHome.note ?? "",
+      noteAm: stored?.bethelHome?.noteAm?.trim() ?? def.bethelHome.noteAm ?? "",
     },
   };
 }

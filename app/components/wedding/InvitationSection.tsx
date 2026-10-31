@@ -373,7 +373,7 @@ export function InvitationSection() {
 
               </div>
 
-              <div data-seq="rise" style={seq("0.64s", "850ms", "6px")} className="mt-6 max-w-[82%] border-t border-[#8C6A3B]/25 pt-5 sm:mt-8">
+              <div data-seq="rise" style={seq("0.64s", "850ms", "6px")} className="mt-6 max-w-[90%] border-t border-[#8C6A3B]/25 pt-5 sm:mt-8 flex flex-wrap items-center justify-center gap-3">
                 <a
                   href="#rsvp"
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-[420ms] shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
@@ -382,6 +382,19 @@ export function InvitationSection() {
                     {isAmharic ? "የመገኘትዎን ሁኔታ በበይነ-መረብ ያሳውቁ" : "RSVP Online"}
                   </span>
                   <span aria-hidden>→</span>
+                </a>
+
+                <a
+                  href="#directions"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold border border-[#2B1810]/30 bg-white/70 text-[#2B1810] hover:bg-[#2B1810] hover:text-[#FAF6F0] transition-all duration-[420ms] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                  </svg>
+                  <span className={isAmharic ? "font-benaiah text-xs sm:text-sm tracking-normal font-bold" : ""}>
+                    {isAmharic ? "የቦታዎች አቅጣጫ" : "Directions"}
+                  </span>
+                  <span aria-hidden>↓</span>
                 </a>
               </div>
 
