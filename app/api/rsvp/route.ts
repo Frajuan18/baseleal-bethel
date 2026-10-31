@@ -5,7 +5,16 @@ import { Guest, GuestWish, RSVP } from "@/app/lib/models";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, response, guestCount, dietary, note } = body;
+    const name = String(body.name || body.fullName || "").trim();
+    const rawResponse = body.response || body.attendance || body.attendanceStatus;
+    const response = (rawResponse === "accept" || rawResponse === "ATTENDING")
+      ? "accept"
+      : (rawResponse === "decline" || rawResponse === "NOT_ATTENDING")
+      ? "decline"
+      : "";
+    const note = String(body.note || body.wish || "").trim();
+    const guestCount = Number(body.guestCount || body.attendeeCount) || 1;
+    const email = typeof body.email === "string" && body.email.trim() ? body.email.toLowerCase().trim() : undefined;
 
     if (!name || !response || !note) {
       return NextResponse.json(
@@ -14,21 +23,39 @@ export async function POST(request: Request) {
       );
     }
 
-    if (typeof name !== "string" || name.trim().length > 120 || typeof note !== "string" || note.length > 2000 || !["accept", "decline"].includes(response)) {
+    if (name.length > 120 || note.length > 2000) {
       return NextResponse.json({ error: "Invalid RSVP data." }, { status: 400 });
     }
+
     await connectMongo();
-    const guest = await Guest.findOneAndUpdate({ email: typeof email === "string" ? email.toLowerCase() : undefined, fullName: name.trim() }, { $set: { fullName: name.trim(), ...(email ? { email } : {}) } }, { upsert: true, new: true, setDefaultsOnInsert: true });
+
+    const guestFilter = email ? { email } : { fullName: name };
+    const guestUpdate = {
+      fullName: name,
+      ...(email ? { email } : {}),
+    };
+
+    const guest = await Guest.findOneAndUpdate(
+      guestFilter,
+      { $set: guestUpdate },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
     await RSVP.findOneAndUpdate(
       { guestId: guest._id, invitationId: null },
-      { guestId: guest._id, attendanceStatus: response === "accept" ? "ATTENDING" : "NOT_ATTENDING", attendeeCount: response === "accept" ? Math.min(20, Math.max(1, Number(guestCount) || 1)) : 0, wish: note, ...(dietary ? { dietary } : {}) },
+      {
+        guestId: guest._id,
+        attendanceStatus: response === "accept" ? "ATTENDING" : "NOT_ATTENDING",
+        attendeeCount: response === "accept" ? Math.min(20, Math.max(1, guestCount)) : 0,
+        wish: note,
+      },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
     // Mirror the message into the guestbook so it shows on the admin Wishes tab.
     await GuestWish.findOneAndUpdate(
       { guestId: guest._id, source: "RSVP" },
-      { $set: { message: note.trim(), guestId: guest._id, source: "RSVP" } },
+      { $set: { message: note, guestId: guest._id, source: "RSVP" } },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 

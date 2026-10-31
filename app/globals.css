@@ -416,7 +416,7 @@ body {
 @keyframes heroRise {
   from {
     opacity: 0;
-    transform: translate3d(0, var(--hero-rise, 14px), 0);
+    transform: translate3d(0, var(--hero-rise, 16px), 0);
   }
   to {
     opacity: 1;
@@ -427,7 +427,19 @@ body {
 @keyframes heroPhotoIn {
   from {
     opacity: 0;
-    transform: translate3d(0, var(--photo-rise, 18px), 0) scale(0.99);
+    transform: translate3d(0, var(--photo-rise, 20px), 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Apple-grade physical spring elevation for stationery cards */
+@keyframes cardSpringIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--card-rise, 24px), 0) scale(0.98);
   }
   to {
     opacity: 1;
@@ -565,13 +577,13 @@ body {
    visible if scripting or animations are unavailable.)
    ============================================================ */
 .reveal-section {
-  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
-              transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .js-reveal .reveal-section {
   opacity: 0;
-  transform: translate3d(0, 26px, 0);
+  transform: translate3d(0, 24px, 0);
   will-change: opacity, transform;
 }
 
@@ -588,51 +600,64 @@ body {
 }
 
 /* ============================================================
-   Invitation section — cinematic sequence
-   Extends the scroll-reveal system above (no competing observer).
-   Reuses the hero keyframes, easing and duration philosophy so the
-   section reads as the next page of the same experience.
+   Invitation & Scroll Sequence System
+   Fluid, Apple-calibrated physical spring motion without diagonal clips.
    ============================================================ */
-
-/* Botanical / parchment unveil — soft diagonal clip from the upper-left */
-@keyframes invitBgVeil {
-  from { clip-path: inset(0 100% 100% 0); }
-  to { clip-path: inset(0 0 0 0); }
-}
 
 /* Hidden only once JS is running, so content stays visible without it */
 .js-reveal .reveal-seq [data-seq="fade"],
 .js-reveal .reveal-seq [data-seq="rise"],
 .js-reveal .reveal-seq [data-seq="card"],
 .js-reveal .reveal-seq [data-seq="wipe"],
-.js-reveal .reveal-seq [data-seq="unfold"] {
-  opacity: 0;
-}
-
-/* Mask-only reveal — hidden by clip so the artwork keeps its own opacity */
+.js-reveal .reveal-seq [data-seq="unfold"],
 .js-reveal .reveal-seq [data-seq="draw-down"] {
-  clip-path: inset(0 0 100% 0);
+  opacity: 0;
 }
 
 .js-reveal .reveal-seq.is-visible [data-seq] {
   animation-name: heroFade;
   animation-fill-mode: both;
-  animation-duration: var(--seq-duration, 1200ms);
+  animation-duration: var(--seq-duration, 850ms);
   animation-delay: calc(var(--seq-delay, 0ms) * var(--seq-speed, 1));
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .js-reveal .reveal-seq.is-visible [data-seq="rise"] { animation-name: heroRise; }
-.js-reveal .reveal-seq.is-visible [data-seq="card"] { animation-name: heroPhotoIn; }
-.js-reveal .reveal-seq.is-visible [data-seq="wipe"] { animation-name: heroWipeLeft; }
-.js-reveal .reveal-seq.is-visible [data-seq="unfold"] { animation-name: heroWipeCenter; }
-.js-reveal .reveal-seq.is-visible [data-seq="draw-down"] { animation-name: heroClipDown; }
+.js-reveal .reveal-seq.is-visible [data-seq="card"] { animation-name: cardSpringIn; }
+.js-reveal .reveal-seq.is-visible [data-seq="wipe"] { animation-name: heroRise; }
+.js-reveal .reveal-seq.is-visible [data-seq="unfold"] { animation-name: heroRise; }
+.js-reveal .reveal-seq.is-visible [data-seq="draw-down"] { animation-name: heroFade; }
 
-/* Stage 1 + 2: parchment fades in, then the arrangement is unveiled */
+/* Background softly surfaces without any diagonal clip-path */
 .js-reveal .reveal-seq.is-visible [data-seq="bg"] {
-  animation-name: heroFade, invitBgVeil;
-  animation-duration: 1400ms, 2200ms;
-  animation-delay: 0ms, 150ms;
+  animation-name: heroFade;
+  animation-duration: 900ms;
+  animation-delay: 0ms;
+}
+
+/* Botanical side accents gracefully glide into place */
+.botanical-left {
+  transition: opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1), transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js-reveal .botanical-left {
+  opacity: 0;
+  transform: translate3d(-20px, -50%, 0);
+}
+.js-reveal .reveal-seq.is-visible .botanical-left {
+  opacity: 0.75;
+  transform: translate3d(0, -50%, 0);
+}
+
+.botanical-right {
+  transition: opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1), transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js-reveal .botanical-right {
+  opacity: 0;
+  transform: translate3d(20px, -50%, 0) scaleX(-1);
+}
+.js-reveal .reveal-seq.is-visible .botanical-right {
+  opacity: 0.75;
+  transform: translate3d(0, -50%, 0) scaleX(-1);
 }
 
 /* Slightly tighter stagger on small screens — same character, less waiting */

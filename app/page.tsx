@@ -12,11 +12,17 @@ import { InvitationProvider } from "./components/wedding/InvitationContext";
 
 export const instant = false;
 
-export default async function Home({ searchParams }: { searchParams: Promise<{ invite?: string }> }) {
-  const { invite } = await searchParams;
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ invite?: string; to?: string; name?: string; guest?: string }>;
+}) {
+  const params = await searchParams;
+  const invite = params?.invite;
+  const initialGuestName = params?.to || params?.name || params?.guest;
   return (
     <LanguageProvider>
-      <InvitationProvider token={invite}>
+      <InvitationProvider token={invite} initialGuestName={initialGuestName}>
         <IntroLoader />
         <LanguageToggle />
         <SongToggle />

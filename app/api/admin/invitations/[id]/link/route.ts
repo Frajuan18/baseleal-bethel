@@ -10,12 +10,14 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
   try {
     const { id } = await params;
     await connectMongo();
-    const invitation = await Invitation.findById(id);
+    const invitation = await Invitation.findById(id).populate("guestId", "fullName");
     if (!invitation || invitation.status === "REVOKED") {
       return NextResponse.json({ error: "Invitation not found." }, { status: 404 });
     }
+    const guest = invitation.guestId as { fullName?: string };
     const { token, tokenHash } = createInvitationToken();
-    const shareUrl = `/?invite=${token}`;
+    const guestParam = guest?.fullName ? `&to=${encodeURIComponent(guest.fullName)}` : "";
+    const shareUrl = `/?invite=${token}${guestParam}`;
     invitation.tokenHash = tokenHash;
     invitation.shareUrl = shareUrl;
     await invitation.save();

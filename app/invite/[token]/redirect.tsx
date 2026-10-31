@@ -9,7 +9,11 @@ export function InvitationRedirect() {
   const token = Array.isArray(params?.token) ? params.token[0] : params?.token;
 
   useEffect(() => {
-    if (token) router.replace(`/?invite=${encodeURIComponent(token)}`);
+    if (token) {
+      const search = typeof window !== "undefined" ? window.location.search : "";
+      const extra = search && search.startsWith("?") ? `&${search.slice(1)}` : "";
+      router.replace(`/?invite=${encodeURIComponent(token)}${extra}`);
+    }
   }, [token, router]);
 
   return null;

@@ -37,8 +37,9 @@ export function GallerySection() {
   return (
     <section
       id="gallery"
+      data-reveal
       lang={isAmharic ? "am" : "en"}
-      className="relative w-full min-h-[100svh] flex flex-col justify-center overflow-hidden bg-[#1f120c] py-16 sm:py-20 text-[#FAF4ED]"
+      className="reveal-seq relative w-full min-h-[100svh] flex flex-col justify-center overflow-hidden bg-[#1f120c] py-16 sm:py-20 text-[#FAF4ED]"
     >
       {/* Blurred lighter brown ambient glows in the background */}
       <div
@@ -59,7 +60,7 @@ export function GallerySection() {
       />
 
       {/* Section Header */}
-      <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+      <div data-seq="rise" className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <p
           className={`text-xs uppercase tracking-[0.3em] text-[#E2C66A] ${
             isAmharic ? "font-balderasu tracking-widest" : "font-sans font-medium"
@@ -86,7 +87,7 @@ export function GallerySection() {
       </div>
 
       {/* 3D Circular Gallery */}
-      <div className="relative z-10 mt-10 w-full">
+      <div data-seq="card" className="relative z-10 mt-10 w-full">
         <div style={{ height: "600px", position: "relative" }} className="w-full overflow-hidden">
           <CircularGallery
             galleryRef={galleryRef}

@@ -27,7 +27,7 @@ export default function InvitationsPage() {
   const [items, setItems] = useState<Invitation[]>([]);
   const [name, setName] = useState("");
   const [type, setType] = useState("CHURCH_ONLY");
-  const [created, setCreated] = useState("");
+  const [created, setCreated] = useState<{ url: string; guestName?: string } | null>(null);
 
   const load = () =>
     fetch("/api/admin/invitations")
@@ -48,7 +48,7 @@ export default function InvitationsPage() {
     });
     if (response.ok) {
       const data = await response.json();
-      setCreated(data.invitation.url);
+      setCreated({ url: data.invitation.url, guestName: data.invitation.guestName });
       setName("");
       load();
     }
@@ -107,7 +107,7 @@ export default function InvitationsPage() {
         </button>
       </form>
 
-      {created && <CreatedLink url={created} />}
+      {created && <CreatedLink url={created.url} guestName={created.guestName} />}
 
       <div className="mt-3 overflow-hidden rounded-2xl border border-[#EDE9E2] bg-white">
         <div className="hidden grid-cols-[1.4fr_1.3fr_0.8fr_auto] gap-4 border-b border-[#E7E2DB] bg-[#FBFAF8] px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6B6660] md:grid">
@@ -129,14 +129,16 @@ export default function InvitationsPage() {
   );
 }
 
-function CreatedLink({ url }: { url: string }) {
+function CreatedLink({ url, guestName }: { url: string; guestName?: string }) {
   const absolute = typeof window !== "undefined" ? new URL(url, window.location.origin).toString() : url;
   return (
     <div className="mt-3 rounded-2xl border border-[#D9E4D5] bg-[#EFF5EC] p-3.5">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4C6B48]">Invitation created</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4C6B48]">
+        Invitation created {guestName ? `for ${guestName}` : ""}
+      </p>
       <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
         <p className="min-w-0 flex-1 truncate rounded-lg bg-white px-3 py-2 text-xs text-[#4A443E]">{absolute}</p>
-        <InviteLinkActions url={url} />
+        <InviteLinkActions url={url} guestName={guestName} />
       </div>
     </div>
   );

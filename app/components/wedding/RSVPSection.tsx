@@ -43,6 +43,13 @@ export function RSVPSection() {
 
   const [response, setResponse] = useState<"accept" | "decline">("accept");
   const [name, setName] = useState("");
+
+  // Auto-prefill guest name from invitation token or personalized link
+  useEffect(() => {
+    if (invitation?.guestName && !name) {
+      setName(invitation.guestName);
+    }
+  }, [invitation?.guestName, name]);
   const [guestCount, setGuestCount] = useState("1");
   const [note, setNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,11 +80,21 @@ export function RSVPSection() {
     setIsSubmitting(true);
     setErrorMessage(null);
 
+    const isAttending = response === "accept";
+    const partySize = isAttending ? Math.max(1, parseInt(guestCount, 10) || 1) : 0;
+    const trimmedName = name.trim();
+    const trimmedNote = note.trim();
+
     const payload = {
-      name: name.trim(),
-      attendance: response,
-      guestCount: response === "accept" ? parseInt(guestCount, 10) : 0,
-      note: note.trim() || undefined,
+      name: trimmedName,
+      fullName: trimmedName,
+      response,
+      attendance: isAttending ? "ATTENDING" : "NOT_ATTENDING",
+      attendanceStatus: isAttending ? "ATTENDING" : "NOT_ATTENDING",
+      guestCount: partySize,
+      attendeeCount: partySize,
+      note: trimmedNote,
+      wish: trimmedNote,
     };
 
     try {
@@ -87,14 +104,11 @@ export function RSVPSection() {
 
       if (hasToken && token) {
         endpoint = `/api/public/invitations/${encodeURIComponent(token)}/rsvp`;
-        method = "PUT";
-        const partySize = Math.max(1, parseInt(guestCount, 10) || 1);
+        method = "POST";
         reqBody = {
-          attendanceStatus: response === "accept" ? "ATTENDING" : "NOT_ATTENDING",
-          churchAttendance: response === "accept",
-          homeAttendance: response === "accept" && (withBasseleal || withBethel),
-          attendeeCount: response === "accept" ? partySize : 0,
-          wish: note.trim() || undefined,
+          ...payload,
+          churchAttendance: isAttending,
+          homeAttendance: isAttending && (withBasseleal || withBethel),
         };
       }
 
@@ -134,7 +148,7 @@ export function RSVPSection() {
       id="rsvp"
       data-reveal
       data-language={isAmharic ? "am" : "en"}
-      className="reveal-section amharic-section scroll-mt-24 relative min-h-[100svh] lg:min-h-screen pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-0 flex flex-col overflow-hidden bg-[#FAF5EE]"
+      className="reveal-seq amharic-section scroll-mt-24 relative min-h-[100svh] lg:min-h-screen pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-0 flex flex-col overflow-hidden bg-[#FAF5EE]"
     >
       {/* Background Image: rsvp bg1.jpg covering both RSVP section and the embedded directions */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
@@ -158,7 +172,7 @@ export function RSVPSection() {
       {/* Main Upper Content: Heading + Stationery Card */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-5 sm:px-8 mb-8 sm:mb-12">
         {/* Section Heading */}
-        <div className="text-center max-w-xl mx-auto mb-4 sm:mb-6">
+        <div data-seq="fade" className="text-center max-w-xl mx-auto mb-4 sm:mb-6">
           <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.26em] font-bold text-xs mb-1.5">
             {isAmharic ? "በደስታችን ይሳተፉ" : "Join Our Celebration"}
           </p>
@@ -169,7 +183,7 @@ export function RSVPSection() {
         </div>
 
         {/* White stationery card */}
-        <div className="relative max-w-lg lg:max-w-xl w-full mx-auto bg-white rounded-lg border border-[#E7DDCB] p-5 sm:p-6 md:p-7 shadow-[0_24px_56px_-22px_rgba(43,24,16,0.22),0_12px_26px_-16px_rgba(43,24,16,0.12)] overflow-hidden">
+        <div data-seq="card" className="relative max-w-lg lg:max-w-xl w-full mx-auto bg-white rounded-lg border border-[#E7DDCB] p-5 sm:p-6 md:p-7 shadow-[0_24px_56px_-22px_rgba(43,24,16,0.22),0_12px_26px_-16px_rgba(43,24,16,0.12)] overflow-hidden">
           {/* Embossed hairline inner frame */}
           <div
             className="pointer-events-none absolute inset-2.5 sm:inset-3.5 rounded-[6px] border border-[#D8CBB2]/70 select-none z-0"
@@ -399,8 +413,8 @@ export function RSVPSection() {
       </div>
 
       {/* Directions — customized for personalized invitation links & homes */}
-      <div id="directions" className="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-8 pb-14 sm:pb-20 scroll-mt-24">
-        <div className="mx-auto rounded-3xl border border-[#E7DDCB] bg-white/90 p-6 sm:p-8 shadow-[0_20px_50px_-20px_rgba(43,24,16,0.25)] backdrop-blur-sm">
+      <div id="directions" data-reveal className="reveal-seq relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-8 pb-14 sm:pb-20 scroll-mt-24">
+        <div data-seq="card" className="mx-auto rounded-3xl border border-[#E7DDCB] bg-white/90 p-6 sm:p-8 shadow-[0_20px_50px_-20px_rgba(43,24,16,0.25)] backdrop-blur-sm">
           {/* Section Header */}
           <div className="text-center">
             <p className="eyebrow text-[#8C6A3B] uppercase tracking-[0.24em] font-bold text-xs mb-1.5">

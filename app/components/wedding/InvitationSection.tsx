@@ -91,7 +91,7 @@ export function InvitationSection() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
         {/* White botanical artwork frames the card on larger screens without competing with its content. */}
-        <div className="pointer-events-none absolute left-[11%] top-1/2 z-0 hidden h-[82%] w-[25%] -translate-y-1/2 opacity-75 md:block lg:left-[13%] lg:w-[23%]" aria-hidden>
+        <div className="pointer-events-none absolute left-[11%] top-1/2 z-0 hidden h-[82%] w-[25%] -translate-y-1/2 opacity-75 md:block lg:left-[13%] lg:w-[23%] botanical-left" aria-hidden>
           <Image
             src="/white flower.png"
             alt=""
@@ -100,7 +100,7 @@ export function InvitationSection() {
             className="object-contain object-right"
           />
         </div>
-        <div className="pointer-events-none absolute right-[11%] top-1/2 z-0 hidden h-[82%] w-[25%] -translate-y-1/2 opacity-75 md:block lg:right-[13%] lg:w-[23%]" aria-hidden>
+        <div className="pointer-events-none absolute right-[11%] top-1/2 z-0 hidden h-[82%] w-[25%] -translate-y-1/2 opacity-75 md:block lg:right-[13%] lg:w-[23%] botanical-right" aria-hidden>
           <Image
             src="/white flower.png"
             alt=""
@@ -114,7 +114,7 @@ export function InvitationSection() {
           
           {/* The Fine-Art Wedding Invitation Card - Grand, Prominent & Perfectly Proportioned */}
           <div className="relative w-full max-w-[460px] sm:max-w-[500px]">
-          <article data-seq="card" style={{ ...seq("0.6s", "1300ms"), "--photo-rise": "14px" } as CSSProperties} className="relative z-20 bg-[#FAF5EE] rounded-sm p-5 sm:p-7 md:p-8 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
+          <article data-seq="card" style={{ ...seq("0.08s", "900ms"), "--card-rise": "20px" } as CSSProperties} className="relative z-20 bg-[#FAF5EE] rounded-sm p-5 sm:p-7 md:p-8 text-left border border-[#E8DFD3] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.28),0_10px_24px_-6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-300 overflow-hidden flex flex-col justify-between">
             <Image src="/card bg.png" alt="" fill sizes="(max-width: 640px) 92vw, 500px" className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover" aria-hidden />
             
             {/* Fine Tactile Cotton Paper Texture Overlay */}
@@ -127,7 +127,7 @@ export function InvitationSection() {
             />
 
             {/* Sculptural Pleated Silk Floral Artwork in Top-Right Corner - Inset gracefully & slender */}
-            <div data-seq="draw-down" style={seq("2.6s", "1800ms")} className="pointer-events-none absolute top-2 right-2 sm:top-2.5 sm:right-2.5 md:top-3 md:right-3 w-[35%] sm:w-[37%] md:w-[39%] max-w-[230px] aspect-[1087/1447] select-none z-10 opacity-95">
+            <div data-seq="draw-down" style={seq("0.2s", "800ms")} className="pointer-events-none absolute top-2 right-2 sm:top-2.5 sm:right-2.5 md:top-3 md:right-3 w-[35%] sm:w-[37%] md:w-[39%] max-w-[230px] aspect-[1087/1447] select-none z-10 opacity-95">
               <Image
                 src="/card flower.png"
                 alt="Artisan pleated silk floral sculpture"
@@ -147,28 +147,35 @@ export function InvitationSection() {
                 {/* Couple Header - Title Case */}
                 <div className="space-y-1.5">
                   {invitation?.guestName && (
-                    <p data-seq="fade" style={seq("1.8s", "900ms")} className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.22em] font-semibold text-[#8C6A3B]">
-                      {isAmharic ? `ክቡር/ት ${invitation.guestName}` : `Honored Guest: ${invitation.guestName}`}
-                    </p>
+                    <div
+                      data-seq="fade"
+                      style={seq("0.16s", "800ms")}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-[#8C6A3B]/10 border border-[#8C6A3B]/35 px-3 py-1 mb-1 max-w-full shadow-xs"
+                    >
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#8C6A3B]" aria-hidden />
+                      <span className={`${isAmharic ? "font-benaiah text-xs sm:text-sm font-semibold tracking-normal" : "font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.16em] font-semibold"} text-[#5A3E26] truncate`}>
+                        {isAmharic ? `ለተከበሩ ${invitation.guestName}` : `Honored Guest: ${invitation.guestName}`}
+                      </span>
+                    </div>
                   )}
-                  <p data-seq="fade" style={seq("2.0s", "900ms")} className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-[#7C5A32]">
+                  <p data-seq="fade" style={seq("0.22s", "800ms")} className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium text-[#7C5A32]">
                     {isAmharic ? "የጋብቻ ሥነ-ሥርዓት" : "The Wedding Of"}
                   </p>
                   <h3 className="font-editorial-serif text-[clamp(1.75rem,3.8vw,2.35rem)] lg:text-[2.05rem] xl:text-[2.35rem] text-[#1E140E] leading-[1.05] tracking-[-0.01em]">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
-                      <span data-seq="rise" style={seq("2.25s", "1000ms", "10px")} className={`capitalize font-semibold ${isAmharic ? "amharic-title" : ""}`}>{isAmharic ? "ባስልኤል" : wedding.couple.first}</span>
-                      <span data-seq="rise" style={seq("2.6s", "1000ms", "8px")} className="font-editorial-serif italic font-light text-[0.8em] tracking-normal text-[#9A7338]">
+                      <span data-seq="rise" style={seq("0.28s", "850ms", "8px")} className={`capitalize font-semibold ${isAmharic ? "amharic-title" : ""}`}>{isAmharic ? "ባስልኤል" : wedding.couple.first}</span>
+                      <span data-seq="rise" style={seq("0.32s", "850ms", "6px")} className="font-editorial-serif italic font-light text-[0.8em] tracking-normal text-[#9A7338]">
                         {isAmharic ? "እና" : "and"}
                       </span>
                     </div>
-                    <span data-seq="rise" style={seq("2.9s", "1000ms", "10px")} className={`block mt-0.5 capitalize font-semibold ${isAmharic ? "amharic-title" : ""}`}>
+                    <span data-seq="rise" style={seq("0.36s", "850ms", "8px")} className={`block mt-0.5 capitalize font-semibold ${isAmharic ? "amharic-title" : ""}`}>
                       {isAmharic ? "ቤቴል" : wedding.couple.second}
                     </span>
                   </h3>
                 </div>
 
                 {/* 2-Column Vertical Hairline Date Lockup */}
-                <div data-seq="rise" style={seq("3.4s", "1000ms", "12px")} className="pt-1.5 sm:pt-2">
+                <div data-seq="rise" style={seq("0.4s", "850ms", "10px")} className="pt-1.5 sm:pt-2">
                   <div className="inline-flex items-center text-[#1E140E]">
                     {/* Left: Day of Week */}
                     <div className="pr-4 sm:pr-6 text-left">
@@ -196,7 +203,7 @@ export function InvitationSection() {
                 </div>
 
                 {/* Prominently Positioned Time Indications */}
-                <div data-seq="rise" style={seq("3.55s", "1000ms", "10px")} className="pt-1">
+                <div data-seq="rise" style={seq("0.46s", "850ms", "8px")} className="pt-1">
                   {isBoth ? (
                     <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5">
                       {/* Church Time Badge */}
@@ -217,7 +224,7 @@ export function InvitationSection() {
                           {isAmharic && (
                             <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
                               ሰዓት
-                            </span>
+                          </span>
                           )}
                         </div>
                       </div>
@@ -293,7 +300,7 @@ export function InvitationSection() {
                 </div>
 
                 {/* Venue & Location Block */}
-                <div data-seq="rise" style={seq("3.65s", "1000ms", "10px")} className="space-y-1 pt-1">
+                <div data-seq="rise" style={seq("0.52s", "850ms", "8px")} className="space-y-1 pt-1">
                   <div className="inline-block rounded-lg bg-[#8C6A3B]/10 border border-[#8C6A3B]/25 px-3 py-1.5 shadow-[0_2px_8px_rgba(43,24,16,0.05)]">
                     <p className="font-editorial-serif text-xs sm:text-[13px] md:text-sm font-bold text-[#1E140E] tracking-wide leading-snug">
                       {isBoth ? (
@@ -343,7 +350,7 @@ export function InvitationSection() {
                 </div>
 
                 {/* Two-statement invitation */}
-                <div data-seq="rise" style={seq("3.95s", "1100ms", "6px")} className="space-y-2 pt-1 text-[#4A3527]">
+                <div data-seq="rise" style={seq("0.58s", "850ms", "6px")} className="space-y-2 pt-1 text-[#4A3527]">
                   <p className={`leading-relaxed ${isAmharic ? "font-benaiah text-[13px]" : "font-editorial-serif text-[13px] italic"}`}>
                     {isBoth
                       ? (isAmharic
@@ -366,7 +373,7 @@ export function InvitationSection() {
 
               </div>
 
-              <div data-seq="rise" style={seq("4.4s", "1100ms", "6px")} className="mt-6 max-w-[82%] border-t border-[#8C6A3B]/25 pt-5 sm:mt-8">
+              <div data-seq="rise" style={seq("0.64s", "850ms", "6px")} className="mt-6 max-w-[82%] border-t border-[#8C6A3B]/25 pt-5 sm:mt-8">
                 <a
                   href="#rsvp"
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold bg-[#2B1810] text-[#FAF6F0] hover:bg-[#8C6A3B] transition-all duration-[420ms] shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#8C6A3B] focus:ring-offset-2 focus:ring-offset-[#FAF5EE]"
