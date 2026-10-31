@@ -5,11 +5,14 @@ import { useWeddingLanguage } from "./LanguageContext";
 import CircularGallery from "./CircularGallery";
 
 const GALLERY_ITEMS = [
-  { image: "/couple 1.jpg" },
-  { image: "/couple 2.jpg" },
-  { image: "/couple 3.jpg" },
-  { image: "/couple 4.jpg" },
-  { image: "/couple 5.jpg" },
+  { image: "/couple 1 new.jpg" },
+  { image: "/couple 2 new.jpg" },
+  { image: "/couple 3 new.jpg" },
+  { image: "/couple 4 new.jpg" },
+  { image: "/couple 5 new.jpg" },
+  { image: "/couple 6.jpg" },
+  { image: "/couple 7.jpg" },
+  { image: "/couple 8.jpg" },
 ];
 
 interface CircularGalleryHandle {
@@ -62,14 +65,14 @@ export function GallerySection() {
             isAmharic ? "font-balderasu tracking-widest" : "font-sans font-medium"
           }`}
         >
-          {isAmharic ? "ትውስታዎችና ምስሎች" : "Moments & Memories"}
+          {isAmharic ? "የማይረሱ ትዝታዎችና አፍታዎች" : "Moments & Memories"}
         </p>
         <h2
           className={`mt-2.5 text-3xl sm:text-4xl md:text-5xl text-[#FFFDF5] ${
             isAmharic ? "font-jegna-title" : "font-editorial-serif"
           }`}
         >
-          {isAmharic ? "የሠርጋችን ማስታወሻ ጋለሪ" : "Our Celebration Gallery"}
+          {isAmharic ? "የደስታችን ማህደር (ጋለሪ)" : "Our Celebration Gallery"}
         </h2>
         <p
           className={`mt-3 text-xs sm:text-sm text-[#FAF4ED]/70 ${
@@ -77,7 +80,7 @@ export function GallerySection() {
           }`}
         >
           {isAmharic
-            ? "ምስሎቹን ለማየት ወደ ግራና ቀኝ ያንሸራትቱ፣ ከታች ያሉትን ነጥቦች ይጫኑ ወይም በካርዶቹ ላይ ይጫኑ።"
+            ? "የ3D ማህደራችንን ለመመልከት ምስሎችን ይጎትቱ፣ ወደ ጎን ያንሸራትቱ፣ ከታች ያሉትን ነጥቦች ይንኩ ወይም ካርዶቹን ይጫኑ።"
             : "Drag, scroll, tap dots below, or click each card to explore our 3D gallery."}
         </p>
       </div>

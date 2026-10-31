@@ -217,7 +217,9 @@ export function FlipCountdownDisplay() {
     <div className="w-full">
       <div className="sr-only" aria-live="polite">
         {timeLeft
-          ? `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds until the wedding`
+          ? isAmharic
+            ? `ለሰርጉ የቀሩት ${timeLeft.days} ቀናት፣ ${timeLeft.hours} ሰዓታት፣ ${timeLeft.minutes} ደቂቃዎች እና ${timeLeft.seconds} ሰከንዶች`
+            : `${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds until the wedding`
           : "Wedding countdown ticking"}
       </div>
       {timeLeft && !isCelebrationDay && (

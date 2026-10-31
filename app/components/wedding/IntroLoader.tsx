@@ -85,6 +85,9 @@ export function IntroLoader() {
 
   const handleVideoEnded = useCallback(() => {
     setPhase("card-amharic");
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("play-wedding-song"));
+    }
   }, []);
 
   // Timed progression: 3s Amharic -> 3s English -> reveal hero

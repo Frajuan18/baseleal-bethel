@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SONG_SRC = "/song/Samuel-Zergaw-Kingdom-Sound-Worship-Night-2025-Yastawekebegn.m4a";
 
@@ -8,6 +8,55 @@ export function SongToggle() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
+
+  // Attempt to play music automatically by default
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.55;
+
+    const tryAutoplay = async () => {
+      try {
+        await audio.play();
+      } catch {
+        // Autoplay policy prevented immediate playback without user interaction
+        // Set up one-shot global interaction listeners to start playing immediately on first touch/click
+        const startOnInteraction = async () => {
+          try {
+            audio.volume = 0.55;
+            await audio.play();
+          } catch {
+            // ignore
+          } finally {
+            window.removeEventListener("pointerdown", startOnInteraction);
+            window.removeEventListener("keydown", startOnInteraction);
+            window.removeEventListener("touchstart", startOnInteraction);
+          }
+        };
+
+        window.addEventListener("pointerdown", startOnInteraction, { once: true });
+        window.addEventListener("keydown", startOnInteraction, { once: true });
+        window.addEventListener("touchstart", startOnInteraction, { once: true });
+      }
+    };
+
+    void tryAutoplay();
+
+    // Listen to custom event in case another component (like IntroLoader) explicitly signals audio start
+    const handleExplicitPlay = () => {
+      if (audio.paused) {
+        audio.volume = 0.55;
+        void audio.play().catch(() => {});
+      }
+    };
+
+    window.addEventListener("play-wedding-song", handleExplicitPlay);
+
+    return () => {
+      window.removeEventListener("play-wedding-song", handleExplicitPlay);
+    };
+  }, []);
 
   async function toggle() {
     const audio = audioRef.current;
@@ -30,7 +79,8 @@ export function SongToggle() {
         ref={audioRef}
         src={SONG_SRC}
         loop
-        preload="none"
+        preload="auto"
+        autoPlay
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onError={() => setFailed(true)}

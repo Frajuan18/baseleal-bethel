@@ -75,15 +75,21 @@ export function WeddingCalendar() {
       <div className="relative z-10 mx-auto grid max-w-[1120px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-[minmax(280px,390px)_minmax(0,1fr)] lg:gap-20 lg:px-12">
         <div data-seq="card" style={seq("0.2s")} className="mx-auto w-full max-w-[390px] pt-4 sm:pt-0">
           <p data-seq="fade" style={seq("0.3s")} className="mb-3 font-sans text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8C6A3B]">{isAmharic ? "ቀኑን ያስታውሱ" : "Save the date"}</p>
-          <h2 data-seq="rise" style={seq("0.4s")} className="font-editorial-serif text-4xl leading-none text-[#1E140E] sm:text-5xl">{monthName} <em className="font-benaiah text-2xl font-normal not-italic text-[#8C6A3B] sm:text-3xl ml-1.5">{displayYear}</em></h2>
+          <h2 data-seq="rise" style={seq("0.4s")} className="font-editorial-serif text-3xl leading-none text-[#1E140E] sm:text-4xl lg:text-5xl">
+            {isAmharic ? (
+              <span className="font-benaiah text-2xl sm:text-3xl lg:text-4xl font-semibold">ታህሳስ 2019 ዓ.ም</span>
+            ) : (
+              <>{monthName} <em className="font-benaiah text-2xl font-normal not-italic text-[#8C6A3B] sm:text-3xl ml-1.5">{displayYear}</em></>
+            )}
+          </h2>
 
           <div className="relative mt-6 overflow-hidden rounded-sm border border-[#DED2C2] bg-[#FAF5EE] p-5 shadow-[0_18px_42px_-18px_rgba(43,24,16,.25)] sm:p-7">
             <div className="flex items-center justify-between border-b border-[#E5DDD2] pb-4">
-              <span className="font-sans text-[10px] uppercase tracking-[0.22em] text-[#857365]">{isAmharic ? "የሰርግ ወር" : "Wedding celebration month"}</span>
+              <span className="font-sans text-[10px] uppercase tracking-[0.22em] text-[#857365]">{isAmharic ? "የጋብቻ በዓል ወር" : "Wedding celebration month"}</span>
               <div className="relative h-12 w-12 shrink-0"><Image src="/b and b.png" alt={`${wedding.couple.monogram} monogram seal`} fill sizes="48px" className="object-contain" /></div>
             </div>
             <div className="mt-4 grid grid-cols-7 text-center font-sans text-[9px] font-semibold uppercase tracking-[0.12em] text-[#857365] sm:text-[10px]">
-              {(isAmharic ? ["እሁድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((label) => <span key={label} className="py-2">{label}</span>)}
+              {(isAmharic ? ["እሁድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "አርብ", "ቅዳሜ"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]).map((label) => <span key={label} className="py-2">{label}</span>)}
             </div>
             <div className="relative z-10 mt-2 grid grid-cols-7 gap-y-1 text-center font-benaiah text-sm text-[#422B20] sm:gap-y-2 sm:text-base">
               {Array.from({ length: startDayOffset }).map((_, index) => <span key={`blank-${index}`} className="py-2 opacity-0">0</span>)}
@@ -103,13 +109,15 @@ export function WeddingCalendar() {
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2">
-            <button type="button" onClick={handleDownload} className="min-h-10 rounded-full bg-[#1E140E] px-4 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-[#FAF6F0] transition hover:bg-[#8C6A3B] focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]">{downloadSuccess ? (isAmharic ? "ተቀምጧል ✓" : "Downloaded ✓") : (isAmharic ? "ወደ ካሌንደር ጨምር ↓" : "Add to calendar ↓")}</button>
-            <a href={googleUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center rounded-full border border-[#DED2C2] bg-[#FAF5EE] px-4 font-sans text-[10px] font-medium uppercase tracking-[0.12em] text-[#1E140E] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]">{isAmharic ? "Google ካሌንደር ↗" : "Google Calendar ↗"}</a>
+            <button type="button" onClick={handleDownload} className="min-h-10 rounded-full bg-[#1E140E] px-4 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-[#FAF6F0] transition hover:bg-[#8C6A3B] focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]">{downloadSuccess ? (isAmharic ? "ተቀምጧል ✓" : "Downloaded ✓") : (isAmharic ? "ወደ ቀን መቁጠሪያ ያክሉ ↓" : "Add to calendar ↓")}</button>
+            <a href={googleUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center rounded-full border border-[#DED2C2] bg-[#FAF5EE] px-4 font-sans text-[10px] font-medium uppercase tracking-[0.12em] text-[#1E140E] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#8C6A3B]">{isAmharic ? "ጎግል ካላንደር (Google Calendar) ↗" : "Google Calendar ↗"}</a>
           </div>
         </div>
 
         <div data-seq="rise" style={seq("0.5s")} className="min-w-0 pt-4 sm:pt-6 lg:pt-0">
-          <p className={`${isAmharic ? "font-balderasu" : "font-brittany-signature"} text-[1.5rem] leading-none text-[#8C6A3B] sm:text-2xl`}>{isAmharic ? "እስከ ‘አዎ’ የምንልበት ቀን ቆጠራ" : "Counting down to the moment we say “I do”"}</p>
+          <p className={`${isAmharic ? "font-jegna-title amharic-title text-xs sm:text-sm tracking-wide" : "font-brittany-signature text-[1.5rem] leading-none sm:text-2xl"} text-[#8C6A3B]`}>
+            {isAmharic ? "አንድ የምንሆንባትንና የቃል ኪዳናችንን ቀን በጉጉት እየጠበቅን…" : "Counting down to the moment we say “I do”"}
+          </p>
           <div className="mx-auto mt-8 w-full max-w-none lg:mx-0 lg:max-w-[820px]"><FlipCountdownDisplay /></div>
         </div>
       </div>
