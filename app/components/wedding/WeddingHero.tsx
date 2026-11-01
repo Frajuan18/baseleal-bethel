@@ -50,7 +50,7 @@ export function WeddingHero() {
           style={{ animationDelay: "360ms" }}
         >
           <span className="block">{isAmharic ? "ባስልኤል" : "Basseleal"}</span>
-          <span className="block">{isAmharic ? "እና ቤቴል" : "& Bethel"}</span>
+          <span className="block">{isAmharic ? "እና ዶ/ር ቤቴል" : "& Dr. Bethel"}</span>
         </h1>
 
         {/* Invitation CTA Button */}

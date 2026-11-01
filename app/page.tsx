@@ -42,11 +42,11 @@ export async function generateMetadata({
   const ogImageUrl = `${siteUrl}/og-image.jpg`;
 
   const title = guestName
-    ? `${guestName} — Wedding Invitation | Basseleal & Bethel`
-    : "Basseleal and Bethel Digital Wedding Invitation";
+    ? `${guestName} — Wedding Invitation | Basseleal & Dr. Bethel`
+    : "Basseleal and Dr. Bethel Digital Wedding Invitation";
 
   const description =
-    "ባስልኤል እና ቤቴል ዲጂታል የሠርግ መጥሪያ — የማክበር ሰላምታችንን እያቀረብን በእግዚአብሔር ፈቃድ የጋብቻ ሥነ-ሥርዓታችን የሚፈጸመው ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም ስለሆነ በዚህ ዕለት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን በምናደርገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።";
+    "ባስልኤል እና ዶ/ር ቤቴል ዲጂታል የሠርግ መጥሪያ — የማክበር ሰላምታችንን እያቀረብን በእግዚአብሔር ፈቃድ የጋብቻ ሥነ-ሥርዓታችን የሚፈጸመው ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም ስለሆነ በዚህ ዕለት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን በምናደርገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።";
 
   return {
     metadataBase: new URL(siteUrl),
@@ -58,13 +58,13 @@ export async function generateMetadata({
       url: siteUrl,
       type: "website",
       locale: "am_ET",
-      siteName: "Basseleal & Bethel Wedding",
+      siteName: "Basseleal & Dr. Bethel Wedding",
       images: [
         {
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: "Basseleal & Bethel Wedding Invitation",
+          alt: "Basseleal & Dr. Bethel Wedding Invitation",
         },
       ],
     },

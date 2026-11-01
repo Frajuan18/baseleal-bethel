@@ -35,8 +35,10 @@ export interface WeddingConfig {
   couple: {
     first: string;
     second: string;
+    secondAm?: string;
     monogram: string;
     title: string;
+    titleAm?: string;
     hashtag: string;
   };
   // ISO date string (YYYY-MM-DD) or null if not yet announced. e.g. "2027-08-14"
@@ -85,9 +87,11 @@ export interface WeddingConfig {
 export const wedding: WeddingConfig = {
   couple: {
     first: "Basseleal",
-    second: "Bethel",
+    second: "Dr. Bethel",
+    secondAm: "ዶ/ር ቤቴል",
     monogram: "B & B",
-    title: "Basseleal & Bethel",
+    title: "Basseleal & Dr. Bethel",
+    titleAm: "ባስልኤል እና ዶ/ር ቤቴል",
     hashtag: "#BasselealAndBethel",
   },
 

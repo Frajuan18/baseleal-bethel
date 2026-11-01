@@ -197,7 +197,7 @@ export function InvitationSection() {
                         {isAmharic ? "እና" : "and"}
                       </span>
                       <span data-seq="rise" style={seq("0.36s", "850ms", "8px")} className={`capitalize font-semibold text-[clamp(1.65rem,3.4vw,2.25rem)] ${isAmharic ? "amharic-title font-jegna-title" : "font-editorial-serif"}`}>
-                        {isAmharic ? "ቤቴል" : wedding.couple.second}
+                        {isAmharic ? (wedding.couple.secondAm || "ዶ/ር ቤቴል") : wedding.couple.second}
                       </span>
                     </div>
                   </h3>

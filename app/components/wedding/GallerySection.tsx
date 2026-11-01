@@ -5,14 +5,16 @@ import { useWeddingLanguage } from "./LanguageContext";
 import CircularGallery from "./CircularGallery";
 
 const GALLERY_ITEMS = [
-  { image: "/couple 1 new.jpg" },
-  { image: "/couple 2 new.jpg" },
-  { image: "/couple 3 new.jpg" },
-  { image: "/couple 4 new.jpg" },
   { image: "/couple 5 new.jpg" },
-  { image: "/couple 6.jpg" },
-  { image: "/couple 7.jpg" },
   { image: "/couple 8.jpg" },
+  { image: "/couple.JPG" },
+  { image: "/couple 9.jpg" },
+  { image: "/couple 1 new.jpg" },
+  { image: "/couple 3 new.jpg" },
+  { image: "/couple 7.jpg" },
+  { image: "/couple 2 new.jpg" },
+  { image: "/couple 4 new.jpg" },
+  { image: "/couple 6 new.JPG" },
 ];
 
 interface CircularGalleryHandle {
@@ -115,7 +117,7 @@ export function GallerySection() {
         </div>
 
         {/* Navigation Dots for image tracking with no background */}
-        <div className="mt-6 flex items-center justify-center gap-3">
+        <div className="mt-6 flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap px-4">
           {GALLERY_ITEMS.map((_, index) => {
             const isActive = activeIndex === index;
             return (

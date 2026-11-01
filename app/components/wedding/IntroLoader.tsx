@@ -345,7 +345,7 @@ export function IntroLoader() {
 
                   {/* Middle: Names */}
                   <h2 className="font-jegna-title text-2xl xs:text-[1.7rem] sm:text-4xl md:text-5xl text-[#2B1810] leading-[1.2] tracking-wide text-center mt-2 xs:mt-2.5 sm:mt-4">
-                    ባስልኤል እና ቤቴል
+                    ባስልኤል እና ዶ/ር ቤቴል
                   </h2>
 
                   {/* Scripture */}
@@ -401,7 +401,7 @@ export function IntroLoader() {
 
                   {/* Middle: Names */}
                   <h2 className="font-brittany-signature text-[1.75rem] xs:text-3xl sm:text-5xl md:text-6xl text-[#2B1810] leading-[1.15] text-center mt-2 xs:mt-2.5 sm:mt-4">
-                    Basseleal &amp; Bethel
+                    Basseleal &amp; Dr. Bethel
                   </h2>
 
                   {/* Scripture */}
