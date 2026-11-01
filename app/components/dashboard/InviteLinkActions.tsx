@@ -17,8 +17,8 @@ export function InviteLinkActions({ url, guestName }: { url: string; guestName?:
 
   const absolute = typeof window !== "undefined" ? new URL(url, window.location.origin).toString() : url;
   const text = guestName
-    ? `${guestName}, you are warmly invited to celebrate with Basseleal & Bethel.`
-    : "You are warmly invited to celebrate with Basseleal & Bethel.";
+    ? `ለተከበሩ ${guestName}\n\n👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈\n\nBasseleal & Dr. Bethel Wedding Invitation`
+    : "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈\n\nBasseleal & Dr. Bethel Wedding Invitation";
   const telegram = `https://t.me/share/url?url=${encodeURIComponent(absolute)}&text=${encodeURIComponent(text)}`;
 
   async function copy() {

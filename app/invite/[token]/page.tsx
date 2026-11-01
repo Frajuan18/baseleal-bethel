@@ -3,30 +3,30 @@ import type { Metadata } from "next";
 import { InvitationRedirect } from "./redirect";
 
 export const metadata: Metadata = {
-  title: "Basseleal and Bethel Digital Wedding Invitation",
+  title: "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈 | Basseleal & Dr. Bethel Wedding",
   description:
-    "ባስልኤል እና ቤቴል ዲጂታል የሠርግ መጥሪያ — የማክበር ሰላምታችንን እያቀረብን በእግዚአብሔር ፈቃድ የጋብቻ ሥነ-ሥርዓታችን የሚፈጸመው ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም ስለሆነ በዚህ ዕለት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን በምናደርገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።",
+    "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈\n\nባስልኤል እና ዶ/ር ቤቴል ዲጂታል የሠርግ መጥሪያ — የማክበር ሰላምታችንን እያቀረብን በእግዚአብሔር ፈቃድ የጋብቻ ሥነ-ሥርዓታችን የሚፈጸመው ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም ስለሆነ በዚህ ዕለት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን በምናደርገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።",
   openGraph: {
-    title: "Basseleal and Bethel Digital Wedding Invitation",
+    title: "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈 | Basseleal & Dr. Bethel Wedding",
     description:
-      "ባስልኤል እና ቤቴል ዲጂታል የሠርግ መጥሪያ — የማክበር ሰላምታችንን እያቀረብን በእግዚአብሔር ፈቃድ የጋብቻ ሥነ-ሥርዓታችን የሚፈጸመው ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም ስለሆነ በዚህ ዕለት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን በደስታ አብረውን እንዲያከብሩ በአክብሮት ጋብዘንዎታል።",
+      "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈\n\nባስልኤል እና ዶ/ር ቤቴል ዲጂታል የሠርግ መጥሪያ — የማክበር ሰላምታችንን እያቀረብን በእግዚአብሔር ፈቃድ የጋብቻ ሥነ-ሥርዓታችን የሚፈጸመው ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም ስለሆነ በዚህ ዕለት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን በምናደርገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።",
     type: "website",
     locale: "am_ET",
-    siteName: "Basseleal & Bethel Wedding",
+    siteName: "Basseleal & Dr. Bethel Wedding",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Basseleal & Bethel Digital Wedding Invitation",
+        alt: "Basseleal & Dr. Bethel Digital Wedding Invitation",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Basseleal and Bethel Digital Wedding Invitation",
+    title: "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈 | Basseleal & Dr. Bethel Wedding",
     description:
-      "ባስልኤል እና ቤቴል ዲጂታል የሠርግ መጥሪያ — ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን",
+      "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈 — ባስልኤል እና ዶ/ር ቤቴል ዲጂታል የሠርግ መጥሪያ — ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን",
     images: ["/og-image.jpg"],
   },
 };
