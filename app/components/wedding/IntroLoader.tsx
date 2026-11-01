@@ -222,7 +222,7 @@ export function IntroLoader() {
 
       {/* Invitation Card Overlay with Blurred Couple Image Background */}
       <div
-        className={`absolute inset-0 z-10 flex items-center justify-center p-4 sm:p-6 transition-opacity duration-1000 ease-in-out ${
+        className={`absolute inset-0 z-10 flex items-center justify-center p-2.5 sm:p-6 transition-opacity duration-1000 ease-in-out ${
           isCardVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -243,7 +243,7 @@ export function IntroLoader() {
 
         {/* 3D Flipping Card Container (Flips from Amharic front to English back) */}
         <div
-          className={`relative z-10 w-full max-w-[500px] sm:max-w-[580px] md:max-w-[640px] aspect-[1247/1261] max-h-[89vh] transition-all duration-1000 ease-out transform ${
+          className={`relative z-10 w-full max-w-[540px] sm:max-w-[620px] md:max-w-[680px] aspect-[1247/1261] max-h-[92vh] sm:max-h-[90vh] transition-all duration-1000 ease-out transform ${
             phase === "revealing"
               ? "opacity-0 scale-[0.96] blur-xs"
               : isCardVisible
@@ -279,37 +279,37 @@ export function IntroLoader() {
                   fill
                   priority
                   unoptimized
-                  sizes="(max-width: 640px) 95vw, 640px"
+                  sizes="(max-width: 640px) 98vw, 680px"
                   className="object-contain pointer-events-none select-none filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)]"
                 />
               </div>
 
               {/* Front Content: Amharic (Centred vertically and horizontally clear of floral corner borders) */}
-              <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-6 sm:p-8 md:p-10 text-center select-none">
-                <div className="flex flex-col items-center justify-center w-full max-w-[330px] sm:max-w-[400px] md:max-w-[460px] mx-auto">
+              <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-4 xs:p-5 sm:p-8 md:p-10 text-center select-none">
+                <div className="flex flex-col items-center justify-center w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[420px] md:max-w-[480px] mx-auto">
                   {/* Top: Header */}
-                  <p className="font-balderasu text-sm sm:text-base md:text-lg font-bold tracking-[0.24em] text-[#8C6A3B] uppercase">
+                  <p className="font-balderasu text-xs xs:text-[13px] sm:text-base md:text-lg font-bold tracking-[0.22em] text-[#8C6A3B] uppercase">
                     ተጋብዘዋል
                   </p>
 
                   {/* Middle: Names */}
-                  <h2 className="font-jegna-title text-3xl sm:text-4xl md:text-5xl text-[#2B1810] leading-[1.2] tracking-wide text-center mt-3.5 sm:mt-5">
+                  <h2 className="font-jegna-title text-2xl xs:text-[1.7rem] sm:text-4xl md:text-5xl text-[#2B1810] leading-[1.2] tracking-wide text-center mt-2 xs:mt-2.5 sm:mt-4">
                     ባስልኤል እና ቤቴል
                   </h2>
 
                   {/* Scripture */}
-                  <div className="mt-3.5 sm:mt-5 space-y-1 text-center">
-                    <p className="font-balderasu text-xs sm:text-sm text-[#8C6A3B] font-semibold tracking-wider">
+                  <div className="mt-2 xs:mt-2.5 sm:mt-4 space-y-0.5 sm:space-y-1 text-center">
+                    <p className="font-balderasu text-[11px] sm:text-sm text-[#8C6A3B] font-semibold tracking-wider">
                       ኦሪት ዘፍጥረት 35:3
                     </p>
-                    <p className="font-balderasu text-xs sm:text-sm md:text-[15px] leading-relaxed text-[#4A3527]">
+                    <p className="font-balderasu text-[11px] xs:text-xs sm:text-sm md:text-[15px] leading-relaxed text-[#4A3527]">
                       “ተነሥተን ወደ ቤቴል እንውጣ፤ እዚያም በመከራዬ ጊዜ ለሰማኝ፣ በሄድሁበትም ስፍራ ሁሉ ላልተለየኝ አምላክ መሠዊያ እሠራለሁ።”
                     </p>
                   </div>
 
                   {/* Bottom: Date */}
-                  <div className="w-full mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-[#8C6A3B]/25">
-                    <p className="font-balderasu text-sm sm:text-base md:text-lg font-bold tracking-[0.16em] text-[#8C6A3B]">
+                  <div className="w-full mt-2.5 xs:mt-3 sm:mt-5 pt-2 xs:pt-2.5 sm:pt-4 border-t border-[#8C6A3B]/25">
+                    <p className="font-balderasu text-xs xs:text-[13px] sm:text-base md:text-lg font-bold tracking-[0.14em] sm:tracking-[0.16em] text-[#8C6A3B]">
                       ቅዳሜ፣ ታህሳስ 17 ቀን 2019 ዓ.ም
                     </p>
                   </div>
@@ -334,37 +334,37 @@ export function IntroLoader() {
                   fill
                   priority
                   unoptimized
-                  sizes="(max-width: 640px) 95vw, 640px"
+                  sizes="(max-width: 640px) 98vw, 680px"
                   className="object-contain pointer-events-none select-none filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)]"
                 />
               </div>
 
               {/* Back Content: English (Centred vertically and horizontally clear of floral corner borders) */}
-              <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-6 sm:p-8 md:p-10 text-center select-none">
-                <div className="flex flex-col items-center justify-center w-full max-w-[330px] sm:max-w-[400px] md:max-w-[460px] mx-auto">
+              <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-4 xs:p-5 sm:p-8 md:p-10 text-center select-none">
+                <div className="flex flex-col items-center justify-center w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[420px] md:max-w-[480px] mx-auto">
                   {/* Top: Header */}
-                  <p className="font-sans text-xs sm:text-sm md:text-base font-bold tracking-[0.3em] text-[#8C6A3B] uppercase">
+                  <p className="font-sans text-[11px] xs:text-xs sm:text-sm md:text-base font-bold tracking-[0.26em] text-[#8C6A3B] uppercase">
                     YOU ARE INVITED
                   </p>
 
                   {/* Middle: Names */}
-                  <h2 className="font-brittany-signature text-4xl sm:text-5xl md:text-6xl text-[#2B1810] leading-[1.15] text-center mt-3.5 sm:mt-5">
+                  <h2 className="font-brittany-signature text-[1.75rem] xs:text-3xl sm:text-5xl md:text-6xl text-[#2B1810] leading-[1.15] text-center mt-2 xs:mt-2.5 sm:mt-4">
                     Basseleal &amp; Bethel
                   </h2>
 
                   {/* Scripture */}
-                  <div className="mt-3.5 sm:mt-5 space-y-1 text-center">
-                    <p className="font-sans text-[10px] sm:text-[11px] md:text-xs uppercase tracking-[0.24em] text-[#8C6A3B] font-semibold">
+                  <div className="mt-2 xs:mt-2.5 sm:mt-4 space-y-0.5 sm:space-y-1 text-center">
+                    <p className="font-sans text-[9px] xs:text-[10px] sm:text-[11px] md:text-xs uppercase tracking-[0.22em] text-[#8C6A3B] font-semibold">
                       GENESIS 35:3
                     </p>
-                    <p className="font-editorial-serif italic text-xs sm:text-sm md:text-[15px] leading-relaxed text-[#4A3527]">
+                    <p className="font-editorial-serif italic text-[11px] xs:text-xs sm:text-sm md:text-[15px] leading-relaxed text-[#4A3527]">
                       “Then come, let us go up to Bethel, where I will build an altar to God, who answered me in the day of my distress and who has been with me wherever I have gone.”
                     </p>
                   </div>
 
                   {/* Bottom: Date */}
-                  <div className="w-full mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-[#8C6A3B]/25">
-                    <p className="font-sans text-xs sm:text-sm md:text-base font-bold tracking-[0.24em] text-[#8C6A3B] uppercase">
+                  <div className="w-full mt-2.5 xs:mt-3 sm:mt-5 pt-2 xs:pt-2.5 sm:pt-4 border-t border-[#8C6A3B]/25">
+                    <p className="font-sans text-[10px] xs:text-[11px] sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.24em] text-[#8C6A3B] uppercase">
                       Saturday, December 26, 2026
                     </p>
                   </div>
