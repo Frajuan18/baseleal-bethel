@@ -155,8 +155,8 @@ export default function DashboardPage() {
   return (
     <main className="dashboard-root font-satoshi min-h-dvh bg-[#E8E5E0] text-[#171717] sm:p-4 lg:p-6">
       <div className="mx-auto flex min-h-dvh w-full max-w-[1440px] flex-col bg-[#F8F8F7] sm:min-h-[calc(100svh-2rem)] sm:rounded-[26px] sm:border sm:border-[#DED8D1] sm:shadow-[0_30px_80px_-40px_rgba(43,33,29,0.4)]">
-        {/* Sleek inline section tabs (top navbar removed per request) */}
-        <div className="border-b border-[#E7E2DB] px-4 py-3 sm:px-6 lg:px-8">
+        {/* Sleek inline section tabs (hidden on mobile since bottom bar is present) */}
+        <div className="hidden lg:block border-b border-[#E7E2DB] px-6 py-3.5 lg:px-8">
           <nav aria-label="Dashboard sections" className="flex items-center gap-1.5 overflow-x-auto py-1">
             {TABS.map((item) => {
               const active = tab === item.value;
@@ -485,7 +485,7 @@ function Invitations({
 }) {
   return (
     <SectionFrame title="Invitation links" description="Create, share, and revoke personalised wedding access.">
-      <form onSubmit={submit} className="flex flex-col gap-4 rounded-2xl border border-[#EDE9E2] bg-white p-5 sm:p-6 shadow-xs">
+      <form onSubmit={submit} className="flex flex-col gap-4 rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:p-6 shadow-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label htmlFor="inv-name" className="sr-only">
             Guest full name
@@ -496,11 +496,11 @@ function Invitations({
             value={name}
             onChange={(event) => setName(event.target.value)}
             placeholder="Guest full name"
-            className="h-14 flex-1 w-full rounded-2xl border border-[#D5CDC2] bg-[#FAF8F5] px-5 text-base text-[#1E140E] outline-none transition placeholder:text-[#9A938B] focus:border-[#8C6A3B] focus:bg-white focus:ring-2 focus:ring-[#8C6A3B]/20"
+            className="min-h-[58px] h-[58px] sm:h-14 flex-1 w-full rounded-2xl border border-[#D5CDC2] bg-[#FAF8F5] px-5 py-3.5 text-base text-[#1E140E] outline-none transition placeholder:text-[#9A938B] focus:border-[#8C6A3B] focus:bg-white focus:ring-2 focus:ring-[#8C6A3B]/20 shadow-xs"
           />
           <button
             type="submit"
-            className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#C2491A] px-7 text-sm font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0 shadow-sm"
+            className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] h-[52px] sm:h-14 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C2491A] px-7 text-base sm:text-sm font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0 shadow-sm"
           >
             <Icon name="plus" className="h-4 w-4" /> Generate link
           </button>

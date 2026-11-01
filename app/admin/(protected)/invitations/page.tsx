@@ -88,7 +88,7 @@ export default function InvitationsPage() {
       title="Invitation links"
       description="Create, assign venue directions (church & homes), and revoke personalised wedding access."
     >
-      <form onSubmit={submit} className="flex flex-col gap-4 rounded-2xl border border-[#EDE9E2] bg-white p-5 sm:p-6 shadow-xs">
+      <form onSubmit={submit} className="flex flex-col gap-4 rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:p-6 shadow-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label htmlFor="admin-inv-name" className="sr-only">
             Guest full name
@@ -99,11 +99,11 @@ export default function InvitationsPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Guest full name"
-            className="h-14 flex-1 w-full rounded-2xl border border-[#D5CDC2] bg-[#FAF8F5] px-5 text-base text-[#1E140E] outline-none transition placeholder:text-[#9A938B] focus:border-[#8C6A3B] focus:bg-white focus:ring-2 focus:ring-[#8C6A3B]/20"
+            className="min-h-[58px] h-[58px] sm:h-14 flex-1 w-full rounded-2xl border border-[#D5CDC2] bg-[#FAF8F5] px-5 py-3.5 text-base text-[#1E140E] outline-none transition placeholder:text-[#9A938B] focus:border-[#8C6A3B] focus:bg-white focus:ring-2 focus:ring-[#8C6A3B]/20 shadow-xs"
           />
           <button
             type="submit"
-            className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#C2491A] px-7 text-sm font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0 shadow-sm"
+            className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] h-[52px] sm:h-14 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C2491A] px-7 text-base sm:text-sm font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0 shadow-sm"
           >
             <Icon name="plus" className="h-4 w-4" /> Generate link
           </button>
