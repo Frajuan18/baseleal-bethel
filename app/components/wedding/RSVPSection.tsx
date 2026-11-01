@@ -40,6 +40,25 @@ export function RSVPSection() {
     ? (activeLocations.bethelHome?.timeAm || "4:30 ሰዓት")
     : (activeLocations.bethelHome?.timeEn || "10:30 am");
 
+  const formatLocationNote = (note: string | undefined): string => {
+    if (!note) return "";
+    let clean = note;
+    if (isAmharic) {
+      clean = clean.replace(/የከሰዓቱ\s*/g, "የጠዋቱ ");
+      clean = clean.replace(/(?:ከቀኑ|ከጠዋቱ)?\s*10:30\s*\((?:4:30\s*(?:LT|ሰዓት)?)\)/g, "ከጠዋቱ 4:30");
+      clean = clean.replace(/10:30\s*\((?:4:30\s*(?:LT|ሰዓት)?)\)/g, "4:30");
+      clean = clean.replace(/10:30\s*\(4:30\)/g, "4:30");
+      if (clean.startsWith("የቤት ዝግጅት")) {
+        clean = clean.replace("የቤት ዝግጅት", "የጠዋቱ የቤት ዝግጅት");
+      }
+    } else {
+      clean = clean.replace(/Afternoon reception/gi, "Morning reception");
+      clean = clean.replace(/4:30\s*(?:PM|pm)?\s*\((?:10:30\s*(?:LT|am|AM)?)\)/g, "10:30 am");
+      clean = clean.replace(/10:30\s*(?:AM|am)?\s*\((?:4:30\s*(?:LT|pm|PM)?)\)/g, "10:30 am");
+    }
+    return clean;
+  };
+
   // Load live admin configured locations from public API
   useEffect(() => {
     fetch("/api/public/locations")
@@ -572,7 +591,7 @@ export function RSVPSection() {
                       </span>
                       <div>
                         <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
-                          {isAmharic ? `ከጠዋቱ ${basselealTimeDisplay}` : `${basselealTimeDisplay} (Reception)`}
+                          {isAmharic ? `ከጠዋቱ ${basselealTimeDisplay}` : `${basselealTimeDisplay} • Reception`}
                         </span>
                         <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
                           {isAmharic ? activeLocations.basselealHome.labelAm : activeLocations.basselealHome.label}
@@ -596,7 +615,7 @@ export function RSVPSection() {
                         </svg>
                       </span>
                       <p className={`text-[11px] sm:text-xs text-[#6A5D54] leading-relaxed ${isAmharic ? "font-balderasu" : ""}`}>
-                        {isAmharic ? (activeLocations.basselealHome.noteAm || activeLocations.basselealHome.note) : (activeLocations.basselealHome.note || activeLocations.basselealHome.noteAm)}
+                        {formatLocationNote(isAmharic ? (activeLocations.basselealHome.noteAm || activeLocations.basselealHome.note) : (activeLocations.basselealHome.note || activeLocations.basselealHome.noteAm))}
                       </p>
                     </div>
                   )}
@@ -660,7 +679,7 @@ export function RSVPSection() {
                       </span>
                       <div>
                         <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
-                          {isAmharic ? `ከጠዋቱ ${bethelTimeDisplay}` : `${bethelTimeDisplay} (Reception)`}
+                          {isAmharic ? `ከጠዋቱ ${bethelTimeDisplay}` : `${bethelTimeDisplay} • Reception`}
                         </span>
                         <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
                           {isAmharic ? activeLocations.bethelHome.labelAm : activeLocations.bethelHome.label}
@@ -684,7 +703,7 @@ export function RSVPSection() {
                         </svg>
                       </span>
                       <p className={`text-[11px] sm:text-xs text-[#6A5D54] leading-relaxed ${isAmharic ? "font-balderasu" : ""}`}>
-                        {isAmharic ? (activeLocations.bethelHome.noteAm || activeLocations.bethelHome.note) : (activeLocations.bethelHome.note || activeLocations.bethelHome.noteAm)}
+                        {formatLocationNote(isAmharic ? (activeLocations.bethelHome.noteAm || activeLocations.bethelHome.note) : (activeLocations.bethelHome.note || activeLocations.bethelHome.noteAm))}
                       </p>
                     </div>
                   )}
@@ -749,7 +768,7 @@ export function RSVPSection() {
                       </span>
                       <div>
                         <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
-                          {isAmharic ? `ከቀኑ ${churchTimeDisplay}` : `${churchTimeDisplay} (Ceremony)`}
+                          {isAmharic ? `ከቀኑ ${churchTimeDisplay}` : `${churchTimeDisplay} • Ceremony`}
                         </span>
                         <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
                           {isAmharic ? activeLocations.church.labelAm : activeLocations.church.label}
@@ -773,7 +792,7 @@ export function RSVPSection() {
                         </svg>
                       </span>
                       <p className={`text-[11px] sm:text-xs text-[#6A5D54] leading-relaxed ${isAmharic ? "font-balderasu" : ""}`}>
-                        {isAmharic ? (activeLocations.church.noteAm || activeLocations.church.note) : (activeLocations.church.note || activeLocations.church.noteAm)}
+                        {formatLocationNote(isAmharic ? (activeLocations.church.noteAm || activeLocations.church.note) : (activeLocations.church.note || activeLocations.church.noteAm))}
                       </p>
                     </div>
                   )}

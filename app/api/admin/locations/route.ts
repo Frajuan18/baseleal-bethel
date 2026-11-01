@@ -16,6 +16,24 @@ type LocationPayload = {
   };
 };
 
+function cleanHomeNoteAm(note: string): string {
+  let clean = note.replace(/የከሰዓቱ\s*/g, "የጠዋቱ ");
+  clean = clean.replace(/(?:ከቀኑ|ከጠዋቱ)?\s*10:30\s*\((?:4:30\s*(?:LT|ሰዓት)?)\)/g, "ከጠዋቱ 4:30");
+  clean = clean.replace(/10:30\s*\((?:4:30\s*(?:LT|ሰዓት)?)\)/g, "4:30");
+  clean = clean.replace(/10:30\s*\(4:30\)/g, "4:30");
+  if (clean.startsWith("የቤት ዝግጅት")) {
+    clean = clean.replace("የቤት ዝግጅት", "የጠዋቱ የቤት ዝግጅት");
+  }
+  return clean;
+}
+
+function cleanHomeNoteEn(note: string): string {
+  let clean = note.replace(/Afternoon reception/gi, "Morning reception");
+  clean = clean.replace(/4:30\s*(?:PM|pm)?\s*\((?:10:30\s*(?:LT|am|AM)?)\)/g, "10:30 am");
+  clean = clean.replace(/10:30\s*(?:AM|am)?\s*\((?:4:30\s*(?:LT|pm|PM)?)\)/g, "10:30 am");
+  return clean;
+}
+
 function getMergedLocations(stored?: LocationPayload | null) {
   const def = wedding.locations;
   const defTimes = wedding.programTimes;
@@ -48,8 +66,8 @@ function getMergedLocations(stored?: LocationPayload | null) {
       addressAm: stored?.basselealHome?.addressAm?.trim() || def.basselealHome.addressAm,
       mapsQuery: stored?.basselealHome?.mapsQuery?.trim() || def.basselealHome.mapsQuery,
       directionsUrl: stored?.basselealHome?.directionsUrl?.trim() || def.basselealHome.directionsUrl || "",
-      note: stored?.basselealHome?.note?.trim() ?? def.basselealHome.note ?? "",
-      noteAm: stored?.basselealHome?.noteAm?.trim() ?? def.basselealHome.noteAm ?? "",
+      note: cleanHomeNoteEn(stored?.basselealHome?.note?.trim() ?? def.basselealHome.note ?? ""),
+      noteAm: cleanHomeNoteAm(stored?.basselealHome?.noteAm?.trim() ?? def.basselealHome.noteAm ?? ""),
       timeEn: stored?.basselealHome?.timeEn?.trim() || programTimes.homeEn,
       timeAm: stored?.basselealHome?.timeAm?.trim() || programTimes.homeAm,
     },
@@ -60,8 +78,8 @@ function getMergedLocations(stored?: LocationPayload | null) {
       addressAm: stored?.bethelHome?.addressAm?.trim() || def.bethelHome.addressAm,
       mapsQuery: stored?.bethelHome?.mapsQuery?.trim() || def.bethelHome.mapsQuery,
       directionsUrl: stored?.bethelHome?.directionsUrl?.trim() || def.bethelHome.directionsUrl || "",
-      note: stored?.bethelHome?.note?.trim() ?? def.bethelHome.note ?? "",
-      noteAm: stored?.bethelHome?.noteAm?.trim() ?? def.bethelHome.noteAm ?? "",
+      note: cleanHomeNoteEn(stored?.bethelHome?.note?.trim() ?? def.bethelHome.note ?? ""),
+      noteAm: cleanHomeNoteAm(stored?.bethelHome?.noteAm?.trim() ?? def.bethelHome.noteAm ?? ""),
       timeEn: stored?.bethelHome?.timeEn?.trim() || programTimes.homeEn,
       timeAm: stored?.bethelHome?.timeAm?.trim() || programTimes.homeAm,
     },

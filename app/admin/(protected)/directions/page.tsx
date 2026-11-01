@@ -485,7 +485,7 @@ export default function DirectionsAdminPage() {
                   rows={3}
                   value={locations.basselealHome.note || ""}
                   onChange={(e) => handleChange("basselealHome", "note", e.target.value)}
-                  placeholder="e.g. Afternoon reception begins at 4:30 PM (10:30 LT). Follow the wedding signage after turning into the residential road."
+                  placeholder="e.g. Morning reception begins at 10:30 am. Follow the wedding signage after turning into the residential road."
                   className="w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] p-3 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -498,7 +498,7 @@ export default function DirectionsAdminPage() {
                   rows={3}
                   value={locations.basselealHome.noteAm || ""}
                   onChange={(e) => handleChange("basselealHome", "noteAm", e.target.value)}
-                  placeholder="ለምሳሌ፡ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።"
+                  placeholder="ለምሳሌ፡ የጠዋቱ የቤት ዝግጅት ከጠዋቱ 4:30 ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።"
                   className="w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] p-3 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -619,7 +619,7 @@ export default function DirectionsAdminPage() {
                   rows={3}
                   value={locations.bethelHome.note || ""}
                   onChange={(e) => handleChange("bethelHome", "note", e.target.value)}
-                  placeholder="e.g. Afternoon reception begins at 4:30 PM (10:30 LT). Follow the wedding signage after turning into the residential road."
+                  placeholder="e.g. Morning reception begins at 10:30 am. Follow the wedding signage after turning into the residential road."
                   className="w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] p-3 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -632,7 +632,7 @@ export default function DirectionsAdminPage() {
                   rows={3}
                   value={locations.bethelHome.noteAm || ""}
                   onChange={(e) => handleChange("bethelHome", "noteAm", e.target.value)}
-                  placeholder="ለምሳሌ፡ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።"
+                  placeholder="ለምሳሌ፡ የጠዋቱ የቤት ዝግጅት ከጠዋቱ 4:30 ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።"
                   className="w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] p-3 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
