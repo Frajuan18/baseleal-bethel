@@ -153,9 +153,33 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="min-h-dvh bg-[#E8E5E0] text-[#171717] sm:p-4 lg:p-6">
+    <main className="dashboard-root font-satoshi min-h-dvh bg-[#E8E5E0] text-[#171717] sm:p-4 lg:p-6">
       <div className="mx-auto flex min-h-dvh w-full max-w-[1440px] flex-col bg-[#F8F8F7] sm:min-h-[calc(100svh-2rem)] sm:rounded-[26px] sm:border sm:border-[#DED8D1] sm:shadow-[0_30px_80px_-40px_rgba(43,33,29,0.4)]">
-        <AppHeader tab={tab} onTab={setTab} />
+        {/* Sleek inline section tabs (top navbar removed per request) */}
+        <div className="border-b border-[#E7E2DB] px-4 py-3 sm:px-6 lg:px-8">
+          <nav aria-label="Dashboard sections" className="flex items-center gap-1.5 overflow-x-auto py-1">
+            {TABS.map((item) => {
+              const active = tab === item.value;
+              return (
+                <button
+                  key={item.value}
+                  type="button"
+                  onClick={() => setTab(item.value)}
+                  aria-current={active ? "page" : undefined}
+                  className={`flex min-h-[42px] items-center gap-2 rounded-xl px-4 text-xs font-semibold transition active:scale-[0.98] ${
+                    active
+                      ? "bg-[#1E140E] text-white shadow-xs"
+                      : "bg-[#EFEBE5] text-[#6B6660] hover:bg-[#E5DFD6] hover:text-[#171717]"
+                  }`}
+                >
+                  <Icon name={item.icon} className="h-4 w-4" />
+                  {item.label}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
         <div className="flex-1">
           {error && (
             <div role="alert" className="mx-4 mt-4 rounded-2xl border border-[#E7C9BC] bg-[#FBEDE7] px-4 py-3 text-xs text-[#8A3D20] sm:mx-6 lg:mx-8">
@@ -184,46 +208,6 @@ export default function DashboardPage() {
       </div>
       <BottomNav tab={tab} onTab={setTab} />
     </main>
-  );
-}
-
-function AppHeader({ tab, onTab }: { tab: Tab; onTab: (value: Tab) => void }) {
-  return (
-    <header className="sticky top-0 z-40 border-b border-[#E7E2DB] bg-[#F8F8F7]/90 backdrop-blur-xl">
-      <div className="flex items-center gap-3 px-4 py-3 sm:px-6 lg:px-8 lg:py-4">
-        <button
-          type="button"
-          onClick={() => onTab("overview")}
-          className="flex min-h-[44px] items-center gap-2.5 rounded-2xl pr-1 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2491A]/40"
-        >
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#171717] font-serif text-base text-[#F2D69B]">B</span>
-          <span className="min-w-0">
-            <span className="block truncate font-serif text-base leading-tight sm:text-lg">Basseleal &amp; Bethel</span>
-            <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-[#736C64]">Wedding admin</span>
-          </span>
-        </button>
-
-        <nav aria-label="Dashboard sections" className="ml-auto hidden items-center gap-1 rounded-full bg-[#EFEBE5] p-1 lg:flex">
-          {TABS.map((item) => {
-            const active = tab === item.value;
-            return (
-              <button
-                key={item.value}
-                type="button"
-                onClick={() => onTab(item.value)}
-                aria-current={active ? "page" : undefined}
-                className={`flex min-h-[38px] items-center gap-2 rounded-full px-3.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2491A]/40 ${
-                  active ? "bg-white text-[#171717] shadow-[0_2px_8px_rgba(43,33,29,0.08)]" : "text-[#6B6660] hover:text-[#171717]"
-                }`}
-              >
-                <Icon name={item.icon} className="h-4 w-4" />
-                {item.label}
-              </button>
-            );
-          })}
-        </nav>
-      </div>
-    </header>
   );
 }
 
@@ -512,11 +496,11 @@ function Invitations({
             value={name}
             onChange={(event) => setName(event.target.value)}
             placeholder="Guest full name"
-            className="h-12 flex-1 w-full rounded-xl border border-[#D5CDC2] bg-[#FAF8F5] px-4 text-base text-[#1E140E] outline-none transition placeholder:text-[#9A938B] focus:border-[#8C6A3B] focus:bg-white focus:ring-2 focus:ring-[#8C6A3B]/20 sm:text-sm"
+            className="h-14 flex-1 w-full rounded-2xl border border-[#D5CDC2] bg-[#FAF8F5] px-5 text-base text-[#1E140E] outline-none transition placeholder:text-[#9A938B] focus:border-[#8C6A3B] focus:bg-white focus:ring-2 focus:ring-[#8C6A3B]/20"
           />
           <button
             type="submit"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#C2491A] px-6 text-sm font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0 shadow-xs"
+            className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#C2491A] px-7 text-sm font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0 shadow-sm"
           >
             <Icon name="plus" className="h-4 w-4" /> Generate link
           </button>

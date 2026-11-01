@@ -10,7 +10,7 @@ const items: { label: string; href: string; icon: IconName }[] = [
   { label: "Links", href: "/admin/invitations", icon: "link" },
 ];
 
-export function AdminSidebar({ active, hideDesktop = false }: { active: string; hideDesktop?: boolean }) {
+export function AdminSidebar({ active, hideDesktop = true }: { active: string; hideDesktop?: boolean }) {
   const isItemActive = (href: string) => {
     if (active === href) return true;
     if ((href === "/admin/directions" && active === "/admin/locations") || (href === "/admin/locations" && active === "/admin/directions")) return true;

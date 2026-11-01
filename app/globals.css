@@ -687,3 +687,11 @@ main[class*="lg:pl-[320px]"] {
   background-color: #F8F8F7 !important;
 }
 
+/* Dashboard Typography — Pure Satoshi */
+.font-satoshi,
+.dashboard-root,
+.dashboard-root * {
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+
