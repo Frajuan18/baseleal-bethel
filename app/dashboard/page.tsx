@@ -1223,14 +1223,6 @@ function DirectionsSection({
         <div className="py-12 text-center text-xs text-[#736C64]">Loading directions...</div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Top Section: Program Times & Schedule Communication */}
-          <ProgramTimeChanger
-            programTimes={programTimes}
-            onChange={setProgramTimes}
-            onSave={() => handleSubmit()}
-            saving={saving}
-          />
-
           {/* 1. Church */}
           <div className="rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[#F0ECE6] pb-3">

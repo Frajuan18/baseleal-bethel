@@ -49,7 +49,7 @@ export default function DirectionsAdminPage() {
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [subTab, setSubTab] = useState<"all" | "time" | "directions">("all");
+  const [subTab, setSubTab] = useState<"time" | "directions">("directions");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -189,19 +189,8 @@ export default function DirectionsAdminPage() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Sub-tab switcher between All, Time, and Directions */}
-          <div className="flex items-center gap-1.5 rounded-2xl bg-[#E6E1D8] p-1.5 max-w-md">
-            <button
-              type="button"
-              onClick={() => setSubTab("all")}
-              className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold transition active:scale-[0.98] ${
-                subTab === "all"
-                  ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
-                  : "text-[#6B6660] hover:text-[#1E140E]"
-              }`}
-            >
-              <span>All</span>
-            </button>
+          {/* Sub-tab switcher between Time Tab and Directions Tab */}
+          <div className="flex items-center gap-1.5 rounded-2xl bg-[#E6E1D8] p-1.5 max-w-xs">
             <button
               type="button"
               onClick={() => setSubTab("time")}
@@ -228,8 +217,8 @@ export default function DirectionsAdminPage() {
             </button>
           </div>
 
-          {/* Top Section: Program Times & Schedule Communication */}
-          {(subTab === "all" || subTab === "time") && (
+          {/* Time Tab: Program Times & Schedule Communication */}
+          {subTab === "time" && (
             <ProgramTimeChanger
               programTimes={programTimes}
               onChange={setProgramTimes}
@@ -238,8 +227,8 @@ export default function DirectionsAdminPage() {
             />
           )}
 
-          {/* Venue Location Cards (Directions Tab) */}
-          {(subTab === "all" || subTab === "directions") && (
+          {/* Directions Tab: Venue Location Cards */}
+          {subTab === "directions" && (
             <>
               {/* Card 1: Church Ceremony */}
               <section className="rounded-2xl border border-[#EDE9E2] bg-white p-5 sm:p-7 shadow-xs">
