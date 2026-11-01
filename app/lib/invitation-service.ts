@@ -22,7 +22,14 @@ export async function createPersonalizedInvitation(
   );
 
   const { token, tokenHash } = createInvitationToken();
-  const origin = (baseUrl || process.env.NEXT_PUBLIC_SITE_URL || "https://basselealandbethel.com").replace(/\/$/, "");
+  const rawOrigin =
+    baseUrl ||
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined) ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+    "https://basselealandbethel.com";
+  const origin = (rawOrigin.startsWith("http") ? rawOrigin : `https://${rawOrigin}`).replace(/\/$/, "");
   const relativeUrl = `/?invite=${token}&to=${encodeURIComponent(guest.fullName)}`;
   const absoluteUrl = `${origin}${relativeUrl}`;
 

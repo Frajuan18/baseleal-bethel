@@ -12,7 +12,12 @@ export async function POST(request: Request) {
 
   try {
     const update = await request.json();
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.headers.get("origin") || undefined;
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+    const proto = request.headers.get("x-forwarded-proto") || (host?.includes("localhost") ? "http" : "https");
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      request.headers.get("origin") ||
+      (host ? `${proto}://${host}` : undefined);
     await handleTelegramUpdate(update, botToken, siteUrl);
     return NextResponse.json({ ok: true });
   } catch (err: unknown) {

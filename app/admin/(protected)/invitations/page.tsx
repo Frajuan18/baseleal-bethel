@@ -28,16 +28,14 @@ export default function InvitationsPage() {
     bethel: false,
   });
   const [created, setCreated] = useState<{ url: string; guestName?: string } | null>(null);
+  const [venueError, setVenueError] = useState<string | null>(null);
 
   const toggleVenue = (key: keyof VenueSelection) => {
-    setVenues((prev) => {
-      const next = { ...prev, [key]: !prev[key] };
-      // Keep at least one selected so the invitation has a valid destination
-      if (!next.church && !next.basseleal && !next.bethel) {
-        return prev;
-      }
-      return next;
-    });
+    setVenueError(null);
+    setVenues((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
   };
 
   const load = () =>
@@ -52,6 +50,11 @@ export default function InvitationsPage() {
 
   async function submit(event: FormEvent) {
     event.preventDefault();
+    if (!venues.church && !venues.basseleal && !venues.bethel) {
+      setVenueError("Please select at least one venue (Church, Basseleal's house, or Bethel's house).");
+      return;
+    }
+    setVenueError(null);
     const invitationType = venuesToInvitationType(venues);
     const response = await fetch("/api/admin/invitations", {
       method: "POST",
@@ -218,6 +221,11 @@ export default function InvitationsPage() {
               </div>
             </button>
           </div>
+          {venueError && (
+            <p className="mt-2 text-xs font-semibold text-rose-600 animate-fadeIn">
+              ⚠️ {venueError}
+            </p>
+          )}
         </div>
       </form>
 

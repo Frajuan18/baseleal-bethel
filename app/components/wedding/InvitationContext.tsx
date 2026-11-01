@@ -13,34 +13,46 @@ type InvitationState = {
 const InvitationContext = createContext<InvitationState>({ invitation: null, hasToken: false, token: undefined });
 
 export function InvitationProvider({
-  token,
+  token: initialToken,
   initialGuestName,
+  initialInvitation,
   children,
 }: {
   token?: string;
   initialGuestName?: string;
+  initialInvitation?: InvitationInfo | null;
   children: ReactNode;
 }) {
-  const [invitation, setInvitation] = useState<InvitationInfo | null>(
-    initialGuestName ? { guestName: initialGuestName } : null
-  );
+  const [token, setToken] = useState<string | undefined>(initialToken);
+  const [invitation, setInvitation] = useState<InvitationInfo | null>(() => {
+    if (initialInvitation) return initialInvitation;
+    if (initialGuestName) return { guestName: initialGuestName };
+    return null;
+  });
 
   useEffect(() => {
-    // Also read direct guest name from URL parameters (e.g. ?to=..., ?name=..., ?guest=...)
+    let resolvedToken = token;
     if (typeof window !== "undefined") {
       const searchParams = new URLSearchParams(window.location.search);
       const urlGuestName = searchParams.get("to") || searchParams.get("name") || searchParams.get("guest") || searchParams.get("for");
+      const urlToken = searchParams.get("invite") || searchParams.get("token");
+
       if (urlGuestName) {
         setInvitation((prev) => ({
           ...prev,
           guestName: urlGuestName,
         }));
       }
+
+      if (urlToken && urlToken !== resolvedToken) {
+        resolvedToken = urlToken;
+        setToken(urlToken);
+      }
     }
 
-    if (!token) return;
+    if (!resolvedToken) return;
     let active = true;
-    fetch(`/api/public/invitations/${encodeURIComponent(token)}`)
+    fetch(`/api/public/invitations/${encodeURIComponent(resolvedToken)}`)
       .then((response) => (response.ok ? response.json() : Promise.reject()))
       .then((data) => {
         if (active && data.invitation) {
@@ -51,15 +63,17 @@ export function InvitationProvider({
         }
       })
       .catch(() => {
-        // preserve previous guestName if set
+        // preserve previous state if already present
       });
     return () => {
       active = false;
     };
   }, [token]);
 
+  const hasToken = Boolean(token || invitation?.invitationType);
+
   return (
-    <InvitationContext.Provider value={{ invitation, hasToken: Boolean(token), token }}>
+    <InvitationContext.Provider value={{ invitation, hasToken, token }}>
       {children}
     </InvitationContext.Provider>
   );

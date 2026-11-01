@@ -115,22 +115,15 @@ export async function handleTelegramUpdate(update: any, botToken: string, baseUr
           [venueKey]: !session.venues[venueKey as keyof VenueSelection],
         };
 
-        // Ensure at least one venue remains selected
-        if (!nextVenues.church && !nextVenues.basseleal && !nextVenues.bethel) {
-          await callTelegramApi(botToken, "answerCallbackQuery", {
-            callback_query_id: cb.id,
-            text: "Please keep at least one venue selected.",
-            show_alert: false,
-          });
-          return;
-        }
-
         session.venues = nextVenues;
         saveSession(sessionId, session);
 
+        const hasAny = nextVenues.church || nextVenues.basseleal || nextVenues.bethel;
         await callTelegramApi(botToken, "answerCallbackQuery", {
           callback_query_id: cb.id,
-          text: `Updated: ${getInvitationTypeLabel(venuesToInvitationType(nextVenues))}`,
+          text: hasAny
+            ? `Updated: ${getInvitationTypeLabel(venuesToInvitationType(nextVenues))}`
+            : "No venue selected. Tap at least one venue.",
         });
 
         await callTelegramApi(botToken, "editMessageText", {
@@ -153,6 +146,15 @@ export async function handleTelegramUpdate(update: any, botToken: string, baseUr
         await callTelegramApi(botToken, "answerCallbackQuery", {
           callback_query_id: cb.id,
           text: "Session expired. Please type the guest name again.",
+          show_alert: true,
+        });
+        return;
+      }
+
+      if (!session.venues.church && !session.venues.basseleal && !session.venues.bethel) {
+        await callTelegramApi(botToken, "answerCallbackQuery", {
+          callback_query_id: cb.id,
+          text: "⚠️ Please select at least one venue (Church, Basseleal, or Bethel) before generating.",
           show_alert: true,
         });
         return;
