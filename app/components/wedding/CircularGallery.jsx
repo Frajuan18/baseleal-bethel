@@ -892,6 +892,30 @@ const CircularGallery = ({
       setSlot(nearest());
     };
 
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isHorizontalTouch = false;
+
+    const onTouchStart = event => {
+      if (event.touches.length !== 1) return;
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+      isHorizontalTouch = false;
+    };
+
+    const onTouchMove = event => {
+      if (event.touches.length !== 1) return;
+      const dx = event.touches[0].clientX - touchStartX;
+      const dy = event.touches[0].clientY - touchStartY;
+      if (!isHorizontalTouch && Math.hypot(dx, dy) > 6) {
+        isHorizontalTouch = Math.abs(dx) >= Math.abs(dy);
+      }
+      if (isHorizontalTouch && event.cancelable) {
+        // Prevent iOS Safari edge-swipe back/forward gesture from canceling horizontal dragging
+        event.preventDefault();
+      }
+    };
+
     const onPointerDown = event => {
       if (event.button !== 0 || event.target.closest('[data-gallery-close]')) return;
       const p = point(event);
@@ -913,13 +937,17 @@ const CircularGallery = ({
       if (drag && drag.id === event.pointerId) {
         const dx = event.clientX - drag.x0;
         const dy = event.clientY - drag.y0;
-        if (!drag.moved && Math.hypot(dx, dy) > 6) {
-          if (Math.abs(dy) > Math.abs(dx) && event.pointerType !== 'mouse') {
+        if (!drag.moved && Math.hypot(dx, dy) > 5) {
+          if (Math.abs(dy) > Math.abs(dx) * 1.25 && event.pointerType !== 'mouse') {
             state.drag = null;
             return;
           }
           drag.moved = true;
-          container.setPointerCapture?.(event.pointerId);
+          try {
+            container.setPointerCapture?.(event.pointerId);
+          } catch {
+            // ignore WebKit pointer capture errors
+          }
           container.setAttribute('data-dragging', '');
           setPointer(null);
         }
@@ -940,7 +968,11 @@ const CircularGallery = ({
       if (!drag || drag.id !== event.pointerId) return;
       state.drag = null;
       container.removeAttribute('data-dragging');
-      if (container.hasPointerCapture?.(event.pointerId)) container.releasePointerCapture(event.pointerId);
+      try {
+        if (container.hasPointerCapture?.(event.pointerId)) container.releasePointerCapture(event.pointerId);
+      } catch {
+        // ignore
+      }
       if (drag.moved) {
         const samples = drag.samples;
         if (samples.length > 1) {
@@ -964,12 +996,26 @@ const CircularGallery = ({
         setSlot(card.slot);
         return;
       }
-      if (state.open > 0.5 && card.slot === state.active) close();
-      else openSlot(card.slot);
+      // Click on image to zoom in / zoom out
+      if (state.open > 0.5) {
+        close();
+      } else {
+        openSlot(card.slot);
+      }
     };
 
     const onPointerCancel = event => {
       if (state.drag && state.drag.id === event.pointerId) {
+        if (state.drag.moved) {
+          const samples = state.drag.samples;
+          if (samples.length > 1) {
+            const a = samples[0];
+            const b = samples[samples.length - 1];
+            const span = Math.max(b.t - a.t, 16);
+            const speed = ((b.x - a.x) / span) * 1000;
+            state.target -= speed * 0.18 * (settingsRef.current.scrollSpeed / 2);
+          }
+        }
         state.drag = null;
         container.removeAttribute('data-dragging');
         snapNow();
@@ -1102,6 +1148,8 @@ const CircularGallery = ({
     );
     intersection.observe(container);
     window.addEventListener('scroll', wake, { passive: true });
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchmove', onTouchMove, { passive: false });
     container.addEventListener('pointerdown', onPointerDown);
     container.addEventListener('pointermove', onPointerMove);
     container.addEventListener('pointerup', onPointerUp);
@@ -1152,6 +1200,8 @@ const CircularGallery = ({
       resizeObserver.disconnect();
       intersection.disconnect();
       window.removeEventListener('scroll', wake);
+      container.removeEventListener('touchstart', onTouchStart);
+      container.removeEventListener('touchmove', onTouchMove);
       container.removeEventListener('pointerdown', onPointerDown);
       container.removeEventListener('pointermove', onPointerMove);
       container.removeEventListener('pointerup', onPointerUp);
@@ -1196,19 +1246,6 @@ const CircularGallery = ({
       <div ref={captionRef} className={CLASSES.caption} aria-hidden={!open}>
         {current?.description && <p className={CLASSES.captionText}>{current.description}</p>}
       </div>
-      <button
-        type="button"
-        className={CLASSES.close}
-        data-gallery-close=""
-        data-visible={open ? '' : undefined}
-        tabIndex={open ? 0 : -1}
-        aria-label="Close"
-        onClick={() => engineRef.current?.close()}
-      >
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-          <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-        </svg>
-      </button>
       <ul className={CLASSES.hidden} data-gallery-list="">
         {list.map((item, index) => (
           <li key={`${item.image}-${index}`}>

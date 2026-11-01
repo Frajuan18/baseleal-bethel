@@ -284,21 +284,29 @@ export function IntroLoader() {
 
         {/* 3D Flipping Card Container (Flips from Amharic front to English back) */}
         <div
-          className={`relative z-10 w-full max-w-[540px] sm:max-w-[620px] md:max-w-[680px] aspect-[1247/1261] max-h-[92vh] sm:max-h-[90vh] transition-all duration-1000 ease-out transform ${
+          className={`relative z-10 w-full max-w-[540px] sm:max-w-[620px] md:max-w-[680px] aspect-[1247/1261] max-h-[92vh] sm:max-h-[90vh] transition-all duration-1000 ease-out transform drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)] ${
             phase === "revealing"
               ? "opacity-0 scale-[0.96] blur-xs"
               : isCardVisible
               ? "opacity-100 scale-100 translate-y-0"
               : "opacity-0 scale-[0.96] translate-y-2"
           }`}
-          style={{ perspective: "1600px" }}
+          style={{
+            perspective: "1600px",
+            WebkitPerspective: "1600px",
+          }}
         >
           {/* Card Body with 3D Flip */}
           <div
             className="relative w-full h-full transition-transform duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
             style={{
               transformStyle: "preserve-3d",
+              WebkitTransformStyle: "preserve-3d",
               transform:
+                phase === "card-english" || phase === "revealing"
+                  ? "rotateY(180deg)"
+                  : "rotateY(0deg)",
+              WebkitTransform:
                 phase === "card-english" || phase === "revealing"
                   ? "rotateY(180deg)"
                   : "rotateY(0deg)",
@@ -310,6 +318,8 @@ export function IntroLoader() {
               style={{
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
+                transform: "translate3d(0, 0, 1px)",
+                WebkitTransform: "translate3d(0, 0, 1px)",
               }}
             >
               {/* Ornate intro card background */}
@@ -321,7 +331,7 @@ export function IntroLoader() {
                   priority
                   unoptimized
                   sizes="(max-width: 640px) 98vw, 680px"
-                  className="object-contain pointer-events-none select-none filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)]"
+                  className="object-contain pointer-events-none select-none"
                 />
               </div>
 
@@ -364,7 +374,8 @@ export function IntroLoader() {
               style={{
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
-                transform: "rotateY(180deg)",
+                transform: "rotateY(180deg) translate3d(0, 0, 1px)",
+                WebkitTransform: "rotateY(180deg) translate3d(0, 0, 1px)",
               }}
             >
               {/* Ornate intro card background */}
@@ -376,7 +387,7 @@ export function IntroLoader() {
                   priority
                   unoptimized
                   sizes="(max-width: 640px) 98vw, 680px"
-                  className="object-contain pointer-events-none select-none filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)]"
+                  className="object-contain pointer-events-none select-none"
                 />
               </div>
 

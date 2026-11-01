@@ -498,7 +498,7 @@ export default function DirectionsAdminPage() {
                   rows={3}
                   value={locations.basselealHome.noteAm || ""}
                   onChange={(e) => handleChange("basselealHome", "noteAm", e.target.value)}
-                  placeholder="ለምሳሌ፡ የከሰዓቱ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።"
+                  placeholder="ለምሳሌ፡ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።"
                   className="w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] p-3 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -632,7 +632,7 @@ export default function DirectionsAdminPage() {
                   rows={3}
                   value={locations.bethelHome.noteAm || ""}
                   onChange={(e) => handleChange("bethelHome", "noteAm", e.target.value)}
-                  placeholder="ለምሳሌ፡ የከሰዓቱ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።"
+                  placeholder="ለምሳሌ፡ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።"
                   className="w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] p-3 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>

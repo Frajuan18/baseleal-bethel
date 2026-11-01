@@ -116,7 +116,7 @@ export function WeddingCalendar() {
 
         <div data-seq="rise" style={seq("0.25s")} className="min-w-0 pt-4 sm:pt-6 lg:pt-0">
           <p className={`${isAmharic ? "font-jegna-title amharic-title text-xs sm:text-sm tracking-wide" : "font-brittany-signature text-[1.5rem] leading-none sm:text-2xl"} text-[#8C6A3B]`}>
-            {isAmharic ? "አንድ የምንሆንባትንና የቃል ኪዳናችንን ቀን በጉጉት እየጠበቅን…" : "Counting down to the moment we say “I do”"}
+            {isAmharic ? "አንድ የምንሆንበት እና የቃል ኪዳናችንን ቀን በጉጉት እየጠበቅን…" : "Counting down to the moment we say “I do”"}
           </p>
           <div className="mx-auto mt-8 w-full max-w-none lg:mx-0 lg:max-w-[820px]"><FlipCountdownDisplay /></div>
         </div>
