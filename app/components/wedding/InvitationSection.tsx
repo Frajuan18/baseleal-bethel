@@ -234,35 +234,6 @@ export function InvitationSection() {
                 {/* Prominently Positioned Time Indications */}
                 <div data-seq="rise" style={seq("0.46s", "850ms", "8px")} className="pt-1">
                   <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5">
-                    {/* Church Time Badge */}
-                    {hasChurch && (
-                      <div className="inline-flex items-center gap-2.5 sm:gap-3 rounded-xl border border-[#8C6A3B]/40 bg-[#FAF5EE] px-3.5 py-2 shadow-[0_2px_8px_rgba(43,24,16,0.06)]">
-                        <div className="flex flex-col text-left leading-tight">
-                          <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.18em] font-bold text-[#7C5A32]">
-                            {isAmharic ? "ቤተክርስቲያን" : "Church"}
-                          </span>
-                          <span className="text-[9px] sm:text-[10px] text-[#8C6A3B] font-medium tracking-wider mt-0.5">
-                            {isAmharic ? "ከሰዓት" : "Ceremony"}
-                          </span>
-                        </div>
-                        <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
-                        <div className="flex items-baseline gap-1">
-                          <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
-                            {churchDigits}
-                          </span>
-                          {isAmharic ? (
-                            <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
-                              {churchUnit}
-                            </span>
-                          ) : (
-                            <span className="font-sans text-xs font-bold text-[#5A3E26] uppercase ml-0.5">
-                              {churchUnit}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
                     {/* Basseleal's Home Time Badge */}
                     {hasBasseleal && (
                       <div className="inline-flex items-center gap-2.5 sm:gap-3 rounded-xl border border-[#8C6A3B]/40 bg-[#FAF5EE] px-3.5 py-2 shadow-[0_2px_8px_rgba(43,24,16,0.06)]">
@@ -320,6 +291,35 @@ export function InvitationSection() {
                         </div>
                       </div>
                     )}
+
+                    {/* Church Time Badge */}
+                    {hasChurch && (
+                      <div className="inline-flex items-center gap-2.5 sm:gap-3 rounded-xl border border-[#8C6A3B]/40 bg-[#FAF5EE] px-3.5 py-2 shadow-[0_2px_8px_rgba(43,24,16,0.06)]">
+                        <div className="flex flex-col text-left leading-tight">
+                          <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.18em] font-bold text-[#7C5A32]">
+                            {isAmharic ? "ቤተክርስቲያን" : "Church"}
+                          </span>
+                          <span className="text-[9px] sm:text-[10px] text-[#8C6A3B] font-medium tracking-wider mt-0.5">
+                            {isAmharic ? "ከሰዓት" : "Ceremony"}
+                          </span>
+                        </div>
+                        <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
+                        <div className="flex items-baseline gap-1">
+                          <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
+                            {churchDigits}
+                          </span>
+                          {isAmharic ? (
+                            <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
+                              {churchUnit}
+                            </span>
+                          ) : (
+                            <span className="font-sans text-xs font-bold text-[#5A3E26] uppercase ml-0.5">
+                              {churchUnit}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -327,30 +327,30 @@ export function InvitationSection() {
                 <div data-seq="rise" style={seq("0.52s", "850ms", "8px")} className="space-y-1 pt-1">
                   <div className="inline-block rounded-lg bg-[#8C6A3B]/10 border border-[#8C6A3B]/25 px-3 py-1.5 shadow-[0_2px_8px_rgba(43,24,16,0.05)]">
                     <p className="font-editorial-serif text-xs sm:text-[13px] md:text-sm font-bold text-[#1E140E] tracking-wide leading-snug">
-                      {hasChurch && (
-                        <>
-                          <span className={isAmharic ? "font-jegna-title" : ""}>
-                            {isAmharic ? "ሀልዎት አማኑኤል ህብረት ቤተክርስቲያን" : "Halwot Emmanuel United Church"}
-                          </span>
-                          <span className="font-benaiah text-sm sm:text-base md:text-lg font-bold text-[#8C6A3B] mx-1">
-                            {isAmharic ? `(${churchDigits} ${churchUnit})` : `(${churchDigits} ${churchUnit})`}
-                          </span>
-                        </>
-                      )}
-                      {hasChurch && hasAnyHome && (
-                        <span className="text-[#8C6A3B] font-light mx-1">&amp;</span>
-                      )}
                       {hasAnyHome && (
                         <>
-                          <span className={`ml-1 ${isAmharic ? "font-jegna-title" : ""}`}>
+                          <span className={isAmharic ? "font-jegna-title" : ""}>
                             {hasBothHomes
                               ? (isAmharic ? "ባስልኤል እና ቤቴል ቤት" : "Basseleal & Bethel's House")
                               : hasBasseleal
                               ? (isAmharic ? "ባስልኤል ቤት" : "Basseleal's House")
                               : (isAmharic ? "ቤቴል ቤት" : "Bethel's House")}
                           </span>
-                          <span className="font-benaiah text-sm sm:text-base md:text-lg font-bold text-[#8C6A3B] ml-1">
+                          <span className="font-benaiah text-sm sm:text-base md:text-lg font-bold text-[#8C6A3B] mx-1">
                             {isAmharic ? `(${homeDigits} ${homeUnit})` : `(${homeDigits} ${homeUnit})`}
+                          </span>
+                        </>
+                      )}
+                      {hasAnyHome && hasChurch && (
+                        <span className="text-[#8C6A3B] font-light mx-1">&amp;</span>
+                      )}
+                      {hasChurch && (
+                        <>
+                          <span className={`ml-1 ${isAmharic ? "font-jegna-title" : ""}`}>
+                            {isAmharic ? "ሀልዎት አማኑኤል ህብረት ቤተክርስቲያን" : "Halwot Emmanuel United Church"}
+                          </span>
+                          <span className="font-benaiah text-sm sm:text-base md:text-lg font-bold text-[#8C6A3B] ml-1">
+                            {isAmharic ? `(${churchDigits} ${churchUnit})` : `(${churchDigits} ${churchUnit})`}
                           </span>
                         </>
                       )}
@@ -366,16 +366,16 @@ export function InvitationSection() {
                   <p className={`w-full leading-relaxed ${isAmharic ? "font-benaiah text-[13.5px] sm:text-[14.5px]" : "font-editorial-serif text-[13.5px] sm:text-[14.5px] italic"}`}>
                     {hasChurch && hasAnyHome ? (
                       isAmharic
-                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትንና አብረን አዲሱን ህይወታችንን የምንጀምርበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ ${churchDigits} ${churchUnit} (በኢትዮጵያ አቆጣጠር)፣ በመቀጠልም ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ ${homeDigits} ${homeUnit} ጀምሮ በሚደረገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
-                        : `Together with our families, we warmly invite you to join us at Halwot Emmanuel United Church at ${churchDigits} ${churchUnit} and ${hasBothHomes ? "home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at ${homeDigits} ${homeUnit} as we exchange our vows and begin our life together.`
-                    ) : hasChurch ? (
-                      isAmharic
-                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ ${churchDigits} ${churchUnit} (በኢትዮጵያ አቆጣጠር) ላይ ተገኝተው አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
-                        : `Together with our families, we warmly invite you to Halwot Emmanuel United Church at ${churchDigits} ${churchUnit} as we exchange our vows.`
-                    ) : (
+                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ ${homeDigits} ${homeUnit} ጀምሮ በሚደረገው ደማቅ ዝግጅት፣ በመቀጠልም ቃል ኪዳን የምንገባበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ ${churchDigits} ${churchUnit} (በኢትዮጵያ አቆጣጠር) ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
+                        : `Together with our families, we warmly invite you to join ${hasBothHomes ? "our home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at ${homeDigits} ${homeUnit} and our church wedding ceremony at Halwot Emmanuel United Church at ${churchDigits} ${churchUnit} as we exchange our vows and begin our life together.`
+                    ) : hasAnyHome ? (
                       isAmharic
                         ? `ከቤተሰቦቻችን ጋር በመሆን፣ ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ ${homeDigits} ${homeUnit} ጀምሮ በሚደረገው የቤት አቀባበል ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
                         : `Together with our families, we warmly invite you to join ${hasBothHomes ? "our home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at ${homeDigits} ${homeUnit} as we begin our life together.`
+                    ) : (
+                      isAmharic
+                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ ${churchDigits} ${churchUnit} (በኢትዮጵያ አቆጣጠር) ላይ ተገኝተው አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
+                        : `Together with our families, we warmly invite you to Halwot Emmanuel United Church at ${churchDigits} ${churchUnit} as we exchange our vows.`
                     )}
                   </p>
                 </div>

@@ -34,8 +34,8 @@ export function IntroLoader() {
     if (!video) return;
 
     const isLarge = window.innerWidth >= 768;
-    const target = isLarge ? "/loader large screen.mp4#t=0.001" : "/loader.mp4#t=0.001";
-    const filename = isLarge ? "loader%20large%20screen.mp4" : "loader.mp4";
+    const target = isLarge ? "/loader large screen.mp4#t=0.001" : "/main loader animation.mp4#t=0.001";
+    const filename = isLarge ? "loader%20large%20screen.mp4" : "main%20loader%20animation.mp4";
     if (!video.src.includes(filename)) {
       video.src = target;
       video.load();
@@ -45,8 +45,8 @@ export function IntroLoader() {
     const handleResize = () => {
       if (phase === "idle" && videoRef.current) {
         const desktop = window.innerWidth >= 768;
-        const next = desktop ? "/loader large screen.mp4#t=0.001" : "/loader.mp4#t=0.001";
-        const nextFile = desktop ? "loader%20large%20screen.mp4" : "loader.mp4";
+        const next = desktop ? "/loader large screen.mp4#t=0.001" : "/main loader animation.mp4#t=0.001";
+        const nextFile = desktop ? "loader%20large%20screen.mp4" : "main%20loader%20animation.mp4";
         if (!videoRef.current.src.includes(nextFile)) {
           videoRef.current.src = next;
           videoRef.current.load();
@@ -70,17 +70,20 @@ export function IntroLoader() {
       return;
     }
     setPhase("playing");
+
+    // Immediately trigger background music on this user interaction so the song continues uninterrupted
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("play-wedding-song"));
+    }
+
     try {
       video.currentTime = 0;
-      video.muted = false;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.volume = 0;
       await video.play();
     } catch {
-      try {
-        video.muted = true;
-        await video.play();
-      } catch {
-        setPhase("card-amharic");
-      }
+      setPhase("card-amharic");
     }
   }, []);
 
@@ -151,7 +154,7 @@ export function IntroLoader() {
       {/* Video layer: Envelope opening */}
       <video
         ref={videoRef}
-        src="/loader.mp4#t=0.001"
+        src="/main loader animation.mp4#t=0.001"
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
           isCardVisible ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
@@ -160,6 +163,62 @@ export function IntroLoader() {
         preload="auto"
         onEnded={handleVideoEnded}
       />
+
+      {/* Tap Guide Overlay on Intro Video (shown during idle phase) */}
+      {phase === "idle" && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-14 sm:bottom-20 z-20 flex flex-col items-center justify-center px-4 animate-in fade-in duration-700">
+          <div className="relative pointer-events-auto flex items-center gap-3.5 rounded-full border border-[#E6C687]/80 bg-[#24130B]/90 px-6 py-3.5 text-[#FAF6F0] shadow-[0_16px_48px_rgba(0,0,0,0.7)] backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer">
+            {/* Glowing Pulse Rings */}
+            <span className="absolute -inset-1 rounded-full bg-[#E6C687]/30 animate-pulse pointer-events-none" />
+            <span className="absolute -inset-2.5 rounded-full bg-[#E6C687]/15 animate-ping pointer-events-none" />
+
+            {/* Tap Icon */}
+            <div className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#E6C687] text-[#24130B] shadow-sm">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <path d="M14 11V5a2 2 0 0 0-4 0v9" />
+                <path d="M10 9a2 2 0 0 0-4 0v4a7 7 0 0 0 14 0v-4a2 2 0 0 0-4 0" />
+                <path d="M10 14h4" />
+              </svg>
+            </div>
+
+            {/* Bilingual Guide Labels */}
+            <div className="relative text-left pr-1 select-none">
+              <p className="font-balderasu text-sm sm:text-base font-bold tracking-wider text-[#FAF6F0] leading-tight">
+                መጋበዣውን ለመክፈት ይጫኑ
+              </p>
+              <p className="font-sans text-[10px] sm:text-[11px] font-semibold tracking-[0.16em] uppercase text-[#E6C687] leading-tight mt-0.5">
+                Tap to Open Invitation
+              </p>
+            </div>
+
+            {/* Arrow */}
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="relative text-[#E6C687] transition-transform duration-200 group-hover:translate-x-1"
+              aria-hidden
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </div>
+      )}
 
       {/* Invitation Card Overlay with Blurred Couple Image Background */}
       <div
@@ -182,106 +241,136 @@ export function IntroLoader() {
           <div className="absolute inset-0 bg-[#26150e]/50 backdrop-blur-xs" />
         </div>
 
-        {/* White stationery card with no outside border, deep box shadow, and no corner stars */}
+        {/* 3D Flipping Card Container (Flips from Amharic front to English back) */}
         <div
-          className={`relative z-10 flex flex-col items-center justify-center w-full max-w-[560px] px-6 py-8 sm:px-10 sm:py-10 rounded-2xl border-0 bg-white shadow-[0_30px_70px_-15px_rgba(0,0,0,0.55),0_15px_30px_-10px_rgba(0,0,0,0.3)] text-center overflow-hidden transition-all duration-1000 ease-out transform ${
+          className={`relative z-10 w-full max-w-[500px] sm:max-w-[580px] md:max-w-[640px] aspect-[1247/1261] max-h-[89vh] transition-all duration-1000 ease-out transform ${
             phase === "revealing"
               ? "opacity-0 scale-[0.96] blur-xs"
               : isCardVisible
               ? "opacity-100 scale-100 translate-y-0"
               : "opacity-0 scale-[0.96] translate-y-2"
           }`}
+          style={{ perspective: "1600px" }}
         >
-          {/* Subtle paper noise texture on the card surface */}
+          {/* Card Body with 3D Flip */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-multiply select-none"
+            className="relative w-full h-full transition-transform duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cardPaperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cardPaperNoise)'/%3E%3C/svg%3E")`,
-            }}
-            aria-hidden
-          />
-
-          {/* Unified Grid Container: Guarantees zero layout shift / jumping during language crossfade */}
-          <div className="relative z-10 grid grid-cols-1 grid-rows-1 w-full items-center justify-center">
-            
-            {/* Amharic Slide (7 seconds) */}
-            <div
-              className={`col-start-1 row-start-1 flex flex-col items-center text-center transition-opacity duration-700 ease-in-out ${
-                phase === "card-amharic" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-              }`}
-            >
-              {/* Top: Large prominent "ተጋብዘዋል" */}
-              <div className="w-full">
-                <p className="font-balderasu text-lg sm:text-xl md:text-2xl font-bold tracking-[0.22em] text-[#8C6A3B] uppercase">
-                  ተጋብዘዋል
-                </p>
-              </div>
-
-              {/* Middle: Couple Names */}
-              <div className="mt-4 sm:mt-5 flex flex-col items-center">
-                <h2 className="font-jegna-title text-4xl sm:text-5xl md:text-6xl text-[#2B1810] leading-[1.2] tracking-wide text-center">
-                  ባስልኤል እና ቤቴል
-                </h2>
-              </div>
-
-              {/* Verse */}
-              <div className="mt-4 sm:mt-5 max-w-[440px] space-y-1.5 text-center">
-                <p className="font-balderasu text-[11px] sm:text-xs text-[#8C6A3B] font-semibold tracking-wide">
-                  ኦሪት ዘፍጥረት 35:3
-                </p>
-                <p className="font-balderasu text-xs sm:text-sm leading-relaxed text-[#4A3527]">
-                  “ተነሥተን ወደ ቤቴል እንውጣ፤ እዚያም በመከራዬ ጊዜ ለሰማኝ፣ በሄድሁበትም ስፍራ ሁሉ ላልተለየኝ አምላክ መሠዊያ እሠራለሁ።”
-                </p>
-              </div>
-
-              {/* Bottom: Big, Noticeable Wedding Date */}
-              <div className="mt-5 sm:mt-6 pt-3.5 sm:pt-4 border-t border-[#E5DAC8] w-full flex flex-col items-center">
-                <p className="font-balderasu text-base sm:text-lg md:text-xl font-bold tracking-[0.14em] text-[#8C6A3B]">
-                  ቅዳሜ፣ ታህሳስ 17 ቀን 2019 ዓ.ም
-                </p>
-              </div>
-            </div>
-
-            {/* English Slide (7 seconds) */}
-            <div
-              className={`col-start-1 row-start-1 flex flex-col items-center text-center transition-opacity duration-700 ease-in-out ${
+              transformStyle: "preserve-3d",
+              transform:
                 phase === "card-english" || phase === "revealing"
-                  ? "opacity-100 pointer-events-auto"
-                  : "opacity-0 pointer-events-none"
-              }`}
+                  ? "rotateY(180deg)"
+                  : "rotateY(0deg)",
+            }}
+          >
+            {/* FRONT FACE: AMHARIC */}
+            <div
+              className="absolute inset-0 w-full h-full select-none"
+              style={{
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+              }}
             >
-              {/* Top: Large prominent "YOU ARE INVITED" */}
-              <div className="w-full">
-                <p className="font-sans text-base sm:text-lg md:text-xl font-bold tracking-[0.28em] text-[#8C6A3B] uppercase">
-                  YOU ARE INVITED
-                </p>
+              {/* Ornate intro card background */}
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src="/intro card.png"
+                  alt="Wedding invitation stationery card"
+                  fill
+                  priority
+                  unoptimized
+                  sizes="(max-width: 640px) 95vw, 640px"
+                  className="object-contain pointer-events-none select-none filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)]"
+                />
               </div>
 
-              {/* Middle: Couple Names */}
-              <div className="mt-4 sm:mt-5 flex flex-col items-center">
-                <h2 className="font-brittany-signature text-5xl sm:text-6xl md:text-7xl text-[#2B1810] leading-[1.1] text-center">
-                  Basseleal & Bethel
-                </h2>
-              </div>
+              {/* Front Content: Amharic (Centred vertically and horizontally clear of floral corner borders) */}
+              <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-6 sm:p-8 md:p-10 text-center select-none">
+                <div className="flex flex-col items-center justify-center w-full max-w-[330px] sm:max-w-[400px] md:max-w-[460px] mx-auto">
+                  {/* Top: Header */}
+                  <p className="font-balderasu text-sm sm:text-base md:text-lg font-bold tracking-[0.24em] text-[#8C6A3B] uppercase">
+                    ተጋብዘዋል
+                  </p>
 
-              {/* Verse */}
-              <div className="mt-4 sm:mt-5 max-w-[450px] space-y-1.5 text-center">
-                <p className="font-sans text-[10px] sm:text-[11px] uppercase tracking-[0.24em] text-[#8C6A3B] font-semibold">
-                  GENESIS 35:3
-                </p>
-                <p className="font-editorial-serif italic text-sm sm:text-base leading-relaxed text-[#4A3527]">
-                  “Then come, let us go up to Bethel, where I will build an altar to God, who answered me in the day of my distress and who has been with me wherever I have gone.”
-                </p>
-              </div>
+                  {/* Middle: Names */}
+                  <h2 className="font-jegna-title text-3xl sm:text-4xl md:text-5xl text-[#2B1810] leading-[1.2] tracking-wide text-center mt-3.5 sm:mt-5">
+                    ባስልኤል እና ቤቴል
+                  </h2>
 
-              {/* Bottom: Big, Noticeable Wedding Date */}
-              <div className="mt-5 sm:mt-6 pt-3.5 sm:pt-4 border-t border-[#E5DAC8] w-full flex flex-col items-center">
-                <p className="font-sans text-sm sm:text-base md:text-lg font-bold tracking-[0.22em] text-[#8C6A3B] uppercase">
-                  Saturday, December 26, 2026
-                </p>
+                  {/* Scripture */}
+                  <div className="mt-3.5 sm:mt-5 space-y-1 text-center">
+                    <p className="font-balderasu text-xs sm:text-sm text-[#8C6A3B] font-semibold tracking-wider">
+                      ኦሪት ዘፍጥረት 35:3
+                    </p>
+                    <p className="font-balderasu text-xs sm:text-sm md:text-[15px] leading-relaxed text-[#4A3527]">
+                      “ተነሥተን ወደ ቤቴል እንውጣ፤ እዚያም በመከራዬ ጊዜ ለሰማኝ፣ በሄድሁበትም ስፍራ ሁሉ ላልተለየኝ አምላክ መሠዊያ እሠራለሁ።”
+                    </p>
+                  </div>
+
+                  {/* Bottom: Date */}
+                  <div className="w-full mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-[#8C6A3B]/25">
+                    <p className="font-balderasu text-sm sm:text-base md:text-lg font-bold tracking-[0.16em] text-[#8C6A3B]">
+                      ቅዳሜ፣ ታህሳስ 17 ቀን 2019 ዓ.ም
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
+            {/* BACK FACE: ENGLISH */}
+            <div
+              className="absolute inset-0 w-full h-full select-none"
+              style={{
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+                transform: "rotateY(180deg)",
+              }}
+            >
+              {/* Ornate intro card background */}
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src="/intro card.png"
+                  alt="Wedding invitation stationery card back"
+                  fill
+                  priority
+                  unoptimized
+                  sizes="(max-width: 640px) 95vw, 640px"
+                  className="object-contain pointer-events-none select-none filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)]"
+                />
+              </div>
+
+              {/* Back Content: English (Centred vertically and horizontally clear of floral corner borders) */}
+              <div className="relative z-10 flex h-full w-full flex-col items-center justify-center p-6 sm:p-8 md:p-10 text-center select-none">
+                <div className="flex flex-col items-center justify-center w-full max-w-[330px] sm:max-w-[400px] md:max-w-[460px] mx-auto">
+                  {/* Top: Header */}
+                  <p className="font-sans text-xs sm:text-sm md:text-base font-bold tracking-[0.3em] text-[#8C6A3B] uppercase">
+                    YOU ARE INVITED
+                  </p>
+
+                  {/* Middle: Names */}
+                  <h2 className="font-brittany-signature text-4xl sm:text-5xl md:text-6xl text-[#2B1810] leading-[1.15] text-center mt-3.5 sm:mt-5">
+                    Basseleal &amp; Bethel
+                  </h2>
+
+                  {/* Scripture */}
+                  <div className="mt-3.5 sm:mt-5 space-y-1 text-center">
+                    <p className="font-sans text-[10px] sm:text-[11px] md:text-xs uppercase tracking-[0.24em] text-[#8C6A3B] font-semibold">
+                      GENESIS 35:3
+                    </p>
+                    <p className="font-editorial-serif italic text-xs sm:text-sm md:text-[15px] leading-relaxed text-[#4A3527]">
+                      “Then come, let us go up to Bethel, where I will build an altar to God, who answered me in the day of my distress and who has been with me wherever I have gone.”
+                    </p>
+                  </div>
+
+                  {/* Bottom: Date */}
+                  <div className="w-full mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-[#8C6A3B]/25">
+                    <p className="font-sans text-xs sm:text-sm md:text-base font-bold tracking-[0.24em] text-[#8C6A3B] uppercase">
+                      Saturday, December 26, 2026
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
