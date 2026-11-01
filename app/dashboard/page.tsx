@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Icon, type IconName } from "@/app/components/dashboard/Icon";
 import { InviteLinkActions } from "@/app/components/dashboard/InviteLinkActions";
+import { getInvitationTypeLabel } from "@/app/lib/venues";
 
 type Tab = "overview" | "guests" | "directions" | "wishes" | "invitations";
 type Stats = { total: number; attending: number; notAttending: number; pending: number; church: number; home: number };
@@ -644,9 +645,8 @@ function EmptyState({ title, text }: { title: string; text: string }) {
 }
 
 function invitationLabel(type?: string | null) {
-  if (type === "CHURCH_ONLY") return "Church only";
-  if (type === "CHURCH_AND_HOME") return "Church + home";
-  return "Public RSVP";
+  if (!type) return "Public RSVP";
+  return getInvitationTypeLabel(type);
 }
 
 function DirectionsSection() {
@@ -764,8 +764,8 @@ function DirectionsSection() {
                   <Icon name="home" className="h-4 w-4" />
                 </span>
                 <div>
-                  <h3 className="text-sm font-semibold text-[#1E140E]">Church Ceremony (9:00 LT)</h3>
-                  <p className="text-[11px] text-[#8C6A3B]">Halwot Emmanuel Church</p>
+                  <h3 className="text-sm font-semibold text-[#1E140E]">Church Ceremony (3:00 PM)</h3>
+                  <p className="text-[11px] text-[#8C6A3B]">Halwot Emmanuel United Church</p>
                 </div>
               </div>
               <a

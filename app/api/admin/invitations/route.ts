@@ -3,8 +3,9 @@ import { connectMongo } from "@/app/lib/mongo";
 import { AuditLog, Guest, Invitation, RSVP } from "@/app/lib/models";
 import { requireAdmin } from "@/app/lib/admin-api";
 import { createInvitationToken } from "@/app/lib/invitation-token";
+import { VALID_INVITATION_TYPES } from "@/app/lib/venues";
 
-const VALID_TYPES = ["CHURCH_ONLY", "CHURCH_AND_HOME", "CHURCH_AND_BASSELEAL", "CHURCH_AND_BETHEL", "CHURCH_AND_BOTH"];
+const VALID_TYPES = VALID_INVITATION_TYPES as readonly string[];
 
 export async function GET() {
   const auth = await requireAdmin();

@@ -87,9 +87,9 @@ export const wedding: WeddingConfig = {
   timeDisplay: "10:00 AM",
 
   // Venue & Location placeholders:
-  venue: "Halwot Emmanuel Church",
+  venue: "Halwot Emmanuel United Church",
   city: "Addis Ababa, Ethiopia",
-  address: "Halwot Emmanuel Church, Addis Ababa, Ethiopia",
+  address: "Halwot Emmanuel United Church, Addis Ababa, Ethiopia",
   directionsUrl: null, // e.g. "https://maps.google.com/..."
 
   // RSVP deadline:
@@ -98,14 +98,14 @@ export const wedding: WeddingConfig = {
   // Addresses shown on the personalized invitation.
   locations: {
     church: {
-      label: "Halwot Emmanuel Church",
-      labelAm: "ህልዎት አማኑኤል ቤተክርስቲያን",
-      address: "Halwot Emmanuel Church, Addis Ababa, Ethiopia",
-      addressAm: "ህልዎት አማኑኤል ቤተክርስቲያን፣ አዲስ አበባ፣ ኢትዮጵያ",
-      mapsQuery: "Halwot Emmanuel Church, Addis Ababa, Ethiopia",
+      label: "Halwot Emmanuel United Church",
+      labelAm: "ሀልዎት አማኑኤል ህብረት ቤተክርስቲያን",
+      address: "Halwot Emmanuel United Church, Addis Ababa, Ethiopia",
+      addressAm: "ሀልዎት አማኑኤል ህብረት ቤተክርስቲያን፣ አዲስ አበባ፣ ኢትዮጵያ",
+      mapsQuery: "Halwot Emmanuel United Church, Addis Ababa, Ethiopia",
       directionsUrl: null,
-      note: "Morning service begins at 9:00 AM (3:00 LT). Parking is available on church premises.",
-      noteAm: "የጧቱ ስነ-ስርዓት ከጠዋቱ 3:00 (9:00 LT) ይጀምራል። በቤተክርስቲያኑ ግቢ ውስጥ ሰፊ የመኪና ማቆሚያ ተዘጋጅቷል።",
+      note: "The ceremony begins at 3:00 pm. Parking is available on church premises.",
+      noteAm: "ሥነ-ሥርዓቱ ከቀኑ 9:00 ሰዓት ይጀምራል። በቤተክርስቲያኑ ግቢ ውስጥ ሰፊ የመኪና ማቆሚያ ተዘጋጅቷል።",
     },
     basselealHome: {
       label: "Basseleal's house",

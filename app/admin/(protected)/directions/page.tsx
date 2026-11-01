@@ -179,7 +179,7 @@ export default function DirectionsAdminPage() {
                   type="text"
                   value={locations.church.label}
                   onChange={(e) => handleChange("church", "label", e.target.value)}
-                  placeholder="e.g. Halwot Emmanuel Church"
+                  placeholder="e.g. Halwot Emmanuel United Church"
                   className="h-11 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3.5 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -192,7 +192,7 @@ export default function DirectionsAdminPage() {
                   type="text"
                   value={locations.church.labelAm}
                   onChange={(e) => handleChange("church", "labelAm", e.target.value)}
-                  placeholder="ለምሳሌ፡ ህልዎት አማኑኤል ቤተክርስቲያን"
+                  placeholder="ለምሳሌ፡ ሀልዎት አማኑኤል ህብረት ቤተክርስቲያን"
                   className="h-11 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3.5 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -205,7 +205,7 @@ export default function DirectionsAdminPage() {
                   type="text"
                   value={locations.church.address}
                   onChange={(e) => handleChange("church", "address", e.target.value)}
-                  placeholder="e.g. Halwot Emmanuel Church, Addis Ababa, Ethiopia"
+                  placeholder="e.g. Halwot Emmanuel United Church, Addis Ababa, Ethiopia"
                   className="h-11 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3.5 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -218,7 +218,7 @@ export default function DirectionsAdminPage() {
                   type="text"
                   value={locations.church.addressAm}
                   onChange={(e) => handleChange("church", "addressAm", e.target.value)}
-                  placeholder="ለምሳሌ፡ ህልዎት አማኑኤል ቤተክርስቲያን፣ አዲስ አበባ፣ ኢትዮጵያ"
+                  placeholder="ለምሳሌ፡ ሀልዎት አማኑኤል ህብረት ቤተክርስቲያን፣ አዲስ አበባ፣ ኢትዮጵያ"
                   className="h-11 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3.5 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -247,7 +247,7 @@ export default function DirectionsAdminPage() {
                   type="text"
                   value={locations.church.mapsQuery}
                   onChange={(e) => handleChange("church", "mapsQuery", e.target.value)}
-                  placeholder="e.g. Halwot Emmanuel Church, Addis Ababa or 9.0123, 38.7654"
+                  placeholder="e.g. Halwot Emmanuel United Church, Addis Ababa or 9.0123, 38.7654"
                   className="h-11 w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] px-3.5 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
                 <span className="mt-1 block text-[11px] text-[#8C6A3B]">
@@ -263,7 +263,7 @@ export default function DirectionsAdminPage() {
                   rows={3}
                   value={locations.church.note || ""}
                   onChange={(e) => handleChange("church", "note", e.target.value)}
-                  placeholder="e.g. Morning service begins at 9:00 AM (3:00 LT). Parking is available in the main church compound."
+                  placeholder="e.g. The ceremony begins at 3:00 pm. Parking is available in the main church compound."
                   className="w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] p-3 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>
@@ -276,7 +276,7 @@ export default function DirectionsAdminPage() {
                   rows={3}
                   value={locations.church.noteAm || ""}
                   onChange={(e) => handleChange("church", "noteAm", e.target.value)}
-                  placeholder="ለምሳሌ፡ የጧቱ ስነ-ስርዓት ከጠዋቱ 3:00 (9:00 LT) ይጀምራል። በቤተክርስቲያኑ ግቢ ውስጥ ሰፊ የመኪና ማቆሚያ ተዘጋጅቷል።"
+                  placeholder="ለምሳሌ፡ ሥነ-ሥርዓቱ ከቀኑ 9:00 ሰዓት ይጀምራል። በቤተክርስቲያኑ ግቢ ውስጥ ሰፊ የመኪና ማቆሚያ ተዘጋጅቷል።"
                   className="w-full rounded-xl border border-[#E1D9CF] bg-[#FBFAF8] p-3 text-sm outline-none transition focus:border-[#C2491A] focus:ring-2 focus:ring-[#C2491A]/15"
                 />
               </div>

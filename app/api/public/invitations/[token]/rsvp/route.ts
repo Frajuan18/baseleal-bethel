@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectMongo } from "@/app/lib/mongo";
 import { Guest, GuestWish, Invitation, RSVP } from "@/app/lib/models";
 import { hashInvitationToken } from "@/app/lib/invitation-token";
+import { parseInvitationVenues } from "@/app/lib/venues";
 
 async function handleInvitationRsvp(
   request: Request,
@@ -55,8 +56,11 @@ async function handleInvitationRsvp(
       await guest.save();
     }
 
-    const isChurchAndHome = ["CHURCH_AND_HOME", "CHURCH_AND_BOTH", "CHURCH_AND_BASSELEAL", "CHURCH_AND_BETHEL"].includes(invitation.invitationType);
-    const homeAttendance = isChurchAndHome ? Boolean(body.homeAttendance) : false;
+    const venues = parseInvitationVenues(invitation.invitationType);
+    const hasHome = venues.basseleal || venues.bethel;
+    const hasChurch = venues.church;
+    const churchAttendance = hasChurch ? Boolean(body.churchAttendance) : false;
+    const homeAttendance = hasHome ? Boolean(body.homeAttendance) : false;
     const wish = String(body.wish || body.note || "").trim().slice(0, 2000);
     const attendeeCount = attendance === "ATTENDING"
       ? Math.min(20, Math.max(1, Number(body.attendeeCount || body.guestCount) || 1))
@@ -69,7 +73,7 @@ async function handleInvitationRsvp(
         invitationId: invitation._id,
         attendanceStatus: attendance,
         attendeeCount,
-        churchAttendance: Boolean(body.churchAttendance),
+        churchAttendance,
         homeAttendance,
         wish,
       },

@@ -6,7 +6,11 @@ export type InvitationType =
   | "CHURCH_AND_HOME"
   | "CHURCH_AND_BASSELEAL"
   | "CHURCH_AND_BETHEL"
-  | "CHURCH_AND_BOTH";
+  | "CHURCH_AND_BOTH"
+  | "BASSELEAL_ONLY"
+  | "BETHEL_ONLY"
+  | "BASSELEAL_AND_BETHEL"
+  | string;
 
 export type AttendanceStatus = "ATTENDING" | "NOT_ATTENDING" | "PENDING";
 
@@ -22,7 +26,16 @@ const invitationSchema = new Schema({
   shareUrl: { type: String, maxlength: 200 },
   invitationType: {
     type: String,
-    enum: ["CHURCH_ONLY", "CHURCH_AND_HOME", "CHURCH_AND_BASSELEAL", "CHURCH_AND_BETHEL", "CHURCH_AND_BOTH"],
+    enum: [
+      "CHURCH_ONLY",
+      "CHURCH_AND_HOME",
+      "CHURCH_AND_BASSELEAL",
+      "CHURCH_AND_BETHEL",
+      "CHURCH_AND_BOTH",
+      "BASSELEAL_ONLY",
+      "BETHEL_ONLY",
+      "BASSELEAL_AND_BETHEL",
+    ],
     required: true,
   },
   status: { type: String, enum: ["ACTIVE", "REVOKED", "EXPIRED"], default: "ACTIVE", index: true },

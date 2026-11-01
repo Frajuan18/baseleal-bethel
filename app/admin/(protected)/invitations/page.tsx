@@ -4,30 +4,41 @@ import { FormEvent, useEffect, useState } from "react";
 import { AdminTabShell } from "../_components/AdminTabShell";
 import { Icon } from "@/app/components/dashboard/Icon";
 import { InviteLinkActions } from "@/app/components/dashboard/InviteLinkActions";
+import {
+  getInvitationTypeLabel,
+  venuesToInvitationType,
+  type VenueSelection,
+} from "@/app/lib/venues";
 
-type Invitation = { _id: string; createdAt: string; invitationType: string; status: string; shareUrl?: string; guestId?: { fullName?: string } };
-
-function getInvitationTypeLabel(type: string) {
-  switch (type) {
-    case "CHURCH_ONLY":
-      return "Church only";
-    case "CHURCH_AND_BASSELEAL":
-      return "Church + Basseleal's house";
-    case "CHURCH_AND_BETHEL":
-      return "Church + Bethel's house";
-    case "CHURCH_AND_BOTH":
-    case "CHURCH_AND_HOME":
-      return "Church + Both houses";
-    default:
-      return type;
-  }
-}
+type Invitation = {
+  _id: string;
+  createdAt: string;
+  invitationType: string;
+  status: string;
+  shareUrl?: string;
+  guestId?: { fullName?: string };
+};
 
 export default function InvitationsPage() {
   const [items, setItems] = useState<Invitation[]>([]);
   const [name, setName] = useState("");
-  const [type, setType] = useState("CHURCH_ONLY");
+  const [venues, setVenues] = useState<VenueSelection>({
+    church: true,
+    basseleal: false,
+    bethel: false,
+  });
   const [created, setCreated] = useState<{ url: string; guestName?: string } | null>(null);
+
+  const toggleVenue = (key: keyof VenueSelection) => {
+    setVenues((prev) => {
+      const next = { ...prev, [key]: !prev[key] };
+      // Keep at least one selected so the invitation has a valid destination
+      if (!next.church && !next.basseleal && !next.bethel) {
+        return prev;
+      }
+      return next;
+    });
+  };
 
   const load = () =>
     fetch("/api/admin/invitations")
@@ -41,10 +52,11 @@ export default function InvitationsPage() {
 
   async function submit(event: FormEvent) {
     event.preventDefault();
+    const invitationType = venuesToInvitationType(venues);
     const response = await fetch("/api/admin/invitations", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fullName: name, invitationType: type }),
+      body: JSON.stringify({ fullName: name, invitationType }),
     });
     if (response.ok) {
       const data = await response.json();
@@ -73,38 +85,140 @@ export default function InvitationsPage() {
       title="Invitation links"
       description="Create, assign venue directions (church & homes), and revoke personalised wedding access."
     >
-      <form onSubmit={submit} className="grid gap-2.5 rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:grid-cols-[1.4fr_1.3fr_auto] sm:items-center sm:gap-3">
-        <label htmlFor="admin-inv-name" className="sr-only">
-          Guest full name
-        </label>
-        <input
-          id="admin-inv-name"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Guest full name"
-          className="h-11 w-full rounded-full border border-[#E1D9CF] bg-[#FBFAF8] px-4 text-base outline-none transition placeholder:text-[#9A938B] focus:border-[#C9B79F] focus:ring-2 focus:ring-[#C2491A]/15 sm:text-sm"
-        />
-        <label htmlFor="admin-inv-type" className="sr-only">
-          Invitation type
-        </label>
-        <select
-          id="admin-inv-type"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          className="h-11 w-full rounded-full border border-[#E1D9CF] bg-[#FBFAF8] px-4 text-base outline-none transition focus:border-[#C9B79F] focus:ring-2 focus:ring-[#C2491A]/15 sm:text-sm"
-        >
-          <option value="CHURCH_ONLY">Church ceremony only</option>
-          <option value="CHURCH_AND_BASSELEAL">Church + Basseleal&apos;s house</option>
-          <option value="CHURCH_AND_BETHEL">Church + Bethel&apos;s house</option>
-          <option value="CHURCH_AND_BOTH">Church + Both houses</option>
-        </select>
-        <button
-          type="submit"
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#C2491A] px-5 text-xs font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99]"
-        >
-          <Icon name="plus" className="h-4 w-4" /> Generate link
-        </button>
+      <form onSubmit={submit} className="flex flex-col gap-3.5 rounded-2xl border border-[#EDE9E2] bg-white p-4 shadow-xs">
+        <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+          <label htmlFor="admin-inv-name" className="sr-only">
+            Guest full name
+          </label>
+          <input
+            id="admin-inv-name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Guest full name (e.g. Abebe Bikila)"
+            className="h-11 flex-1 w-full rounded-full border border-[#E1D9CF] bg-[#FBFAF8] px-4 text-base outline-none transition placeholder:text-[#9A938B] focus:border-[#C9B79F] focus:ring-2 focus:ring-[#C2491A]/15 sm:text-sm"
+          />
+          <button
+            type="submit"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#C2491A] px-6 text-xs font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0"
+          >
+            <Icon name="plus" className="h-4 w-4" /> Generate link
+          </button>
+        </div>
+
+        {/* 3-Button Selector to Click & Unclick Any Combination */}
+        <div className="border-t border-[#F0EBE3] pt-3">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#6B6660]">
+              Select Venues for Guest (Click to Toggle Combination):
+            </span>
+            <span className="text-[11px] font-medium text-[#8C6A3B]">
+              {getInvitationTypeLabel(venuesToInvitationType(venues))}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {/* 1. Church */}
+            <button
+              type="button"
+              onClick={() => toggleVenue("church")}
+              className={`flex items-center gap-3 rounded-xl border p-3 text-left transition-all ${
+                venues.church
+                  ? "border-[#2B1810] bg-[#2B1810] text-[#FAF6F0] shadow-sm"
+                  : "border-[#E1D9CF] bg-[#FBFAF8] text-[#554F48] hover:border-[#8C6A3B]/50 hover:bg-[#F6F2EC]"
+              }`}
+            >
+              <div
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
+                  venues.church ? "bg-white/20 text-white" : "bg-[#EDE6DC] text-[#7A6A58]"
+                }`}
+              >
+                {venues.church ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2v4M10 4h4" />
+                    <path d="M12 6L4 12v9h16v-9z" />
+                  </svg>
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold leading-tight">Church Ceremony</p>
+                <p className={`text-[10px] mt-0.5 truncate ${venues.church ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
+                  ሀልዎት አማኑኤል (3:00 PM)
+                </p>
+              </div>
+            </button>
+
+            {/* 2. Basseleal's House */}
+            <button
+              type="button"
+              onClick={() => toggleVenue("basseleal")}
+              className={`flex items-center gap-3 rounded-xl border p-3 text-left transition-all ${
+                venues.basseleal
+                  ? "border-[#2B1810] bg-[#2B1810] text-[#FAF6F0] shadow-sm"
+                  : "border-[#E1D9CF] bg-[#FBFAF8] text-[#554F48] hover:border-[#8C6A3B]/50 hover:bg-[#F6F2EC]"
+              }`}
+            >
+              <div
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
+                  venues.basseleal ? "bg-white/20 text-white" : "bg-[#EDE6DC] text-[#7A6A58]"
+                }`}
+              >
+                {venues.basseleal ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold leading-tight">Basseleal&apos;s House</p>
+                <p className={`text-[10px] mt-0.5 truncate ${venues.basseleal ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
+                  የባስልኤል ቤት (10:30 AM)
+                </p>
+              </div>
+            </button>
+
+            {/* 3. Bethel's House */}
+            <button
+              type="button"
+              onClick={() => toggleVenue("bethel")}
+              className={`flex items-center gap-3 rounded-xl border p-3 text-left transition-all ${
+                venues.bethel
+                  ? "border-[#2B1810] bg-[#2B1810] text-[#FAF6F0] shadow-sm"
+                  : "border-[#E1D9CF] bg-[#FBFAF8] text-[#554F48] hover:border-[#8C6A3B]/50 hover:bg-[#F6F2EC]"
+              }`}
+            >
+              <div
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
+                  venues.bethel ? "bg-white/20 text-white" : "bg-[#EDE6DC] text-[#7A6A58]"
+                }`}
+              >
+                {venues.bethel ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  </svg>
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold leading-tight">Bethel&apos;s House</p>
+                <p className={`text-[10px] mt-0.5 truncate ${venues.bethel ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
+                  የቤቴል ቤት (10:30 AM)
+                </p>
+              </div>
+            </button>
+          </div>
+        </div>
       </form>
 
       {created && <CreatedLink url={created.url} guestName={created.guestName} />}

@@ -3,25 +3,9 @@
 import { useEffect, useState } from "react";
 import { AdminTabShell } from "../_components/AdminTabShell";
 import { Icon } from "@/app/components/dashboard/Icon";
+import { getInvitationTypeLabel } from "@/app/lib/venues";
 
 type Guest = { _id: string; fullName: string; email?: string; invitation?: { invitationType?: string } | null; rsvp?: { attendanceStatus?: string; attendeeCount?: number } | null };
-
-function getInvitationTypeLabel(type?: string) {
-  if (!type) return "Not invited";
-  switch (type) {
-    case "CHURCH_ONLY":
-      return "Church only";
-    case "CHURCH_AND_BASSELEAL":
-      return "Church + Basseleal's house";
-    case "CHURCH_AND_BETHEL":
-      return "Church + Bethel's house";
-    case "CHURCH_AND_BOTH":
-    case "CHURCH_AND_HOME":
-      return "Church + Both houses";
-    default:
-      return type;
-  }
-}
 
 export default function GuestsPage() {
   const [query, setQuery] = useState("");
