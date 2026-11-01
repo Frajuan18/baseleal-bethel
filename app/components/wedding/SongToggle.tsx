@@ -8,53 +8,94 @@ export function SongToggle() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
+  const userPausedRef = useRef(false);
 
-  // Attempt to play music automatically by default
+  // Attempt to play music automatically the moment the website loads
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     audio.volume = 0.55;
 
-    const tryAutoplay = async () => {
+    const playSong = async () => {
+      if (userPausedRef.current) return;
       try {
+        audio.volume = 0.55;
         await audio.play();
+        setPlaying(true);
       } catch {
-        // Autoplay policy prevented immediate playback without user interaction
-        // Set up one-shot global interaction listeners to start playing immediately on first touch/click
-        const startOnInteraction = async () => {
-          try {
-            audio.volume = 0.55;
-            await audio.play();
-          } catch {
-            // ignore
-          } finally {
-            window.removeEventListener("pointerdown", startOnInteraction);
-            window.removeEventListener("keydown", startOnInteraction);
-            window.removeEventListener("touchstart", startOnInteraction);
-          }
-        };
-
-        window.addEventListener("pointerdown", startOnInteraction, { once: true });
-        window.addEventListener("keydown", startOnInteraction, { once: true });
-        window.addEventListener("touchstart", startOnInteraction, { once: true });
+        // Autoplay policy may restrict initial unmuted playback until interaction
       }
     };
 
-    void tryAutoplay();
+    // 1. Immediately attempt playback on mount
+    void playSong();
 
-    // Listen to custom event in case another component (like IntroLoader) explicitly signals audio start
-    const handleExplicitPlay = () => {
-      if (audio.paused) {
-        audio.volume = 0.55;
-        void audio.play().catch(() => {});
+    // 2. Attempt immediately as soon as the window and all assets are fully loaded
+    if (document.readyState === "complete") {
+      void playSong();
+    } else {
+      const handleWindowLoad = () => void playSong();
+      window.addEventListener("load", handleWindowLoad, { once: true });
+      document.addEventListener("readystatechange", handleWindowLoad, { once: true });
+    }
+
+    // 3. Fallback interaction listeners: first touch, click, pointerdown, or scroll starts song immediately
+    const startOnInteraction = () => {
+      if (!userPausedRef.current) {
+        void playSong();
       }
+      cleanupInteractionListeners();
+    };
+
+    const interactionEvents: (keyof WindowEventMap)[] = [
+      "pointerdown",
+      "touchstart",
+      "mousedown",
+      "keydown",
+      "click",
+      "scroll",
+      "wheel",
+    ];
+
+    const cleanupInteractionListeners = () => {
+      interactionEvents.forEach((event) => {
+        window.removeEventListener(event, startOnInteraction);
+      });
+    };
+
+    interactionEvents.forEach((event) => {
+      window.addEventListener(event, startOnInteraction, { once: true, passive: true });
+    });
+
+    // 4. Custom event for explicit triggers (from IntroLoader or intro video events)
+    const handleExplicitPlay = () => {
+      userPausedRef.current = false;
+      void playSong();
     };
 
     window.addEventListener("play-wedding-song", handleExplicitPlay);
 
+    // 5. Handle pause events: if external media (like a video) causes audio pause, auto-resume
+    const handlePause = () => {
+      if (userPausedRef.current) {
+        setPlaying(false);
+      } else {
+        // Interrupted by video playback or browser media session switch: resume immediately!
+        setTimeout(() => {
+          if (!userPausedRef.current && audio.paused) {
+            void audio.play().catch(() => {});
+          }
+        }, 60);
+      }
+    };
+
+    audio.addEventListener("pause", handlePause);
+
     return () => {
+      cleanupInteractionListeners();
       window.removeEventListener("play-wedding-song", handleExplicitPlay);
+      audio.removeEventListener("pause", handlePause);
     };
   }, []);
 
@@ -63,10 +104,14 @@ export function SongToggle() {
     if (!audio) return;
     try {
       if (audio.paused) {
+        userPausedRef.current = false;
         audio.volume = 0.55;
         await audio.play();
+        setPlaying(true);
       } else {
+        userPausedRef.current = true;
         audio.pause();
+        setPlaying(false);
       }
     } catch {
       setFailed(true);
@@ -82,7 +127,6 @@ export function SongToggle() {
         preload="auto"
         autoPlay
         onPlay={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
         onError={() => setFailed(true)}
       />
       <button

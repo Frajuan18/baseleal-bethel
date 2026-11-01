@@ -33,6 +33,19 @@ export function IntroLoader() {
     const video = videoRef.current;
     if (!video) return;
 
+    // Strictly enforce muted state so video playback never interrupts or hijacks background music
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "true");
+
+    // Signal song start as soon as website loads
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("play-wedding-song"));
+    }
+
     const isLarge = window.innerWidth >= 768;
     const target = isLarge ? "/loader large screen.mp4#t=0.001" : "/main loader animation.mp4#t=0.001";
     const filename = isLarge ? "loader%20large%20screen.mp4" : "main%20loader%20animation.mp4";
@@ -58,6 +71,26 @@ export function IntroLoader() {
     return () => mq.removeEventListener?.("change", handleResize);
   }, [phase]);
 
+  // Keep background song running seamlessly during video playback
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const ensureSongPlaying = () => {
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("play-wedding-song"));
+      }
+    };
+
+    video.addEventListener("play", ensureSongPlaying);
+    video.addEventListener("playing", ensureSongPlaying);
+
+    return () => {
+      video.removeEventListener("play", ensureSongPlaying);
+      video.removeEventListener("playing", ensureSongPlaying);
+    };
+  }, []);
+
   const reveal = useCallback(() => {
     setPhase("revealing");
     window.setTimeout(() => setPhase("done"), 1100);
@@ -71,19 +104,22 @@ export function IntroLoader() {
     }
     setPhase("playing");
 
-    // Immediately trigger background music on this user interaction so the song continues uninterrupted
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("play-wedding-song"));
-    }
+    // Strictly ensure the video has 0 volume and is muted before playing
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+    video.setAttribute("muted", "");
 
     try {
       video.currentTime = 0;
-      video.muted = true;
-      video.defaultMuted = true;
-      video.volume = 0;
       await video.play();
     } catch {
       setPhase("card-amharic");
+    }
+
+    // Immediately trigger background music on this user interaction so the song continues uninterrupted
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("play-wedding-song"));
     }
   }, []);
 
@@ -161,6 +197,11 @@ export function IntroLoader() {
         playsInline
         muted
         preload="auto"
+        onPlay={() => {
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("play-wedding-song"));
+          }
+        }}
         onEnded={handleVideoEnded}
       />
 
