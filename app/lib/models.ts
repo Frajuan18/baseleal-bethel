@@ -75,12 +75,20 @@ const venueLocationSchema = new Schema({
   directionsUrl: { type: String, default: "" },
   note: { type: String, default: "" },
   noteAm: { type: String, default: "" },
+  timeEn: { type: String, default: "" },
+  timeAm: { type: String, default: "" },
 }, { _id: false });
 
 const locationSettingSchema = new Schema({
   church: { type: venueLocationSchema, default: () => ({}) },
   basselealHome: { type: venueLocationSchema, default: () => ({}) },
   bethelHome: { type: venueLocationSchema, default: () => ({}) },
+  programTimes: {
+    churchEn: { type: String, default: "3:00 pm" },
+    churchAm: { type: String, default: "9:00 ሰዓት" },
+    homeEn: { type: String, default: "10:30 am" },
+    homeAm: { type: String, default: "4:30 ሰዓት" },
+  },
 }, { timestamps: true });
 
 export const Guest = (mongoose.models.Guest || mongoose.model("Guest", guestSchema)) as Model<any>;

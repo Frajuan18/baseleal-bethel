@@ -429,51 +429,75 @@ const CircularGallery = ({
           image.crossOrigin = 'anonymous';
         }
       }
-      image.decoding = 'async';
-      image.onload = () => {
+
+      const applyTexture = () => {
         if (!textures.has(url)) return;
-        const texture = gl.createTexture();
-        gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        try {
+          const texture = gl.createTexture();
+          gl.bindTexture(gl.TEXTURE_2D, texture);
+          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
-        // Clamp texture dimensions to safe GPU limits (mobile devices often cap at 4096 or 2048)
-        const maxTextureLimit = gl.getParameter(gl.MAX_TEXTURE_SIZE) || 4096;
-        const targetMax = Math.min(2048, maxTextureLimit);
-        let texSource = image;
-        if (image.naturalWidth > targetMax || image.naturalHeight > targetMax) {
-          const canvas = document.createElement('canvas');
-          const scale = Math.min(targetMax / image.naturalWidth, targetMax / image.naturalHeight);
-          canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
-          canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
-          const ctx = canvas.getContext('2d');
-          if (ctx) {
-            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-            texSource = canvas;
+          // Clamp texture dimensions to safe GPU limits (mobile devices often cap at 4096 or 2048)
+          const maxTextureLimit = gl.getParameter(gl.MAX_TEXTURE_SIZE) || 4096;
+          const targetMax = Math.min(2048, maxTextureLimit);
+          let texSource = image;
+          if (image.naturalWidth > targetMax || image.naturalHeight > targetMax) {
+            const canvas = document.createElement('canvas');
+            const scale = Math.min(targetMax / image.naturalWidth, targetMax / image.naturalHeight);
+            canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+            canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+              texSource = canvas;
+            }
           }
-        }
 
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texSource);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-        gl.generateMipmap(gl.TEXTURE_2D);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        if (anisotropy) {
-          const max = gl.getParameter(anisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-          gl.texParameterf(gl.TEXTURE_2D, anisotropy.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, max));
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texSource);
+          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+          gl.generateMipmap(gl.TEXTURE_2D);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          if (anisotropy) {
+            const max = gl.getParameter(anisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+            gl.texParameterf(gl.TEXTURE_2D, anisotropy.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, max));
+          }
+          entry.texture = texture;
+          entry.aspect = image.naturalWidth / Math.max(1, image.naturalHeight);
+          entry.loaded = true;
+          wake();
+        } catch (err) {
+          console.error('Failed to create WebGL texture for:', url, err);
+          entry.loaded = true;
+          wake();
         }
-        entry.texture = texture;
-        entry.aspect = image.naturalWidth / Math.max(1, image.naturalHeight);
-        entry.loaded = true;
-        wake();
       };
-      image.onerror = () => {
-        console.warn('Could not load image for gallery:', url);
-        entry.loaded = true;
-        wake();
+
+      const loadWithFallback = (srcUrl, isRetry = false) => {
+        image.onload = () => applyTexture();
+        image.onerror = () => {
+          if (!isRetry) {
+            // Try alternate casing (.JPG vs .jpg) or encoded space
+            let altUrl = null;
+            if (srcUrl.endsWith('.jpg')) altUrl = srcUrl.slice(0, -4) + '.JPG';
+            else if (srcUrl.endsWith('.JPG')) altUrl = srcUrl.slice(0, -4) + '.jpg';
+            else if (srcUrl.includes(' ')) altUrl = encodeURI(srcUrl);
+
+            if (altUrl && altUrl !== srcUrl) {
+              loadWithFallback(altUrl, true);
+              return;
+            }
+          }
+          console.warn('Could not load image for gallery:', srcUrl);
+          entry.loaded = true;
+          wake();
+        };
+        image.src = srcUrl;
       };
-      image.src = url;
+
+      loadWithFallback(url);
       return entry;
     };
 
@@ -784,7 +808,7 @@ const CircularGallery = ({
         }
       });
       textures.forEach(entry => {
-        if (!entry.loaded || entry.ready >= 1) return;
+        if (!entry.loaded || !entry.texture || entry.ready >= 1) return;
         entry.ready = reduce ? 1 : Math.min(1, entry.ready + dt / 0.45);
         settling = true;
       });

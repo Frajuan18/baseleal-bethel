@@ -7,11 +7,27 @@ type LocationPayload = {
   church?: Partial<VenueLocation>;
   basselealHome?: Partial<VenueLocation>;
   bethelHome?: Partial<VenueLocation>;
+  programTimes?: {
+    churchEn?: string;
+    churchAm?: string;
+    homeEn?: string;
+    homeAm?: string;
+  };
 };
 
 function getMergedLocations(stored?: LocationPayload | null) {
   const def = wedding.locations;
+  const defTimes = wedding.programTimes;
+
+  const programTimes = {
+    churchEn: stored?.programTimes?.churchEn?.trim() || stored?.church?.timeEn?.trim() || defTimes.churchEn,
+    churchAm: stored?.programTimes?.churchAm?.trim() || stored?.church?.timeAm?.trim() || defTimes.churchAm,
+    homeEn: stored?.programTimes?.homeEn?.trim() || stored?.basselealHome?.timeEn?.trim() || defTimes.homeEn,
+    homeAm: stored?.programTimes?.homeAm?.trim() || stored?.basselealHome?.timeAm?.trim() || defTimes.homeAm,
+  };
+
   return {
+    programTimes,
     church: {
       label: stored?.church?.label?.trim() || def.church.label,
       labelAm: stored?.church?.labelAm?.trim() || def.church.labelAm,
@@ -21,6 +37,8 @@ function getMergedLocations(stored?: LocationPayload | null) {
       directionsUrl: stored?.church?.directionsUrl?.trim() || def.church.directionsUrl || "",
       note: stored?.church?.note?.trim() ?? def.church.note ?? "",
       noteAm: stored?.church?.noteAm?.trim() ?? def.church.noteAm ?? "",
+      timeEn: programTimes.churchEn,
+      timeAm: programTimes.churchAm,
     },
     basselealHome: {
       label: stored?.basselealHome?.label?.trim() || def.basselealHome.label,
@@ -31,6 +49,8 @@ function getMergedLocations(stored?: LocationPayload | null) {
       directionsUrl: stored?.basselealHome?.directionsUrl?.trim() || def.basselealHome.directionsUrl || "",
       note: stored?.basselealHome?.note?.trim() ?? def.basselealHome.note ?? "",
       noteAm: stored?.basselealHome?.noteAm?.trim() ?? def.basselealHome.noteAm ?? "",
+      timeEn: stored?.basselealHome?.timeEn?.trim() || programTimes.homeEn,
+      timeAm: stored?.basselealHome?.timeAm?.trim() || programTimes.homeAm,
     },
     bethelHome: {
       label: stored?.bethelHome?.label?.trim() || def.bethelHome.label,
@@ -41,6 +61,8 @@ function getMergedLocations(stored?: LocationPayload | null) {
       directionsUrl: stored?.bethelHome?.directionsUrl?.trim() || def.bethelHome.directionsUrl || "",
       note: stored?.bethelHome?.note?.trim() ?? def.bethelHome.note ?? "",
       noteAm: stored?.bethelHome?.noteAm?.trim() ?? def.bethelHome.noteAm ?? "",
+      timeEn: stored?.bethelHome?.timeEn?.trim() || programTimes.homeEn,
+      timeAm: stored?.bethelHome?.timeAm?.trim() || programTimes.homeAm,
     },
   };
 }
@@ -49,8 +71,10 @@ export async function GET() {
   try {
     await connectMongo();
     const stored = (await LocationSetting.findOne().sort({ updatedAt: -1 }).lean()) as LocationPayload | null;
-    return NextResponse.json({ locations: getMergedLocations(stored) });
+    const merged = getMergedLocations(stored);
+    return NextResponse.json({ locations: merged, programTimes: merged.programTimes });
   } catch {
-    return NextResponse.json({ locations: getMergedLocations(null) });
+    const merged = getMergedLocations(null);
+    return NextResponse.json({ locations: merged, programTimes: merged.programTimes });
   }
 }

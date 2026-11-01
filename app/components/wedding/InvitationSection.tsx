@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { CSSProperties } from "react";
+import { useState, useEffect, type CSSProperties } from "react";
 import { toEthiopian, wedding } from "@/config/wedding";
 import { useWeddingLanguage } from "./LanguageContext";
 import { useInvitation } from "./InvitationContext";
@@ -22,6 +22,17 @@ const seq = (
 export function InvitationSection() {
   const { isAmharic } = useWeddingLanguage();
   const { invitation, hasToken } = useInvitation();
+  const [liveLocations, setLiveLocations] = useState<any>(null);
+
+  useEffect(() => {
+    fetch("/api/public/locations")
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data) => {
+        if (data.locations) setLiveLocations(data.locations);
+      })
+      .catch(() => {});
+  }, []);
+
   const venues = parseInvitationVenues(hasToken ? invitation?.invitationType : undefined);
   const hasChurch = venues.church;
   const hasBasseleal = venues.basseleal;
@@ -31,6 +42,20 @@ export function InvitationSection() {
   const isBoth = hasChurch && hasAnyHome;
   const isHomeOnly = !hasChurch && hasAnyHome;
   const ethiopian = toEthiopian(wedding.date);
+
+  // Live program times configured in Directions tab
+  const churchTimeRaw = isAmharic
+    ? (liveLocations?.church?.timeAm || "9:00")
+    : (liveLocations?.church?.timeEn || "3:00");
+  const homeTimeRaw = isAmharic
+    ? (liveLocations?.basselealHome?.timeAm || "4:30")
+    : (liveLocations?.basselealHome?.timeEn || "10:30");
+
+  const churchDigits = churchTimeRaw.replace(/[^0-9:]/g, "") || (isAmharic ? "9:00" : "3:00");
+  const churchUnit = isAmharic ? "ሰዓት" : (churchTimeRaw.toLowerCase().includes("am") ? "am" : "pm");
+
+  const homeDigits = homeTimeRaw.replace(/[^0-9:]/g, "") || (isAmharic ? "4:30" : "10:30");
+  const homeUnit = isAmharic ? "ሰዓት" : (homeTimeRaw.toLowerCase().includes("pm") ? "pm" : "am");
   // Structured date lockup data — Amharic uses the Ethiopian calendar date
   const parsedDate = (() => {
     if (wedding.date) {
@@ -223,15 +248,15 @@ export function InvitationSection() {
                         <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
                         <div className="flex items-baseline gap-1">
                           <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
-                            {isAmharic ? "9:00" : "3:00"}
+                            {churchDigits}
                           </span>
                           {isAmharic ? (
                             <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
-                              ሰዓት
+                              {churchUnit}
                             </span>
                           ) : (
                             <span className="font-sans text-xs font-bold text-[#5A3E26] uppercase ml-0.5">
-                              pm
+                              {churchUnit}
                             </span>
                           )}
                         </div>
@@ -252,15 +277,15 @@ export function InvitationSection() {
                         <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
                         <div className="flex items-baseline gap-1">
                           <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
-                            {isAmharic ? "4:30" : "10:30"}
+                            {homeDigits}
                           </span>
                           {isAmharic ? (
                             <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
-                              ሰዓት
+                              {homeUnit}
                             </span>
                           ) : (
                             <span className="font-sans text-xs font-bold text-[#5A3E26] uppercase ml-0.5">
-                              am
+                              {homeUnit}
                             </span>
                           )}
                         </div>
@@ -281,15 +306,15 @@ export function InvitationSection() {
                         <div className="h-7 w-px bg-[#8C6A3B]/40" aria-hidden />
                         <div className="flex items-baseline gap-1">
                           <span className="font-benaiah text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E140E] leading-none tracking-tight">
-                            {isAmharic ? "4:30" : "10:30"}
+                            {homeDigits}
                           </span>
                           {isAmharic ? (
                             <span className="font-balderasu text-xs font-semibold text-[#5A3E26]">
-                              ሰዓት
+                              {homeUnit}
                             </span>
                           ) : (
                             <span className="font-sans text-xs font-bold text-[#5A3E26] uppercase ml-0.5">
-                              am
+                              {homeUnit}
                             </span>
                           )}
                         </div>
@@ -308,7 +333,7 @@ export function InvitationSection() {
                             {isAmharic ? "ሀልዎት አማኑኤል ህብረት ቤተክርስቲያን" : "Halwot Emmanuel United Church"}
                           </span>
                           <span className="font-benaiah text-sm sm:text-base md:text-lg font-bold text-[#8C6A3B] mx-1">
-                            {isAmharic ? "(9:00 ሰዓት)" : "(3:00 pm)"}
+                            {isAmharic ? `(${churchDigits} ${churchUnit})` : `(${churchDigits} ${churchUnit})`}
                           </span>
                         </>
                       )}
@@ -325,7 +350,7 @@ export function InvitationSection() {
                               : (isAmharic ? "ቤቴል ቤት" : "Bethel's House")}
                           </span>
                           <span className="font-benaiah text-sm sm:text-base md:text-lg font-bold text-[#8C6A3B] ml-1">
-                            {isAmharic ? "(4:30 ሰዓት)" : "(10:30 am)"}
+                            {isAmharic ? `(${homeDigits} ${homeUnit})` : `(${homeDigits} ${homeUnit})`}
                           </span>
                         </>
                       )}
@@ -341,16 +366,16 @@ export function InvitationSection() {
                   <p className={`w-full leading-relaxed ${isAmharic ? "font-benaiah text-[13.5px] sm:text-[14.5px]" : "font-editorial-serif text-[13.5px] sm:text-[14.5px] italic"}`}>
                     {hasChurch && hasAnyHome ? (
                       isAmharic
-                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትንና አብረን አዲሱን ህይወታችንን የምንጀምርበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ 9:00 (በኢትዮጵያ አቆጣጠር)፣ በመቀጠልም ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ 4:30 ጀምሮ በሚደረገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
-                        : `Together with our families, we warmly invite you to join us at Halwot Emmanuel United Church at 3:00 pm and ${hasBothHomes ? "home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at 10:30 am as we exchange our vows and begin our life together.`
+                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትንና አብረን አዲሱን ህይወታችንን የምንጀምርበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ ${churchDigits} ${churchUnit} (በኢትዮጵያ አቆጣጠር)፣ በመቀጠልም ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ ${homeDigits} ${homeUnit} ጀምሮ በሚደረገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
+                        : `Together with our families, we warmly invite you to join us at Halwot Emmanuel United Church at ${churchDigits} ${churchUnit} and ${hasBothHomes ? "home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at ${homeDigits} ${homeUnit} as we exchange our vows and begin our life together.`
                     ) : hasChurch ? (
                       isAmharic
-                        ? "ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ 9:00 (በኢትዮጵያ አቆጣጠር) ላይ ተገኝተው አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።"
-                        : "Together with our families, we warmly invite you to Halwot Emmanuel United Church at 3:00 pm as we exchange our vows."
+                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ ${churchDigits} ${churchUnit} (በኢትዮጵያ አቆጣጠር) ላይ ተገኝተው አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
+                        : `Together with our families, we warmly invite you to Halwot Emmanuel United Church at ${churchDigits} ${churchUnit} as we exchange our vows.`
                     ) : (
                       isAmharic
-                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ 4:30 ጀምሮ በሚደረገው የቤት አቀባበል ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
-                        : `Together with our families, we warmly invite you to join ${hasBothHomes ? "our home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at 10:30 am as we begin our life together.`
+                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ ${homeDigits} ${homeUnit} ጀምሮ በሚደረገው የቤት አቀባበል ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
+                        : `Together with our families, we warmly invite you to join ${hasBothHomes ? "our home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at ${homeDigits} ${homeUnit} as we begin our life together.`
                     )}
                   </p>
                 </div>

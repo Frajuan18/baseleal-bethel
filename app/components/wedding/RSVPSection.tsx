@@ -30,6 +30,16 @@ export function RSVPSection() {
     bethelHome: wedding.locations.bethelHome,
   });
 
+  const churchTimeDisplay = isAmharic
+    ? (activeLocations.church?.timeAm || "9:00 ሰዓት")
+    : (activeLocations.church?.timeEn || "3:00 pm");
+  const basselealTimeDisplay = isAmharic
+    ? (activeLocations.basselealHome?.timeAm || "4:30 ሰዓት")
+    : (activeLocations.basselealHome?.timeEn || "10:30 am");
+  const bethelTimeDisplay = isAmharic
+    ? (activeLocations.bethelHome?.timeAm || "4:30 ሰዓት")
+    : (activeLocations.bethelHome?.timeEn || "10:30 am");
+
   // Load live admin configured locations from public API
   useEffect(() => {
     fetch("/api/public/locations")
@@ -473,7 +483,7 @@ export function RSVPSection() {
                     <span className={`font-benaiah text-[11px] font-semibold mt-0.5 tracking-wider ${
                       activeVenueTab === "church" ? "text-[#E6C687]" : "text-[#8C6A3B]"
                     }`}>
-                      {isAmharic ? "9:00 ሰዓት" : "3:00 pm"}
+                      {churchTimeDisplay}
                     </span>
                   </div>
                 </button>
@@ -501,7 +511,7 @@ export function RSVPSection() {
                     <span className={`font-benaiah text-[11px] font-semibold mt-0.5 tracking-wider ${
                       activeVenueTab === "basseleal" ? "text-[#E6C687]" : "text-[#8C6A3B]"
                     }`}>
-                      {isAmharic ? "4:30 ሰዓት" : "10:30 am"}
+                      {basselealTimeDisplay}
                     </span>
                   </div>
                 </button>
@@ -529,7 +539,7 @@ export function RSVPSection() {
                     <span className={`font-benaiah text-[11px] font-semibold mt-0.5 tracking-wider ${
                       activeVenueTab === "bethel" ? "text-[#E6C687]" : "text-[#8C6A3B]"
                     }`}>
-                      {isAmharic ? "4:30 ሰዓት" : "10:30 am"}
+                      {bethelTimeDisplay}
                     </span>
                   </div>
                 </button>
@@ -558,7 +568,7 @@ export function RSVPSection() {
                       </span>
                       <div>
                         <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
-                          {isAmharic ? "ከቀኑ 9:00 ሰዓት" : "3:00 pm (Ceremony)"}
+                          {isAmharic ? `ከቀኑ ${churchTimeDisplay}` : `${churchTimeDisplay} (Ceremony)`}
                         </span>
                         <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
                           {isAmharic ? activeLocations.church.labelAm : activeLocations.church.label}
@@ -646,7 +656,7 @@ export function RSVPSection() {
                       </span>
                       <div>
                         <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
-                          {isAmharic ? "ከቀኑ 10:30 / 4:30 (Local Time)" : "10:30 am (Reception)"}
+                          {isAmharic ? `ከጠዋቱ ${basselealTimeDisplay}` : `${basselealTimeDisplay} (Reception)`}
                         </span>
                         <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
                           {isAmharic ? activeLocations.basselealHome.labelAm : activeLocations.basselealHome.label}
@@ -734,7 +744,7 @@ export function RSVPSection() {
                       </span>
                       <div>
                         <span className="inline-block rounded-full bg-[#8C6A3B]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#8C6A3B]">
-                          {isAmharic ? "ከቀኑ 10:30 / 4:30 (Local Time)" : "10:30 am (Reception)"}
+                          {isAmharic ? `ከጠዋቱ ${basselealTimeDisplay}` : `${basselealTimeDisplay} (Reception)`}
                         </span>
                         <h4 className={`mt-1 font-semibold text-base sm:text-lg text-[#2B1810] ${isAmharic ? "amharic-title" : "font-editorial-serif"}`}>
                           {isAmharic ? activeLocations.bethelHome.labelAm : activeLocations.bethelHome.label}

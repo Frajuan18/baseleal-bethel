@@ -10,13 +10,25 @@ export type IconName =
   | "arrow"
   | "search"
   | "calendar"
+  | "clock"
   | "check"
   | "copy"
   | "send"
   | "map-pin"
+  | "dots"
+  | "church"
+  | "megaphone"
+  | "alert"
+  | "external-link"
   | "x";
 
 const paths: Record<IconName, ReactNode> = {
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </>
+  ),
   home: (
     <>
       <path d="m3 10 9-7 9 7" />
@@ -27,6 +39,40 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
       <circle cx="12" cy="10" r="3" />
+    </>
+  ),
+  dots: (
+    <>
+      <circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none" />
+    </>
+  ),
+  church: (
+    <>
+      <path d="M12 2v4M10 4h4" />
+      <path d="M12 6L4 12v9h16v-9z" />
+      <path d="M10 21v-4a2 2 0 0 1 4 0v4" />
+    </>
+  ),
+  megaphone: (
+    <>
+      <path d="m3 11 18-5v12L3 14v-3z" />
+      <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+    </>
+  ),
+  alert: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="8" x2="12" y2="12" />
+      <line x1="12" y1="16" x2="12.01" y2="16" />
+    </>
+  ),
+  "external-link": (
+    <>
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
     </>
   ),
   users: (

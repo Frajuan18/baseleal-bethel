@@ -29,6 +29,10 @@ export default function InvitationsPage() {
   });
   const [created, setCreated] = useState<{ url: string; guestName?: string } | null>(null);
   const [venueError, setVenueError] = useState<string | null>(null);
+  const [programTimes, setProgramTimes] = useState<{ churchEn: string; homeEn: string }>({
+    churchEn: "3:00 PM",
+    homeEn: "10:30 AM",
+  });
 
   const toggleVenue = (key: keyof VenueSelection) => {
     setVenueError(null);
@@ -38,11 +42,24 @@ export default function InvitationsPage() {
     }));
   };
 
-  const load = () =>
+  const load = () => {
     fetch("/api/admin/invitations")
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((data) => setItems(data.items || []))
       .catch(() => setItems([]));
+
+    fetch("/api/public/locations")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        if (data.programTimes) {
+          setProgramTimes({
+            churchEn: (data.programTimes.churchEn || "3:00 PM").toUpperCase(),
+            homeEn: (data.programTimes.homeEn || "10:30 AM").toUpperCase(),
+          });
+        }
+      })
+      .catch(() => {});
+  };
 
   useEffect(() => {
     load();
@@ -150,7 +167,7 @@ export default function InvitationsPage() {
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold leading-tight">Church Ceremony</p>
                 <p className={`text-[10px] mt-0.5 truncate ${venues.church ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
-                  ሀልዎት አማኑኤል (3:00 PM)
+                  ሀልዎት አማኑኤል ({programTimes.churchEn})
                 </p>
               </div>
             </button>
@@ -183,7 +200,7 @@ export default function InvitationsPage() {
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold leading-tight">Basseleal&apos;s House</p>
                 <p className={`text-[10px] mt-0.5 truncate ${venues.basseleal ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
-                  የባስልኤል ቤት (10:30 AM)
+                  የባስልኤል ቤት ({programTimes.homeEn})
                 </p>
               </div>
             </button>
@@ -216,14 +233,15 @@ export default function InvitationsPage() {
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold leading-tight">Bethel&apos;s House</p>
                 <p className={`text-[10px] mt-0.5 truncate ${venues.bethel ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
-                  የቤቴል ቤት (10:30 AM)
+                  የቤቴል ቤት ({programTimes.homeEn})
                 </p>
               </div>
             </button>
           </div>
           {venueError && (
-            <p className="mt-2 text-xs font-semibold text-rose-600 animate-fadeIn">
-              ⚠️ {venueError}
+            <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 animate-fadeIn">
+              <Icon name="alert" className="h-3.5 w-3.5" />
+              <span>{venueError}</span>
             </p>
           )}
         </div>

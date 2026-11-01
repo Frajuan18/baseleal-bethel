@@ -1,15 +1,16 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState, type ReactNode } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Icon, type IconName } from "@/app/components/dashboard/Icon";
 import { InviteLinkActions } from "@/app/components/dashboard/InviteLinkActions";
+import { ProgramTimeChanger, type ProgramTimes } from "@/app/components/dashboard/ProgramTimeChanger";
 import {
   getInvitationTypeLabel,
   venuesToInvitationType,
   type VenueSelection,
 } from "@/app/lib/venues";
 
-type Tab = "overview" | "guests" | "directions" | "wishes" | "invitations";
+type Tab = "overview" | "guests" | "wishes" | "invitations" | "directions" | "time";
 type Stats = { total: number; attending: number; notAttending: number; pending: number; church: number; home: number };
 type Guest = { _id: string; fullName: string; email?: string; invitation?: { invitationType?: string } | null; rsvp?: { attendanceStatus?: string; attendeeCount?: number } | null };
 type Wish = { _id: string; message: string; createdAt: string; guestId?: { fullName?: string } };
@@ -49,9 +50,10 @@ const emptyStats: Stats = { total: 0, attending: 0, notAttending: 0, pending: 0,
 const TABS: { value: Tab; label: string; icon: IconName }[] = [
   { value: "overview", label: "Overview", icon: "home" },
   { value: "guests", label: "Guests", icon: "users" },
-  { value: "directions", label: "Directions", icon: "map-pin" },
   { value: "wishes", label: "Wishes", icon: "heart" },
   { value: "invitations", label: "Links", icon: "link" },
+  { value: "directions", label: "Directions", icon: "map-pin" },
+  { value: "time", label: "Time", icon: "clock" },
 ];
 
 export default function DashboardPage() {
@@ -71,6 +73,23 @@ export default function DashboardPage() {
   const [venueError, setVenueError] = useState<string | null>(null);
   const [created, setCreated] = useState("");
   const [error, setError] = useState(false);
+  const [programTimes, setProgramTimes] = useState<ProgramTimes>({
+    churchEn: "3:00 pm",
+    churchAm: "9:00 ሰዓት",
+    homeEn: "10:30 am",
+    homeAm: "4:30 ሰዓት",
+  });
+
+  useEffect(() => {
+    fetch("/api/public/locations")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        if (data.programTimes) {
+          setProgramTimes(data.programTimes);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const toggleVenue = (key: keyof VenueSelection) => {
     setVenueError(null);
@@ -188,7 +207,6 @@ export default function DashboardPage() {
           )}
           {tab === "overview" && <Overview stats={stats} recent={recent} onNavigate={setTab} />}
           {tab === "guests" && <Guests guests={filteredGuests} query={query} setQuery={setQuery} />}
-          {tab === "directions" && <DirectionsSection />}
           {tab === "wishes" && <Wishes wishes={filteredWishes} query={query} setQuery={setQuery} />}
           {tab === "invitations" && (
             <Invitations
@@ -202,6 +220,21 @@ export default function DashboardPage() {
               submit={createInvitation}
               revoke={revoke}
               createLink={createLink}
+              programTimes={programTimes}
+            />
+          )}
+          {tab === "time" && (
+            <TimeSection
+              programTimes={programTimes}
+              setProgramTimes={setProgramTimes}
+              onSwitchToDirections={() => setTab("directions")}
+            />
+          )}
+          {tab === "directions" && (
+            <DirectionsSection
+              programTimes={programTimes}
+              setProgramTimes={setProgramTimes}
+              onSwitchToTime={() => setTab("time")}
             />
           )}
         </div>
@@ -211,20 +244,47 @@ export default function DashboardPage() {
   );
 }
 
+const MOBILE_MAIN_TABS: { value: Tab; label: string; icon: IconName }[] = [
+  { value: "overview", label: "Overview", icon: "home" },
+  { value: "guests", label: "Guests", icon: "users" },
+  { value: "wishes", label: "Wishes", icon: "heart" },
+  { value: "invitations", label: "Links", icon: "link" },
+];
+
 function BottomNav({ tab, onTab }: { tab: Tab; onTab: (value: Tab) => void }) {
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (moreRef.current && !moreRef.current.contains(event.target as Node)) {
+        setMoreOpen(false);
+      }
+    }
+    if (moreOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [moreOpen]);
+
+  const isMoreActive = tab === "directions" || tab === "time";
+
   return (
     <nav
       aria-label="Dashboard sections"
       className="fixed inset-x-0 bottom-0 z-50 border-t border-[#E4DED6] bg-[#FBF9F6]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
     >
       <div className="mx-auto grid max-w-lg grid-cols-5 gap-1 px-2 py-1.5">
-        {TABS.map((item) => {
+        {MOBILE_MAIN_TABS.map((item) => {
           const active = tab === item.value;
           return (
             <button
               key={item.value}
               type="button"
-              onClick={() => onTab(item.value)}
+              onClick={() => {
+                setMoreOpen(false);
+                onTab(item.value);
+              }}
               aria-current={active ? "page" : undefined}
               className={`flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl px-1 text-[10px] font-semibold transition active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2491A]/40 ${
                 active ? "bg-[#F0E6D9] text-[#7A4A2A]" : "text-[#6F665D]"
@@ -235,6 +295,113 @@ function BottomNav({ tab, onTab }: { tab: Tab; onTab: (value: Tab) => void }) {
             </button>
           );
         })}
+
+        {/* Rightmost 5th item: Three dots menu */}
+        <div ref={moreRef} className="relative">
+          {moreOpen && (
+            <>
+              {/* Backdrop */}
+              <div
+                className="fixed inset-0 z-40 bg-black/20 backdrop-blur-[1px]"
+                onClick={() => setMoreOpen(false)}
+              />
+
+              {/* Popover popup */}
+              <div
+                role="menu"
+                aria-label="Directions and Time navigation menu"
+                className="absolute bottom-full right-0 mb-3 w-56 rounded-2xl border border-[#E3DDD5] bg-[#FAF8F5] p-2 shadow-[0_16px_40px_-8px_rgba(43,24,16,0.25)] z-50"
+              >
+                <div className="px-3 py-1.5 border-b border-[#EFEAE2] mb-1">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#9A7B4F]">
+                    Schedule &amp; Venues
+                  </p>
+                </div>
+
+                {/* 1. Time Tab */}
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    onTab("time");
+                    setMoreOpen(false);
+                  }}
+                  className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-xs font-semibold transition active:scale-[0.98] ${
+                    tab === "time"
+                      ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
+                      : "text-[#422B20] hover:bg-[#EFEBE4]"
+                  }`}
+                >
+                  <span
+                    className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg ${
+                      tab === "time" ? "bg-white/20 text-[#FAF6F0]" : "bg-[#EDE7DE] text-[#8C6A3B]"
+                    }`}
+                  >
+                    <Icon name="clock" className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold leading-tight">Time Tab</p>
+                    <p
+                      className={`text-[10px] mt-0.5 truncate ${
+                        tab === "time" ? "text-[#E6C687]" : "text-[#8C6A3B]"
+                      }`}
+                    >
+                      Program times &amp; schedule
+                    </p>
+                  </div>
+                  {tab === "time" && <Icon name="check" className="h-4 w-4 text-[#E6C687] shrink-0" />}
+                </button>
+
+                {/* 2. Directions Tab */}
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    onTab("directions");
+                    setMoreOpen(false);
+                  }}
+                  className={`mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-xs font-semibold transition active:scale-[0.98] ${
+                    tab === "directions"
+                      ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
+                      : "text-[#422B20] hover:bg-[#EFEBE4]"
+                  }`}
+                >
+                  <span
+                    className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg ${
+                      tab === "directions" ? "bg-white/20 text-[#FAF6F0]" : "bg-[#EDE7DE] text-[#8C6A3B]"
+                    }`}
+                  >
+                    <Icon name="map-pin" className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold leading-tight">Directions Tab</p>
+                    <p
+                      className={`text-[10px] mt-0.5 truncate ${
+                        tab === "directions" ? "text-[#E6C687]" : "text-[#8C6A3B]"
+                      }`}
+                    >
+                      Google Maps &amp; locations
+                    </p>
+                  </div>
+                  {tab === "directions" && <Icon name="check" className="h-4 w-4 text-[#E6C687] shrink-0" />}
+                </button>
+              </div>
+            </>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setMoreOpen((prev) => !prev)}
+            aria-expanded={moreOpen}
+            aria-label="Open Time and Directions options"
+            className={`flex min-h-[56px] w-full flex-col items-center justify-center gap-1 rounded-2xl px-1 text-[10px] font-semibold transition active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2491A]/40 ${
+              isMoreActive || moreOpen ? "bg-[#F0E6D9] text-[#7A4A2A]" : "text-[#6F665D]"
+            }`}
+          >
+            <Icon name="dots" className="h-5 w-5" />
+            <span>{tab === "time" ? "Time" : tab === "directions" ? "Directions" : "More"}</span>
+          </button>
+        </div>
       </div>
     </nav>
   );
@@ -471,6 +638,7 @@ function Invitations({
   submit,
   revoke,
   createLink,
+  programTimes,
 }: {
   items: Invitation[];
   name: string;
@@ -482,7 +650,11 @@ function Invitations({
   submit: (event: FormEvent) => void;
   revoke: (id: string) => void;
   createLink: (id: string) => void;
+  programTimes?: ProgramTimes;
 }) {
+  const churchTime = (programTimes?.churchEn || "3:00 PM").toUpperCase();
+  const homeTime = (programTimes?.homeEn || "10:30 AM").toUpperCase();
+
   return (
     <SectionFrame title="Invitation links" description="Create, share, and revoke personalised wedding access.">
       <form onSubmit={submit} className="flex flex-col gap-4 rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:p-6 shadow-xs">
@@ -547,7 +719,7 @@ function Invitations({
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold leading-tight">Church Ceremony</p>
                 <p className={`text-[10px] mt-0.5 truncate ${venues.church ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
-                  ሀልዎት አማኑኤል (3:00 PM)
+                  ሀልዎት አማኑኤል ({churchTime})
                 </p>
               </div>
             </button>
@@ -580,7 +752,7 @@ function Invitations({
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold leading-tight">Basseleal&apos;s House</p>
                 <p className={`text-[10px] mt-0.5 truncate ${venues.basseleal ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
-                  የባስልኤል ቤት (10:30 AM)
+                  የባስልኤል ቤት ({homeTime})
                 </p>
               </div>
             </button>
@@ -613,15 +785,16 @@ function Invitations({
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold leading-tight">Bethel&apos;s House</p>
                 <p className={`text-[10px] mt-0.5 truncate ${venues.bethel ? "text-[#E6C687]" : "text-[#8C6A3B]"}`}>
-                  የቤቴል ቤት (10:30 AM)
+                  የቤቴል ቤት ({homeTime})
                 </p>
               </div>
             </button>
           </div>
 
           {venueError && (
-            <p className="mt-2 text-xs font-semibold text-rose-600 animate-fadeIn">
-              ⚠️ {venueError}
+            <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 animate-fadeIn">
+              <Icon name="alert" className="h-3.5 w-3.5" />
+              <span>{venueError}</span>
             </p>
           )}
         </div>
@@ -767,12 +940,140 @@ function invitationLabel(type?: string | null) {
   return getInvitationTypeLabel(type);
 }
 
-function DirectionsSection() {
+function TimeSection({
+  programTimes: parentProgramTimes,
+  setProgramTimes: setParentProgramTimes,
+  onSwitchToDirections,
+}: {
+  programTimes?: ProgramTimes;
+  setProgramTimes?: React.Dispatch<React.SetStateAction<ProgramTimes>>;
+  onSwitchToDirections?: () => void;
+} = {}) {
+  const [localProgramTimes, setLocalProgramTimes] = useState<ProgramTimes>({
+    churchEn: "3:00 pm",
+    churchAm: "9:00 ሰዓት",
+    homeEn: "10:30 am",
+    homeAm: "4:30 ሰዓት",
+  });
+
+  const programTimes = parentProgramTimes || localProgramTimes;
+  const setProgramTimes = (
+    val: ProgramTimes | ((prev: ProgramTimes) => ProgramTimes)
+  ) => {
+    if (setParentProgramTimes) {
+      setParentProgramTimes(val);
+    }
+    setLocalProgramTimes(val);
+  };
+
+  const [saving, setSaving] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSaveTimes = async () => {
+    setSaving(true);
+    setErrorMsg("");
+    setSavedSuccess(false);
+
+    try {
+      const res = await fetch("/api/admin/locations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ programTimes }),
+      });
+      if (!res.ok) throw new Error("Save failed");
+      const data = await res.json();
+      if (data.programTimes) setProgramTimes(data.programTimes);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 5000);
+    } catch {
+      setErrorMsg("Failed to save program times. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <SectionFrame
+      title="Program Times"
+      description="Update and communicate official wedding celebration times for Church Ceremony and Home Receptions. Changes sync across all guest portals and invitations."
+    >
+      {/* Sub-tab switcher between Time and Directions */}
+      <div className="mb-5 flex items-center gap-1.5 rounded-2xl bg-[#EBE7E1] p-1.5 max-w-xs">
+        <button
+          type="button"
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-white px-3 py-2 text-xs font-semibold text-[#1E140E] shadow-xs"
+        >
+          <Icon name="clock" className="h-4 w-4 text-[#C2491A]" />
+          <span>Time</span>
+        </button>
+        {onSwitchToDirections && (
+          <button
+            type="button"
+            onClick={onSwitchToDirections}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-[#6B6660] transition hover:bg-white/60 hover:text-[#1E140E]"
+          >
+            <Icon name="map-pin" className="h-4 w-4" />
+            <span>Directions</span>
+          </button>
+        )}
+      </div>
+
+      {savedSuccess && (
+        <div className="mb-5 flex items-center gap-2 rounded-2xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-xs text-emerald-800">
+          <Icon name="check" className="h-4 w-4 shrink-0 text-emerald-600" />
+          <span>Program times saved successfully! Active on the website and all guest invitation cards.</span>
+        </div>
+      )}
+
+      {errorMsg && (
+        <div className="mb-5 flex items-center gap-2 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-xs text-amber-900">
+          <Icon name="alert" className="h-4 w-4 shrink-0 text-amber-700" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
+
+      <ProgramTimeChanger
+        programTimes={programTimes}
+        onChange={setProgramTimes}
+        onSave={handleSaveTimes}
+        saving={saving}
+      />
+    </SectionFrame>
+  );
+}
+
+function DirectionsSection({
+  programTimes: parentProgramTimes,
+  setProgramTimes: setParentProgramTimes,
+  onSwitchToTime,
+}: {
+  programTimes?: ProgramTimes;
+  setProgramTimes?: React.Dispatch<React.SetStateAction<ProgramTimes>>;
+  onSwitchToTime?: () => void;
+} = {}) {
   const [locations, setLocations] = useState<DashboardLocations>({
     church: { ...emptyDashboardVenue },
     basselealHome: { ...emptyDashboardVenue },
     bethelHome: { ...emptyDashboardVenue },
   });
+  const [localProgramTimes, setLocalProgramTimes] = useState<ProgramTimes>({
+    churchEn: "3:00 pm",
+    churchAm: "9:00 ሰዓት",
+    homeEn: "10:30 am",
+    homeAm: "4:30 ሰዓት",
+  });
+
+  const programTimes = parentProgramTimes || localProgramTimes;
+  const setProgramTimes = (
+    val: ProgramTimes | ((prev: ProgramTimes) => ProgramTimes)
+  ) => {
+    if (setParentProgramTimes) {
+      setParentProgramTimes(val);
+    }
+    setLocalProgramTimes(val);
+  };
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
@@ -783,6 +1084,11 @@ function DirectionsSection() {
       .then((res) => (res.ok ? res.json() : Promise.reject()))
       .then((data) => {
         if (data.locations) setLocations(data.locations);
+        if (data.programTimes) {
+          setProgramTimes(data.programTimes);
+        } else if (data.locations?.programTimes) {
+          setProgramTimes(data.locations.programTimes);
+        }
       })
       .catch(() => {
         setErrorMsg("Failed to load saved directions. Default settings are displayed.");
@@ -809,15 +1115,36 @@ function DirectionsSection() {
     setSavedSuccess(false);
 
     try {
+      const payload = {
+        ...locations,
+        programTimes,
+        church: {
+          ...locations.church,
+          timeEn: programTimes.churchEn,
+          timeAm: programTimes.churchAm,
+        },
+        basselealHome: {
+          ...locations.basselealHome,
+          timeEn: programTimes.homeEn,
+          timeAm: programTimes.homeAm,
+        },
+        bethelHome: {
+          ...locations.bethelHome,
+          timeEn: programTimes.homeEn,
+          timeAm: programTimes.homeAm,
+        },
+      };
+
       const res = await fetch("/api/admin/locations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(locations),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error("Save failed");
       const data = await res.json();
       if (data.locations) setLocations(data.locations);
+      if (data.programTimes) setProgramTimes(data.programTimes);
       setSavedSuccess(true);
       setTimeout(() => setSavedSuccess(false), 5000);
     } catch {
@@ -840,12 +1167,34 @@ function DirectionsSection() {
       title="Wedding Directions"
       description="Update Google Maps links, addresses, and route instructions for Church and both Homes. Stored directly in the database."
     >
+      {/* Sub-tab switcher between Time and Directions */}
+      <div className="mb-5 flex items-center gap-1.5 rounded-2xl bg-[#EBE7E1] p-1.5 max-w-xs">
+        {onSwitchToTime && (
+          <button
+            type="button"
+            onClick={onSwitchToTime}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-[#6B6660] transition hover:bg-white/60 hover:text-[#1E140E]"
+          >
+            <Icon name="clock" className="h-4 w-4" />
+            <span>Time</span>
+          </button>
+        )}
+        <button
+          type="button"
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-white px-3 py-2 text-xs font-semibold text-[#1E140E] shadow-xs"
+        >
+          <Icon name="map-pin" className="h-4 w-4 text-[#C2491A]" />
+          <span>Directions</span>
+        </button>
+      </div>
+
       <div className="mb-4 flex items-center justify-between">
         <a
           href="/admin/directions"
-          className="text-xs font-semibold text-[#8C6A3B] underline hover:text-[#C2491A]"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8C6A3B] underline hover:text-[#C2491A]"
         >
-          Open Full Directions Editor ↗
+          <span>Open Full Directions Editor</span>
+          <Icon name="external-link" className="h-3 w-3" />
         </a>
         <button
           onClick={() => handleSubmit()}
@@ -874,6 +1223,14 @@ function DirectionsSection() {
         <div className="py-12 text-center text-xs text-[#736C64]">Loading directions...</div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Top Section: Program Times & Schedule Communication */}
+          <ProgramTimeChanger
+            programTimes={programTimes}
+            onChange={setProgramTimes}
+            onSave={() => handleSubmit()}
+            saving={saving}
+          />
+
           {/* 1. Church */}
           <div className="rounded-2xl border border-[#EDE9E2] bg-white p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[#F0ECE6] pb-3">
@@ -882,17 +1239,18 @@ function DirectionsSection() {
                   <Icon name="home" className="h-4 w-4" />
                 </span>
                 <div>
-                  <h3 className="text-sm font-semibold text-[#1E140E]">Church Ceremony (3:00 PM)</h3>
-                  <p className="text-[11px] text-[#8C6A3B]">Halwot Emmanuel United Church</p>
+                  <h3 className="text-sm font-semibold text-[#1E140E]">Church Ceremony ({programTimes.churchEn})</h3>
+                  <p className="text-[11px] text-[#8C6A3B]">Halwot Emmanuel United Church • {programTimes.churchAm}</p>
                 </div>
               </div>
               <a
                 href={getMapsUrl(locations.church)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] font-semibold text-[#8C6A3B] hover:underline"
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#8C6A3B] hover:underline"
               >
-                Test in Maps ↗
+                <span>Test in Maps</span>
+                <Icon name="external-link" className="h-3 w-3" />
               </a>
             </div>
 
@@ -973,17 +1331,18 @@ function DirectionsSection() {
                   <Icon name="home" className="h-4 w-4" />
                 </span>
                 <div>
-                  <h3 className="text-sm font-semibold text-[#1E140E]">Basseleal&apos;s House (4:30 LT)</h3>
-                  <p className="text-[11px] text-[#8C6A3B]">Afternoon celebration</p>
+                  <h3 className="text-sm font-semibold text-[#1E140E]">Basseleal&apos;s House ({programTimes.homeEn})</h3>
+                  <p className="text-[11px] text-[#8C6A3B]">Afternoon celebration • {programTimes.homeAm}</p>
                 </div>
               </div>
               <a
                 href={getMapsUrl(locations.basselealHome)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] font-semibold text-[#8C6A3B] hover:underline"
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#8C6A3B] hover:underline"
               >
-                Test in Maps ↗
+                <span>Test in Maps</span>
+                <Icon name="external-link" className="h-3 w-3" />
               </a>
             </div>
 
@@ -1064,17 +1423,18 @@ function DirectionsSection() {
                   <Icon name="home" className="h-4 w-4" />
                 </span>
                 <div>
-                  <h3 className="text-sm font-semibold text-[#1E140E]">Bethel&apos;s House (4:30 LT)</h3>
-                  <p className="text-[11px] text-[#8C6A3B]">Afternoon celebration</p>
+                  <h3 className="text-sm font-semibold text-[#1E140E]">Bethel&apos;s House ({programTimes.homeEn})</h3>
+                  <p className="text-[11px] text-[#8C6A3B]">Afternoon celebration • {programTimes.homeAm}</p>
                 </div>
               </div>
               <a
                 href={getMapsUrl(locations.bethelHome)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] font-semibold text-[#8C6A3B] hover:underline"
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#8C6A3B] hover:underline"
               >
-                Test in Maps ↗
+                <span>Test in Maps</span>
+                <Icon name="external-link" className="h-3 w-3" />
               </a>
             </div>
 

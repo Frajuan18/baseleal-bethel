@@ -20,6 +20,15 @@ export interface VenueLocation {
   directionsUrl?: string | null;
   note?: string;
   noteAm?: string;
+  timeEn?: string;
+  timeAm?: string;
+}
+
+export interface WeddingProgramTimes {
+  churchEn: string;
+  churchAm: string;
+  homeEn: string;
+  homeAm: string;
 }
 
 export interface WeddingConfig {
@@ -40,6 +49,7 @@ export interface WeddingConfig {
   address: string;
   directionsUrl: string | null;
   rsvpDeadline: string | null; // e.g. "July 1, 2027" or null
+  programTimes: WeddingProgramTimes;
   locations: {
     church: VenueLocation;
     basselealHome: VenueLocation;
@@ -95,6 +105,14 @@ export const wedding: WeddingConfig = {
   // RSVP deadline:
   rsvpDeadline: null, // e.g. "July 15, 2027"
 
+  // Live program times:
+  programTimes: {
+    churchEn: "3:00 pm",
+    churchAm: "9:00 ሰዓት",
+    homeEn: "10:30 am",
+    homeAm: "4:30 ሰዓት",
+  },
+
   // Addresses shown on the personalized invitation.
   locations: {
     church: {
@@ -106,6 +124,8 @@ export const wedding: WeddingConfig = {
       directionsUrl: null,
       note: "The ceremony begins at 3:00 pm. Parking is available on church premises.",
       noteAm: "ሥነ-ሥርዓቱ ከቀኑ 9:00 ሰዓት ይጀምራል። በቤተክርስቲያኑ ግቢ ውስጥ ሰፊ የመኪና ማቆሚያ ተዘጋጅቷል።",
+      timeEn: "3:00 pm",
+      timeAm: "9:00 ሰዓት",
     },
     basselealHome: {
       label: "Basseleal's house",
@@ -114,8 +134,10 @@ export const wedding: WeddingConfig = {
       addressAm: "ባስልኤል ቤት፣ አዲስ አበባ፣ ኢትዮጵያ",
       mapsQuery: "Basseleal's house, Addis Ababa, Ethiopia",
       directionsUrl: null,
-      note: "Afternoon reception begins at 4:30 PM (10:30 LT). Follow the wedding celebration signs upon arrival.",
-      noteAm: "የከሰዓቱ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።",
+      note: "Afternoon reception begins at 10:30 am. Follow the wedding celebration signs upon arrival.",
+      noteAm: "የቤት ዝግጅት ከጠዋቱ 10:30 (4:30 ሰዓት) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።",
+      timeEn: "10:30 am",
+      timeAm: "4:30 ሰዓት",
     },
     bethelHome: {
       label: "Bethel's house",
@@ -124,8 +146,10 @@ export const wedding: WeddingConfig = {
       addressAm: "ቤቴል ቤት፣ አዲስ አበባ፣ ኢትዮጵያ",
       mapsQuery: "Bethel's house, Addis Ababa, Ethiopia",
       directionsUrl: null,
-      note: "Afternoon reception begins at 4:30 PM (10:30 LT). Follow the wedding celebration signs upon arrival.",
-      noteAm: "የከሰዓቱ የቤት ዝግጅት ከቀኑ 10:30 (4:30 LT) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።",
+      note: "Afternoon reception begins at 10:30 am. Follow the wedding celebration signs upon arrival.",
+      noteAm: "የቤት ዝግጅት ከጠዋቱ 10:30 (4:30 ሰዓት) ጀምሮ ይካሄዳል። አካባቢው ሲደርሱ የሰርግ መመሪያ ምልክቶችን ይከተሉ።",
+      timeEn: "10:30 am",
+      timeAm: "4:30 ሰዓት",
     },
     get home() {
       return this.basselealHome;

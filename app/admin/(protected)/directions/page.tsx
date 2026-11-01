@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { AdminTabShell } from "../_components/AdminTabShell";
 import { Icon } from "@/app/components/dashboard/Icon";
+import { ProgramTimeChanger, type ProgramTimes } from "@/app/components/dashboard/ProgramTimeChanger";
 
 type VenueData = {
   label: string;
@@ -38,10 +39,27 @@ export default function DirectionsAdminPage() {
     basselealHome: { ...emptyVenue },
     bethelHome: { ...emptyVenue },
   });
+  const [programTimes, setProgramTimes] = useState<ProgramTimes>({
+    churchEn: "3:00 pm",
+    churchAm: "9:00 ሰዓት",
+    homeEn: "10:30 am",
+    homeAm: "4:30 ሰዓት",
+  });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [subTab, setSubTab] = useState<"all" | "time" | "directions">("all");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab");
+      if (tabParam === "time" || tabParam === "directions") {
+        setSubTab(tabParam);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     fetch("/api/admin/locations")
@@ -49,6 +67,11 @@ export default function DirectionsAdminPage() {
       .then((data) => {
         if (data.locations) {
           setLocations(data.locations);
+        }
+        if (data.programTimes) {
+          setProgramTimes(data.programTimes);
+        } else if (data.locations?.programTimes) {
+          setProgramTimes(data.locations.programTimes);
         }
       })
       .catch(() => {
@@ -79,16 +102,39 @@ export default function DirectionsAdminPage() {
     setSavedSuccess(false);
 
     try {
+      const payload = {
+        ...locations,
+        programTimes,
+        church: {
+          ...locations.church,
+          timeEn: programTimes.churchEn,
+          timeAm: programTimes.churchAm,
+        },
+        basselealHome: {
+          ...locations.basselealHome,
+          timeEn: programTimes.homeEn,
+          timeAm: programTimes.homeAm,
+        },
+        bethelHome: {
+          ...locations.bethelHome,
+          timeEn: programTimes.homeEn,
+          timeAm: programTimes.homeAm,
+        },
+      };
+
       const res = await fetch("/api/admin/locations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(locations),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error("Save failed");
       const data = await res.json();
       if (data.locations) {
         setLocations(data.locations);
+      }
+      if (data.programTimes) {
+        setProgramTimes(data.programTimes);
       }
       setSavedSuccess(true);
       setTimeout(() => setSavedSuccess(false), 5000);
@@ -143,8 +189,60 @@ export default function DirectionsAdminPage() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Card 1: Church Ceremony */}
-          <section className="rounded-2xl border border-[#EDE9E2] bg-white p-5 sm:p-7 shadow-xs">
+          {/* Sub-tab switcher between All, Time, and Directions */}
+          <div className="flex items-center gap-1.5 rounded-2xl bg-[#E6E1D8] p-1.5 max-w-md">
+            <button
+              type="button"
+              onClick={() => setSubTab("all")}
+              className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold transition active:scale-[0.98] ${
+                subTab === "all"
+                  ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
+                  : "text-[#6B6660] hover:text-[#1E140E]"
+              }`}
+            >
+              <span>All</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSubTab("time")}
+              className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition active:scale-[0.98] ${
+                subTab === "time"
+                  ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
+                  : "text-[#6B6660] hover:text-[#1E140E]"
+              }`}
+            >
+              <Icon name="clock" className="h-4 w-4" />
+              <span>Time Tab</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSubTab("directions")}
+              className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition active:scale-[0.98] ${
+                subTab === "directions"
+                  ? "bg-[#2B1810] text-[#FAF6F0] shadow-xs"
+                  : "text-[#6B6660] hover:text-[#1E140E]"
+              }`}
+            >
+              <Icon name="map-pin" className="h-4 w-4" />
+              <span>Directions Tab</span>
+            </button>
+          </div>
+
+          {/* Top Section: Program Times & Schedule Communication */}
+          {(subTab === "all" || subTab === "time") && (
+            <ProgramTimeChanger
+              programTimes={programTimes}
+              onChange={setProgramTimes}
+              onSave={() => handleSubmit()}
+              saving={saving}
+            />
+          )}
+
+          {/* Venue Location Cards (Directions Tab) */}
+          {(subTab === "all" || subTab === "directions") && (
+            <>
+              {/* Card 1: Church Ceremony */}
+              <section className="rounded-2xl border border-[#EDE9E2] bg-white p-5 sm:p-7 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-[#F0ECE6] pb-4">
               <div className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#2B1810] text-[#FAF6F0] shadow-inner">
@@ -156,7 +254,7 @@ export default function DirectionsAdminPage() {
                 </span>
                 <div>
                   <h2 className="text-base font-semibold text-[#1E140E]">1. Church Ceremony Directions</h2>
-                  <p className="text-xs text-[#8C6A3B]">Morning wedding service & vows (9:00 LT / 3:00 Ethiopian Time)</p>
+                  <p className="text-xs text-[#8C6A3B]">Program time: {programTimes.churchEn} ({programTimes.churchAm})</p>
                 </div>
               </div>
               <a
@@ -166,7 +264,8 @@ export default function DirectionsAdminPage() {
                 className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-full border border-[#DED2C2] bg-[#FAF5EE] px-4 py-2 text-xs font-semibold text-[#1E140E] transition hover:bg-white hover:border-[#8C6A3B]"
               >
                 <Icon name="map-pin" className="h-3.5 w-3.5 text-[#8C6A3B]" />
-                <span>Test Link in Google Maps ↗</span>
+                <span>Test Link in Google Maps</span>
+                <Icon name="external-link" className="h-3 w-3 text-[#8C6A3B]" />
               </a>
             </div>
 
@@ -295,7 +394,7 @@ export default function DirectionsAdminPage() {
                 </span>
                 <div>
                   <h2 className="text-base font-semibold text-[#1E140E]">2. Basseleal&apos;s House Directions</h2>
-                  <p className="text-xs text-[#8C6A3B]">Home reception celebration (4:30 LT / 10:30 Ethiopian Time)</p>
+                  <p className="text-xs text-[#8C6A3B]">Program time: {programTimes.homeEn} ({programTimes.homeAm})</p>
                 </div>
               </div>
               <a
@@ -305,7 +404,8 @@ export default function DirectionsAdminPage() {
                 className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-full border border-[#DED2C2] bg-[#FAF5EE] px-4 py-2 text-xs font-semibold text-[#1E140E] transition hover:bg-white hover:border-[#8C6A3B]"
               >
                 <Icon name="map-pin" className="h-3.5 w-3.5 text-[#8C6A3B]" />
-                <span>Test Link in Google Maps ↗</span>
+                <span>Test Link in Google Maps</span>
+                <Icon name="external-link" className="h-3 w-3 text-[#8C6A3B]" />
               </a>
             </div>
 
@@ -428,7 +528,7 @@ export default function DirectionsAdminPage() {
                 </span>
                 <div>
                   <h2 className="text-base font-semibold text-[#1E140E]">3. Bethel&apos;s House Directions</h2>
-                  <p className="text-xs text-[#8C6A3B]">Home reception celebration (4:30 LT / 10:30 Ethiopian Time)</p>
+                  <p className="text-xs text-[#8C6A3B]">Program time: {programTimes.homeEn} ({programTimes.homeAm})</p>
                 </div>
               </div>
               <a
@@ -438,7 +538,8 @@ export default function DirectionsAdminPage() {
                 className="inline-flex items-center gap-1.5 self-start sm:self-auto rounded-full border border-[#DED2C2] bg-[#FAF5EE] px-4 py-2 text-xs font-semibold text-[#1E140E] transition hover:bg-white hover:border-[#8C6A3B]"
               >
                 <Icon name="map-pin" className="h-3.5 w-3.5 text-[#8C6A3B]" />
-                <span>Test Link in Google Maps ↗</span>
+                <span>Test Link in Google Maps</span>
+                <Icon name="external-link" className="h-3 w-3 text-[#8C6A3B]" />
               </a>
             </div>
 
@@ -548,6 +649,8 @@ export default function DirectionsAdminPage() {
               </div>
             </div>
           </section>
+        </>
+      )}
 
           <div className="flex justify-end pt-3">
             <button
