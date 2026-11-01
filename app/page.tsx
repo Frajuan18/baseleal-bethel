@@ -6,6 +6,7 @@ import { GallerySection } from "./components/wedding/GallerySection";
 import { WeddingCalendar } from "./components/wedding/WeddingCalendar";
 import { RSVPSection } from "./components/wedding/RSVPSection";
 import { ScrollReveal } from "./components/wedding/ScrollReveal";
+import { ScrollFlowers } from "./components/wedding/ScrollFlowers";
 import { LanguageProvider } from "./components/wedding/LanguageContext";
 import { LanguageToggle } from "./components/wedding/LanguageToggle";
 import { SongToggle } from "./components/wedding/SongToggle";
@@ -122,8 +123,9 @@ export default async function Home({
         <IntroLoader />
         <LanguageToggle />
         <SongToggle />
-        <main className="min-h-screen bg-[#F8F4ED] text-[#422B20]">
+        <main className="relative min-h-screen bg-[#F8F4ED] text-[#422B20]">
           <ScrollReveal />
+          <ScrollFlowers />
           <WeddingHero />
           <InvitationSection />
           <GallerySection />

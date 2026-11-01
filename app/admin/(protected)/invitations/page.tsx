@@ -88,8 +88,8 @@ export default function InvitationsPage() {
       title="Invitation links"
       description="Create, assign venue directions (church & homes), and revoke personalised wedding access."
     >
-      <form onSubmit={submit} className="flex flex-col gap-3.5 rounded-2xl border border-[#EDE9E2] bg-white p-4 shadow-xs">
-        <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+      <form onSubmit={submit} className="flex flex-col gap-4 rounded-2xl border border-[#EDE9E2] bg-white p-5 sm:p-6 shadow-xs">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label htmlFor="admin-inv-name" className="sr-only">
             Guest full name
           </label>
@@ -98,12 +98,12 @@ export default function InvitationsPage() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Guest full name (e.g. Abebe Bikila)"
-            className="h-11 flex-1 w-full rounded-full border border-[#E1D9CF] bg-[#FBFAF8] px-4 text-base outline-none transition placeholder:text-[#9A938B] focus:border-[#C9B79F] focus:ring-2 focus:ring-[#C2491A]/15 sm:text-sm"
+            placeholder="Guest full name"
+            className="h-12 flex-1 w-full rounded-xl border border-[#D5CDC2] bg-[#FAF8F5] px-4 text-base text-[#1E140E] outline-none transition placeholder:text-[#9A938B] focus:border-[#8C6A3B] focus:bg-white focus:ring-2 focus:ring-[#8C6A3B]/20 sm:text-sm"
           />
           <button
             type="submit"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#C2491A] px-6 text-xs font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#C2491A] px-6 text-sm font-semibold text-white transition hover:bg-[#A83E15] active:scale-[0.99] shrink-0 shadow-xs"
           >
             <Icon name="plus" className="h-4 w-4" /> Generate link
           </button>

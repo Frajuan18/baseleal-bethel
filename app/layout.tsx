@@ -54,6 +54,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  other: {
+    google: "notranslate",
+  },
 };
 
 export const viewport: Viewport = {
@@ -69,9 +72,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="am" className="scroll-smooth">
+    <html lang="am" className="scroll-smooth" suppressHydrationWarning>
       <head />
-      <body className="min-h-full bg-[#F8F4ED] font-sans text-[#422B20] antialiased selection:bg-[#B18A54] selection:text-[#F8F4ED]">
+      <body
+        className="min-h-full bg-[#F8F4ED] font-sans text-[#422B20] antialiased selection:bg-[#B18A54] selection:text-[#F8F4ED]"
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
