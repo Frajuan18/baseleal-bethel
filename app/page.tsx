@@ -41,19 +41,23 @@ export async function generateMetadata({
   const siteUrl = (rawBase.startsWith("http") ? rawBase : `https://${rawBase}`).replace(/\/$/, "");
   const ogImageUrl = `${siteUrl}/og-image.jpg`;
 
-  const title = guestName
+  const tabTitle = guestName
+    ? `${guestName} — Basseleal and Bethel`
+    : "Basseleal and Bethel";
+
+  const ogTitle = guestName
     ? `👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈 | ${guestName} — Basseleal & Dr. Bethel Wedding`
-    : "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈 | Basseleal & Dr. Bethel Digital Wedding Invitation";
+    : "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈 | Basseleal & Dr. Bethel Wedding";
 
   const description =
     "ባስልኤል እና ዶ/ር ቤቴል ዲጂታል የሠርግ መጥሪያ — የማክበር ሰላምታችንን እያቀረብን በእግዚአብሔር ፈቃድ የጋብቻ ሥነ-ሥርዓታችን የሚፈጸመው ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም ስለሆነ በዚህ ዕለት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን በምናደርገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።";
 
   return {
     metadataBase: new URL(siteUrl),
-    title,
+    title: tabTitle,
     description,
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       url: siteUrl,
       type: "website",
@@ -70,7 +74,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: ogTitle,
       description,
       images: [ogImageUrl],
     },

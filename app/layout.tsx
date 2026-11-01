@@ -12,7 +12,7 @@ const siteUrl = rawSiteUrl.startsWith("http") ? rawSiteUrl : `https://${rawSiteU
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "👉 ሊንኩን በመጫን ወደ ዌብሳይቱ ይሂዱ 👈 | Basseleal & Dr. Bethel Wedding",
+  title: "Basseleal and Bethel",
   description:
     "ባስልኤል እና ዶ/ር ቤቴል ዲጂታል የሠርግ መጥሪያ — የማክበር ሰላምታችንን እያቀረብን በእግዚአብሔር ፈቃድ የጋብቻ ሥነ-ሥርዓታችን የሚፈጸመው ቅዳሜ ፡ ታህሳስ 17 ፡ 2019 ዓ.ም ስለሆነ በዚህ ዕለት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን በምናደርገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።",
   keywords: [
