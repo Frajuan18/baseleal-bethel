@@ -3,16 +3,17 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 
-type Phase = "idle" | "playing" | "card-amharic" | "card-english" | "revealing" | "done";
+type Phase = "idle" | "playing" | "photo-sharp" | "card-amharic" | "card-english" | "revealing" | "done";
 
 /**
  * Full-screen cinematic intro:
  * 1. The envelope video is the first thing seen when the page loads, paused at frame 0.
  * 2. Pressing starts playback.
- * 3. When the envelope opens and finishes, the blurred couple photo background with a white card emerges.
- * 4. Displays prominent "ተጋብዘዋል" + Amharic invitation with large bottom date for 7 seconds.
- * 5. Smoothly cross-fades to prominent "YOU ARE INVITED" + English invitation with large bottom date for 7 seconds.
- * 6. After the full 14-second sequence ends, an elegant clearing animation reveals the hero section.
+ * 3. When the envelope opens and finishes, the crystal-clear portrait of the couple is unveiled first.
+ * 4. The photo then smoothly blurs with cinematic depth of field, and the invitation card pops up into view.
+ * 5. Displays prominent "ተጋብዘዋል" + Amharic invitation with large bottom date for 7 seconds.
+ * 6. Smoothly 3D-flips to prominent "YOU ARE INVITED" + English invitation with large bottom date for 7 seconds.
+ * 7. After the full 14-second sequence ends, an elegant clearing animation reveals the hero section.
  */
 export function IntroLoader() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -46,29 +47,12 @@ export function IntroLoader() {
       window.dispatchEvent(new CustomEvent("play-wedding-song"));
     }
 
-    const isLarge = window.innerWidth >= 768;
-    const target = isLarge ? "/loader large screen.mp4#t=0.001" : "/main loader animation.mp4#t=0.001";
-    const filename = isLarge ? "loader%20large%20screen.mp4" : "main%20loader%20animation.mp4";
+    const target = "/main loader animation video.mp4#t=0.001";
+    const filename = "main%20loader%20animation%20video.mp4";
     if (!video.src.includes(filename)) {
       video.src = target;
       video.load();
     }
-
-    const mq = window.matchMedia("(min-width: 768px)");
-    const handleResize = () => {
-      if (phase === "idle" && videoRef.current) {
-        const desktop = window.innerWidth >= 768;
-        const next = desktop ? "/loader large screen.mp4#t=0.001" : "/main loader animation.mp4#t=0.001";
-        const nextFile = desktop ? "loader%20large%20screen.mp4" : "main%20loader%20animation.mp4";
-        if (!videoRef.current.src.includes(nextFile)) {
-          videoRef.current.src = next;
-          videoRef.current.load();
-        }
-      }
-    };
-
-    mq.addEventListener?.("change", handleResize);
-    return () => mq.removeEventListener?.("change", handleResize);
   }, [phase]);
 
   // Keep background song running seamlessly during video playback
@@ -99,7 +83,7 @@ export function IntroLoader() {
   const start = useCallback(async () => {
     const video = videoRef.current;
     if (!video) {
-      setPhase("card-amharic");
+      setPhase("photo-sharp");
       return;
     }
     setPhase("playing");
@@ -114,7 +98,7 @@ export function IntroLoader() {
       video.currentTime = 0;
       await video.play();
     } catch {
-      setPhase("card-amharic");
+      setPhase("photo-sharp");
     }
 
     // Immediately trigger background music on this user interaction so the song continues uninterrupted
@@ -124,7 +108,7 @@ export function IntroLoader() {
   }, []);
 
   const handleVideoEnded = useCallback(() => {
-    setPhase("card-amharic");
+    setPhase("photo-sharp");
     if (videoRef.current) {
       videoRef.current.pause();
     }
@@ -133,8 +117,22 @@ export function IntroLoader() {
     }
   }, []);
 
-  // Timed progression: EXACTLY 7s Amharic + 7s English = 14s total -> clearing animation to reveal hero
+  const handleTimeUpdate = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (phase === "playing" && video.duration && video.currentTime >= video.duration - 0.15) {
+      handleVideoEnded();
+    }
+  }, [phase, handleVideoEnded]);
+
+  // Timed progression: Photo sharp (3s) -> Card Amharic (7s) -> Card English (7s) = 14s reveal -> Hero
   useEffect(() => {
+    if (phase === "photo-sharp") {
+      const timer = window.setTimeout(() => {
+        setPhase("card-amharic");
+      }, 3000);
+      return () => window.clearTimeout(timer);
+    }
     if (phase === "card-amharic") {
       const timer = window.setTimeout(() => {
         setPhase("card-english");
@@ -165,6 +163,9 @@ export function IntroLoader() {
 
   if (phase === "done") return null;
 
+  const isPhotoVisible =
+    phase === "photo-sharp" || phase === "card-amharic" || phase === "card-english" || phase === "revealing";
+
   const isCardVisible =
     phase === "card-amharic" || phase === "card-english" || phase === "revealing";
 
@@ -175,6 +176,8 @@ export function IntroLoader() {
       aria-label={
         phase === "idle"
           ? "Start the wedding introduction"
+          : phase === "photo-sharp"
+          ? "Wedding couple portrait"
           : isCardVisible
           ? "Wedding invitation card"
           : "Wedding intro video"
@@ -190,9 +193,9 @@ export function IntroLoader() {
       {/* Video layer: Envelope opening */}
       <video
         ref={videoRef}
-        src="/main loader animation.mp4#t=0.001"
+        src="/main loader animation video.mp4#t=0.001"
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          isCardVisible ? "opacity-0 pointer-events-none" : "opacity-100"
+          isPhotoVisible ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
         playsInline
         muted
@@ -203,6 +206,7 @@ export function IntroLoader() {
           }
         }}
         onEnded={handleVideoEnded}
+        onTimeUpdate={handleTimeUpdate}
       />
 
       {/* Tap Guide Overlay on Intro Video (shown during idle phase) */}
@@ -261,13 +265,13 @@ export function IntroLoader() {
         </div>
       )}
 
-      {/* Invitation Card Overlay with Blurred Couple Image Background */}
+      {/* Invitation Card Overlay with Couple Image Background */}
       <div
         className={`absolute inset-0 z-10 flex items-center justify-center p-2.5 sm:p-6 transition-opacity duration-1000 ease-in-out ${
-          isCardVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          isPhotoVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* Background: Blurred couple photo fitted matching the hero section */}
+        {/* Background: Couple photo (Clear initially, then smoothly blurs as card pops up) */}
         <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
           <Image
             src="/couple main.JPG"
@@ -276,20 +280,30 @@ export function IntroLoader() {
             priority
             unoptimized
             sizes="100vw"
-            className="h-full w-full object-cover object-[center_15%] sm:object-[center_14%] md:object-[center_12%] lg:object-[center_10%] xl:object-[center_8%] scale-110 blur-xl filter brightness-[0.82] contrast-[1.05]"
+            className={`h-full w-full object-cover object-[center_15%] sm:object-[center_14%] md:object-[center_12%] lg:object-[center_10%] xl:object-[center_8%] transition-all duration-1000 ease-out ${
+              phase === "photo-sharp"
+                ? "scale-100 blur-none brightness-100 contrast-100 filter-none"
+                : "scale-110 blur-xl filter brightness-[0.82] contrast-[1.05]"
+            }`}
           />
-          {/* Subtle warm vignette overlay for depth & readability */}
-          <div className="absolute inset-0 bg-[#26150e]/50 backdrop-blur-xs" />
+          {/* Subtle warm vignette overlay for depth & readability when card appears */}
+          <div
+            className={`absolute inset-0 bg-[#26150e]/50 backdrop-blur-xs transition-opacity duration-1000 ease-out ${
+              phase === "photo-sharp" ? "opacity-0" : "opacity-100"
+            }`}
+          />
         </div>
 
-        {/* 3D Flipping Card Container (Flips from Amharic front to English back) */}
+        {/* 3D Flipping Card Container (Spring pop-up, then flips from Amharic front to English back) */}
         <div
-          className={`relative z-10 w-full max-w-[540px] sm:max-w-[620px] md:max-w-[680px] aspect-[1247/1261] max-h-[92vh] sm:max-h-[90vh] transition-all duration-1000 ease-out transform drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)] ${
+          className={`relative z-10 w-full max-w-[540px] sm:max-w-[620px] md:max-w-[680px] aspect-[1247/1261] max-h-[92vh] sm:max-h-[90vh] drop-shadow-[0_25px_60px_rgba(0,0,0,0.55)] ${
             phase === "revealing"
-              ? "opacity-0 scale-[0.96] blur-xs"
-              : isCardVisible
-              ? "opacity-100 scale-100 translate-y-0"
-              : "opacity-0 scale-[0.96] translate-y-2"
+              ? "opacity-0 scale-[0.96] blur-xs pointer-events-none transition-all duration-1000 ease-in-out"
+              : phase === "card-amharic"
+              ? "intro-card-popup opacity-100 pointer-events-auto"
+              : phase === "card-english"
+              ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 scale-75 translate-y-8 pointer-events-none"
           }`}
           style={{
             perspective: "1600px",

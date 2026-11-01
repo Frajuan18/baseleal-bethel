@@ -54,7 +54,15 @@ export const metadata: Metadata = {
     images: ["/og-image.jpg"],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/b-and-b-seal.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/b-and-b-seal.png",
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/b-and-b-seal.png" },
+    ],
   },
   other: {
     google: "notranslate",
@@ -75,7 +83,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="am" className="scroll-smooth" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="icon" href="/b-and-b-seal.png" type="image/png" />
+        <link rel="shortcut icon" href="/b-and-b-seal.png" />
+        <link rel="apple-touch-icon" href="/b-and-b-seal.png" />
+      </head>
       <body
         className="min-h-full bg-[#F8F4ED] font-sans text-[#422B20] antialiased selection:bg-[#B18A54] selection:text-[#F8F4ED]"
         suppressHydrationWarning
