@@ -45,17 +45,29 @@ export function InvitationSection() {
 
   // Live program times configured in Directions tab
   const churchTimeRaw = isAmharic
-    ? (liveLocations?.church?.timeAm || "9:00")
-    : (liveLocations?.church?.timeEn || "3:00");
+    ? (liveLocations?.church?.timeAm || liveLocations?.programTimes?.churchAm || wedding.programTimes.churchAm || "9:00")
+    : (liveLocations?.church?.timeEn || liveLocations?.programTimes?.churchEn || wedding.programTimes.churchEn || "3:00 pm");
   const homeTimeRaw = isAmharic
-    ? (liveLocations?.basselealHome?.timeAm || "4:30")
-    : (liveLocations?.basselealHome?.timeEn || "10:30");
+    ? (liveLocations?.basselealHome?.timeAm || liveLocations?.programTimes?.homeAm || wedding.programTimes.homeAm || "4:30")
+    : (liveLocations?.basselealHome?.timeEn || liveLocations?.programTimes?.homeEn || wedding.programTimes.homeEn || "10:30 am");
 
-  const churchDigits = churchTimeRaw.replace(/[^0-9:]/g, "") || (isAmharic ? "9:00" : "3:00");
+  const churchDigits = churchTimeRaw.replace(/[^0-9:]/g, "").trim() || (isAmharic ? "9:00" : "3:00");
   const churchUnit = isAmharic ? "ሰዓት" : (churchTimeRaw.toLowerCase().includes("am") ? "am" : "pm");
 
-  const homeDigits = homeTimeRaw.replace(/[^0-9:]/g, "") || (isAmharic ? "4:30" : "10:30");
+  const homeDigits = homeTimeRaw.replace(/[^0-9:]/g, "").trim() || (isAmharic ? "4:30" : "10:30");
   const homeUnit = isAmharic ? "ሰዓት" : (homeTimeRaw.toLowerCase().includes("pm") ? "pm" : "am");
+
+  const homePeriodAm = homeTimeRaw.includes("ቀኑ")
+    ? "ቀኑ"
+    : homeTimeRaw.includes("ማታ") || homeTimeRaw.includes("ምሽቱ")
+    ? "ምሽቱ"
+    : "ጠዋቱ";
+
+  const churchPeriodAm = churchTimeRaw.includes("ጠዋቱ")
+    ? "ጠዋቱ"
+    : churchTimeRaw.includes("ማታ") || churchTimeRaw.includes("ምሽቱ")
+    ? "ምሽቱ"
+    : "ቀኑ";
   // Structured date lockup data — Amharic uses the Ethiopian calendar date
   const parsedDate = (() => {
     if (wedding.date) {
@@ -366,16 +378,16 @@ export function InvitationSection() {
                   <p className={`w-full leading-relaxed ${isAmharic ? "font-benaiah text-[13.5px] sm:text-[14.5px]" : "font-editorial-serif text-[13.5px] sm:text-[14.5px] italic"}`}>
                     {hasChurch && hasAnyHome ? (
                       isAmharic
-                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ ${homeDigits} ${homeUnit} ጀምሮ በሚደረገው ደማቅ ዝግጅት፣ በመቀጠልም ቃል ኪዳን የምንገባበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ ${churchDigits} ${churchUnit} (በኢትዮጵያ አቆጣጠር) ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
-                        : `Together with our families, we warmly invite you to join ${hasBothHomes ? "our home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at ${homeDigits} ${homeUnit} and our church wedding ceremony at Halwot Emmanuel United Church at ${churchDigits} ${churchUnit} as we exchange our vows and begin our life together.`
+                        ? `${hasBothHomes ? "በባስልኤል እና በዶ/ር ቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በዶ/ር ቤቴል ቤት"} ከ${homePeriodAm} ${homeDigits} ጀምሮ ከቤተሰቦቻቸው ጋር በሚደረገው ዝግጅት እንዲሁም በሀልዎት አማኑኤል ህብርት ቤ/ክ ከ${churchPeriodAm} ${churchDigits} ጀምሮ በሚኖረው የቃልኪዳን ስነስርዓት በመገኘት የደስታችን ተካፋይ እንዲሆኑ በአክብሮት እንጋብዛለን::`
+                        : `Together with our families, we warmly invite you to join ${hasBothHomes ? "our home celebrations at Basseleal & Dr. Bethel's" : hasBasseleal ? "Basseleal's home celebration" : "Dr. Bethel's home celebration"} from ${homeDigits} ${homeUnit} and our church wedding ceremony at Halwot Emmanuel United Church from ${churchDigits} ${churchUnit} as we exchange our vows and begin our life together.`
                     ) : hasAnyHome ? (
                       isAmharic
-                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ${hasBothHomes ? "በባስልኤል እና በቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በቤቴል ቤት"} ከጠዋቱ ${homeDigits} ${homeUnit} ጀምሮ በሚደረገው የቤት አቀባበል ላይ ተገኝተው ደስታችንን እንዲካፈሉ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
-                        : `Together with our families, we warmly invite you to join ${hasBothHomes ? "our home celebrations" : hasBasseleal ? "Basseleal's home celebration" : "Bethel's home celebration"} at ${homeDigits} ${homeUnit} as we begin our life together.`
+                        ? `${hasBothHomes ? "በባስልኤል እና በዶ/ር ቤቴል ቤት" : hasBasseleal ? "በባስልኤል ቤት" : "በዶ/ር ቤቴል ቤት"} ከ${homePeriodAm} ${homeDigits} ጀምሮ ከቤተሰቦቻቸው ጋር በሚደረገው ዝግጅት በመገኘት የደስታችን ተካፋይ እንዲሆኑ በአክብሮት እንጋብዛለን::`
+                        : `Together with our families, we warmly invite you to join ${hasBothHomes ? "our home celebrations at Basseleal & Dr. Bethel's" : hasBasseleal ? "Basseleal's home celebration" : "Dr. Bethel's home celebration"} from ${homeDigits} ${homeUnit} as we begin our life together.`
                     ) : (
                       isAmharic
-                        ? `ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ ${churchDigits} ${churchUnit} (በኢትዮጵያ አቆጣጠር) ላይ ተገኝተው አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።`
-                        : `Together with our families, we warmly invite you to Halwot Emmanuel United Church at ${churchDigits} ${churchUnit} as we exchange our vows.`
+                        ? `በሀልዎት አማኑኤል ህብርት ቤ/ክ ከ${churchPeriodAm} ${churchDigits} ጀምሮ በሚኖረው የቃልኪዳን ስነስርዓት በመገኘት የደስታችን ተካፋይ እንዲሆኑ በአክብሮት እንጋብዛለን::`
+                        : `Together with our families, we warmly invite you to Halwot Emmanuel United Church from ${churchDigits} ${churchUnit} as we exchange our vows and begin our life together.`
                     )}
                   </p>
                 </div>

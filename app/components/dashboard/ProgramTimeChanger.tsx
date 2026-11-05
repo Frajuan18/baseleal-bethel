@@ -255,7 +255,7 @@ export function ProgramTimeChanger({
               English Invitation Statement:
             </span>
             <p className="italic">
-              &ldquo;Together with our families, we warmly invite you to join us at Halwot Emmanuel United Church at <strong className="text-[#1E140E] font-bold underline decoration-[#8C6A3B]">{programTimes.churchEn}</strong> and home celebrations at <strong className="text-[#1E140E] font-bold underline decoration-[#8C6A3B]">{programTimes.homeEn}</strong> as we exchange our vows and begin our life together.&rdquo;
+              &ldquo;Together with our families, we warmly invite you to join our home celebrations at Basseleal &amp; Dr. Bethel&apos;s from <strong className="text-[#1E140E] font-bold underline decoration-[#8C6A3B]">{programTimes.homeEn}</strong> and our church wedding ceremony at Halwot Emmanuel United Church from <strong className="text-[#1E140E] font-bold underline decoration-[#8C6A3B]">{programTimes.churchEn}</strong> as we exchange our vows and begin our life together.&rdquo;
             </p>
           </div>
           <div className="rounded-lg bg-white/80 p-2.5 border border-[#E8E1D5]">
@@ -263,7 +263,7 @@ export function ProgramTimeChanger({
               Amharic Invitation Statement:
             </span>
             <p>
-              &ldquo;ከቤተሰቦቻችን ጋር በመሆን፣ ቃል ኪዳን የምንገባበትን የሰርግ ስነ-ስርዓት በሀልዎት አማኑኤል ህብረት ቤተክርስቲያን ከቀኑ <strong className="text-[#1E140E] font-bold underline decoration-[#8C6A3B]">{programTimes.churchAm}</strong>፣ በመቀጠልም በቤት አቀባበል ከጠዋቱ <strong className="text-[#1E140E] font-bold underline decoration-[#8C6A3B]">{programTimes.homeAm}</strong> ጀምሮ በሚደረገው ደማቅ ዝግጅት ላይ አብረውን እንዲያከብሩ በአክብሮትና በታላቅ ደስታ ጋብዘንዎታል።&rdquo;
+              &ldquo;በባስልኤል እና በዶ/ር ቤቴል ቤት ከጠዋቱ <strong className="text-[#1E140E] font-bold underline decoration-[#8C6A3B]">{programTimes.homeAm.replace(/[^0-9:]/g, "").trim() || programTimes.homeAm}</strong> ጀምሮ ከቤተሰቦቻቸው ጋር በሚደረገው ዝግጅት እንዲሁም በሀልዎት አማኑኤል ህብርት ቤ/ክ ከቀኑ <strong className="text-[#1E140E] font-bold underline decoration-[#8C6A3B]">{programTimes.churchAm.replace(/[^0-9:]/g, "").trim() || programTimes.churchAm}</strong> ጀምሮ በሚኖረው የቃልኪዳን ስነስርዓት በመገኘት የደስታችን ተካፋይ እንዲሆኑ በአክብሮት እንጋብዛለን::&rdquo;
             </p>
           </div>
         </div>

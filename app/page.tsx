@@ -5,6 +5,7 @@ import { InvitationSection } from "./components/wedding/InvitationSection";
 import { GallerySection } from "./components/wedding/GallerySection";
 import { WeddingCalendar } from "./components/wedding/WeddingCalendar";
 import { RSVPSection } from "./components/wedding/RSVPSection";
+import { WeddingFooter } from "./components/wedding/WeddingFooter";
 import { ScrollReveal } from "./components/wedding/ScrollReveal";
 import { ScrollFlowers } from "./components/wedding/ScrollFlowers";
 import { LanguageProvider } from "./components/wedding/LanguageContext";
@@ -135,6 +136,7 @@ export default async function Home({
           <GallerySection />
           <WeddingCalendar />
           <RSVPSection />
+          <WeddingFooter />
         </main>
       </InvitationProvider>
     </LanguageProvider>

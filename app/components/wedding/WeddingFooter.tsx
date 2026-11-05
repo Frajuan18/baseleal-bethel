@@ -1,35 +1,39 @@
-import { coupleName, wedding } from "@/config/wedding";
+"use client";
+
 import { useWeddingLanguage } from "./LanguageContext";
 
 export function WeddingFooter() {
   const { isAmharic } = useWeddingLanguage();
-  return (
-    <footer data-language={isAmharic ? "am" : "en"} className="amharic-section relative bg-transparent text-[#422B20] border-t border-[#DED2C2]/50 overflow-hidden pt-16 pb-12 sm:pt-20 sm:pb-16 w-full z-10">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
-        
-        {/* Grand Signature Wordmark (Soulify-style from reference) */}
-        <div className="text-center select-none py-4 sm:py-6 overflow-hidden">
-          <span
-            className="block font-editorial-serif text-[clamp(2.8rem,11vw,8.5rem)] text-[#422B20]/15 tracking-tight uppercase leading-none font-light"
-            style={{
-              WebkitTextStroke: "1px rgba(66, 43, 32, 0.35)",
-              color: "transparent",
-            }}
-          >
-            {wedding.couple.first} &amp; {wedding.couple.second}
-          </span>
-        </div>
 
-        {/* Bottom Details & Copyright */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] uppercase tracking-[0.18em] text-[#857365] pt-6 border-t border-[#DED2C2]/40">
-          <p>© 2026 {coupleName}. All Rights Reserved.</p>
-          <p className="flex items-center gap-2">
-            <span>{isAmharic ? "በፍቅር የተሰራ" : "Made with love"}</span>
-            <span className="text-[#B18A54]">✦</span>
-            <span>Solas Dei Gloria</span>
+  return (
+    <footer
+      id="footer"
+      lang={isAmharic ? "am" : "en"}
+      className="relative w-full border-t border-b border-[#CBB596]/60 bg-transparent py-12 sm:py-16 md:py-20 select-none m-0"
+    >
+      {/* Top and Bottom secondary hairlines for traditional Bible page double-ruled border look spanning full screen width */}
+      <div className="pointer-events-none absolute inset-x-0 top-1 h-px bg-[#B39368]/25" aria-hidden />
+      <div className="pointer-events-none absolute inset-x-0 bottom-1 h-px bg-[#B39368]/25" aria-hidden />
+
+      {/* Full width content attached to screen borders with transparent background */}
+      <div className="w-full px-4 sm:px-8 md:px-12 text-center bg-transparent">
+        <div className="mx-auto max-w-3xl space-y-2.5 sm:space-y-3.5">
+          {/* Scripture Reference Title */}
+          <p className={`text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.24em] text-[#8C6A3B] ${isAmharic ? "font-balderasu" : "font-sans"}`}>
+            {isAmharic ? "ኦሪት ዘፍጥረት 35:3" : "GENESIS 35:3"}
+          </p>
+
+          {/* Holy Scripture Verse */}
+          <p
+            className={`text-sm xs:text-base sm:text-lg md:text-xl leading-relaxed text-[#4A3527] italic max-w-2xl mx-auto ${
+              isAmharic ? "font-balderasu" : "font-editorial-serif"
+            }`}
+          >
+            {isAmharic
+              ? "“ተነሥተን ወደ ቤቴል እንውጣ፤ እዚያም በመከራዬ ጊዜ ለሰማኝ፣ በሄድሁበትም ስፍራ ሁሉ ላልተለየኝ አምላክ መሠዊያ እሠራለሁ።”"
+              : "“Then come, let us go up to Bethel, where I will build an altar to God, who answered me in the day of my distress and who has been with me wherever I have gone.”"}
           </p>
         </div>
-
       </div>
     </footer>
   );

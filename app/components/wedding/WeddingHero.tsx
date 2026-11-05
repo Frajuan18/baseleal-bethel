@@ -42,17 +42,43 @@ export function WeddingHero() {
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1440px] flex-col items-center justify-end pb-4 sm:pb-6 lg:h-full lg:pb-8 px-6 sm:px-12 text-center">
         {/* Lifted Names and CTA button group */}
         <div className="flex flex-col items-center justify-center -translate-y-2 sm:-translate-y-4">
-          {/* Couple Names */}
+          {/* Couple Names - 3-Line Vertical Lockup (Husband / And / Wife) */}
           <h1
-            className={`hero-anim hero-veil flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-5 font-normal text-[#FFFDF5] [-webkit-text-stroke:0.2px_currentColor] ${
-              isAmharic
-                ? "font-jegna-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight"
-                : "font-brittany-signature text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-[1.08]"
-            }`}
+            className="hero-anim hero-veil flex flex-col items-center justify-center text-center font-normal text-[#FFFDF5] [-webkit-text-stroke:0.2px_currentColor]"
             style={{ animationDelay: "360ms" }}
           >
-            <span className="block">{isAmharic ? "ባስልኤል" : "Basseleal"}</span>
-            <span className="block">{isAmharic ? "እና ዶ/ር ቤቴል" : "& Dr. Bethel"}</span>
+            {/* Top: Husband's Name */}
+            <span
+              className={`block leading-[1.08] ${
+                isAmharic
+                  ? "font-jegna-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl"
+                  : "font-brittany-signature text-5xl sm:text-7xl md:text-8xl lg:text-9xl"
+              }`}
+            >
+              {isAmharic ? "ባስልኤል" : "Basseleal"}
+            </span>
+
+            {/* Middle: 'And' */}
+            <span
+              className={`block my-0.5 sm:my-1 text-[#F4E5C9]/90 ${
+                isAmharic
+                  ? "font-jegna-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
+                  : "font-editorial-serif italic font-light text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
+              }`}
+            >
+              {isAmharic ? "እና" : "&"}
+            </span>
+
+            {/* Bottom: Wife's Name */}
+            <span
+              className={`block leading-[1.08] ${
+                isAmharic
+                  ? "font-jegna-title text-4xl sm:text-6xl md:text-7xl lg:text-8xl"
+                  : "font-brittany-signature text-5xl sm:text-7xl md:text-8xl lg:text-9xl"
+              }`}
+            >
+              {isAmharic ? "ዶ/ር ቤቴል" : "Dr. Bethel"}
+            </span>
           </h1>
 
           {/* Invitation CTA Button */}
